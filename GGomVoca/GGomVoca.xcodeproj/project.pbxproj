@@ -1,0 +1,610 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904E429514A6E003262AE /* WordSearchingView.swift */; };
+		03F904E829514B9B003262AE /* SearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904E729514B9B003262AE /* SearchListCell.swift */; };
+		03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904EA295155B2003262AE /* SearchingWordModel.swift */; };
+		162EE05129509F4E0065E103 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE04F29509F4E0065E103 /* SegmentView.swift */; };
+		162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05029509F4E0065E103 /* OptionSheetView.swift */; };
+		162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05529509F6D0065E103 /* JPWordListView.swift */; };
+		162EE0582950A1960065E103 /* JPWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0572950A1960065E103 /* JPWordsTableView.swift */; };
+		162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0592950B0380065E103 /* FRWordListView.swift */; };
+		162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05B2950B0840065E103 /* FRWordsTableView.swift */; };
+		16F432402952A46C000D74B0 /* EditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F4323F2952A46C000D74B0 /* EditWordView.swift */; };
+		6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E03F29515726003A1A08 /* AddNewWordView.swift */; };
+		6371E0422951A0B8003A1A08 /* JPAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */; };
+		6371E0442951A1EB003A1A08 /* FRAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0432951A1EB003A1A08 /* FRAddNewWordView.swift */; };
+		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
+		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
+		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85342950312E00461DEB /* GGomVocaApp.swift */; };
+		63DC85372950312E00461DEB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85362950312E00461DEB /* Persistence.swift */; };
+		63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */; };
+		63DC853C2950312E00461DEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC853B2950312E00461DEB /* ContentView.swift */; };
+		63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63DC85412950312F00461DEB /* Preview Assets.xcassets */; };
+		EE57C04D2951791D004312CE /* VocabularyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04C2951791D004312CE /* VocabularyListView.swift */; };
+		EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04E29517950004312CE /* AddVocabularyView.swift */; };
+		EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C0502951795E004312CE /* VocabularyCell.swift */; };
+		EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05329517F81004312CE /* VocabularyModel.swift */; };
+		EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C055295180BE004312CE /* VocabularyListViewModel.swift */; };
+		EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05929518348004312CE /* CoredataRepository.swift */; };
+		EE57C05F2951885E004312CE /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05E2951885E004312CE /* TabbarView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03F904E429514A6E003262AE /* WordSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSearchingView.swift; sourceTree = "<group>"; };
+		03F904E729514B9B003262AE /* SearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListCell.swift; sourceTree = "<group>"; };
+		03F904EA295155B2003262AE /* SearchingWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingWordModel.swift; sourceTree = "<group>"; };
+		162EE04F29509F4E0065E103 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		162EE05029509F4E0065E103 /* OptionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionSheetView.swift; sourceTree = "<group>"; };
+		162EE05529509F6D0065E103 /* JPWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordListView.swift; sourceTree = "<group>"; };
+		162EE0572950A1960065E103 /* JPWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordsTableView.swift; sourceTree = "<group>"; };
+		162EE0592950B0380065E103 /* FRWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
+		162EE05B2950B0840065E103 /* FRWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordsTableView.swift; sourceTree = "<group>"; };
+		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
+		6371E03F29515726003A1A08 /* AddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
+		6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordView.swift; sourceTree = "<group>"; };
+		6371E0432951A1EB003A1A08 /* FRAddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRAddNewWordView.swift; sourceTree = "<group>"; };
+		6371E0452952058D003A1A08 /* ImportCSVFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVFileView.swift; sourceTree = "<group>"; };
+		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63DC85312950312E00461DEB /* GGomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GGomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		63DC85342950312E00461DEB /* GGomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGomVocaApp.swift; sourceTree = "<group>"; };
+		63DC85362950312E00461DEB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		63DC85392950312E00461DEB /* GGomVoca.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GGomVoca.xcdatamodel; sourceTree = "<group>"; };
+		63DC853B2950312E00461DEB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		63DC853F2950312F00461DEB /* GGomVoca.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GGomVoca.entitlements; sourceTree = "<group>"; };
+		63DC85412950312F00461DEB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EE57C04C2951791D004312CE /* VocabularyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyListView.swift; sourceTree = "<group>"; };
+		EE57C04E29517950004312CE /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
+		EE57C0502951795E004312CE /* VocabularyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCell.swift; sourceTree = "<group>"; };
+		EE57C05329517F81004312CE /* VocabularyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyModel.swift; sourceTree = "<group>"; };
+		EE57C055295180BE004312CE /* VocabularyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyListViewModel.swift; sourceTree = "<group>"; };
+		EE57C05929518348004312CE /* CoredataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataRepository.swift; sourceTree = "<group>"; };
+		EE57C05E2951885E004312CE /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		63DC852E2950312E00461DEB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03F904E329514A55003262AE /* WordSearchingView */ = {
+			isa = PBXGroup;
+			children = (
+				03F904E429514A6E003262AE /* WordSearchingView.swift */,
+				03F904E92951558A003262AE /* Model */,
+				03F904E629514B85003262AE /* Cell */,
+			);
+			path = WordSearchingView;
+			sourceTree = "<group>";
+		};
+		03F904E629514B85003262AE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				03F904E729514B9B003262AE /* SearchListCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		03F904E92951558A003262AE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				03F904EA295155B2003262AE /* SearchingWordModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		162EE03729507A690065E103 /* WordListView */ = {
+			isa = PBXGroup;
+			children = (
+				162EE04E29509F4E0065E103 /* CommonView */,
+				162EE04C29509F130065E103 /* JPWordListView */,
+				162EE04B29509F040065E103 /* FRWordListView */,
+			);
+			path = WordListView;
+			sourceTree = "<group>";
+		};
+		162EE04B29509F040065E103 /* FRWordListView */ = {
+			isa = PBXGroup;
+			children = (
+				162EE0592950B0380065E103 /* FRWordListView.swift */,
+				162EE05B2950B0840065E103 /* FRWordsTableView.swift */,
+				6371E0432951A1EB003A1A08 /* FRAddNewWordView.swift */,
+			);
+			path = FRWordListView;
+			sourceTree = "<group>";
+		};
+		162EE04C29509F130065E103 /* JPWordListView */ = {
+			isa = PBXGroup;
+			children = (
+				162EE05529509F6D0065E103 /* JPWordListView.swift */,
+				162EE0572950A1960065E103 /* JPWordsTableView.swift */,
+				6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */,
+			);
+			path = JPWordListView;
+			sourceTree = "<group>";
+		};
+		162EE04E29509F4E0065E103 /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				162EE04F29509F4E0065E103 /* SegmentView.swift */,
+				162EE05029509F4E0065E103 /* OptionSheetView.swift */,
+				6371E03F29515726003A1A08 /* AddNewWordView.swift */,
+				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
+				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
+			);
+			path = CommonView;
+			sourceTree = "<group>";
+		};
+		63DC85282950312E00461DEB = {
+			isa = PBXGroup;
+			children = (
+				63DC85332950312E00461DEB /* GGomVoca */,
+				63DC85322950312E00461DEB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		63DC85322950312E00461DEB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63DC85312950312E00461DEB /* GGomVoca.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63DC85332950312E00461DEB /* GGomVoca */ = {
+			isa = PBXGroup;
+			children = (
+				6371E05129530885003A1A08 /* Info.plist */,
+				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
+				EE57C05B29518833004312CE /* Component */,
+				63DC854B2950321D00461DEB /* View */,
+				63DC854A2950321500461DEB /* ViewModel */,
+				63DC85482950317D00461DEB /* Store */,
+				63DC8549295031E400461DEB /* Model */,
+				63DC85362950312E00461DEB /* Persistence.swift */,
+				6371E04D29530716003A1A08 /* Assets.xcassets */,
+				6371E04F29530737003A1A08 /* Launch Screen.storyboard */,
+				63DC853F2950312F00461DEB /* GGomVoca.entitlements */,
+				63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */,
+				63DC85402950312F00461DEB /* Preview Content */,
+			);
+			path = GGomVoca;
+			sourceTree = "<group>";
+		};
+		63DC85402950312F00461DEB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				63DC85412950312F00461DEB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		63DC85482950317D00461DEB /* Store */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		63DC8549295031E400461DEB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		63DC854A2950321500461DEB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		63DC854B2950321D00461DEB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C04A29517881004312CE /* VocabularyListView */,
+				03F904E329514A55003262AE /* WordSearchingView */,
+				162EE03729507A690065E103 /* WordListView */,
+				63DC853B2950312E00461DEB /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EE57C04A29517881004312CE /* VocabularyListView */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C05829518319004312CE /* ViewModel */,
+				EE57C057295182FD004312CE /* Repository */,
+				EE57C05229517F51004312CE /* Model */,
+				EE57C04B295178AD004312CE /* Cell */,
+				EE57C04C2951791D004312CE /* VocabularyListView.swift */,
+				EE57C04E29517950004312CE /* AddVocabularyView.swift */,
+			);
+			path = VocabularyListView;
+			sourceTree = "<group>";
+		};
+		EE57C04B295178AD004312CE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C0502951795E004312CE /* VocabularyCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		EE57C05229517F51004312CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C05329517F81004312CE /* VocabularyModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EE57C057295182FD004312CE /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C05929518348004312CE /* CoredataRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		EE57C05829518319004312CE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C055295180BE004312CE /* VocabularyListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		EE57C05B29518833004312CE /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				EE57C05E2951885E004312CE /* TabbarView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		63DC85302950312E00461DEB /* GGomVoca */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63DC85452950312F00461DEB /* Build configuration list for PBXNativeTarget "GGomVoca" */;
+			buildPhases = (
+				63DC852D2950312E00461DEB /* Sources */,
+				63DC852E2950312E00461DEB /* Frameworks */,
+				63DC852F2950312E00461DEB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GGomVoca;
+			productName = GGomVoca;
+			productReference = 63DC85312950312E00461DEB /* GGomVoca.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		63DC85292950312E00461DEB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					63DC85302950312E00461DEB = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = 63DC852C2950312E00461DEB /* Build configuration list for PBXProject "GGomVoca" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 63DC85282950312E00461DEB;
+			productRefGroup = 63DC85322950312E00461DEB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63DC85302950312E00461DEB /* GGomVoca */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63DC852F2950312E00461DEB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */,
+				63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */,
+				6371E04E29530716003A1A08 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		63DC852D2950312E00461DEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */,
+				03F904E829514B9B003262AE /* SearchListCell.swift in Sources */,
+				EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */,
+				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
+				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
+				63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */,
+				EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */,
+				03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */,
+				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
+				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
+				16F432402952A46C000D74B0 /* EditWordView.swift in Sources */,
+				EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */,
+				162EE05129509F4E0065E103 /* SegmentView.swift in Sources */,
+				6371E0422951A0B8003A1A08 /* JPAddNewWordView.swift in Sources */,
+				162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */,
+				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
+				162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */,
+				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
+				162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */,
+				6371E0442951A1EB003A1A08 /* FRAddNewWordView.swift in Sources */,
+				6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */,
+				6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */,
+				EE57C04D2951791D004312CE /* VocabularyListView.swift in Sources */,
+				EE57C05F2951885E004312CE /* TabbarView.swift in Sources */,
+				162EE0582950A1960065E103 /* JPWordsTableView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		63DC85432950312F00461DEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		63DC85442950312F00461DEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		63DC85462950312F00461DEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GGomVoca/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63DC85472950312F00461DEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GGomVoca/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		63DC852C2950312E00461DEB /* Build configuration list for PBXProject "GGomVoca" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63DC85432950312F00461DEB /* Debug */,
+				63DC85442950312F00461DEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63DC85452950312F00461DEB /* Build configuration list for PBXNativeTarget "GGomVoca" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63DC85462950312F00461DEB /* Debug */,
+				63DC85472950312F00461DEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				63DC85392950312E00461DEB /* GGomVoca.xcdatamodel */,
+			);
+			currentVersion = 63DC85392950312E00461DEB /* GGomVoca.xcdatamodel */;
+			path = GGomVoca.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 63DC85292950312E00461DEB /* Project object */;
+}
