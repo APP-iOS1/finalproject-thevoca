@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct FRAddNewWordView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
+    var viewModel : FRAddNewWordViewModel = FRAddNewWordViewModel()
     var vocabulary: Vocabulary
     
     @Binding var isShowingAddWordView: Bool
@@ -92,7 +91,7 @@ struct FRAddNewWordView: View {
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
                         if !word.isEmpty && !meaning.isEmpty {
-                            addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
@@ -109,30 +108,7 @@ struct FRAddNewWordView: View {
             }
         }
     }
-    
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
-        let newWord = Word(context: viewContext)
-        newWord.id = UUID()
-        newWord.word = word
-        newWord.meaning = meaning
-        newWord.option = option
-        newWord.vocabulary = vocabulary
-        newWord.vocabularyID = vocabulary.id
-        
-        saveContext()
-        words = vocabulary.words?.allObjects as! [Word]
-        filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
-        
-    }
-    
-    // MARK: saveContext
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
+   
 }
 
 //struct AddNewWordView_Previews: PreviewProvider {
