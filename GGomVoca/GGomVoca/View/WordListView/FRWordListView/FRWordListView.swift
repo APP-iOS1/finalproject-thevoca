@@ -9,12 +9,6 @@ import SwiftUI
 import CoreData
 
 struct FRWordListView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        entity: Vocabulary.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Vocabulary.createdAt, ascending: true)],
-        animation: .default)
-    private var vocabularies: FetchedResults<Vocabulary>
     
     @State private var selectedSegment: ProfileSection = .normal
     @State private var selectedWord: [UUID] = []

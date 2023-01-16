@@ -9,12 +9,7 @@ import SwiftUI
 import CoreData
 
 struct JPWordListView: View {
-    @Environment(\.managedObjectContext) private var viewContext 
-    @FetchRequest(
-        entity: Vocabulary.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Vocabulary.createdAt, ascending: true)],
-        animation: .default)
-    private var vocabularies: FetchedResults<Vocabulary>
+
     
     @State private var selectedSegment: ProfileSection = .normal
     @State private var selectedWord: [UUID] = []
@@ -23,11 +18,13 @@ struct JPWordListView: View {
     @State var isShowingAddWordView: Bool = false
     @State var isShowingEditWordView: Bool = false
     
-    @State var bindingWord: Word = Word()
+    @State var bindingWord: Word = Word() //??
     @State var vocabulary: Vocabulary
+    
     
     @State var words: [Word] = [] {
         didSet {
+            //삭제된 기록이 없는 단어장 filter
             filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
         }
     }

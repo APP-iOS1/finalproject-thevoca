@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-
+//단어 수정 뷰
 struct EditWordView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    var vocabulary: Vocabulary
     
+    var vocabulary: Vocabulary
+    var viewModel : EditWordViewModel = EditWordViewModel()
     @Binding var editShow: Bool
     @Binding var bindingWord: Word
     @Binding var filteredWords: [Word]
@@ -85,7 +85,8 @@ struct EditWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         if !word.isEmpty && !meaning.isEmpty {
-                            editWord(vocabulary: vocabulary, editWord: bindingWord, word: word, meaning: meaning, option: option)
+                            viewModel.editWord(vocabulary: vocabulary, editWord: bindingWord, word: word, meaning: meaning, option: option)
+                            
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
@@ -100,23 +101,5 @@ struct EditWordView: View {
         }
     }
     
-    func editWord(vocabulary:Vocabulary, editWord: Word, word: String, meaning: String, option: String = "") {
-        editWord.word = word
-        editWord.meaning = meaning
-        editWord.option = option
-        
-        saveContext()
-        words = vocabulary.words?.allObjects as! [Word]
-        filteredWords = words.filter({ $0.deletedAt == "" })
-        filteredWords = words.filter({ $0.deletedAt == nil })
-    }
-    
-    // MARK: saveContext
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
+   
 }
