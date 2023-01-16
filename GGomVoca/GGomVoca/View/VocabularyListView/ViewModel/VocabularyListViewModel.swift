@@ -39,9 +39,6 @@ class VocabularyListViewModel : ObservableObject {
         self.vocabularyList = vocabularyList
     }
     
-    let persistenceController = PersistenceController.shared
-    let viewContext = PersistenceController.shared.container.viewContext
-
     /*
      Get Vocabulary List
      */
@@ -49,7 +46,7 @@ class VocabularyListViewModel : ObservableObject {
     -> [Vocabulary] {
         let vocabularyFetch = Vocabulary.fetchRequest()
 
-        var results = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+        var results = (try? repository.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
         self.vocabularyList = results.filter{
             $0.deleatedAt == nil || $0.deleatedAt?.count == 0
         }
@@ -82,6 +79,8 @@ class VocabularyListViewModel : ObservableObject {
         italianVoca = results.filter {
             $0.nationality == "IT" && $0.deleatedAt == nil
         }
+        
+        
         
         return results
     }

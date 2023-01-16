@@ -70,11 +70,7 @@ struct VocabularyListView: View {
                     }
                 } else {
                     VStack {
-                        Image("nedpark")
-                            .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .frame(width: 100, height: 100)
-                            .padding(.vertical, 2)
+                        
                         HStack {
                             Spacer()
                             VStack(spacing: 4) {
