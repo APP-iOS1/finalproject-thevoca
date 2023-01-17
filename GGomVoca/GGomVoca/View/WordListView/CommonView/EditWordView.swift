@@ -40,7 +40,6 @@ struct EditWordView: View {
         NavigationStack {
             
             Form {
-                
                 Section(header: Text("단어")) {
                     TextField("단어를 입력하세요.", text: $inputWord)
                 }
