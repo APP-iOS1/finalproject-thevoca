@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 class EditWordViewModel {
     var viewContext = PersistenceController.shared.container.viewContext
     
@@ -15,7 +16,6 @@ class EditWordViewModel {
         editWord.option = option
         
         saveContext()
-       
     }
     
     // MARK: saveContext

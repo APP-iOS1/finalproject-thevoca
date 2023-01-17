@@ -23,12 +23,10 @@ struct JPWordsTableView: View {
     var backgroundColor: Color = Color("background")
     
     var body: some View {
-
         GeometryReader { geo in
             VStack {
                 List {
                     ForEach(filteredWords) { word in
-                        
                         ZStack {
                             Rectangle()
                                 .fill(backgroundColor)

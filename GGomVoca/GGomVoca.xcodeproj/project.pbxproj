@@ -24,6 +24,8 @@
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
 		63B095F3297631F100E6BB21 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F2297631F100E6BB21 /* View+.swift */; };
+		63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */; };
+		63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F62976832C00E6BB21 /* DataFrame+.swift */; };
 		63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85342950312E00461DEB /* GGomVocaApp.swift */; };
 		63DC85372950312E00461DEB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85362950312E00461DEB /* Persistence.swift */; };
 		63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */; };
@@ -61,6 +63,8 @@
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		63B095F2297631F100E6BB21 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVFileViewModel.swift; sourceTree = "<group>"; };
+		63B095F62976832C00E6BB21 /* DataFrame+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataFrame+.swift"; sourceTree = "<group>"; };
 		63DC85312950312E00461DEB /* GGomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GGomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DC85342950312E00461DEB /* GGomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGomVocaApp.swift; sourceTree = "<group>"; };
 		63DC85362950312E00461DEB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				162EE05029509F4E0065E103 /* OptionSheetView.swift */,
 				6371E03F29515726003A1A08 /* AddNewWordView.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
+				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
 				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 				EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */,
 			);
@@ -167,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				63B095F2297631F100E6BB21 /* View+.swift */,
+				63B095F62976832C00E6BB21 /* DataFrame+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -387,6 +393,7 @@
 				EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */,
 				EE60FB22297546B1004F82E2 /* EditWordViewModel.swift in Sources */,
 				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
+				63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */,
 				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
 				63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */,
 				EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */,
@@ -403,6 +410,7 @@
 				162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
 				162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */,
+				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
 				162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */,
 				6371E0442951A1EB003A1A08 /* FRAddNewWordView.swift in Sources */,

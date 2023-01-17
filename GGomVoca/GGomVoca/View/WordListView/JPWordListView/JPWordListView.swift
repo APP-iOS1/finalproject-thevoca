@@ -67,9 +67,9 @@ struct JPWordListView: View {
                 .presentationDetents([.height(CGFloat(350))])
             //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
         }
-        .onAppear(perform: {
+        .onAppear {
             words = vocabulary.words?.allObjects as! [Word]
-        })
+        }
         .navigationTitle("\(vocabulary.name ?? "")")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

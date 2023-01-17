@@ -1,13 +1,13 @@
 //
-//  JPAddNewWordViewModel.swift
+//  ImportCSVFileViewModel.swift
 //  GGomVoca
 //
-//  Created by JeongMin Ko on 2023/01/16.
+//  Created by Roen White on 2023/01/17.
 //
 
 import Foundation
 
-final class JPAddNewWordViewModel{
+final class ImportCSVFileViewModel {
     var viewContext = PersistenceController.shared.container.viewContext
     
     // MARK: Add new Word
@@ -31,4 +31,5 @@ final class JPAddNewWordViewModel{
             print("Error saving managed object context: \(error)")
         }
     }
+
 }
