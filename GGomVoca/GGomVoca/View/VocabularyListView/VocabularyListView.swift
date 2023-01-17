@@ -28,6 +28,12 @@ struct VocabularyListView: View {
         vocaList = vocaList.filter{
             word in word.deleatedAt == nil
         }
+        
+        if vocaList.count > 3 {
+            print("최근 본 단어장 stack이 3개 이상 쌓여서 기존 데이터가 삭제됩니다.")
+            print("삭제되는 데이터 : \(vocaList[0].name!)")
+            vocaList.remove(at: 2)
+        }
         return vocaList
     }
     
@@ -42,10 +48,10 @@ struct VocabularyListView: View {
                         VocabularyCell(
                             cellClosure: {
                             print("cellClosure")
-                            viewModel.vocabularyList = viewModel.getVocabularyData()
+                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             print("deleteCompletion")
-                            viewModel.vocabularyList = viewModel.getVocabularyData()
+                            viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
                     }
@@ -61,20 +67,16 @@ struct VocabularyListView: View {
                         VocabularyCell(
                             cellClosure: {
                             print("click")
-                            viewModel.vocabularyList = viewModel.getVocabularyData()
+                            viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             print("deleteCompletion")
-                            viewModel.vocabularyList = viewModel.getVocabularyData()
+                            viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
                     }
                 } else {
                     VStack {
-                        Image("nedpark")
-                            .resizable()
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .frame(width: 100, height: 100)
-                            .padding(.vertical, 2)
+                        
                         HStack {
                             Spacer()
                             VStack(spacing: 4) {
@@ -126,10 +128,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "EN" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -142,10 +144,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "CH" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -158,10 +160,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "FR" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -174,10 +176,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "DE" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -190,10 +192,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "ES" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -206,10 +208,10 @@ struct VocabularyListView: View {
                         if vocabulary.nationality == "IT" {
                             VocabularyCell(cellClosure: {
                                 print("click")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 print("deleteCompletion")
-                                viewModel.vocabularyList = viewModel.getVocabularyData()
+                                viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                         }
@@ -219,7 +221,7 @@ struct VocabularyListView: View {
         }
         .onAppear(perform: {
             //fetch 단어장 data
-            viewModel.vocabularyList = viewModel.getVocabularyData()
+            viewModel.getVocabularyData()
             viewModel.recentVocabularyList = getRecentVocabulary()
         })
 
@@ -234,7 +236,7 @@ struct VocabularyListView: View {
                     .presentationDetents([.height(CGFloat(270))])
                     .onDisappear(perform: {
                         //fetch 단어장 data
-                        viewModel.vocabularyList = viewModel.getVocabularyData()
+                        viewModel.getVocabularyData()
                     })
             })
         )
