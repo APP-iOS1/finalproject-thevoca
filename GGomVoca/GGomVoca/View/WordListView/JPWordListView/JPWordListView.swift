@@ -9,14 +9,17 @@ import SwiftUI
 import CoreData
 
 struct JPWordListView: View {
-
     
+    @Environment(\.editMode) var editMode
     @State private var selectedSegment: ProfileSection = .normal
     @State private var selectedWord: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
     @State var isShowingEditWordView: Bool = false
+    
+    // MARK: 단어장 편집모드 관련 State
+    @State private var isEditingMode: Bool = false
     
     @State var bindingWord: Word = Word() //??
     @State var vocabulary: Vocabulary
@@ -73,72 +76,86 @@ struct JPWordListView: View {
         .navigationTitle("\(vocabulary.name ?? "")")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem {
-                VStack(alignment: .center) {
-                    Text("\(filteredWords.count)")
-                        .foregroundColor(.gray)
+            // TODO: toolbar State 분기
+            if !isEditingMode { // 기존에 보이는 툴바
+                ToolbarItem {
+                    VStack(alignment: .center) {
+                        Text("\(filteredWords.count)")
+                            .foregroundColor(.gray)
+                    }
                 }
-            }
-            // + 버튼
-            ToolbarItem {
-                Button {
-                    isShowingAddWordView.toggle()
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-            ToolbarItem {
-                // 햄버거 버튼일 때
-                Menu {
+                // + 버튼
+                ToolbarItem {
                     Button {
-                        words.shuffle()
+                        isShowingAddWordView.toggle()
                     } label: {
-                        HStack {
-                            Text("단어 순서 섞기")
-                            Image(systemName: "shuffle")
-                        }
+                        Image(systemName: "plus")
                     }
-                    
-                    Button {
-                        print("전체 단어 재생하기")
-                    } label: {
-                        HStack {
-                            Text("전체 단어 재생하기")
-                            Image(systemName: "play.fill")
-                        }
-                    }
-                    .disabled(true)
-
-                    NavigationLink {
-                        ImportCSVFileView(vocabulary: vocabulary)
-                    } label: {
-                        HStack {
-                            Text("단어 가져오기")
-                            Image(systemName: "square.and.arrow.down")
-                        }
-                    }
-                    
-                    Button {
-                        print("export")
-                    } label: {
-                        HStack {
-                            Text("단어 리스트 내보내기")
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                    }
-                    .disabled(true)
-                    
-                } label: {
-                    Image(systemName: "line.3.horizontal")
                 }
                 
-                
-                // 미트볼 버튼일 때
-//                Button(action: {
-//                    showOption.toggle()
-//                }){
-//                    Image(systemName: "ellipsis.circle")
-//                }
+                ToolbarItem {
+                    // 햄버거 버튼일 때
+                    Menu {
+                        Button {
+                            editMode?.wrappedValue = .active
+                            isEditingMode = true
+                        } label: {
+                            HStack {
+                                Text("단어장 편집하기")
+                                Image(systemName: "checkmark.circle")
+                            }
+                        }
+                        
+                        Button {
+                            words.shuffle()
+                        } label: {
+                            HStack {
+                                Text("단어 순서 섞기")
+                                Image(systemName: "shuffle")
+                            }
+                        }
+                        
+                        Button {
+                            print("전체 단어 재생하기")
+                        } label: {
+                            HStack {
+                                Text("전체 단어 재생하기")
+                                Image(systemName: "play.fill")
+                            }
+                        }
+                        .disabled(true)
+                        
+                        NavigationLink {
+                            ImportCSVFileView(vocabulary: vocabulary)
+                        } label: {
+                            HStack {
+                                Text("단어 가져오기")
+                                Image(systemName: "square.and.arrow.down")
+                            }
+                        }
+                        
+                        Button {
+                            print("export")
+                        } label: {
+                            HStack {
+                                Text("단어 리스트 내보내기")
+                                Image(systemName: "square.and.arrow.up")
+                            }
+                        }
+                        .disabled(true)
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                    }
+                }
+            } else { // 새롭게 보이는 툴바
+                ToolbarItem {
+                    Button {
+                        editMode?.wrappedValue = .inactive
+                        isEditingMode = false
+                    } label: {
+                        Text("취소")
+                    }
+                }
             }
         }
     }
