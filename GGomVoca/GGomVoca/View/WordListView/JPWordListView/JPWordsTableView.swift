@@ -19,8 +19,8 @@ struct JPWordsTableView: View {
     @Binding var bindingWord: Word
     
     @State private var totalHeight = CGFloat(100) // no matter - just for static Preview !!
-    
-    var backgroundColor: Color = Color(red: 246 / 255, green: 246 / 255, blue: 246 / 255)
+
+    var backgroundColor: Color = Color("background")
     
     var body: some View {
 

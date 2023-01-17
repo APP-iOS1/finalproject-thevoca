@@ -17,10 +17,9 @@ struct SearchingWordModel: Identifiable, Hashable {
     var isMemorized: Bool = false // 암기여부
     var createdAt: Date = Date.now // 생성일시
     var deletedAt: Date? // 삭제된 날짜
-    var recentTestResults: [Bool] // 시험에서 정답여부를 저장하는 배열
+    var recentTestResults: [Bool] // 시험에서 정답 여부를 저장하는 배열
     var correctCount: Int
-    var incorrectCount: Int16
-    
+    var incorrectCount: Int
 }
 
 struct SearchingVocaModel {

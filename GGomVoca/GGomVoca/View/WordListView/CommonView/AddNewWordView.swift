@@ -63,7 +63,7 @@ struct AddNewWordView: View {
                         Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
                     }
                 }) {
-                    TextField("단어를 입력하세요.", text: $inputWord)
+                    TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
                         .focused($wordFocused)
                 }
