@@ -23,6 +23,7 @@
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		63B095F3297631F100E6BB21 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F2297631F100E6BB21 /* View+.swift */; };
 		63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85342950312E00461DEB /* GGomVocaApp.swift */; };
 		63DC85372950312E00461DEB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85362950312E00461DEB /* Persistence.swift */; };
 		63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */; };
@@ -58,6 +59,7 @@
 		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63B095F2297631F100E6BB21 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		63DC85312950312E00461DEB /* GGomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GGomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DC85342950312E00461DEB /* GGomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGomVocaApp.swift; sourceTree = "<group>"; };
 		63DC85362950312E00461DEB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -159,6 +161,14 @@
 			path = CommonView;
 			sourceTree = "<group>";
 		};
+		63B095F1297631DF00E6BB21 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				63B095F2297631F100E6BB21 /* View+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		63DC85282950312E00461DEB = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +188,7 @@
 		63DC85332950312E00461DEB /* GGomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				63B095F1297631DF00E6BB21 /* Extension */,
 				6371E05129530885003A1A08 /* Info.plist */,
 				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
 				EE57C05B29518833004312CE /* Component */,
@@ -371,6 +382,7 @@
 				03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */,
 				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
+				63B095F3297631F100E6BB21 /* View+.swift in Sources */,
 				16F432402952A46C000D74B0 /* EditWordView.swift in Sources */,
 				EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */,
 				162EE05129509F4E0065E103 /* SegmentView.swift in Sources */,

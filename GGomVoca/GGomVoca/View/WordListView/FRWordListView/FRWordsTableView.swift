@@ -12,7 +12,7 @@ struct FRWordsTableView: View {
     @Binding var isShowingEditView: Bool
     @Binding var bindingWord: Word
     
-    var backgroundColor: Color = Color(red: 246 / 255, green: 246 / 255, blue: 246 / 255)
+    var backgroundColor: Color = Color("background")
     
     // UIScreen.main deprecated...
     // 뷰 전체 폭 길이

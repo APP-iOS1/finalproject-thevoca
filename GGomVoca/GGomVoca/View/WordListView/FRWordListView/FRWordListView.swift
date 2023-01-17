@@ -33,8 +33,22 @@ struct FRWordListView: View {
     var body: some View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
-            FRWordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditView: $isShowingEditWordView, bindingWord: $bindingWord)
-                .padding()
+            if filteredWords.count <= 0 {
+                VStack(alignment: .center){
+                    Spacer()
+                    Image(systemName: "questionmark.circle")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                    Text("단어를 추가해주세요")
+                        .font(.title3)
+                    Spacer()
+                }
+                .foregroundColor(.gray)
+            } else {
+                JPWordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditView: $isShowingEditWordView, bindingWord: $bindingWord)
+                    .padding()
+            }
+            
         }
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
@@ -99,7 +113,7 @@ struct FRWordListView: View {
                         }
                     }
                     .disabled(true)
-
+                    
                     NavigationLink {
                         ImportCSVFileView(vocabulary: vocabulary)
                     } label: {
@@ -122,13 +136,13 @@ struct FRWordListView: View {
                 } label: {
                     Image(systemName: "line.3.horizontal")
                 }
-
+                
                 // 미트볼 버튼일 때
-//                Button(action: {
-//                    showOption.toggle()
-//                }){
-//                    Image(systemName: "ellipsis.circle")
-//                }
+                //                Button(action: {
+                //                    showOption.toggle()
+                //                }){
+                //                    Image(systemName: "ellipsis.circle")
+                //                }
             }
         }
     }
