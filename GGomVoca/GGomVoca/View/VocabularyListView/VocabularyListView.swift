@@ -19,22 +19,27 @@ struct VocabularyListView: View {
     
     @State var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedItem: Vocabulary?
+    
+    
+    func getVocaItem(for itemID: UUID) -> Vocabulary {
+        
+        let vocaItem = viewModel.vocabularyList.first(where: { $0.id == itemID })! as Vocabulary
+                
+        return vocaItem
+    }
+    
     // 3개의 단어장 불러오기
     func getRecentVocabulary() -> [Vocabulary] {
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
-        var results = (try? self.viewContext.fetch(vocabularyFetch) as [RecentVocabulary]) ?? []
-        
-        var vocaList = (results.first?.vocabularies ?? []).allObjects as [Vocabulary]
-        vocaList = vocaList.filter{
-            word in word.deleatedAt == nil
+        var result = [Vocabulary]()
+        var vocaIds = UserManager.shared.recentVocabulary
+        vocaIds.forEach{
+            if let id = UUID(uuidString: $0){
+                result.append(getVocaItem(for: id))
+            }
+            
         }
-        
-        if vocaList.count > 3 {
-            print("최근 본 단어장 stack이 3개 이상 쌓여서 기존 데이터가 삭제됩니다.")
-            print("삭제되는 데이터 : \(vocaList[0].name!)")
-            vocaList.remove(at: 2)
-        }
-        return vocaList
+        print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
+        return result
     }
     
     
@@ -223,6 +228,7 @@ struct VocabularyListView: View {
             //fetch 단어장 data
             viewModel.getVocabularyData()
             viewModel.recentVocabularyList = getRecentVocabulary()
+           
         })
 
         .navigationBarTitle("단어장")

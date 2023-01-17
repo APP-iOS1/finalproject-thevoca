@@ -29,6 +29,7 @@
 		63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */; };
 		63DC853C2950312E00461DEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC853B2950312E00461DEB /* ContentView.swift */; };
 		63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63DC85412950312F00461DEB /* Preview Assets.xcassets */; };
+		EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E49FE2976709A00890CF7 /* UserManager.swift */; };
 		EE57C04D2951791D004312CE /* VocabularyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04C2951791D004312CE /* VocabularyListView.swift */; };
 		EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04E29517950004312CE /* AddVocabularyView.swift */; };
 		EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C0502951795E004312CE /* VocabularyCell.swift */; };
@@ -67,6 +68,7 @@
 		63DC853B2950312E00461DEB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		63DC853F2950312F00461DEB /* GGomVoca.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GGomVoca.entitlements; sourceTree = "<group>"; };
 		63DC85412950312F00461DEB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EE1E49FE2976709A00890CF7 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		EE57C04C2951791D004312CE /* VocabularyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyListView.swift; sourceTree = "<group>"; };
 		EE57C04E29517950004312CE /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 		EE57C0502951795E004312CE /* VocabularyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCell.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 		63DC85332950312E00461DEB /* GGomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				EE1E49FD2976700800890CF7 /* Comfiguration */,
 				63B095F1297631DF00E6BB21 /* Extension */,
 				6371E05129530885003A1A08 /* Info.plist */,
 				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
@@ -244,6 +247,14 @@
 				63DC853B2950312E00461DEB /* ContentView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		EE1E49FD2976700800890CF7 /* Comfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				EE1E49FE2976709A00890CF7 /* UserManager.swift */,
+			);
+			path = Comfiguration;
 			sourceTree = "<group>";
 		};
 		EE57C04A29517881004312CE /* VocabularyListView */ = {
@@ -388,6 +399,7 @@
 				162EE05129509F4E0065E103 /* SegmentView.swift in Sources */,
 				EE60FB1E29754190004F82E2 /* JPAddNewWordViewModel.swift in Sources */,
 				6371E0422951A0B8003A1A08 /* JPAddNewWordView.swift in Sources */,
+				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
 				162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
 				162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */,

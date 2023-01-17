@@ -23,18 +23,18 @@ struct VocabularyCell: View {
                 if vocabulary.nationality! == "JA" {
                     JPWordListView(vocabulary: vocabulary)
                         .onAppear(perform: {
-                            manageVocabulary(voca: vocabulary)
+                            manageRecentVocabulary(voca: vocabulary)
                             print("gesture")})
                 } else {
                     FRWordListView(vocabulary: vocabulary)
                         .onAppear(perform: {
-                            manageVocabulary(voca: vocabulary)
+                            manageRecentVocabulary(voca: vocabulary)
                             print("gesture")})
                 }
             }, label: { VStack { Text(vocabulary.name ?? "")}})
 
         }
-
+        //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 updateFavorite(id: vocabulary.id!)
@@ -45,6 +45,7 @@ struct VocabularyCell: View {
             }
             .tint(vocabulary.isFavorite ? .gray : .yellow)
         }
+        //단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 //updateData(id: vocabulary.id!)
@@ -56,7 +57,7 @@ struct VocabularyCell: View {
         .alert(isPresented: $isShowingDeleteAlert) {
             
             Alert(title: Text("단어장을 삭제하면, \n 포함된 단어도 모두 삭제됩니다.\n 단어장을 삭제 하시겠습니까?"), primaryButton: .destructive(Text("삭제"), action: {
-                updateData(id: vocabulary.id!)
+                updateDeletedData(id: vocabulary.id!)
                 //deleteRecentVocabulary(vocaId: vocabulary.id!)
                 deleteCompletion() //삭제 후 업데이트
                 
@@ -89,7 +90,10 @@ struct VocabularyCell: View {
         }
     }
     
-    func updateData(id: UUID) {
+    /*
+     단어장 삭제 후 반영 함수
+     */
+    func updateDeletedData(id: UUID) {
 
         let managedContext = viewContext
         let vocabularyFetch = Vocabulary.fetchRequest()
@@ -101,7 +105,9 @@ struct VocabularyCell: View {
             let objectUpdate = results[0] // as! NSManagedObject
             objectUpdate.setValue("\(Date())", forKey: "deleatedAt")
             
-//            objectUpdate.setValue("", forKey: "nationality")
+            //
+            deleteRecentVoca(id: "\(id)")
+            
             try self.viewContext.save()
             print("변경 결과 : \(objectUpdate.deleatedAt)" )
             do {
@@ -113,135 +119,38 @@ struct VocabularyCell: View {
             print(error)
         }
     }
-    //최근 목록 초기화
-    func initRecentVocabulary(){
-        var results = getRecentVocabulary()
-        if results.count == 0 {
-            let recentVocabulary = RecentVocabulary(context: viewContext)
-            recentVocabulary.vocabularies = []
+    /*
+      최근 본 단어장 (UserDefault) 삭제
+     */
+    func deleteRecentVoca(id : String){
+        var before =  UserManager.shared.recentVocabulary // [voca1, voca2]
+        if let idx = before.firstIndex(of: "\(id)"){
+            before.remove(at: idx)
         }
+        UserManager.shared.recentVocabulary = before
     }
-    func addRecentVocabulary(voca: Vocabulary) { //name: String, nationality: String
-//        withAnimation {
-//            let recentVocabulary = RecentVocabulary(context: viewContext)
-//            recentVocabulary.vocabularies = [voca]
-//        }
-        
-        print("addRecentVocabulary")
-        let managedContext = viewContext
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
 
-        let results = (try? self.viewContext.fetch(vocabularyFetch) as [RecentVocabulary]) ?? []
-        print("addRecentVocabulary results : \(results)")
 
-        do {
-//            let test = try managedContext.fetch(fetchRequest)
-            let objectUpdate = results[0] // as! NSManagedObject
-            var arr = objectUpdate.vocabularies
-//            if objectUpdate.vocabularies?.count ?? 0 >= 3{
-//                //drop
-//                arr = NSSet(object: arr?.dropFirst(2))
-//                //arr?.dropFirst(2)
-//            }
-            var aa = arr?.allObjects as [Vocabulary]
-            aa.append(voca)
-            var nsSet = NSSet(array: aa)
-            print("addRecentVocabulary append : \(voca)")
-            objectUpdate.setValue(nsSet, forKey: "vocabularies")
-
-            print(objectUpdate)
-            do {
-                try managedContext.save()
-            } catch {
-                print(error)
-            }
-        } catch {
-            print(error)
-        }
-        
-        
-    }
-    // 3개의 단어장 불러오기
-    func getRecentVocabulary() -> [Vocabulary] {
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
-        var results = (try? self.viewContext.fetch(vocabularyFetch) as [RecentVocabulary])
-        var arr = (results?.first?.vocabularies?.allObjects ?? []) as [Vocabulary]
-        return arr
-    }
-    // 3개 이후 지우기
-    func deleteVocabulary() {
-        
-        let managedContext = viewContext
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
-
-        let results = (try? self.viewContext.fetch(vocabularyFetch) as [RecentVocabulary]) ?? []
-
-        do {
-
-            let objectUpdate = results[0] // as! NSManagedObject
-            var arr = objectUpdate.vocabularies?.dropFirst(2)
-            objectUpdate.setValue(arr, forKey: "vocabularies")
-
-            print(objectUpdate)
-            do {
-                try managedContext.save()
-            } catch {
-                print(error)
-            }
-        } catch {
-            print(error)
-        }
-        
-
-    }
     // 3개 가져오고 지우기 (관리)
-    func manageVocabulary(voca: Vocabulary) {
+    func manageRecentVocabulary(voca: Vocabulary) {
         
-        initRecentVocabulary() //초기화
+        //중복되는 최근 단어장 제거
+        deleteRecentVoca(id: "\(voca.id!)")
+        var before =  UserManager.shared.recentVocabulary // [voca1, voca2]
         
-        var data = getRecentVocabulary()
-//        if data.count >= 3{
-//            deleteVocabulary()
-//        }
-        addRecentVocabulary(voca: voca)
-        print("results")
+        before.insert("\(voca.id!)", at: 0)
+        
+        if before.count >= 4{
+            before.removeLast()
+        }
+
+        UserManager.shared.recentVocabulary = before
+        
+        print( "manageRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
+        
     }
     
-    // 특정최근 본 단어장 삭제
-    func deleteRecentVocabulary(vocaId : UUID) {
-        
-        let managedContext = viewContext
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
-       
-        let results = try? (self.viewContext.fetch(vocabularyFetch) ?? []) as [RecentVocabulary]
 
-        do {
-//            let test = try managedContext.fetch(fetchRequest)
-            if results?.count == 0 {
-                return
-            }
-            let objectUpdate = results?[0] // as! NSManagedObject
-            var arr = (objectUpdate?.vocabularies?.allObjects ?? []) as [Vocabulary]
-            guard let removeIndex = arr.firstIndex(where: {$0.id == vocaId}) else { return }
-            arr.remove(at: removeIndex)
-            objectUpdate?.setValue( arr, forKey: "vocabularies")
-//            objectUpdate.setValue("", forKey: "nationality")
-            print(objectUpdate)
-            do {
-                try managedContext.save()
-            } catch {
-                print(error)
-            }
-        } catch {
-            print(error)
-        }
-        
-        
-        withAnimation {
-//            viewContext.delete(voca)
-//            saveContext()
-        }
-    }
     
     func saveContext() {
         do {
