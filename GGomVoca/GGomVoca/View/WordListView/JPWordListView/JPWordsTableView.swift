@@ -25,7 +25,6 @@ struct JPWordsTableView: View {
     var backgroundColor: Color = Color("background")
     
     var body: some View {
-        
         GeometryReader { geo in
             VStack {
                 List(filteredWords, id: \.self, selection: $isSelected) { word in

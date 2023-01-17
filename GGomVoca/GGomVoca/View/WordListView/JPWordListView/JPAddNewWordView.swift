@@ -108,7 +108,4 @@ struct JPAddNewWordView: View {
             }
         }
     }
-    
-    
-    
 }

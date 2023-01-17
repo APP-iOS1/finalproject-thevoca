@@ -12,19 +12,22 @@ struct ImportCSVFileView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
+    var viewModel: ImportCSVFileViewModel = ImportCSVFileViewModel()
     var vocabulary: Vocabulary
     
+    /// - View Properties...
     @State private var openFile: Bool = false
-    // loadCSV method에 사용되는 states
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    
+    /// - loadCSV method에 사용되는 states
     @State private var fileName: String = ""
     @State private var fileURL: URL? = nil
     
-    // 불러온 csvData 저장
+    /// - 불러온 csvData 저장
     @State private var csvData: DataFrame = [:]
     
     var body: some View {
         VStack {
-            
             if !csvData.isEmpty {
                 Text("파일 내용 확인하기")
             }
@@ -34,30 +37,28 @@ struct ImportCSVFileView: View {
                     Button {
                         openFile.toggle()
                     } label: {
-                        HStack {
-                            Spacer()
-                            VStack(spacing: 15) {
-                                Image(systemName: "icloud.and.arrow.up")
-                                    .font(.largeTitle)
-                                Text("csv 파일 업로드")
-                                    .font(.title3)
-                            }
-                            .foregroundColor(.gray)
-                            Spacer()
+                        VStack(spacing: 15) {
+                            Image(systemName: "icloud.and.arrow.up")
+                                .font(.largeTitle)
+                            Text("csv 파일 업로드")
+                                .font(.title3)
                         }
+                        .foregroundColor(.gray)
+                        .verticalAlignSetting(.center)
+                        .horizontalAlignSetting(.center)
                     }
                 } else {
                     ScrollView {
-                        Grid {
-                            ForEach(Array(csvData.rows), id: \.self) { row in
-                                GridRow(alignment: .center) {
+                        ForEach(Array(csvData.rows), id: \.self) { row in
+                            LazyVGrid(columns: columns, alignment: .center, spacing: 20) {
+                                Group {
                                     Text(row[0] as? String ?? "")
                                     Text(row[1] as? String ?? "")
                                     Text(row[2] as? String ?? "")
                                 }
                                 .multilineTextAlignment(.center)
-                                Divider()
                             }
+                            Divider()
                         }
                         .padding()
                     }
@@ -65,7 +66,7 @@ struct ImportCSVFileView: View {
             }
             .padding(20)
             .frame(minHeight: 400)
-            .background(Color(red: 246 / 255, green: 246 / 255, blue: 246 / 255))
+            .background(Color("background"))
             .cornerRadius(15)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
@@ -81,7 +82,7 @@ struct ImportCSVFileView: View {
                             let option = line[1] as? String ?? ""
                             let meaning = line[2] as? String ?? ""
                             
-                            addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
                             
                             dismiss()
                         }
@@ -95,7 +96,7 @@ struct ImportCSVFileView: View {
                 .padding()
                 .buttonStyle(.borderedProminent)
             }
-
+            
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
@@ -107,49 +108,12 @@ struct ImportCSVFileView: View {
                 fileName = fileURL?.lastPathComponent ?? ""
                 
                 if let fileURL {
-                    csvData = loadCSV(fileURL: fileURL)
+                    csvData = DataFrame.loadCSV(fileURL: fileURL)
                 }
                 
             } catch {
                 print("error reading docs", error.localizedDescription)
             }
-        }
-    }
-    // MARK: CSV 파일 내용 불러오기
-    func loadCSV(fileURL: URL) -> DataFrame {
-        var wordDF: DataFrame = [:]
-        do {
-            let columnNames = ["word", "option", "meaning"]
-            let columnTypes: [String : CSVType] = ["word": .string, "option": .string, "meaning": .string]
-            let readingOption = CSVReadingOptions(hasHeaderRow: true, delimiter: ",")
-
-            wordDF = try DataFrame(contentsOfCSVFile: fileURL, columns: columnNames, types: columnTypes, options: readingOption)
-            
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        return wordDF
-    }
-    
-    // MARK: 단어 하나씩 추가 하는 메서드
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
-        let newWord = Word(context: viewContext)
-        newWord.id = UUID()
-        newWord.word = word
-        newWord.meaning = meaning
-        newWord.option = option
-        newWord.vocabulary = vocabulary
-        newWord.vocabularyID = vocabulary.id
-        
-        saveContext()
-    }
-    // MARK: saveContext
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
         }
     }
 }

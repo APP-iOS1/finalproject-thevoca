@@ -19,22 +19,27 @@ struct VocabularyListView: View {
     
     @State var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedItem: Vocabulary?
+    
+    
+    func getVocaItem(for itemID: UUID) -> Vocabulary {
+        
+        let vocaItem = viewModel.vocabularyList.first(where: { $0.id == itemID })! as Vocabulary
+                
+        return vocaItem
+    }
+    
     // 3개의 단어장 불러오기
     func getRecentVocabulary() -> [Vocabulary] {
-        let vocabularyFetch = RecentVocabulary.fetchRequest()
-        var results = (try? self.viewContext.fetch(vocabularyFetch) as [RecentVocabulary]) ?? []
-        
-        var vocaList = (results.first?.vocabularies ?? []).allObjects as [Vocabulary]
-        vocaList = vocaList.filter{
-            word in word.deleatedAt == nil
+        var result = [Vocabulary]()
+        var vocaIds = UserManager.shared.recentVocabulary
+        vocaIds.forEach{
+            if let id = UUID(uuidString: $0){
+                result.append(getVocaItem(for: id))
+            }
+            
         }
-        
-        if vocaList.count > 3 {
-            print("최근 본 단어장 stack이 3개 이상 쌓여서 기존 데이터가 삭제됩니다.")
-            print("삭제되는 데이터 : \(vocaList[0].name!)")
-            vocaList.remove(at: 2)
-        }
-        return vocaList
+        print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
+        return result
     }
     
     
@@ -46,7 +51,7 @@ struct VocabularyListView: View {
                 if !viewModel.recentVocabularyList.isEmpty {
                     ForEach(viewModel.recentVocabularyList) { vocabulary in
                         VocabularyCell(
-                            cellClosure: {
+                            favoriteCompletion: {
                             print("cellClosure")
                              viewModel.getVocabularyData()
                         }, deleteCompletion: {
@@ -65,7 +70,7 @@ struct VocabularyListView: View {
                     }
                     ForEach(viewModel.favoriteVoca) { vocabulary in
                         VocabularyCell(
-                            cellClosure: {
+                            favoriteCompletion: {
                             print("click")
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
@@ -94,7 +99,7 @@ struct VocabularyListView: View {
                 Section(header: Text("한국어")) {
                     ForEach(viewModel.koreanVoca) { vocabulary in
                         if vocabulary.nationality == "KO" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -110,7 +115,7 @@ struct VocabularyListView: View {
                 Section(header: Text("일본어")) {
                     ForEach(viewModel.japaneseVoca) { vocabulary in
                         if vocabulary.nationality == "JA" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -126,7 +131,7 @@ struct VocabularyListView: View {
                 Section(header: Text("영어")) {
                     ForEach(viewModel.englishVoca) { vocabulary in
                         if vocabulary.nationality == "EN" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -142,7 +147,7 @@ struct VocabularyListView: View {
                 Section(header: Text("중국어")) {
                     ForEach(viewModel.chineseVoca) { vocabulary in
                         if vocabulary.nationality == "CH" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -158,7 +163,7 @@ struct VocabularyListView: View {
                 Section(header: Text("프랑스어")) {
                     ForEach(viewModel.frenchVoca) { vocabulary in
                         if vocabulary.nationality == "FR" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -174,7 +179,7 @@ struct VocabularyListView: View {
                 Section(header: Text("독일어")) {
                     ForEach(viewModel.germanVoca) { vocabulary in
                         if vocabulary.nationality == "DE" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -190,7 +195,7 @@ struct VocabularyListView: View {
                 Section(header: Text("스페인어")) {
                     ForEach(viewModel.spanishVoca) { vocabulary in
                         if vocabulary.nationality == "ES" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -206,7 +211,7 @@ struct VocabularyListView: View {
                 Section(header: Text("이탈리어")) {
                     ForEach(viewModel.italianVoca) { vocabulary in
                         if vocabulary.nationality == "IT" {
-                            VocabularyCell(cellClosure: {
+                            VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
@@ -223,6 +228,7 @@ struct VocabularyListView: View {
             //fetch 단어장 data
             viewModel.getVocabularyData()
             viewModel.recentVocabularyList = getRecentVocabulary()
+           
         })
 
         .navigationBarTitle("단어장")
