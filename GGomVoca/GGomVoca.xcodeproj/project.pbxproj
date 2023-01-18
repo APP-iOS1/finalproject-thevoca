@@ -16,6 +16,7 @@
 		162EE0582950A1960065E103 /* JPWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0572950A1960065E103 /* JPWordsTableView.swift */; };
 		162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0592950B0380065E103 /* FRWordListView.swift */; };
 		162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05B2950B0840065E103 /* FRWordsTableView.swift */; };
+		166390662977AEEE00B3635F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 166390652977AEEE00B3635F /* Localizable.strings */; };
 		16F432402952A46C000D74B0 /* EditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F4323F2952A46C000D74B0 /* EditWordView.swift */; };
 		6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E03F29515726003A1A08 /* AddNewWordView.swift */; };
 		6371E0422951A0B8003A1A08 /* JPAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */; };
@@ -55,6 +56,7 @@
 		162EE0572950A1960065E103 /* JPWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordsTableView.swift; sourceTree = "<group>"; };
 		162EE0592950B0380065E103 /* FRWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		162EE05B2950B0840065E103 /* FRWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordsTableView.swift; sourceTree = "<group>"; };
+		166390652977AEEE00B3635F /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
 		6371E03F29515726003A1A08 /* AddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
 		6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				63DC853F2950312F00461DEB /* GGomVoca.entitlements */,
 				63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */,
 				63DC85402950312F00461DEB /* Preview Content */,
+				166390652977AEEE00B3635F /* Localizable.strings */,
 			);
 			path = GGomVoca;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */,
+				166390662977AEEE00B3635F /* Localizable.strings in Resources */,
 				63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */,
 				6371E04E29530716003A1A08 /* Assets.xcassets in Resources */,
 			);
