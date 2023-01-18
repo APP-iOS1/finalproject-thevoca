@@ -9,7 +9,13 @@ import SwiftUI
 import CoreData
 
 struct FRWordListView: View {
+    // MARK: Data Properties
+    var vocabularyID: UUID
+    @StateObject var viewModel: FRWordListViewModel = FRWordListViewModel()
     
+    // MARK: View Properties
+    @State var navigationTitle: String = ""
+    @State private var showOption: Bool = false
     @State private var selectedSegment: ProfileSection = .normal
     @State private var selectedWord: [UUID] = []
     
@@ -18,22 +24,10 @@ struct FRWordListView: View {
     @State var isShowingEditWordView: Bool = false
     @State var bindingWord: Word = Word()
     
-    @State var vocabulary: Vocabulary
-    
-    @State var words: [Word] = [] {
-        didSet {
-            print("words changed")
-            filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
-        }
-    }
-    
-    @State var filteredWords: [Word] = []
-    @State private var showOption: Bool = false
-    
     var body: some View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
-            if filteredWords.count <= 0 {
+            if viewModel.filteredWords.count <= 0 {
                 VStack(alignment: .center){
                     Spacer()
                     Image(systemName: "questionmark.circle")
@@ -45,7 +39,11 @@ struct FRWordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                JPWordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditView: $isShowingEditWordView, bindingWord: $bindingWord)
+                FRWordsTableView(selectedSegment: selectedSegment,
+                                 selectedWord: $selectedWord,
+                                 filteredWords: $viewModel.filteredWords,
+                                 isShowingEditView: $isShowingEditWordView,
+                                 bindingWord: $bindingWord)
                     .padding()
             }
             
@@ -57,6 +55,9 @@ struct FRWordListView: View {
                 .onDisappear(perform: {
                     words = vocabulary.words?.allObjects as! [Word]
                 })
+//                .onDisappear(perform: {
+//                    words = viewModel.selectedVocabulary.words?.allObjects as! [Word]
+//                })
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
@@ -68,19 +69,17 @@ struct FRWordListView: View {
                 .presentationDetents([.height(CGFloat(350))])
             //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
         }
-        .onAppear(perform: {
-            words = vocabulary.words?.allObjects as! [Word]
-            
-        })
-        .navigationTitle("\(vocabulary.name ?? "")")
+        .onAppear {
+            viewModel.getVocabulary(vocabularyID: vocabularyID)
+//            words = viewModel.selectedVocabulary.words?.allObjects as! [Word]
+            navigationTitle = viewModel.selectedVocabulary.name ?? ""
+        }
+        .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem {
                 VStack(alignment: .center) {
-                    //                        Text("total")
-                    //                            .font(.caption)
-                    //                            .opacity(0.5)
-                    Text("\(filteredWords.count)")
+                    Text("\($viewModel.filteredWords.count)")
                         .foregroundColor(.gray)
                 }
             }
@@ -96,7 +95,7 @@ struct FRWordListView: View {
                 // 햄버거 버튼일 때
                 Menu {
                     Button {
-                        words.shuffle()
+                        viewModel.words.shuffle()
                     } label: {
                         HStack {
                             Text("단어 순서 섞기")
@@ -115,7 +114,7 @@ struct FRWordListView: View {
                     .disabled(true)
                     
                     NavigationLink {
-                        ImportCSVFileView(vocabulary: vocabulary)
+                        ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
                     } label: {
                         HStack {
                             Text("단어 가져오기")
@@ -136,13 +135,6 @@ struct FRWordListView: View {
                 } label: {
                     Image(systemName: "line.3.horizontal")
                 }
-                
-                // 미트볼 버튼일 때
-                //                Button(action: {
-                //                    showOption.toggle()
-                //                }){
-                //                    Image(systemName: "ellipsis.circle")
-                //                }
             }
         }
     }
