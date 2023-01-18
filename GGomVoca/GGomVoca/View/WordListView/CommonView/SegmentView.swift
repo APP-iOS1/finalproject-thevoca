@@ -20,7 +20,7 @@ enum ProfileSection : String, CaseIterable {
 
 struct SegmentView: View {
     @Binding var selectedSegment : ProfileSection
-    @Binding var selectedWord: [UUID]
+    @Binding var unmaskedWords: [UUID]
     
     @State var wordTest: LocalizedStringKey = "탭 하면 가려진 단어가 나타납니다."
     @State var meaningTest: LocalizedStringKey = "탭 하면 가려진 뜻이 나타납니다."
@@ -32,22 +32,15 @@ struct SegmentView: View {
                     Text(option.localizedString())
                 }
             }
-            .onChange(of: selectedSegment, perform: { newValue in
-                selectedWord = []
-            })
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
+            
             Text(selectedSegment == .normal ? " " : selectedSegment == .wordTest ? wordTest : meaningTest)
                 .font(.subheadline)
                 .opacity(0.5)
                 .padding(.bottom, -20)
         }
+        .onChange(of: selectedSegment) { newValue in
+            unmaskedWords = []
     }
 }
-
-
-//struct SegmentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SegmentView()
-//    }
-//}

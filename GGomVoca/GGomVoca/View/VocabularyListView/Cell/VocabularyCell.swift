@@ -20,20 +20,23 @@ struct VocabularyCell: View {
     
     var body: some View {
         HStack {
-            NavigationLink(destination: {
+            NavigationLink {
                 if vocabulary.nationality! == "JA" {
                     JPWordListView(vocabulary: vocabulary)
-                        .onAppear(perform: {
+                        .onAppear {
                             vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")})
+                            print("gesture")
+                        }
                 } else {
-                    FRWordListView(vocabulary: vocabulary)
-                        .onAppear(perform: {
+                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+                        .onAppear {
                             vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")})
+                            print("gesture")
+                        }
                 }
-            }, label: { VStack { Text(vocabulary.name ?? "")}})
-
+            } label: {
+                VStack { Text(vocabulary.name ?? "") }
+            }
         }
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {

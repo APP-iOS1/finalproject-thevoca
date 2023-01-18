@@ -11,7 +11,7 @@ final class JPAddNewWordViewModel{
     var viewContext = PersistenceController.shared.container.viewContext
     
     // MARK: Add new Word
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
+    func addNewWord(vocabulary: Vocabulary, word: String, meaning: String, option: String = "") {
         let newWord = Word(context: viewContext)
         newWord.id = UUID()
         newWord.word = word
