@@ -59,6 +59,7 @@
 		166390692977BBDA00B3635F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1663906B2977BC0200B3635F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1663906C2977BC2800B3635F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1663906D2977E74D00B3635F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
 		6371E03F29515726003A1A08 /* AddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
 		6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordView.swift; sourceTree = "<group>"; };
@@ -368,6 +369,7 @@
 				Base,
 				fr,
 				ja,
+				ko,
 			);
 			mainGroup = 63DC85282950312E00461DEB;
 			productRefGroup = 63DC85322950312E00461DEB /* Products */;
@@ -443,6 +445,7 @@
 				166390692977BBDA00B3635F /* en */,
 				1663906B2977BC0200B3635F /* fr */,
 				1663906C2977BC2800B3635F /* ja */,
+				1663906D2977E74D00B3635F /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
