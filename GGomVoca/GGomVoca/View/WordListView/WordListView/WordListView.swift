@@ -14,16 +14,18 @@ struct WordListView: View {
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<String> = Set<String>()
     
-    @State var vocabulary: Vocabulary
+//    @State var vocabulary: Vocabulary
+    @State var vocabulary: TempVocabulary = vocabularies[0]
+//    @State var vocabulary: TempVocabulary = vocabularies[1]
     
-    @State var words: [Word] = [] {
+    @State var words: [TempWord] = [] {
         didSet {
             //삭제된 기록이 없는 단어장 filter
-            filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
+            filteredWords = vocabulary.words.filter({ $0.deletedAt == "" })
         }
     }
     
-    @State var filteredWords: [Word] = []
+    @State var filteredWords: [TempWord] = []
     
     var body: some View {
         VStack{
@@ -41,7 +43,7 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                WordsTableView(filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "")
+                WordsTableView(filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality)
             }
             
         }
@@ -50,7 +52,7 @@ struct WordListView: View {
 
 struct WordListView_Previews: PreviewProvider {
     static var previews: some View {
-        WordListView(vocabulary: Vocabulary(), filteredWords: [])
+        WordListView(vocabulary: vocabularies[0], filteredWords: JPWords)
     }
 }
 

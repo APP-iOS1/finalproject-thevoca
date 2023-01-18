@@ -33,7 +33,6 @@ struct SegmentView: View {
             Text(selectedSegment == .normal ? " " : selectedSegment == .wordTest ? "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 단어가 나타납니다." : "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 뜻이 나타납니다.")
                 .font(.subheadline)
                 .opacity(0.5)
-                .padding(.bottom, -20)
         }
     }
 }
