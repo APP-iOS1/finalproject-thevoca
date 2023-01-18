@@ -85,24 +85,7 @@ struct WordsTableView: View {
                 } // LazyVStack
             } // GeometryReader
         } // ScrollView
-        .navigationTitle("단어장")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem {
-                VStack {
-                    Text("\(multiSelection.count)")
-                        .foregroundColor(.gray)
-                }
-            }
-            ToolbarItem {
-                Button {
-                    isSelectionMode.toggle()
-                    multiSelection.removeAll()
-                } label: {
-                    isSelectionMode ? Text("취소") : Text("편집")
-                }
-            }
-        } // toolbar
+        
     }
 }
 
