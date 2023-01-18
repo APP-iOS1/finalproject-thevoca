@@ -12,6 +12,10 @@ enum ProfileSection : String, CaseIterable {
     case normal = "전체 보기"
     case wordTest = "단어 가리기"
     case meaningTest = "뜻 가리기"
+    
+    func localizedString() -> String {
+            return NSLocalizedString(self.rawValue, comment: "")
+    }
 }
 
 struct SegmentView: View {
