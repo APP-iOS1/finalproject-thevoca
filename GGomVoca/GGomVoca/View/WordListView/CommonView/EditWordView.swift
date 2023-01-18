@@ -14,7 +14,7 @@ struct EditWordView: View {
     
     // MARK: Super View Properties
     var vocabularyNationality: String
-    @Binding var bindingWord: Word
+    @Binding var selectedWord: Word
     
     // MARK: View Properties
     @Environment(\.dismiss) private var dismiss
@@ -64,9 +64,9 @@ struct EditWordView: View {
             .navigationTitle("단어 수정")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                inputWord = bindingWord.word!
-                inputOption = bindingWord.option ?? ""
-                inputMeaning = bindingWord.meaning!
+                inputWord = selectedWord.word!
+                inputOption = selectedWord.option ?? ""
+                inputMeaning = selectedWord.meaning!
             }
             .toolbar {
                 // 취소 버튼
@@ -77,7 +77,7 @@ struct EditWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("변경") {
                         if !word.isEmpty && !meaning.isEmpty {
-                            viewModel.editWord(editWord: bindingWord, word: word, meaning: meaning, option: option)
+                            viewModel.editWord(editWord: selectedWord, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""

@@ -17,16 +17,16 @@ struct FRWordListView: View {
     @State var navigationTitle: String = ""
     @State private var showOption: Bool = false
     @State private var selectedSegment: ProfileSection = .normal
-    @State private var selectedWord: [UUID] = []
+    @State private var selectedWords: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
     @State var isShowingEditWordView: Bool = false
-    @State var bindingWord: Word = Word()
+    @State var selectedWord: Word = Word()
     
     var body: some View {
         VStack {
-            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
+            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWords)
             if viewModel.filteredWords.count <= 0 {
                 VStack(alignment: .center){
                     Spacer()
@@ -40,10 +40,10 @@ struct FRWordListView: View {
                 .foregroundColor(.gray)
             } else {
                 FRWordsTableView(selectedSegment: selectedSegment,
-                                 selectedWord: $selectedWord,
+                                 selectedWord: $selectedWords,
                                  filteredWords: $viewModel.filteredWords,
                                  isShowingEditView: $isShowingEditWordView,
-                                 bindingWord: $bindingWord)
+                                 bindingWord: $selectedWord)
                     .padding()
             }
             
@@ -51,22 +51,19 @@ struct FRWordListView: View {
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
             EditWordView(vocabularyNationality: viewModel.selectedVocabulary.nationality ?? "",
-                         bindingWord: $bindingWord)
+                         selectedWord: $selectedWord)
                 .presentationDetents([.medium])
-                .onDisappear(perform: {
-                    words = vocabulary.words?.allObjects as! [Word]
-                })
 //                .onDisappear(perform: {
 //                    words = viewModel.selectedVocabulary.words?.allObjects as! [Word]
 //                })
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
-            FRAddNewWordView(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
+            FRAddNewWordView(vocabulary: viewModel.selectedVocabulary, isShowingAddWordView: $isShowingAddWordView, words: $viewModel.words, filteredWords: $viewModel.filteredWords)
                 .presentationDetents([.height(CGFloat(500))])
         }
         .sheet(isPresented: $showOption) {
-            OptionSheetView(words: $filteredWords, vocabulary: vocabulary)
+            OptionSheetView(words: $viewModel.filteredWords, vocabulary: viewModel.selectedVocabulary)
                 .presentationDetents([.height(CGFloat(350))])
             //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
         }
