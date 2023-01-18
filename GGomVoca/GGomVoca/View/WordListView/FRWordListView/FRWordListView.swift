@@ -53,13 +53,11 @@ struct FRWordListView: View {
             EditWordView(vocabularyNationality: viewModel.selectedVocabulary.nationality ?? "",
                          selectedWord: $selectedWord)
                 .presentationDetents([.medium])
-//                .onDisappear(perform: {
-//                    words = viewModel.selectedVocabulary.words?.allObjects as! [Word]
-//                })
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
             FRAddNewWordView(vocabulary: viewModel.selectedVocabulary, isShowingAddWordView: $isShowingAddWordView, words: $viewModel.words, filteredWords: $viewModel.filteredWords)
+            FRAddNewWordView(vocabularyID: viewModel.selectedVocabulary.id ?? UUID())
                 .presentationDetents([.height(CGFloat(500))])
         }
         .sheet(isPresented: $showOption) {
