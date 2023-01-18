@@ -42,5 +42,6 @@ struct SegmentView: View {
         }
         .onChange(of: selectedSegment) { newValue in
             unmaskedWords = []
+        }
     }
 }
