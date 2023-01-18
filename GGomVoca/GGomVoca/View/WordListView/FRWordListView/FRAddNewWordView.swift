@@ -12,7 +12,7 @@ struct FRAddNewWordView: View {
     var viewModel : FRAddNewWordViewModel = FRAddNewWordViewModel()
     
     // MARK: Super View Properties
-    var vocabularyID: Vocabulary.ID
+    var vocabulary: Vocabulary
     
     // MARK: View Properties
     @Environment(\.dismiss) private var dismiss
@@ -93,7 +93,7 @@ struct FRAddNewWordView: View {
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
                         if !isWordEmpty && !isMeaningEmpty {
-                            viewModel.addNewWord(vocabularyID: vocabularyID, word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""

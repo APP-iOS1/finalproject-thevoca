@@ -22,10 +22,11 @@ class FRWordListViewModel: ObservableObject {
         }
     }
     
-    var filteredWords: [Word] = []
+    @Published var filteredWords: [Word] = []
     
     func getVocabulary(vocabularyID: Vocabulary.ID) {
         selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
         words = selectedVocabulary.words?.allObjects as? [Word] ?? []
+        print("getVocabulary", words, selectedVocabulary)
     }
 }
