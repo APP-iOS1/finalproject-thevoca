@@ -47,8 +47,8 @@ let JPWords: [TempWord] = [
 ]
 
 let FRWords: [TempWord] = [
-    TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "과일의 설탕절임", option: "female", vocabularyID: "2", word: "confiture"),
-    TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "묘지", option: "male", vocabularyID: "2", word: "cimetière"),
+    TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "과일의 설탕절임", option: "f", vocabularyID: "2", word: "confiture"),
+    TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "묘지", option: "m", vocabularyID: "2", word: "cimetière"),
     TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "건축하다", option: "", vocabularyID: "2", word: "construire"),
     TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "각각의", option: "", vocabularyID: "2", word: "chaque"),
     TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "붙어 있다", option: "", vocabularyID: "2", word: "tenir"),

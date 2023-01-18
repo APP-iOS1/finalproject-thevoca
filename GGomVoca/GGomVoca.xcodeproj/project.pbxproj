@@ -369,6 +369,8 @@
 			dependencies = (
 			);
 			name = GGomVoca;
+			packageProductDependencies = (
+			);
 			productName = GGomVoca;
 			productReference = 63DC85312950312E00461DEB /* GGomVoca.app */;
 			productType = "com.apple.product-type.application";
@@ -397,6 +399,8 @@
 				Base,
 			);
 			mainGroup = 63DC85282950312E00461DEB;
+			packageReferences = (
+			);
 			productRefGroup = 63DC85322950312E00461DEB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

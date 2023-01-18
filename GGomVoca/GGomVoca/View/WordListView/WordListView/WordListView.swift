@@ -20,8 +20,8 @@ struct WordListView: View {
     @State private var multiSelection: Set<String> = Set<String>()
     
 //    @State var vocabulary: Vocabulary
-    @State var vocabulary: TempVocabulary = vocabularies[0]
-//    @State var vocabulary: TempVocabulary = vocabularies[1]
+//    @State var vocabulary: TempVocabulary = vocabularies[0]
+    @State var vocabulary: TempVocabulary = vocabularies[1]
     
     @State var words: [TempWord] = [] {
         didSet {
@@ -158,7 +158,8 @@ struct WordListView: View {
 struct WordListView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            WordListView(vocabulary: vocabularies[0], filteredWords: JPWords)
+//            WordListView(vocabulary: vocabularies[0], filteredWords: JPWords)
+            WordListView(vocabulary: vocabularies[1], filteredWords: FRWords)
         }
     }
 }

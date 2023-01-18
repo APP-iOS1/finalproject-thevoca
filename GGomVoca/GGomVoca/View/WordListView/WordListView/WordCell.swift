@@ -38,16 +38,49 @@ struct WordCell: View {
                 }
             }
             
-            Text(word.word ?? "")
+            switch nationality {
+            case .EN:
+                Text("EN")
+            case .KO, .JP, .CH:
+                HStack {
+                    Text(word.word ?? "")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
+                    Text(word.option ?? "")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
+                    Text(word.meaning ?? "")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id)) ? 0 : 1)
+                }
+            case .FR:
+                Text(word.word ?? "")
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
+                HStack(spacing: 0) {
+//                    Image(systemName: word.option == "f" ? "f.square" : "m.square")
+//                        .font(.subheadline)
+//                        .opacity(0.5)
+//                    Text(word.meaning ?? "")
+                    Image(systemName: word.option == "f" ? "f.square" : word.option == "m" ? "m.square" : "" )
+                        .font(.subheadline)
+                        .opacity(0.5)
+                        .padding(.trailing, 5)
+
+                    Text(word.meaning ?? "")
+
+                }
                 .frame(maxWidth: .infinity, alignment: .center)
-                .multilineTextAlignment(.center)
-                .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
-            Text(word.option ?? "")
-                .frame(maxWidth: .infinity, alignment: .center)
-                .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
-            Text(word.meaning ?? "")
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id)) ? 0 : 1)
+            case .DE:
+                Text("DE")
+            case .ES:
+                Text("ES")
+            case .IT:
+                Text("IT")
+            }
         }
         .background {
             Color.clear
@@ -77,6 +110,7 @@ struct WordCell: View {
 
 struct WordCell_Previews: PreviewProvider {
     static var previews: some View {
-        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
+//        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
+        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "과일의 설탕절임", option: "f", vocabularyID: "2", word: "confiture"))
     }
 }
