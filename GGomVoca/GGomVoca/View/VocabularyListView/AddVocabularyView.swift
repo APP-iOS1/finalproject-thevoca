@@ -32,7 +32,7 @@ struct AddVocabularyView: View {
                 TextField("단어장 이름을 입력하세요", text: $vocabularyName)
                 Picker(selection: $nationality, label: Text("언어")) {
                     ForEach(Nationality.allCases, id: \.rawValue) { nationality in
-                        Text(nationality.rawValue)
+                        Text(nationality.localizedString())
                             .tag(nationality)
                     }
                 }

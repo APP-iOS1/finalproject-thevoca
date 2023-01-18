@@ -22,11 +22,14 @@ struct SegmentView: View {
     @Binding var selectedSegment : ProfileSection
     @Binding var selectedWord: [UUID]
     
+    @State var wordTest: LocalizedStringKey = "탭 하면 가려진 단어가 나타납니다."
+    @State var meaningTest: LocalizedStringKey = "탭 하면 가려진 뜻이 나타납니다."
+    
     var body: some View {
         VStack {
             Picker("", selection: $selectedSegment) {
                 ForEach(ProfileSection.allCases, id: \.self) { option in
-                    Text(option.rawValue)
+                    Text(option.localizedString())
                 }
             }
             .onChange(of: selectedSegment, perform: { newValue in
@@ -34,7 +37,7 @@ struct SegmentView: View {
             })
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
-            Text(selectedSegment == .normal ? " " : selectedSegment == .wordTest ? "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 단어가 나타납니다." : "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 뜻이 나타납니다.")
+            Text(selectedSegment == .normal ? " " : selectedSegment == .wordTest ? wordTest : meaningTest)
                 .font(.subheadline)
                 .opacity(0.5)
                 .padding(.bottom, -20)
