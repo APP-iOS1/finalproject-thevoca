@@ -23,6 +23,8 @@ struct FRWordListView: View {
     @State var isShowingEditWordView: Bool = false
     @State var selectedWord: Word = Word()
     
+    
+    
     var body: some View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -30,7 +32,11 @@ struct FRWordListView: View {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
                         .font(.largeTitle)
-                    Text("EMPTY : 비어 있는")
+                    HStack {
+                        Text("\(viewModel.getEmptyWord(vocabularyID: vocabularyID)) : ")
+                            .bold()
+                        Text("비어있는")
+                    }
                 }
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)
