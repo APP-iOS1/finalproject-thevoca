@@ -16,7 +16,7 @@ struct FRWordListView: View {
     // MARK: View Properties
     @State var navigationTitle: String = ""
     @State private var selectedSegment: ProfileSection = .normal
-    @State private var selectedWords: [UUID] = []
+    @State private var unmaskedWords: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
@@ -25,7 +25,7 @@ struct FRWordListView: View {
     
     var body: some View {
         VStack {
-            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWords)
+            SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
             if viewModel.filteredWords.count <= 0 {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
@@ -37,10 +37,9 @@ struct FRWordListView: View {
                 
             } else {
                 FRWordsTableView(selectedSegment: selectedSegment,
-                                 selectedWord: $selectedWords,
-                                 filteredWords: $viewModel.filteredWords,
-                                 isShowingEditView: $isShowingEditWordView,
-                                 bindingWord: $selectedWord)
+                                 unmaskedWords: $unmaskedWords,
+                                 selectedWord: $selectedWord,
+                                 filteredWords: viewModel.filteredWords)
                     .padding()
             }
             
@@ -68,7 +67,7 @@ struct FRWordListView: View {
             /// - 현재 단어장의 단어 개수
             ToolbarItem {
                 VStack(alignment: .center) {
-                    Text("\($viewModel.filteredWords.count)")
+                    Text("\(viewModel.filteredWords.count)")
                         .foregroundColor(.gray)
                 }
             }

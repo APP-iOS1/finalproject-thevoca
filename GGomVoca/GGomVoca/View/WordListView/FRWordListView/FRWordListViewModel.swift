@@ -14,10 +14,11 @@ class FRWordListViewModel: ObservableObject {
     
     // MARK: View properties
     var selectedVocabulary: Vocabulary = Vocabulary()
+    
     @Published var words: [Word] = [] {
         didSet {
             print("words changed")
-            filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
+            filteredWords = words.filter { $0.deletedAt == "" || $0.deletedAt == nil }
         }
     }
     
