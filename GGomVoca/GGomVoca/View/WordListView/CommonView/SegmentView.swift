@@ -25,22 +25,29 @@ struct SegmentView: View {
                     Text(option.rawValue)
                 }
             }
-            .onChange(of: selectedSegment, perform: { newValue in
-                selectedWord = []
-            })
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
-            Text(selectedSegment == .normal ? " " : selectedSegment == .wordTest ? "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 단어가 나타납니다." : "\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 뜻이 나타납니다.")
-                .font(.subheadline)
-                .opacity(0.5)
-                .padding(.bottom, -20)
+                        
+            switch selectedSegment {
+            case .normal:
+                Text(" ")
+                    .font(.subheadline)
+                    .opacity(0.5)
+                    .padding(.bottom, -20)
+            case .wordTest:
+                Text("\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 단어가 나타납니다.")
+                    .font(.subheadline)
+                    .opacity(0.5)
+                    .padding(.bottom, -20)
+            case .meaningTest:
+                Text("\(Image(systemName: "exclamationmark.circle")) 탭 하면 가려진 뜻이 나타납니다.")
+                    .font(.subheadline)
+                    .opacity(0.5)
+                    .padding(.bottom, -20)
+            }
+        }
+        .onChange(of: selectedSegment) { newValue in
+            selectedWord = []
         }
     }
 }
-
-
-//struct SegmentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SegmentView()
-//    }
-//}
