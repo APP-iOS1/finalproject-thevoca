@@ -71,7 +71,7 @@ struct AddNewWordView: View {
                 switch vocabulary.nationality {
                 case "JP":
                     Section(header: Text("발음")) {
-                        TextField("발음을 입력하세요.", text: $inputOption)
+                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                     }
                 case "FR":
                     Section(header: Text("성별")) {
@@ -92,7 +92,7 @@ struct AddNewWordView: View {
                         Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
                     }
                 }) {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning)
+                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
                         .textInputAutocapitalization(.never)
                 }
             }
