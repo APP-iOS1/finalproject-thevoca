@@ -56,7 +56,6 @@ struct FRWordListView: View {
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
-            FRAddNewWordView(vocabulary: viewModel.selectedVocabulary, isShowingAddWordView: $isShowingAddWordView, words: $viewModel.words, filteredWords: $viewModel.filteredWords)
             FRAddNewWordView(vocabularyID: viewModel.selectedVocabulary.id ?? UUID())
                 .presentationDetents([.height(CGFloat(500))])
         }

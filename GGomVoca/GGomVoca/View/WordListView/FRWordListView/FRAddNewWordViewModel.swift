@@ -11,14 +11,13 @@ final class FRAddNewWordViewModel {
     var viewContext = PersistenceController.shared.container.viewContext
     
     // MARK: Add new Word
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
+    func addNewWord(vocabularyID: Vocabulary.ID, word: String, meaning: String, option: String = "") {
         let newWord = Word(context: viewContext)
+        newWord.vocabularyID = vocabularyID
         newWord.id = UUID()
         newWord.word = word
         newWord.meaning = meaning
         newWord.option = option
-        newWord.vocabulary = vocabulary
-        newWord.vocabularyID = vocabulary.id
         
         saveContext()
     }
