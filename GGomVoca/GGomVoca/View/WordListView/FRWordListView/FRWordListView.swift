@@ -15,7 +15,6 @@ struct FRWordListView: View {
     
     // MARK: View Properties
     @State var navigationTitle: String = ""
-    @State private var showOption: Bool = false
     @State private var selectedSegment: ProfileSection = .normal
     @State private var selectedWords: [UUID] = []
     
@@ -59,26 +58,23 @@ struct FRWordListView: View {
             FRAddNewWordView(vocabularyID: viewModel.selectedVocabulary.id ?? UUID())
                 .presentationDetents([.height(CGFloat(500))])
         }
-        .sheet(isPresented: $showOption) {
-            OptionSheetView(words: $viewModel.filteredWords, vocabulary: viewModel.selectedVocabulary)
-                .presentationDetents([.height(CGFloat(350))])
-            //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
-        }
+        /// - View가 보여질 때 Vocabulary의 ID값으로 해당하는 Vocabulary 객체를 가져옴
+        /// - Vocabulary객체를 가져온 후 navigationTitle을 Vocabulary의 이름으로 가져옴
         .onAppear {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
-//            words = viewModel.selectedVocabulary.words?.allObjects as! [Word]
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
         }
         .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            /// - 현재 단어장의 단어 개수
             ToolbarItem {
                 VStack(alignment: .center) {
                     Text("\($viewModel.filteredWords.count)")
                         .foregroundColor(.gray)
                 }
             }
-            // + 버튼
+            /// - 새 단어 추가 버튼
             ToolbarItem {
                 Button {
                     isShowingAddWordView.toggle()
@@ -86,8 +82,8 @@ struct FRWordListView: View {
                     Image(systemName: "plus")
                 }
             }
+            /// - 햄버거 버튼
             ToolbarItem {
-                // 햄버거 버튼일 때
                 Menu {
                     Button {
                         viewModel.words.shuffle()
@@ -98,15 +94,15 @@ struct FRWordListView: View {
                         }
                     }
                     
-                    Button {
-                        print("전체 단어 재생하기")
-                    } label: {
-                        HStack {
-                            Text("전체 단어 재생하기")
-                            Image(systemName: "play.fill")
-                        }
-                    }
-                    .disabled(true)
+//                    Button {
+//                        print("전체 단어 재생하기")
+//                    } label: {
+//                        HStack {
+//                            Text("전체 단어 재생하기")
+//                            Image(systemName: "play.fill")
+//                        }
+//                    }
+//                    .disabled(true)
                     
                     NavigationLink {
                         ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
@@ -117,15 +113,15 @@ struct FRWordListView: View {
                         }
                     }
                     
-                    Button {
-                        print("export")
-                    } label: {
-                        HStack {
-                            Text("단어 리스트 내보내기")
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                    }
-                    .disabled(true)
+//                    Button {
+//                        print("export")
+//                    } label: {
+//                        HStack {
+//                            Text("단어 리스트 내보내기")
+//                            Image(systemName: "square.and.arrow.up")
+//                        }
+//                    }
+//                    .disabled(true)
                     
                 } label: {
                     Image(systemName: "line.3.horizontal")

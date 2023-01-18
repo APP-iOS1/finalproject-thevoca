@@ -11,7 +11,6 @@
 		03F904E829514B9B003262AE /* SearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904E729514B9B003262AE /* SearchListCell.swift */; };
 		03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904EA295155B2003262AE /* SearchingWordModel.swift */; };
 		162EE05129509F4E0065E103 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE04F29509F4E0065E103 /* SegmentView.swift */; };
-		162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05029509F4E0065E103 /* OptionSheetView.swift */; };
 		162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05529509F6D0065E103 /* JPWordListView.swift */; };
 		162EE0582950A1960065E103 /* JPWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0572950A1960065E103 /* JPWordsTableView.swift */; };
 		162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0592950B0380065E103 /* FRWordListView.swift */; };
@@ -51,7 +50,6 @@
 		03F904E729514B9B003262AE /* SearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListCell.swift; sourceTree = "<group>"; };
 		03F904EA295155B2003262AE /* SearchingWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingWordModel.swift; sourceTree = "<group>"; };
 		162EE04F29509F4E0065E103 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
-		162EE05029509F4E0065E103 /* OptionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionSheetView.swift; sourceTree = "<group>"; };
 		162EE05529509F6D0065E103 /* JPWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordListView.swift; sourceTree = "<group>"; };
 		162EE0572950A1960065E103 /* JPWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordsTableView.swift; sourceTree = "<group>"; };
 		162EE0592950B0380065E103 /* FRWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
-				162EE05029509F4E0065E103 /* OptionSheetView.swift */,
 				6371E03F29515726003A1A08 /* AddNewWordView.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
@@ -419,7 +416,6 @@
 				162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */,
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
-				162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */,
 				6371E0442951A1EB003A1A08 /* FRAddNewWordView.swift in Sources */,
 				63A6BC52297783FD000C7B9B /* FRWordListViewModel.swift in Sources */,
 				6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */,
