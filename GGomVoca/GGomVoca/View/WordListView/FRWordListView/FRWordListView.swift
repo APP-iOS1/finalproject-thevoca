@@ -27,16 +27,14 @@ struct FRWordListView: View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWords)
             if viewModel.filteredWords.count <= 0 {
-                VStack(alignment: .center){
-                    Spacer()
-                    Image(systemName: "questionmark.circle")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                    Text("단어를 추가해주세요")
-                        .font(.title3)
-                    Spacer()
+                VStack(spacing: 10) {
+                    Image(systemName: "tray")
+                        .font(.largeTitle)
+                    Text("EMPTY : 비어 있는")
                 }
                 .foregroundColor(.gray)
+                .verticalAlignSetting(.center)
+                
             } else {
                 FRWordsTableView(selectedSegment: selectedSegment,
                                  selectedWord: $selectedWords,
