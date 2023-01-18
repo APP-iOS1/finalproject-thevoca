@@ -3,9 +3,9 @@
 "즐겨찾기" = "favoris";
 "즐겨찾기 된 단어장이 없습니다." = "Il n'y a aucun vocabulaire préféré";
 "오른쪽으로 밀어 즐겨찾기" = "Glissez à droite pour ajouter aux favoris";
-"한국어" = "Coréenne";
+"한국어" = "Coréen";
 "영어" = "Anglais";
-"일본어" = "Japonaise";
+"일본어" = "Japonais";
 "중국어" = "Chinois";
 "프랑스어" = "Français";
 "독일어" = "Allemand";
@@ -61,8 +61,8 @@
 
 // WordSearchingView
 "단어 검색" = "Rechercher ici";
-"검색어를 입력해주세요" = "Chercher ici";
-"내단어검색" = "Rechercher le mot";
+"검색어를 입력해주세요" = "Rechercher ici";
+"내단어검색" = "Recherche";
 
 // SegmentView
 "전체 보기" = "Origine";
