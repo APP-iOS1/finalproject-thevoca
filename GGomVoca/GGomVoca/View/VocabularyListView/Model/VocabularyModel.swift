@@ -25,4 +25,8 @@ enum Nationality: String, CaseIterable {
     case DE = "독일어" // 독일어
     case ES = "스페인어" // 스페인어
     case IT = "이탈리아어" // 이탈리아어
+    
+    func localizedString() -> String {
+            return NSLocalizedString(self.rawValue, comment: "")
+    }
 }

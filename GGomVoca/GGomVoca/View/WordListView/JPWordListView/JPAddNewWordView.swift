@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-
+//일본어 단어 추가 시트 뷰
 struct JPAddNewWordView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
+   
     var vocabulary: Vocabulary
-    
+    var viewModel : JPAddNewWordViewModel = JPAddNewWordViewModel()
     @Binding var isShowingAddWordView: Bool
     @Binding var words: [Word]
     @Binding var filteredWords: [Word]
@@ -53,14 +52,14 @@ struct JPAddNewWordView: View {
                         Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
                     }
                 }) {
-                    TextField("단어를 입력하세요.", text: $inputWord)
+                    TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
                         .focused($wordFocused)
                 }
                 .padding(0)
                 
                 Section(header: Text("발음")) {
-                    TextField("발음을 입력하세요.", text: $inputOption)
+                    TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                         .textInputAutocapitalization(.never)
                 }
                 
@@ -70,7 +69,7 @@ struct JPAddNewWordView: View {
                         Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
                     }
                 }) {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning)
+                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
                         .textInputAutocapitalization(.never)
                 }
             }
@@ -90,7 +89,9 @@ struct JPAddNewWordView: View {
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
                         if !word.isEmpty && !meaning.isEmpty {
-                            addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                            //post 단어추가
+                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                            
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
@@ -105,29 +106,6 @@ struct JPAddNewWordView: View {
                     }
                 }
             }
-        }
-    }
-    
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
-        let newWord = Word(context: viewContext)
-        newWord.id = UUID()
-        newWord.word = word
-        newWord.meaning = meaning
-        newWord.option = option
-        newWord.vocabulary = vocabulary
-        newWord.vocabularyID = vocabulary.id
-        
-        saveContext()
-        words = vocabulary.words?.allObjects as! [Word]
-        filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
-    }
-    
-    // MARK: saveContext
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
         }
     }
 }

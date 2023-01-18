@@ -11,10 +11,9 @@ struct SearchListCell: View {
     //단어
     //바인딩으로 넘겨받을 필요 없음.
     var word: SearchingWordModel
-    var deviceWidth = UIScreen.main.bounds.size.width
+    
     var body: some View {
-        
-            HStack(spacing: 0){
+            HStack(spacing: 0) {
                 Spacer()
                 Text("\(word.vocabulary.description)")
                     .frame(width: 120)

@@ -39,51 +39,116 @@ class VocabularyListViewModel : ObservableObject {
         self.vocabularyList = vocabularyList
     }
     
-    let persistenceController = PersistenceController.shared
-    let viewContext = PersistenceController.shared.container.viewContext
-
+    func clearVoca() {
+        vocabularyList = []
+//        recentVocabularyList = []
+        favoriteVoca = []
+        koreanVoca = []
+        japaneseVoca = []
+        englishVoca = []
+        chineseVoca = []
+        frenchVoca = []
+        germanVoca = []
+        spanishVoca = []
+        italianVoca = []
+    }
+    
     /*
      Get Vocabulary List
      */
-    func getVocabularyData()
-    -> [Vocabulary] {
-        let vocabularyFetch = Vocabulary.fetchRequest()
-
-        var results = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
-        self.vocabularyList = results.filter{
-            $0.deleatedAt == nil || $0.deleatedAt?.count == 0
-        }
-        print("반환 결과getVocabularyData() : \(results)")
+    func getVocabularyData() {
         
-        favoriteVoca = vocabularyList.filter {
-            $0.isFavorite == true && $0.deleatedAt == nil
-        }
-        koreanVoca = results.filter {
-            $0.nationality == "KO" && $0.deleatedAt == nil
-        }
-        japaneseVoca = results.filter {
-            $0.nationality == "JA" && $0.deleatedAt == nil
-        }
-        englishVoca = results.filter {
-            $0.nationality == "EN" && $0.deleatedAt == nil
-        }
-        chineseVoca = results.filter {
-            $0.nationality == "CH" && $0.deleatedAt == nil
-        }
-        frenchVoca = results.filter {
-            $0.nationality == "FR" && $0.deleatedAt == nil
-        }
-        germanVoca = results.filter {
-            $0.nationality == "DE" && $0.deleatedAt == nil
-        }
-        spanishVoca = results.filter {
-            $0.nationality == "ES" && $0.deleatedAt == nil
-        }
-        italianVoca = results.filter {
-            $0.nationality == "IT" && $0.deleatedAt == nil
+        var results = repository.getVocabularyData()
+        clearVoca()
+        for voca in results {
+            if voca.deleatedAt == nil {
+                print("name : \(voca.name!)")
+                print("isFavorite : \(voca.isFavorite)")
+                print("nationality : \(voca.nationality!)")
+                vocabularyList.append(voca)
+                if voca.isFavorite {
+                    favoriteVoca.append(voca)
+                }
+                
+                /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue
+                if voca.nationality == "KO" {
+                    koreanVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "JA" {
+                    japaneseVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "EN" {
+                    englishVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "FR" {
+                    frenchVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "CH" {
+                    chineseVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "DE" {
+                    germanVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "ES" {
+                    spanishVoca.append(voca)
+                    continue
+                }
+                
+                if voca.nationality == "IT" {
+                    italianVoca.append(voca)
+                    continue
+                }
+            }
         }
         
-        return results
+        
+//        self.vocabularyList = results.filter{
+//            $0.deleatedAt == nil || $0.deleatedAt?.count == 0
+//        }
+//        
+//        favoriteVoca = vocabularyList.filter {
+//            $0.isFavorite == true && $0.deleatedAt == nil
+//        }
+//        koreanVoca = results.filter {
+//            $0.nationality == "KO" && $0.deleatedAt == nil
+//        }
+//        japaneseVoca = results.filter {
+//            $0.nationality == "JA" && $0.deleatedAt == nil
+//        }
+//        englishVoca = results.filter {
+//            $0.nationality == "EN" && $0.deleatedAt == nil
+//        }
+//        chineseVoca = results.filter {
+//            $0.nationality == "CH" && $0.deleatedAt == nil
+//        }
+//        frenchVoca = results.filter {
+//            $0.nationality == "FR" && $0.deleatedAt == nil
+//        }
+//        germanVoca = results.filter {
+//            $0.nationality == "DE" && $0.deleatedAt == nil
+//        }
+//        spanishVoca = results.filter {
+//            $0.nationality == "ES" && $0.deleatedAt == nil
+//        }
+//        italianVoca = results.filter {
+//            $0.nationality == "IT" && $0.deleatedAt == nil
+//        }
+        
+        
+        
+//        return results
     }
     
     
