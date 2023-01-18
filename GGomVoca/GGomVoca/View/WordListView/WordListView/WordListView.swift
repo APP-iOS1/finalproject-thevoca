@@ -16,8 +16,6 @@ struct WordListView: View {
     @State var isShowingEditWordView: Bool = false
     
     // MARK: 단어장 편집모드 관련 State
-    @State private var isEditingMode: Bool = false
-    
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<String> = Set<String>()
     
@@ -52,13 +50,14 @@ struct WordListView: View {
             } else {
                 WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality)
             }
+            Text(multiSelection.description)
                 
         }
         .navigationTitle(vocabulary.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             // TODO: toolbar State 분기
-            if !isEditingMode { // 기존에 보이는 툴바
+            if !isSelectionMode { // 기존에 보이는 툴바
                 ToolbarItem {
                     VStack(alignment: .center) {
                         Text("\(filteredWords.count)")
@@ -78,7 +77,7 @@ struct WordListView: View {
                 ToolbarItem {
                     Menu {
                         Button {
-                            
+                            isSelectionMode.toggle()
                         } label: {
                             HStack {
                                 Text("단어장 편집하기")
@@ -130,7 +129,7 @@ struct WordListView: View {
             } else { // 새롭게 보이는 툴바
                 ToolbarItem {
                     Button {
-                        
+                        isSelectionMode.toggle()
                     } label: {
                         Text("취소")
                     }

@@ -28,10 +28,12 @@ struct WordCell: View {
             if isSelectionMode {
                 Button {
                     isSelected.toggle()
+                    multiSelection.insert(word.word)
                 } label: {
                     checkImage
                         .resizable()
                         .frame(width: 25, height: 25)
+                        .foregroundColor(.secondary)
                         .padding(.leading, 20)
                 }
             }
@@ -63,6 +65,8 @@ struct WordCell: View {
         }
         .frame(height: 50)
         .onChange(of: isSelectionMode) { selectMode in
+            // isSelectionMode의 값이 변화할 때 isSelected 값을 false로 바꿔주어 Image도 변경
+            // 체크 해제
             if !selectMode {
                 isSelected = false
             }

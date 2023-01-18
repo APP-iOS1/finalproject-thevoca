@@ -55,15 +55,16 @@ struct WordsTableView: View {
                                         Image(systemName: "circle")
                                             .resizable()
                                             .frame(width: 25, height: 25)
+                                            .foregroundColor(.gray)
                                             .padding(.leading, 20)
                                     }
                                 }
                                 Text("단어")
-                                    .frame(width: geo.size.width * 0.33, alignment: .center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                                 Text("성별")
-                                    .frame(width: geo.size.width * 0.33, alignment: .center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                                 Text("뜻")
-                                    .frame(width: geo.size.width * 0.33, alignment: .center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                             }
                             .frame(height: 40)
                             .background {
