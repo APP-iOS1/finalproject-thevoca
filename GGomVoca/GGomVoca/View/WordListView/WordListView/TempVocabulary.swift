@@ -7,11 +7,25 @@
 
 import Foundation
 
-struct Vocabulary: Identifiable {
+struct TempVocabulary: Identifiable {
     var id = UUID().uuidString
     var createdAt: String
     var deletedAt: String
     var isFavorite: Bool
     var name: String
     var nationality: String
+    var words: [TempWord]
+}
+
+struct TempWord: Identifiable {
+    var id = UUID().uuidString
+    var correctCount: Int16
+    var createdAt: String
+    var deletedAt: String
+    var incorrectCount: Int16
+    var isMemorized: Bool
+    var meaning: String
+    var option: String
+    var vocabularyID: String
+    var word: String
 }
