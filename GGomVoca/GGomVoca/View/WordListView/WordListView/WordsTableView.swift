@@ -42,6 +42,16 @@ struct WordsTableView: View {
                         Section {
                             ForEach(filteredWords) { word in
                                 WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                                    .addButtonActions(leadingButtons: [],
+                                                      trailingButton:  [.delete], onClick: { button in
+                                        switch button {
+                                        case .delete:
+                                            // 삭제에 필요한 메서드 넣기
+                                            print("clicked: \(button)")
+                                        default:
+                                            print("default")
+                                        }
+                                    })
                                 Divider()
                             }
                         } header: {
