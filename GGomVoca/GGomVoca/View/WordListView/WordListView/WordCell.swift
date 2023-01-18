@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WordCell: View {
+    @Binding var selectedSegment: ProfileSection
+    @Binding var selectedWord: [UUID]
+    
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<String>
     @State var isTextShowing: Bool = true
@@ -35,20 +38,27 @@ struct WordCell: View {
             
             Text(word.word ?? "")
                 .frame(maxWidth: .infinity, alignment: .center)
-                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
             Text(word.option ?? "")
                 .frame(maxWidth: .infinity, alignment: .center)
+                .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id)) ? 0 : 1)
             Text(word.meaning ?? "")
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                .opacity(isTextShowing ? 1 : 0)
+                .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id)) ? 0 : 1)
         }
         .background {
             Color.clear
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    print("tapped")
-                    isTextShowing.toggle()
+                    if selectedWord.contains(word.id) {
+                        if let tmpIndex = selectedWord.firstIndex(of: word.id) {
+                            selectedWord.remove(at: tmpIndex)
+                        }
+                    } else {
+                        selectedWord.append(word.id)
+                    }
                 }
         }
         .frame(height: 50)
@@ -63,6 +73,6 @@ struct WordCell: View {
 
 struct WordCell_Previews: PreviewProvider {
     static var previews: some View {
-        WordCell(isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
+        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
     }
 }

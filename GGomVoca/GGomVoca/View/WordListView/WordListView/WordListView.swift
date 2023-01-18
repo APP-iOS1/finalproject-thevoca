@@ -43,7 +43,7 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                WordsTableView(filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality)
+                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality)
             }
             
         }

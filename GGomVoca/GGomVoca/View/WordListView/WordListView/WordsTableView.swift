@@ -19,6 +19,9 @@ enum TempNationality: String, CaseIterable {
 }
 
 struct WordsTableView: View {
+    @Binding var selectedSegment: ProfileSection
+    @Binding var selectedWord: [UUID]
+    
     @Binding var filteredWords: [TempWord]
     
     @Binding var isSelectionMode: Bool
@@ -38,7 +41,7 @@ struct WordsTableView: View {
                     case .JP:
                         Section {
                             ForEach(filteredWords) { word in
-                                WordCell(isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                                WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
                                 Divider()
                             }
                         } header: {
@@ -105,6 +108,6 @@ struct WordsTableView: View {
 
 struct WordsTableView_Previews: PreviewProvider {
     static var previews: some View {
-        WordsTableView(filteredWords: .constant(JPWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP)
+        WordsTableView(selectedSegment: .constant(.normal), selectedWord: .constant([]), filteredWords: .constant(JPWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP)
     }
 }

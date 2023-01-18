@@ -18,7 +18,7 @@ struct TempVocabulary: Identifiable {
 }
 
 struct TempWord: Identifiable {
-    var id = UUID().uuidString
+    var id = UUID()
     var correctCount: Int16
     var createdAt: String
     var deletedAt: String
