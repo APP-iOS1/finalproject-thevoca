@@ -208,7 +208,7 @@ struct VocabularyListView: View {
                 }
             }
             if !viewModel.italianVoca.isEmpty {
-                Section(header: Text("이탈리어")) {
+                Section(header: Text("이탈리아어")) {
                     ForEach(viewModel.italianVoca) { vocabulary in
                         if vocabulary.nationality == "IT" {
                             VocabularyCell(favoriteCompletion: {
