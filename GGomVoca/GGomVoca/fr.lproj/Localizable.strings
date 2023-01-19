@@ -74,6 +74,7 @@
 //// JPWordListView
 "단어를 추가해주세요" = "Vide";
 "단어장 편집하기" = "Éditer le vocabulaire";
+"비어있는" = "Vide";
 //"단어 순서 섞기"
 //"전체 단어 재생하기"
 //"단어 가져오기"
