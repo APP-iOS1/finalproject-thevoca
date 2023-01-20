@@ -24,6 +24,7 @@ class FRWordListViewModel: ObservableObject {
         words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
     }
     
+
     // MARK: 단어 삭제하기
     func deleteWord(word: Word) {
         word.deletedAt = "\(Date())"
@@ -68,4 +69,36 @@ class FRWordListViewModel: ObservableObject {
             print("Error saving managed object context: \(error)")
         }
     }
+    
+    func getEmptyWord(vocabularyID: Vocabulary.ID) -> String {
+        selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
+        let na = selectedVocabulary.nationality ?? "KO"
+        print("getEmptyWord", na)
+        var emptyMsg: String {
+            get {
+                switch na {
+                case "CH":
+                    return "空"
+                case "DE":
+                    return "Geleert"
+                case "EN":
+                    return "Empty"
+                case "ES":
+                    return "Vacío"
+                case "FR":
+                    return "Vide"
+                case "IT":
+                    return "Vida"
+                case "KO":
+                    return "비어있는"
+                case "JA":
+                    return "空"
+                default :
+                    return " "
+                }
+            }
+        }
+        return emptyMsg
+    }
+
 }

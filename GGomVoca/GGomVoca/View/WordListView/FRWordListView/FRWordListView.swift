@@ -22,6 +22,8 @@ struct FRWordListView: View {
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
     
+    
+    
     var body: some View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -29,7 +31,11 @@ struct FRWordListView: View {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
                         .font(.largeTitle)
-                    Text("EMPTY : 비어 있는")
+                    HStack {
+                        Text("\(viewModel.getEmptyWord(vocabularyID: vocabularyID)) : ")
+                            .bold()
+                        Text("비어있는")
+                    }
                 }
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)
