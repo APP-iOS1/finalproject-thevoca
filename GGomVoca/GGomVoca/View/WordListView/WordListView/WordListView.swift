@@ -21,16 +21,16 @@ struct WordListView: View {
     
 //    @State var vocabulary: Vocabulary
 //    @State var vocabulary: TempVocabulary = vocabularies[0]
-    @State var vocabulary: TempVocabulary = vocabularies[1]
+    @State var vocabulary: Vocabulary
     
-    @State var words: [TempWord] = [] {
+    @State var words: [Word] = [] {
         didSet {
             //삭제된 기록이 없는 단어장 filter
-            filteredWords = vocabulary.words.filter({ $0.deletedAt == "" })
+            filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
         }
     }
     
-    @State var filteredWords: [TempWord] = []
+    @State var filteredWords: [Word] = []
     
     var body: some View {
         VStack{
@@ -48,12 +48,12 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality)
+                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: Nationality(rawValue: vocabulary.nationality!) ?? .KO)
             }
             Text(multiSelection.description)
                 
         }
-        .navigationTitle(vocabulary.name)
+        .navigationTitle(vocabulary.name ?? "unknown")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             // TODO: toolbar State 분기
@@ -155,14 +155,14 @@ struct WordListView: View {
     }
 }
 
-struct WordListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-//            WordListView(vocabulary: vocabularies[0], filteredWords: JPWords)
-            WordListView(vocabulary: vocabularies[1], filteredWords: FRWords)
-        }
-    }
-}
+//struct WordListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+////            WordListView(vocabulary: vocabularies[0], filteredWords: JPWords)
+//            WordListView(vocabulary: vocabularies[1], filteredWords: FRWords)
+//        }
+//    }
+//}
 
 
 

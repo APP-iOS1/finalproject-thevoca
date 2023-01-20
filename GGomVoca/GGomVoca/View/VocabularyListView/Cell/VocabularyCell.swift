@@ -21,17 +21,7 @@ struct VocabularyCell: View {
     var body: some View {
         HStack {
             NavigationLink(destination: {
-                if vocabulary.nationality! == "JA" {
-                    JPWordListView(vocabulary: vocabulary)
-                        .onAppear(perform: {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")})
-                } else {
-                    FRWordListView(vocabulary: vocabulary)
-                        .onAppear(perform: {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")})
-                }
+                WordListView(vocabulary: vocabulary)
             }, label: { VStack { Text(vocabulary.name ?? "")}})
 
         }

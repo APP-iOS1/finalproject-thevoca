@@ -22,22 +22,24 @@ struct WordsTableView: View {
     @Binding var selectedSegment: ProfileSection
     @Binding var selectedWord: [UUID]
     
-    @Binding var filteredWords: [TempWord]
+    @Binding var filteredWords: [Word]
     
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<String>
     
-    let nationality: TempNationality
+    let nationality: Nationality
     
     var body: some View {
         ScrollView {
             GeometryReader { geo in
                 LazyVStack.init(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                    Text("LazyVStack")
                     switch nationality {
                     case .EN:
                         Text("EN")
-                    case .KO, .JP, .CH:
+                    case .KO, .JA, .CH:
                         Section {
+                            Text("Section")
                             ForEach(filteredWords) { word in
                                 WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
                                     .addButtonActions(leadingButtons: [],
@@ -135,8 +137,8 @@ struct WordsTableView: View {
     }
 }
 
-struct WordsTableView_Previews: PreviewProvider {
-    static var previews: some View {
-        WordsTableView(selectedSegment: .constant(.normal), selectedWord: .constant([]), filteredWords: .constant(FRWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR)
-    }
-}
+//struct WordsTableView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WordsTableView(selectedSegment: .constant(.normal), selectedWord: .constant([]), filteredWords: .constant(FRWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR)
+//    }
+//}
