@@ -51,21 +51,22 @@ struct AddNewWordView: View {
     @FocusState private var wordFocused: Bool
     
     var body: some View {
-        NavigationStack {
-            
+        NavigationView {
             Form {
-                Toggle("연속으로 단어 추가하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
-//
-                Section(header: HStack {
-                    Text("단어")
-                    if isWordEmpty {
-                        Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
-                    }
-                }) {
+                
+                Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
                         .focused($wordFocused)
+                } header: {
+                    HStack {
+                        Text("단어")
+                        if isWordEmpty {
+                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        }
+                    }
                 }
                 
                 switch vocabulary.nationality {
@@ -76,24 +77,26 @@ struct AddNewWordView: View {
                 case "FR":
                     Section(header: Text("성별")) {
                         Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
                             Text("남성형").tag("m")
                             Text("여성형").tag("f")
                         }
                         .pickerStyle(.segmented)
                     }
-                    
                 default:
-                    Text("")
+                    EmptyView()
                 }
                 
-                Section(header: HStack {
-                    Text("뜻")
-                    if isMeaningEmpty {
-                        Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
-                    }
-                }) {
+                Section {
                     TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                } header: {
+                    HStack {
+                        Text("뜻")
+                        if isMeaningEmpty {
+                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        }
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)

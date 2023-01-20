@@ -306,7 +306,6 @@ struct VocabularyListView: View {
         print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
         return result
     }
-    
 }
 
 struct VocabularyListView_Previews: PreviewProvider {

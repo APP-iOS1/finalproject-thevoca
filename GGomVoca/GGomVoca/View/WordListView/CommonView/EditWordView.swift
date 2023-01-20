@@ -6,21 +6,24 @@
 //
 
 import SwiftUI
-
 //단어 수정 뷰
 struct EditWordView: View {
-    // MARK: ViewModel Object
-    var viewModel: EditWordViewModel = EditWordViewModel()
     
+    var vocabulary: Vocabulary
+    var viewModel : EditWordViewModel = EditWordViewModel()
+
+    @Binding var editingWord: Word
+    @Binding var isShowEdit: Bool
+    
+    @State private var isContinue: Bool = false
     // MARK: Super View Properties
-    var vocabularyNationality: String
-    @Binding var selectedWord: Word
+    // @Binding var editingWord: Word
     
-    // MARK: View Properties
-    @Environment(\.dismiss) private var dismiss
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+    
+    
     
     // 입력값 공백 제거
     private var word: String {
@@ -33,62 +36,78 @@ struct EditWordView: View {
         inputMeaning.trimmingCharacters(in: .whitespaces)
     }
 
+    
     var body: some View {
         NavigationStack {
+            
             Form {
-                Section("단어") {
-                    TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
+                Section(header: Text("단어")) {
+                    TextField("단어를 입력하세요.", text: $inputWord)
                 }
                 
-                switch vocabularyNationality {
-                case "JP":
-                    Section("발음") {
-                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                switch vocabulary.nationality {
+                case "JA":
+                    Section(header: Text("발음")) {
+                        TextField("발음을 입력하세요.", text: $inputOption)
                     }
                 case "FR":
-                    Section("성별") {
+                    Section(header: Text("성별")) {
                         Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
                             Text("남성형").tag("m")
                             Text("여성형").tag("f")
                         }
                         .pickerStyle(.segmented)
                     }
+                    
+                case "EN":
+                    EmptyView()
+                    
                 default:
-                    Text("")
+                    Text("default")
                 }
                 
-                Section("뜻") {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
+                Section(header: Text("뜻")) {
+                    TextField("뜻을 입력하세요.", text: $inputMeaning)
                 }
             }
-            .navigationTitle("단어 수정")
+            .onAppear(perform: {
+                inputWord = editingWord.word!
+                inputOption = editingWord.option ?? ""
+                inputMeaning = editingWord.meaning!
+            })
             .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("단어 수정")
             .onAppear {
-                inputWord = selectedWord.word!
-                inputOption = selectedWord.option ?? ""
-                inputMeaning = selectedWord.meaning!
+                inputWord = editingWord.word!
+                inputOption = editingWord.option ?? ""
+                inputMeaning = editingWord.meaning!
             }
             .toolbar {
-                // 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("취소", role: .cancel) { dismiss() }
+                    Button {
+                        isShowEdit = false
+                    } label: {
+                        Text("취소").foregroundColor(.red)
+                    }
                 }
-                // 변경 내용 저장 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("변경") {
+                    Button {
                         if !word.isEmpty && !meaning.isEmpty {
-                            viewModel.editWord(editWord: selectedWord, word: word, meaning: meaning, option: option)
+                            viewModel.editWord(editWord: editingWord, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
-                            dismiss()
+
+                            isShowEdit = false
                         }
+                        
+                    } label: {
+                        Text("변경")
                     }
                 }
             }
         }
     }
-    
-   
 }

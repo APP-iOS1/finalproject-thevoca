@@ -14,23 +14,60 @@ class FRWordListViewModel: ObservableObject {
     
     // MARK: View properties
     var selectedVocabulary: Vocabulary = Vocabulary()
+
+    @Published var words: [Word] = []
     
-    // MARK: 빈 화면 Placeholder 관련 property
+    // MARK: 일치하는 id의 단어장 불러오기
+    func getVocabulary(vocabularyID: Vocabulary.ID) {
+        selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
+        let allWords = selectedVocabulary.words?.allObjects as? [Word] ?? []
+        words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
+    }
     
-    
-    @Published var words: [Word] = [] {
-        didSet {
-            print("words changed")
-            filteredWords = words.filter { $0.deletedAt == "" || $0.deletedAt == nil }
+
+    // MARK: 단어 삭제하기
+    func deleteWord(word: Word) {
+        word.deletedAt = "\(Date())"
+        if let tempIndex = words.firstIndex(of: word) {
+            words.remove(at: tempIndex)
         }
     }
     
-    @Published var filteredWords: [Word] = []
+    // MARK: 단어 수정하기
+    func updateWord(editWord: Word, word: String, meaning: String, option: String = "") {
+        guard let tempIndex = words.firstIndex(of: editWord) else { return }
+
+        editWord.word = word
+        editWord.meaning = meaning
+        editWord.option = option
+        
+        saveContext()
+        
+        words[tempIndex] = editWord
+    }
     
-    func getVocabulary(vocabularyID: Vocabulary.ID) {
-        selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
-        words = selectedVocabulary.words?.allObjects as? [Word] ?? []
-        print("getVocabulary", words, selectedVocabulary)
+    // MARK: 단어 추가하기
+    func addNewWord(vocabulary: Vocabulary, word: String, meaning: String, option: String = "") {
+        let newWord = Word(context: viewContext)
+        newWord.vocabularyID = vocabulary.id
+        newWord.vocabulary = vocabulary
+        newWord.id = UUID()
+        newWord.word = word
+        newWord.meaning = meaning
+        newWord.option = option
+        
+        saveContext()
+        
+        words.append(newWord)
+    }
+    
+    // MARK: saveContext
+    func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
     }
     
     func getEmptyWord(vocabularyID: Vocabulary.ID) -> String {

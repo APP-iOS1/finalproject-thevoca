@@ -3,25 +3,24 @@ import SwiftUI
 import Foundation
 
 struct FRWordsTableView: View {
+    // MARK: Data Properties
+    @ObservedObject var viewModel: FRWordListViewModel
+    
     // MARK: Super View Properties
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [UUID]
-    @Binding var selectedWord: Word
-    @Binding var filteredWords: [Word]
-    
-    // MARK: View Properies
-    @Environment(\.dismiss) private var dismiss
-    var backgroundColor: Color = Color("background")
-    
-    
-    @Environment(\.managedObjectContext) private var viewContext
 
+    var backgroundColor: Color = Color("background")
+    @State var isShowingEditWordView: Bool = false
+    /// - Edit하려고 선택한 단어
+    @State var editingWord: Word = Word()
     
     var body: some View {
+        
         GeometryReader { geo in
             VStack {
                 List {
-                    ForEach(filteredWords) { word in
+                    ForEach(viewModel.words) { word in
                         ZStack {
                             Rectangle()
                                 .fill(backgroundColor)
@@ -50,29 +49,12 @@ struct FRWordsTableView: View {
                                 }
                             }
                         }
-                        .contextMenu(ContextMenu {
-                            if selectedSegment == .normal {
-                                Button {
-                                    selectedWord = word
-                                    dismiss()
-                                } label: {
-                                    Label("수정하기", systemImage: "gearshape.fill")
-                                }
-                                
-                                Button {
-                                    // Voice Over
-                                } label: {
-                                    Label("발음 듣기", systemImage: "mic.fill")
-                                }
-                            }
-                            
-                        })
                         .listRowBackground(backgroundColor)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if unmaskedWords.contains(word.id!) {
-                                if let tmpIndex = unmaskedWords.firstIndex(of: word.id!) {
-                                    unmaskedWords.remove(at: tmpIndex)
+                                if let tempIndex = unmaskedWords.firstIndex(of: word.id!) {
+                                    unmaskedWords.remove(at: tempIndex)
                                 }
                             } else {
                                 unmaskedWords.append(word.id!)
@@ -80,18 +62,26 @@ struct FRWordsTableView: View {
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
-                                word.deletedAt = "\(Date())"
-                                print("현재 시간 데이터를 deleteAt prop에 update \(word.deletedAt!)")
-                                // filteredWords에서는 진짜로 제거
-//                                if let index = filteredWords.firstIndex(of: word) {
-//                                    print("\(index)")
-//                                    filteredWords.remove(at: index)
-//                                }
-//                                try? viewContext.save()
+                                viewModel.deleteWord(word: word)
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
                         }
+                        .contextMenu(ContextMenu {
+                            if selectedSegment == .normal {
+                                Button {
+                                    editingWord = word
+                                    isShowingEditWordView.toggle()
+                                } label: {
+                                    Label("수정하기", systemImage: "gearshape.fill")
+                                }
+                                Button {
+                                    // Voice Over
+                                } label: {
+                                    Label("발음 듣기", systemImage: "mic.fill")
+                                }
+                            }
+                        })
                     }
                 }
                 .navigationBarItems(trailing: EditButton())
@@ -99,6 +89,11 @@ struct FRWordsTableView: View {
                     print("refresh")
                 }
                 .listStyle(.plain)
+                // 단어 편집
+                .sheet(isPresented: $isShowingEditWordView) {
+                    FREditWordView(viewModel: viewModel, editingWord: $editingWord)
+                        .presentationDetents([.medium])
+                }
             }
             
         }
