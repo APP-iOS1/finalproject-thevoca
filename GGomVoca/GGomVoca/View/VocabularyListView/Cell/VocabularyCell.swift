@@ -8,7 +8,7 @@
 import SwiftUI
 //단어장 셀 뷰
 struct VocabularyCell: View {
-  
+    
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
     //단어장 즐겨찾기 completion Handler
     var favoriteCompletion: () -> ()
@@ -22,8 +22,9 @@ struct VocabularyCell: View {
         HStack {
             NavigationLink(destination: {
                 WordListView(vocabulary: vocabulary)
+                    .toolbar(.hidden, for: .tabBar)
             }, label: { VStack { Text(vocabulary.name ?? "")}})
-
+            
         }
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
