@@ -1,19 +1,16 @@
 //
-//  FRAddNewWordView.swift
+//  AddNewWordView.swift
 //  GGomVoca
 //
-//  Created by Roen White on 2022/12/20.
+//  Created by do hee kim on 2023/01/20.
 //
 
 import SwiftUI
-
-struct FRAddNewWordView: View {
-    // MARK: Data Properties
-    var viewModel: FRWordListViewModel
-    
-    // MARK: Super View Properties
+// 단어 추가 시트 뷰
+struct AddNewWordView2: View {
+   
     var vocabulary: Vocabulary
-    
+    var viewModel : AddNewWordViewModel = AddNewWordViewModel()
     @Binding var isShowingAddWordView: Bool
     @Binding var words: [Word]
     @Binding var filteredWords: [Word]
@@ -34,7 +31,7 @@ struct FRAddNewWordView: View {
     private var meaning: String {
         inputMeaning.trimmingCharacters(in: .whitespaces)
     }
-
+    
     // 입력값이 공백일 때 경고메세지 출력 조건
     @State private var isWordEmpty: Bool = false
     @State private var isMeaningEmpty: Bool = false
@@ -43,7 +40,8 @@ struct FRAddNewWordView: View {
     @FocusState private var wordFocused: Bool
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
+            
             Form {
                 Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
@@ -58,16 +56,29 @@ struct FRAddNewWordView: View {
                         .textInputAutocapitalization(.never)
                         .focused($wordFocused)
                 }
+                .padding(0)
                 
-                Section(header: Text("성별")) {
-                    Picker("성별", selection: $inputOption) {
-                        Text("성별 없음").tag("")
-                        Text("남성형").tag("m")
-                        Text("여성형").tag("f")
+                switch vocabulary.nationality {
+                case "JA":
+                    Section(header: Text("발음")) {
+                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                            .textInputAutocapitalization(.never)
                     }
-                    .pickerStyle(.segmented)
+                case "FR":
+                    Section(header: Text("성별")) {
+                        Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
+                            Text("남성형").tag("m")
+                            Text("여성형").tag("f")
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                case "EN":
+                    EmptyView()
+                default:
+                    Text("default")
                 }
-                    
+                
                 Section(header: HStack {
                     Text("뜻")
                     if isMeaningEmpty {
@@ -94,11 +105,13 @@ struct FRAddNewWordView: View {
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
                         if !word.isEmpty && !meaning.isEmpty {
+                            //post 단어추가
                             viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                            
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
-                            
+                            // isContinue 상태에 따라 sheet를 닫지 않고 유지함
                             if !isContinue {
                                 isShowingAddWordView = false
                             }
@@ -111,14 +124,4 @@ struct FRAddNewWordView: View {
             }
         }
     }
-   
 }
-
-//struct AddNewWordView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            AddNewWordView(vocabulary: , isShowingAddWordView: .constant(true))
-//        }
-//    }
-//}
-

@@ -10,14 +10,16 @@ struct FRWordsTableView: View {
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [UUID]
     
-    // MARK: View Properies
-    @Environment(\.dismiss) private var dismiss
+    @Binding var isShowingEditView: Bool
+    @Binding var bindingWord: Word
+    
     var backgroundColor: Color = Color("background")
     @State var isShowingEditWordView: Bool = false
     /// - Edit하려고 선택한 단어
     @State var editingWord: Word = Word()
     
     var body: some View {
+        
         GeometryReader { geo in
             VStack {
                 List {
@@ -35,7 +37,7 @@ struct FRWordsTableView: View {
                                         }
                                         .frame(width: geo.size.width * 0.5, alignment: .center)
                                         .multilineTextAlignment(.center)
-                                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
+                                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id!)) ? 0 : 1)
                                     
                                     HStack {
                                         Image(systemName: word.option == "f" ? "f.square" : "m.square")
@@ -45,7 +47,7 @@ struct FRWordsTableView: View {
                                     }
                                     .frame(width: geo.size.width * 0.5, alignment: .center)
                                     .multilineTextAlignment(.center)
-                                    .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
+                                    .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
                                     
                                 }
                             }
@@ -76,7 +78,6 @@ struct FRWordsTableView: View {
                                 } label: {
                                     Label("수정하기", systemImage: "gearshape.fill")
                                 }
-                                
                                 Button {
                                     // Voice Over
                                 } label: {

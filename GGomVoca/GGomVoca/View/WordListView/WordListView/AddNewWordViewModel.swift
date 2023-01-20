@@ -1,13 +1,13 @@
 //
-//  JPAddNewWordViewModel.swift
+//  AddNewWordViewModel.swift
 //  GGomVoca
 //
-//  Created by JeongMin Ko on 2023/01/16.
+//  Created by do hee kim on 2023/01/20.
 //
 
 import Foundation
 
-final class JPAddNewWordViewModel{
+final class AddNewWordViewModel{
     var viewContext = PersistenceController.shared.container.viewContext
     
     // MARK: Add new Word

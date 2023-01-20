@@ -8,7 +8,7 @@
 import SwiftUI
 //단어장 셀 뷰
 struct VocabularyCell: View {
-  
+    
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
     //단어장 즐겨찾기 completion Handler
     var favoriteCompletion: () -> ()
