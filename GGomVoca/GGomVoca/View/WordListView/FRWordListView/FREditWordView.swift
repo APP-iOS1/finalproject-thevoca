@@ -1,16 +1,15 @@
 //
-//  EditWordView.swift
+//  FREditWordView.swift
 //  GGomVoca
 //
-//  Created by tae on 2022/12/21.
+//  Created by Roen White on 2023/01/20.
 //
 
 import SwiftUI
 
-//단어 수정 뷰
-struct EditWordView: View {
-    // MARK: ViewModel Object
-    var viewModel: EditWordViewModel = EditWordViewModel()
+struct FREditWordView: View {
+    // MARK: Data Properties
+    var viewModel: FRWordListViewModel
     
     // MARK: Super View Properties
     @Binding var editingWord: Word
@@ -33,28 +32,19 @@ struct EditWordView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Section("단어") {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                 }
                 
-                switch editingWord.vocabulary?.nationality ?? "" {
-                case "JP":
-                    Section("발음") {
-                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                Section("성별") {
+                    Picker("성별", selection: $inputOption) {
+                        Text("성별 없음").tag("")
+                        Text("남성형").tag("m")
+                        Text("여성형").tag("f")
                     }
-                case "FR":
-                    Section("성별") {
-                        Picker("성별", selection: $inputOption) {
-                            Text("성별 없음").tag("")
-                            Text("남성형").tag("m")
-                            Text("여성형").tag("f")
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                default:
-                    EmptyView()
+                    .pickerStyle(.segmented)
                 }
                 
                 Section("뜻") {
@@ -77,7 +67,7 @@ struct EditWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("변경") {
                         if !word.isEmpty && !meaning.isEmpty {
-                            viewModel.editWord(editWord: editingWord, word: word, meaning: meaning, option: option)
+                            viewModel.updateWord(editWord: editingWord, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""
@@ -91,3 +81,9 @@ struct EditWordView: View {
         }
     }
 }
+
+//struct FREditWordView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FREditWordView()
+//    }
+//}

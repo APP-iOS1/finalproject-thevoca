@@ -56,7 +56,7 @@ struct JPWordListView: View {
         }
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabularyNationality: vocabulary.nationality ?? "", selectedWord: $bindingWord)
+            EditWordView(editingWord: $bindingWord)
                 .presentationDetents([.medium])
         }
         // 새 단어 추가 시트

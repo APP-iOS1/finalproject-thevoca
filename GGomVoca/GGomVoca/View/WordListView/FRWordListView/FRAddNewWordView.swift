@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FRAddNewWordView: View {
     // MARK: Data Properties
-    var viewModel : FRAddNewWordViewModel = FRAddNewWordViewModel()
+    var viewModel: FRWordListViewModel
     
     // MARK: Super View Properties
     var vocabulary: Vocabulary
@@ -41,9 +41,9 @@ struct FRAddNewWordView: View {
     
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
-                Toggle("계속 이어서 입력하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
                 
                 Section {
@@ -61,6 +61,7 @@ struct FRAddNewWordView: View {
                 
                 Section("성별") {
                     Picker("성별", selection: $inputOption) {
+                        Text("성별 없음").tag("")
                         Text("남성형").tag("m")
                         Text("여성형").tag("f")
                     }
