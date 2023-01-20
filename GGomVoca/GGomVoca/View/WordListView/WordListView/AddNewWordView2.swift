@@ -43,7 +43,7 @@ struct AddNewWordView2: View {
         NavigationStack {
             
             Form {
-                Toggle("계속 이어서 입력하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
                 
                 Section(header: HStack {
