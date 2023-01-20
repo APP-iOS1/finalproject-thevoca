@@ -32,4 +32,13 @@ struct CoredataRepository{
        
         return results
     }
+    
+    func getVocabularyFromID(vocabularyID: UUID) -> Vocabulary {
+        let vocabularyFetch = Vocabulary.fetchRequest()
+        vocabularyFetch.predicate = NSPredicate(format: "id == %@", vocabularyID as CVarArg)
+        
+        let result = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+        
+        return result.first ?? Vocabulary()
+    }
 }

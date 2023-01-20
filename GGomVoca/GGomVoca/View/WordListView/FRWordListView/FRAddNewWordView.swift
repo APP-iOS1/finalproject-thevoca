@@ -13,13 +13,9 @@ struct FRAddNewWordView: View {
     
     // MARK: Super View Properties
     var vocabulary: Vocabulary
-    
     @Binding var isShowingAddWordView: Bool
-    @Binding var words: [Word]
-    @Binding var filteredWords: [Word]
     
     @State private var isContinue: Bool = false
-    
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""

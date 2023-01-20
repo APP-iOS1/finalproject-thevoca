@@ -11,10 +11,9 @@ struct EditWordView: View {
     
     var vocabulary: Vocabulary
     var viewModel : EditWordViewModel = EditWordViewModel()
-    @Binding var editShow: Bool
-    @Binding var bindingWord: Word
-    @Binding var filteredWords: [Word]
-    @Binding var words: [Word]
+
+    @Binding var editingWord: Word
+    @Binding var isShowEdit: Bool
     
     @State private var isContinue: Bool = false
     // MARK: Super View Properties
@@ -73,9 +72,9 @@ struct EditWordView: View {
                 }
             }
             .onAppear(perform: {
-                inputWord = bindingWord.word!
-                inputOption = bindingWord.option ?? ""
-                inputMeaning = bindingWord.meaning!
+                inputWord = editingWord.word!
+                inputOption = editingWord.option ?? ""
+                inputMeaning = editingWord.meaning!
             })
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("단어 수정")
@@ -87,7 +86,7 @@ struct EditWordView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        editShow = false
+                        isShowEdit = false
                     } label: {
                         Text("취소").foregroundColor(.red)
                     }
@@ -95,13 +94,13 @@ struct EditWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         if !word.isEmpty && !meaning.isEmpty {
-                            viewModel.editWord(vocabulary: vocabulary, editWord: bindingWord, word: word, meaning: meaning, option: option)
+                            viewModel.editWord(editWord: editingWord, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
 
-                            editShow = false
+                            isShowEdit = false
                         }
                         
                     } label: {

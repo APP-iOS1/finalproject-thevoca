@@ -81,7 +81,7 @@ struct WordListView: View {
         }
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabulary: vocabulary, editShow: $isShowingEditWordView, bindingWord: $bindingWord, filteredWords: $filteredWords, words: $words)
+            EditWordView(vocabulary: vocabulary, editingWord: $bindingWord, isShowEdit: $isShowingEditWordView)
                 .presentationDetents([.medium])
         }
         .onAppear {
