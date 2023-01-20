@@ -11,12 +11,11 @@ import CoreData
 struct FRWordListView: View {
     
     @State private var selectedSegment: ProfileSection = .normal
-    @State private var selectedWord: [UUID] = []
+    /// - 단어 가리기/뜻 가리기 segment에서 현재 가려지 않은 단어
+    @State private var unmaskedWords: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
-    @State var isShowingEditWordView: Bool = false
-    @State var bindingWord: Word = Word()
     
     @State var vocabulary: Vocabulary
     
@@ -32,35 +31,27 @@ struct FRWordListView: View {
     
     var body: some View {
         VStack {
-            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
-            if filteredWords.count <= 0 {
-                VStack(alignment: .center){
-                    Spacer()
-                    Image(systemName: "questionmark.circle")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                    Text("단어를 추가해주세요")
-                        .font(.title3)
-                    Spacer()
+            SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
+            if viewModel.words.count <= 0 {
+                VStack(spacing: 10) {
+                    Image(systemName: "tray")
+                        .font(.largeTitle)
+                    HStack {
+                        Text("\(viewModel.getEmptyWord(vocabularyID: vocabularyID)) : ")
+                            .bold()
+                        Text("비어있는")
+                    }
                 }
                 .foregroundColor(.gray)
             } else {
-                JPWordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditView: $isShowingEditWordView, bindingWord: $bindingWord)
+                FRWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords)
                     .padding()
             }
             
         }
-        // 단어 편집
-        .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabulary: vocabulary, editShow: $isShowingEditWordView, bindingWord: $bindingWord, filteredWords: $filteredWords, words: $words)
-                .presentationDetents([.medium])
-                .onDisappear(perform: {
-                    words = vocabulary.words?.allObjects as! [Word]
-                })
-        }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
-            FRAddNewWordView(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
+            FRAddNewWordView(viewModel: viewModel, vocabulary: viewModel.selectedVocabulary)
                 .presentationDetents([.height(CGFloat(500))])
         }
         .sheet(isPresented: $showOption) {
@@ -77,10 +68,7 @@ struct FRWordListView: View {
         .toolbar {
             ToolbarItem {
                 VStack(alignment: .center) {
-                    //                        Text("total")
-                    //                            .font(.caption)
-                    //                            .opacity(0.5)
-                    Text("\(filteredWords.count)")
+                    Text("\(viewModel.words.count)")
                         .foregroundColor(.gray)
                 }
             }
@@ -136,13 +124,6 @@ struct FRWordListView: View {
                 } label: {
                     Image(systemName: "line.3.horizontal")
                 }
-                
-                // 미트볼 버튼일 때
-                //                Button(action: {
-                //                    showOption.toggle()
-                //                }){
-                //                    Image(systemName: "ellipsis.circle")
-                //                }
             }
         }
     }

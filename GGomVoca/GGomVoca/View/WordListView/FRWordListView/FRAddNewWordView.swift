@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct FRAddNewWordView: View {
-    var viewModel : FRAddNewWordViewModel = FRAddNewWordViewModel()
+    // MARK: Data Properties
+    var viewModel: FRWordListViewModel
+    
+    // MARK: Super View Properties
     var vocabulary: Vocabulary
     
     @Binding var isShowingAddWordView: Bool
@@ -40,10 +43,9 @@ struct FRAddNewWordView: View {
     @FocusState private var wordFocused: Bool
     
     var body: some View {
-        NavigationStack {
-            
+        NavigationView {
             Form {
-                Toggle("계속 이어서 입력하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
                 
                 Section(header: HStack {
@@ -59,6 +61,7 @@ struct FRAddNewWordView: View {
                 
                 Section(header: Text("성별")) {
                     Picker("성별", selection: $inputOption) {
+                        Text("성별 없음").tag("")
                         Text("남성형").tag("m")
                         Text("여성형").tag("f")
                     }

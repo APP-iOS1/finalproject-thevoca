@@ -17,6 +17,8 @@ struct EditWordView: View {
     @Binding var words: [Word]
     
     @State private var isContinue: Bool = false
+    // MARK: Super View Properties
+    // @Binding var editingWord: Word
     
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
@@ -77,6 +79,11 @@ struct EditWordView: View {
             })
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("단어 수정")
+            .onAppear {
+                inputWord = editingWord.word!
+                inputOption = editingWord.option ?? ""
+                inputMeaning = editingWord.meaning!
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -93,6 +100,7 @@ struct EditWordView: View {
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
+
                             editShow = false
                         }
                         
@@ -103,6 +111,4 @@ struct EditWordView: View {
             }
         }
     }
-    
-   
 }

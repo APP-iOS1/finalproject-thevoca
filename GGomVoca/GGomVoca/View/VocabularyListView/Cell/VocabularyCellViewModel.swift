@@ -28,7 +28,7 @@ class VocabularyCellViewModel{
             deleteRecentVoca(id: "\(id)")
             
             try self.viewContext.save()
-            print("변경 결과 : \(objectUpdate.deleatedAt)" )
+           
             do {
                 try managedContext.save()
             } catch {
@@ -99,8 +99,6 @@ class VocabularyCellViewModel{
             } catch {
                 print(error)
             }
-        } catch {
-            print(error)
-        }
+        } 
     }
 }
