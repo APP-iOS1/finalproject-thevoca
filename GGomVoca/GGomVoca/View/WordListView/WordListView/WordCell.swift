@@ -96,7 +96,8 @@ struct WordCell: View {
                     }
                 }
         }
-        .frame(height: 50)
+        .padding(.vertical, 5)
+        .frame(minHeight: 50)
         .onChange(of: isSelectionMode) { selectMode in
             // isSelectionMode의 값이 변화할 때 isSelected 값을 false로 바꿔주어 Image도 변경
             // 체크 해제
