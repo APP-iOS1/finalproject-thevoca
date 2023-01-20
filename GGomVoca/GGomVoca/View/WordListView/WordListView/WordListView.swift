@@ -51,9 +51,27 @@ struct WordListView: View {
             } else {
                 WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "KO")
             }
-            Text(multiSelection.description)
-                
+            
+            if !multiSelection.isEmpty {
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .foregroundColor(Color("toolbardivider"))
+                        .frame(height: 1)
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button(action: {}) {
+                            Text("삭제")
+                                .foregroundColor(.red)
+                        }
+                        .padding()
+                    }
+                    .background(Color("toolbarbackground"))
+                }
+            }
         }
+        
         .navigationTitle(vocabulary.name ?? "unknown")
         .navigationBarTitleDisplayMode(.inline)
         // 새 단어 추가 시트
@@ -119,7 +137,7 @@ struct WordListView: View {
                         .disabled(true)
                         
                         NavigationLink {
-                             ImportCSVFileView(vocabulary: vocabulary)
+                            ImportCSVFileView(vocabulary: vocabulary)
                         } label: {
                             HStack {
                                 Text("단어 가져오기")
@@ -157,22 +175,22 @@ struct WordListView: View {
                 }
             }
         }
-//        .toolbar {
-//            ToolbarItem {
-//                VStack {
-//                    Text("\(multiSelection.count)")
-//                        .foregroundColor(.gray)
-//                }
-//            }
-//            ToolbarItem {
-//                Button {
-//                    isSelectionMode.toggle()
-//                    multiSelection.removeAll()
-//                } label: {
-//                    isSelectionMode ? Text("취소") : Text("편집")
-//                }
-//            }
-//        } // toolbar
+        //        .toolbar {
+        //            ToolbarItem {
+        //                VStack {
+        //                    Text("\(multiSelection.count)")
+        //                        .foregroundColor(.gray)
+        //                }
+        //            }
+        //            ToolbarItem {
+        //                Button {
+        //                    isSelectionMode.toggle()
+        //                    multiSelection.removeAll()
+        //                } label: {
+        //                    isSelectionMode ? Text("취소") : Text("편집")
+        //                }
+        //            }
+        //        } // toolbar
     }
 }
 

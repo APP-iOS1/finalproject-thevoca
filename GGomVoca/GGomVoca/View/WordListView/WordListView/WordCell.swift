@@ -30,9 +30,15 @@ struct WordCell: View {
     var body: some View {
         HStack {
             if isSelectionMode {
+                // MARK: 체크박스를 직접 눌렀을 때
                 Button {
                     isSelected.toggle()
-                    multiSelection.insert(word.word!)
+                    
+                    if isSelected {
+                        multiSelection.insert(word.id?.uuidString ?? "")
+                    } else {
+                        multiSelection.remove(word.id?.uuidString ?? "")
+                    }
                 } label: {
                     checkImage
                         .resizable()
@@ -100,10 +106,10 @@ struct WordCell: View {
                         isSelected.toggle()
                         if isSelected {
                             // 선택된 단어를 Set에 삽입
-                            multiSelection.insert(word.word!)
+                            multiSelection.insert(word.id?.uuidString ?? "")
                         } else {
                             // 선택해제된 단어를 Set에서 제거
-                            multiSelection.remove(word.word!)
+                            multiSelection.remove(word.id?.uuidString ?? "")
                         }
                     }
                 }
