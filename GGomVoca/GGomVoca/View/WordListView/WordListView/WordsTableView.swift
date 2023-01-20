@@ -31,105 +31,103 @@ struct WordsTableView: View {
     
     var body: some View {
         ScrollView {
-            GeometryReader { geo in
-                LazyVStack.init(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    switch nationality {
-                    case .EN:
-                        Text("EN")
-                    case .KO, .JA, .CH:
-                        Section {
-                            ForEach(filteredWords) { word in
-                                WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
-                                    .addButtonActions(leadingButtons: [],
-                                                      trailingButton:  [.delete], onClick: { button in
-                                        switch button {
-                                        case .delete:
-                                            // 삭제에 필요한 메서드 넣기
-                                            print("clicked: \(button)")
-                                        default:
-                                            print("default")
-                                        }
-                                    })
-                                Divider()
-                            }
-                        } header: {
-                            HStack {
-                                if isSelectionMode {
-                                    Button {
-                                        
-                                    } label: {
-                                        /// header도 밑의 내용과 같은 위치에 나오도록 하기위해서 circle image를 같이 띄워줌
-                                        /// clear로 띄우거나 배경과 같은 색으로 띄워줘서 원 있는거 모르게 하기
-                                        Image(systemName: "circle")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .foregroundColor(.gray)
-                                            .padding(.leading, 20)
+            LazyVStack.init(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                switch nationality {
+                case .EN:
+                    Text("EN")
+                case .KO, .JA, .CH:
+                    Section {
+                        ForEach(filteredWords) { word in
+                            WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                                .addButtonActions(leadingButtons: [],
+                                                  trailingButton:  [.delete], onClick: { button in
+                                    switch button {
+                                    case .delete:
+                                        // 삭제에 필요한 메서드 넣기
+                                        print("clicked: \(button)")
+                                    default:
+                                        print("default")
                                     }
+                                })
+                            Divider()
+                        }
+                    } header: {
+                        HStack {
+                            if isSelectionMode {
+                                Button {
+                                    
+                                } label: {
+                                    /// header도 밑의 내용과 같은 위치에 나오도록 하기위해서 circle image를 같이 띄워줌
+                                    /// clear로 띄우거나 배경과 같은 색으로 띄워줘서 원 있는거 모르게 하기
+                                    Image(systemName: "circle")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.gray)
+                                        .padding(.leading, 20)
                                 }
-                                Text("단어")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                Text("성별")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                Text("뜻")
-                                    .frame(maxWidth: .infinity, alignment: .center)
                             }
-                            .frame(height: 40)
-                            .background {
-                                Color.gray
-                            }
-                        } // Section
-                    case .FR:
-                        Section {
-                            ForEach(filteredWords) { word in
-                                WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
-                                    .addButtonActions(leadingButtons: [],
-                                                      trailingButton:  [.delete], onClick: { button in
-                                        switch button {
-                                        case .delete:
-                                            // 삭제에 필요한 메서드 넣기
-                                            print("clicked: \(button)")
-                                        default:
-                                            print("default")
-                                        }
-                                    })
-                                Divider()
-                            }
-                        } header: {
-                            HStack {
-                                if isSelectionMode {
-                                    Button {
-                                        
-                                    } label: {
-                                        /// header도 밑의 내용과 같은 위치에 나오도록 하기위해서 circle image를 같이 띄워줌
-                                        /// clear로 띄우거나 배경과 같은 색으로 띄워줘서 원 있는거 모르게 하기
-                                        Image(systemName: "circle")
-                                            .resizable()
-                                            .frame(width: 25, height: 25)
-                                            .foregroundColor(.gray)
-                                            .padding(.leading, 20)
+                            Text("단어")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            Text("성별")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            Text("뜻")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .frame(height: 40)
+                        .background {
+                            Color.gray
+                        }
+                    } // Section
+                case .FR:
+                    Section {
+                        ForEach(filteredWords) { word in
+                            WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                                .addButtonActions(leadingButtons: [],
+                                                  trailingButton:  [.delete], onClick: { button in
+                                    switch button {
+                                    case .delete:
+                                        // 삭제에 필요한 메서드 넣기
+                                        print("clicked: \(button)")
+                                    default:
+                                        print("default")
                                     }
+                                })
+                            Divider()
+                        }
+                    } header: {
+                        HStack {
+                            if isSelectionMode {
+                                Button {
+                                    
+                                } label: {
+                                    /// header도 밑의 내용과 같은 위치에 나오도록 하기위해서 circle image를 같이 띄워줌
+                                    /// clear로 띄우거나 배경과 같은 색으로 띄워줘서 원 있는거 모르게 하기
+                                    Image(systemName: "circle")
+                                        .resizable()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.gray)
+                                        .padding(.leading, 20)
                                 }
-                                Text("단어")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                Text("뜻")
-                                    .frame(maxWidth: .infinity, alignment: .center)
                             }
-                            .frame(height: 40)
-                            .background {
-                                Color.gray
-                            }
-                        } // Section
-                    case .DE:
-                        Text("DE")
-                    case .ES:
-                        Text("ES")
-                    case .IT:
-                        Text("IT")
-                    }
-
-                } // LazyVStack
-            } // GeometryReader
+                            Text("단어")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            Text("뜻")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .frame(height: 40)
+                        .background {
+                            Color.gray
+                        }
+                    } // Section
+                case .DE:
+                    Text("DE")
+                case .ES:
+                    Text("ES")
+                case .IT:
+                    Text("IT")
+                }
+                
+            } // LazyVStack
         } // ScrollView
         
     }
