@@ -142,6 +142,12 @@ struct WordListView: View {
                 }
             } else { // 새롭게 보이는 툴바
                 ToolbarItem {
+                    VStack(alignment: .center) {
+                        Text("\(multiSelection.count)")
+                            .foregroundColor(.gray)
+                    }
+                }
+                ToolbarItem {
                     Button {
                         isSelectionMode.toggle()
                         multiSelection.removeAll()
