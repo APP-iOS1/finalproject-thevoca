@@ -41,7 +41,7 @@ struct FRAddNewWordView: View {
     
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Toggle("계속 이어서 입력하기", isOn: $isContinue)
                     .toggleStyle(.switch)

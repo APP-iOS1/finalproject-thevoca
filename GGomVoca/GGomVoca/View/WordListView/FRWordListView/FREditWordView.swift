@@ -32,7 +32,7 @@ struct FREditWordView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Section("단어") {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
