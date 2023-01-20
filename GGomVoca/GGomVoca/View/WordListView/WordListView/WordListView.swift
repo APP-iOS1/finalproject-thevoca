@@ -55,6 +55,9 @@ struct WordListView: View {
         }
         .navigationTitle(vocabulary.name ?? "unknown")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            words = vocabulary.words?.allObjects as! [Word]
+        }
         .toolbar {
             // TODO: toolbar State 분기
             if !isSelectionMode { // 기존에 보이는 툴바

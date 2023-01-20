@@ -42,7 +42,6 @@ struct WordCell: View {
             case .EN:
                 Text("EN")
             case .KO, .JA, .CH:
-                Text("Test")
                 HStack {
                     Text(word.word ?? "")
                         .frame(maxWidth: .infinity, alignment: .center)

@@ -33,13 +33,11 @@ struct WordsTableView: View {
         ScrollView {
             GeometryReader { geo in
                 LazyVStack.init(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                    Text("LazyVStack")
                     switch nationality {
                     case .EN:
                         Text("EN")
                     case .KO, .JA, .CH:
                         Section {
-                            Text("Section")
                             ForEach(filteredWords) { word in
                                 WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
                                     .addButtonActions(leadingButtons: [],
