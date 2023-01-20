@@ -21,23 +21,47 @@ struct VocabularyCell: View {
     var body: some View {
         HStack {
             NavigationLink {
-                if vocabulary.nationality! == "JA" {
+                
+                switch vocabulary.nationality! {
+                case "JA" :
                     JPWordListView(vocabulary: vocabulary)
                         .onAppear {
                             vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")
+                            print("gesture \(vocabulary.name)")
                         }
-                } else {
+                    
+                case "FR" :
+                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+                        .onAppear {
+                            vm.manageRecentVocabulary(voca: vocabulary)
+                            print("gesture \(vocabulary.name)")
+                        }
+                case "EN" :
+                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+                        .onAppear {
+                            vm.manageRecentVocabulary(voca: vocabulary)
+                            print("gesture \(vocabulary.name)")
+                        }
+                case "KO" :
+                    JPWordListView(vocabulary: vocabulary)
+                        .onAppear {
+                            vm.manageRecentVocabulary(voca: vocabulary)
+                            print("gesture \(vocabulary.name)")
+                        }
+                    
+                default:
                     FRWordListView(vocabularyID: vocabulary.id ?? UUID())
                         .onAppear {
                             vm.manageRecentVocabulary(voca: vocabulary)
                             print("gesture")
                         }
                 }
+
             } label: {
                 VStack { Text(vocabulary.name ?? "") }
             }
         }
+        
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
