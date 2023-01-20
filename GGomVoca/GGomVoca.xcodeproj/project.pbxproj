@@ -43,6 +43,7 @@
 		EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05929518348004312CE /* CoredataRepository.swift */; };
 		EE57C05F2951885E004312CE /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05E2951885E004312CE /* TabbarView.swift */; };
 		EE60FB1E29754190004F82E2 /* JPAddNewWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60FB1D29754190004F82E2 /* JPAddNewWordViewModel.swift */; };
+		EE60FB22297546B1004F82E2 /* EditWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		EE57C05929518348004312CE /* CoredataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataRepository.swift; sourceTree = "<group>"; };
 		EE57C05E2951885E004312CE /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		EE60FB1D29754190004F82E2 /* JPAddNewWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordViewModel.swift; sourceTree = "<group>"; };
+		EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,9 +167,10 @@
 			children = (
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
 				6371E03F29515726003A1A08 /* AddNewWordView.swift */,
-				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
+				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
+				EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */,
 				03F904E829514B9B003262AE /* SearchListCell.swift in Sources */,
 				EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */,
+				EE60FB22297546B1004F82E2 /* EditWordViewModel.swift in Sources */,
 				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
 				63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */,
 				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
