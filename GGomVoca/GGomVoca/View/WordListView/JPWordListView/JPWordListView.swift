@@ -37,7 +37,7 @@ struct JPWordListView: View {
     
     var body: some View {
         VStack {
-            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
+            SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $selectedWord)
             if filteredWords.count <= 0 {
                 VStack(alignment: .center){
                     Spacer()
@@ -56,19 +56,13 @@ struct JPWordListView: View {
         }
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabulary: vocabulary, editShow: $isShowingEditWordView, bindingWord: $bindingWord, filteredWords: $filteredWords, words: $words)
+            EditWordView(vocabularyNationality: vocabulary.nationality ?? "", selectedWord: $bindingWord)
                 .presentationDetents([.medium])
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
             JPAddNewWordView(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
                 .presentationDetents([.height(CGFloat(500))])
-        }
-        // ...더보기 버튼 시트
-        .sheet(isPresented: $showOption) {
-            OptionSheetView(words: $filteredWords, vocabulary: vocabulary)
-                .presentationDetents([.height(CGFloat(350))])
-            //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
         }
         .onAppear {
             words = vocabulary.words?.allObjects as! [Word]

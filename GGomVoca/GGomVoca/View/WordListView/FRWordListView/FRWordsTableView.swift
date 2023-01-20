@@ -3,27 +3,21 @@ import SwiftUI
 import Foundation
 
 struct FRWordsTableView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var selectedSegment: ProfileSection
-    @Binding var selectedWord: [UUID]
-    
+    // MARK: Super View Properties
+    var selectedSegment: ProfileSection
+    @Binding var unmaskedWords: [UUID]
+    @Binding var selectedWord: Word
     @Binding var filteredWords: [Word]
     
-    @Binding var isShowingEditView: Bool
-    @Binding var bindingWord: Word
-    
+    // MARK: View Properies
+    @Environment(\.dismiss) private var dismiss
     var backgroundColor: Color = Color("background")
     
-    // UIScreen.main deprecated...
-    // 뷰 전체 폭 길이
-    let screenWidth = UIScreen.main.bounds.size.width
     
-    // 뷰 전체 높이 길이
-    let screenHeight = UIScreen.main.bounds.size.height
-    
+    @Environment(\.managedObjectContext) private var viewContext
+
     
     var body: some View {
-        
         GeometryReader { geo in
             VStack {
                 List {
@@ -41,7 +35,7 @@ struct FRWordsTableView: View {
                                         }
                                         .frame(width: geo.size.width * 0.5, alignment: .center)
                                         .multilineTextAlignment(.center)
-                                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
                                     
                                     HStack {
                                         Image(systemName: word.option == "f" ? "f.square" : "m.square")
@@ -51,7 +45,7 @@ struct FRWordsTableView: View {
                                     }
                                     .frame(width: geo.size.width * 0.5, alignment: .center)
                                     .multilineTextAlignment(.center)
-                                    .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                                    .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
                                     
                                 }
                             }
@@ -59,11 +53,12 @@ struct FRWordsTableView: View {
                         .contextMenu(ContextMenu {
                             if selectedSegment == .normal {
                                 Button {
-                                    bindingWord = word
-                                    isShowingEditView.toggle()
+                                    selectedWord = word
+                                    dismiss()
                                 } label: {
                                     Label("수정하기", systemImage: "gearshape.fill")
                                 }
+                                
                                 Button {
                                     // Voice Over
                                 } label: {
@@ -75,12 +70,12 @@ struct FRWordsTableView: View {
                         .listRowBackground(backgroundColor)
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            if selectedWord.contains(word.id!) {
-                                if let tmpIndex = selectedWord.firstIndex(of: word.id!) {
-                                    selectedWord.remove(at: tmpIndex)
+                            if unmaskedWords.contains(word.id!) {
+                                if let tmpIndex = unmaskedWords.firstIndex(of: word.id!) {
+                                    unmaskedWords.remove(at: tmpIndex)
                                 }
                             } else {
-                                selectedWord.append(word.id!)
+                                unmaskedWords.append(word.id!)
                             }
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -88,31 +83,15 @@ struct FRWordsTableView: View {
                                 word.deletedAt = "\(Date())"
                                 print("현재 시간 데이터를 deleteAt prop에 update \(word.deletedAt!)")
                                 // filteredWords에서는 진짜로 제거
-                                if let index = filteredWords.firstIndex(of: word) {
-                                    print("\(index)")
-                                    filteredWords.remove(at: index)
-                                }
-                                try? viewContext.save()
+//                                if let index = filteredWords.firstIndex(of: word) {
+//                                    print("\(index)")
+//                                    filteredWords.remove(at: index)
+//                                }
+//                                try? viewContext.save()
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
                         }
-//                        .swipeActions(edge: .leading, allowsFullSwipe: false) {
-//                            Button {
-//                                //word.isMemorized.toggle()
-//                                print("Memorize action")
-//                            } label: {
-//                                Image(systemName: "brain.head.profile")
-//                            }
-//                            .tint(word.isMemorized ? .gray : .blue)
-//                        }
-                    }
-                    .onMove { indexSet, offset in
-                        filteredWords.move(fromOffsets: indexSet, toOffset: offset)
-                    }
-                    .onDelete { indexSet in
-                        // filteredWords에서 지워도 상관없긴 하다.
-                        //                    filteredWords.remove(atOffsets: indexSet)
                     }
                 }
                 .navigationBarItems(trailing: EditButton())

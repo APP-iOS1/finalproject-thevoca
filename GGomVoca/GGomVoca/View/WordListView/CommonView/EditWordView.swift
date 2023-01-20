@@ -6,23 +6,21 @@
 //
 
 import SwiftUI
+
 //단어 수정 뷰
 struct EditWordView: View {
+    // MARK: ViewModel Object
+    var viewModel: EditWordViewModel = EditWordViewModel()
     
-    var vocabulary: Vocabulary
-    var viewModel : EditWordViewModel = EditWordViewModel()
-    @Binding var editShow: Bool
-    @Binding var bindingWord: Word
-    @Binding var filteredWords: [Word]
-    @Binding var words: [Word]
+    // MARK: Super View Properties
+    var vocabularyNationality: String
+    @Binding var selectedWord: Word
     
-    @State private var isContinue: Bool = false
-    
+    // MARK: View Properties
+    @Environment(\.dismiss) private var dismiss
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
-    
-    
     
     // 입력값 공백 제거
     private var word: String {
@@ -35,68 +33,59 @@ struct EditWordView: View {
         inputMeaning.trimmingCharacters(in: .whitespaces)
     }
 
-    
     var body: some View {
         NavigationStack {
-            
             Form {
-                Section(header: Text("단어")) {
-                    TextField("단어를 입력하세요.", text: $inputWord)
+                Section("단어") {
+                    TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                 }
-                
-                switch vocabulary.nationality {
-                case "JA":
-                    Section(header: Text("발음")) {
-                        TextField("발음을 입력하세요.", text: $inputOption)
+                switch vocabularyNationality {
+                case "JP":
+                    Section("발음") {
+                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                     }
                 case "FR":
-                    Section(header: Text("성별")) {
+                    Section("성별") {
                         Picker("성별", selection: $inputOption) {
                             Text("남성형").tag("m")
                             Text("여성형").tag("f")
                         }
                         .pickerStyle(.segmented)
                     }
-                    
                 case "EN":
                     EmptyView()
-                    
+
                 default:
                     Text("default")
                 }
                 
-                Section(header: Text("뜻")) {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning)
+                Section("뜻") {
+                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
                 }
             }
-            .onAppear(perform: {
-                inputWord = bindingWord.word!
-                inputOption = bindingWord.option ?? ""
-                inputMeaning = bindingWord.meaning!
-            })
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("단어 수정")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                inputWord = selectedWord.word!
+                inputOption = selectedWord.option ?? ""
+                inputMeaning = selectedWord.meaning!
+            }
             .toolbar {
+                // 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        editShow = false
-                    } label: {
-                        Text("취소").foregroundColor(.red)
-                    }
+                    Button("취소", role: .cancel) { dismiss() }
                 }
+                // 변경 내용 저장 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button("변경") {
                         if !word.isEmpty && !meaning.isEmpty {
-                            viewModel.editWord(vocabulary: vocabulary, editWord: bindingWord, word: word, meaning: meaning, option: option)
+                            viewModel.editWord(editWord: selectedWord, word: word, meaning: meaning, option: option)
                             
                             inputWord = ""
                             inputMeaning = ""
                             inputOption = ""
-                            editShow = false
+                            dismiss()
                         }
-                        
-                    } label: {
-                        Text("변경")
                     }
                 }
             }

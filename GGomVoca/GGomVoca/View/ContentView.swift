@@ -23,7 +23,7 @@ struct ContentView: View {
                 ForEach(vocabularies) { vocabulary in
                     NavigationLink {
                         if vocabulary.nationality == "FR" {
-                            FRWordListView(vocabulary: vocabulary)
+                            FRWordListView(vocabularyID: vocabulary.id ?? UUID())
                         } else {
                             JPWordListView(vocabulary: vocabulary)
                         }

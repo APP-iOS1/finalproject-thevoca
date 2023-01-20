@@ -9,82 +9,78 @@ import SwiftUI
 import CoreData
 
 struct FRWordListView: View {
+    // MARK: Data Properties
+    var vocabularyID: UUID
+    @StateObject var viewModel: FRWordListViewModel = FRWordListViewModel()
     
+    // MARK: View Properties
+    @State var navigationTitle: String = ""
     @State private var selectedSegment: ProfileSection = .normal
-    @State private var selectedWord: [UUID] = []
+    @State private var unmaskedWords: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
     @State var isShowingEditWordView: Bool = false
-    @State var bindingWord: Word = Word()
+    @State var selectedWord: Word = Word()
     
-    @State var vocabulary: Vocabulary
     
-    @State var words: [Word] = [] {
-        didSet {
-            print("words changed")
-            filteredWords = words.filter({ $0.deletedAt == "" || $0.deletedAt == nil })
-        }
-    }
-    
-    @State var filteredWords: [Word] = []
-    @State private var showOption: Bool = false
     
     var body: some View {
         VStack {
-            SegmentView(selectedSegment: $selectedSegment, selectedWord: $selectedWord)
-            if filteredWords.count <= 0 {
-                VStack(alignment: .center){
-                    Spacer()
-                    Image(systemName: "questionmark.circle")
-                        .resizable()
-                        .frame(width: 100, height: 100)
-                    Text("단어를 추가해주세요")
-                        .font(.title3)
-                    Spacer()
+            SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
+            if viewModel.filteredWords.count <= 0 {
+                VStack(spacing: 10) {
+                    Image(systemName: "tray")
+                        .font(.largeTitle)
+                    HStack {
+                        Text("\(viewModel.getEmptyWord(vocabularyID: vocabularyID)) : ")
+                            .bold()
+                        Text("비어있는")
+                    }
                 }
                 .foregroundColor(.gray)
+                .verticalAlignSetting(.center)
+                
             } else {
-                JPWordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditView: $isShowingEditWordView, bindingWord: $bindingWord)
+                FRWordsTableView(selectedSegment: selectedSegment,
+                                 unmaskedWords: $unmaskedWords,
+                                 selectedWord: $selectedWord,
+                                 filteredWords: $viewModel.filteredWords)
                     .padding()
             }
             
         }
         // 단어 편집
         .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabulary: vocabulary, editShow: $isShowingEditWordView, bindingWord: $bindingWord, filteredWords: $filteredWords, words: $words)
+            EditWordView(vocabularyNationality: viewModel.selectedVocabulary.nationality ?? "",
+                         selectedWord: $selectedWord)
                 .presentationDetents([.medium])
-                .onDisappear(perform: {
-                    words = vocabulary.words?.allObjects as! [Word]
-                })
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
-            FRAddNewWordView(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
+            FRAddNewWordView(vocabulary: viewModel.selectedVocabulary)
                 .presentationDetents([.height(CGFloat(500))])
+                .onDisappear {
+                    viewModel.getVocabulary(vocabularyID: vocabularyID)
+                }
         }
-        .sheet(isPresented: $showOption) {
-            OptionSheetView(words: $filteredWords, vocabulary: vocabulary)
-                .presentationDetents([.height(CGFloat(350))])
-            //                    .presentationDetents([.medium, .large, .height(CGFloat(100))])
+        /// - View가 보여질 때 Vocabulary의 ID값으로 해당하는 Vocabulary 객체를 가져옴
+        /// - Vocabulary객체를 가져온 후 navigationTitle을 Vocabulary의 이름으로 가져옴
+        .onAppear {
+            viewModel.getVocabulary(vocabularyID: vocabularyID)
+            navigationTitle = viewModel.selectedVocabulary.name ?? ""
         }
-        .onAppear(perform: {
-            words = vocabulary.words?.allObjects as! [Word]
-            
-        })
-        .navigationTitle("\(vocabulary.name ?? "")")
+        .navigationTitle(navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            /// - 현재 단어장의 단어 개수
             ToolbarItem {
                 VStack(alignment: .center) {
-                    //                        Text("total")
-                    //                            .font(.caption)
-                    //                            .opacity(0.5)
-                    Text("\(filteredWords.count)")
+                    Text("\(viewModel.filteredWords.count)")
                         .foregroundColor(.gray)
                 }
             }
-            // + 버튼
+            /// - 새 단어 추가 버튼
             ToolbarItem {
                 Button {
                     isShowingAddWordView.toggle()
@@ -92,11 +88,11 @@ struct FRWordListView: View {
                     Image(systemName: "plus")
                 }
             }
+            /// - 햄버거 버튼
             ToolbarItem {
-                // 햄버거 버튼일 때
                 Menu {
                     Button {
-                        words.shuffle()
+                        viewModel.words.shuffle()
                     } label: {
                         HStack {
                             Text("단어 순서 섞기")
@@ -104,18 +100,18 @@ struct FRWordListView: View {
                         }
                     }
                     
-                    Button {
-                        print("전체 단어 재생하기")
-                    } label: {
-                        HStack {
-                            Text("전체 단어 재생하기")
-                            Image(systemName: "play.fill")
-                        }
-                    }
-                    .disabled(true)
+//                    Button {
+//                        print("전체 단어 재생하기")
+//                    } label: {
+//                        HStack {
+//                            Text("전체 단어 재생하기")
+//                            Image(systemName: "play.fill")
+//                        }
+//                    }
+//                    .disabled(true)
                     
                     NavigationLink {
-                        ImportCSVFileView(vocabulary: vocabulary)
+                        ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
                     } label: {
                         HStack {
                             Text("단어 가져오기")
@@ -123,26 +119,19 @@ struct FRWordListView: View {
                         }
                     }
                     
-                    Button {
-                        print("export")
-                    } label: {
-                        HStack {
-                            Text("단어 리스트 내보내기")
-                            Image(systemName: "square.and.arrow.up")
-                        }
-                    }
-                    .disabled(true)
+//                    Button {
+//                        print("export")
+//                    } label: {
+//                        HStack {
+//                            Text("단어 리스트 내보내기")
+//                            Image(systemName: "square.and.arrow.up")
+//                        }
+//                    }
+//                    .disabled(true)
                     
                 } label: {
                     Image(systemName: "line.3.horizontal")
                 }
-                
-                // 미트볼 버튼일 때
-                //                Button(action: {
-                //                    showOption.toggle()
-                //                }){
-                //                    Image(systemName: "ellipsis.circle")
-                //                }
             }
         }
     }

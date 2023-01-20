@@ -63,10 +63,10 @@ struct VocabularyListView: View {
                 }
                 // !가 앞에 붙으면 내용이 반전
                 Section(header: Text("즐겨찾기")) {
-                    if !viewModel.vocabularyList.isEmpty {
-                        var favoriteList = viewModel.vocabularyList.filter {
-                            $0.isFavorite == true
-                        }
+                    let favoriteList = viewModel.vocabularyList.filter {
+                        $0.isFavorite == true
+                    }
+                    if favoriteList.count > 0 {
                         ForEach(viewModel.favoriteVoca) { vocabulary in
                             VocabularyCell(
                                 favoriteCompletion: {
@@ -80,20 +80,18 @@ struct VocabularyListView: View {
                         }
                     } else {
                         VStack {
-                            
                             HStack {
-                                Spacer()
                                 VStack(spacing: 4) {
                                     Text("즐겨찾기 된 단어장이 없습니다.")
                                     Text("오른쪽으로 밀어 즐겨찾기")
                                 }
-                                Spacer()
+                                .horizontalAlignSetting(.center)
                             }
                         }
                         .foregroundColor(.gray)
                     }
                 }
-                
+
                 if !viewModel.koreanVoca.isEmpty {
                     Section(header: Text("한국어")) {
                         ForEach(viewModel.koreanVoca) { vocabulary in
@@ -207,7 +205,7 @@ struct VocabularyListView: View {
                     }
                 }
                 if !viewModel.italianVoca.isEmpty {
-                    Section(header: Text("이탈리어")) {
+                    Section(header: Text("이탈리아어")) {
                         ForEach(viewModel.italianVoca) { vocabulary in
                             if vocabulary.nationality == "IT" {
                                 VocabularyCell(favoriteCompletion: {

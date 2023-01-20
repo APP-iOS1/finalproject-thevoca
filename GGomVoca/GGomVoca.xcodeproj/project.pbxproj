@@ -11,11 +11,11 @@
 		03F904E829514B9B003262AE /* SearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904E729514B9B003262AE /* SearchListCell.swift */; };
 		03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904EA295155B2003262AE /* SearchingWordModel.swift */; };
 		162EE05129509F4E0065E103 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE04F29509F4E0065E103 /* SegmentView.swift */; };
-		162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05029509F4E0065E103 /* OptionSheetView.swift */; };
 		162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05529509F6D0065E103 /* JPWordListView.swift */; };
 		162EE0582950A1960065E103 /* JPWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0572950A1960065E103 /* JPWordsTableView.swift */; };
 		162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0592950B0380065E103 /* FRWordListView.swift */; };
 		162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05B2950B0840065E103 /* FRWordsTableView.swift */; };
+		166390682977BBDA00B3635F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1663906A2977BBDA00B3635F /* Localizable.strings */; };
 		16F432402952A46C000D74B0 /* EditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F4323F2952A46C000D74B0 /* EditWordView.swift */; };
 		6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E03F29515726003A1A08 /* AddNewWordView.swift */; };
 		6371E0422951A0B8003A1A08 /* JPAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */; };
@@ -23,6 +23,7 @@
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		63A6BC52297783FD000C7B9B /* FRWordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6BC51297783FD000C7B9B /* FRWordListViewModel.swift */; };
 		63B095F3297631F100E6BB21 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F2297631F100E6BB21 /* View+.swift */; };
 		63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */; };
 		63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F62976832C00E6BB21 /* DataFrame+.swift */; };
@@ -58,11 +59,14 @@
 		03F904E729514B9B003262AE /* SearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListCell.swift; sourceTree = "<group>"; };
 		03F904EA295155B2003262AE /* SearchingWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingWordModel.swift; sourceTree = "<group>"; };
 		162EE04F29509F4E0065E103 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
-		162EE05029509F4E0065E103 /* OptionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionSheetView.swift; sourceTree = "<group>"; };
 		162EE05529509F6D0065E103 /* JPWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordListView.swift; sourceTree = "<group>"; };
 		162EE0572950A1960065E103 /* JPWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPWordsTableView.swift; sourceTree = "<group>"; };
 		162EE0592950B0380065E103 /* FRWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		162EE05B2950B0840065E103 /* FRWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordsTableView.swift; sourceTree = "<group>"; };
+		166390692977BBDA00B3635F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1663906B2977BC0200B3635F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1663906C2977BC2800B3635F /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1663906D2977E74D00B3635F /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
 		6371E03F29515726003A1A08 /* AddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
 		6371E0412951A0B8003A1A08 /* JPAddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordView.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		63A6BC51297783FD000C7B9B /* FRWordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListViewModel.swift; sourceTree = "<group>"; };
 		63B095F2297631F100E6BB21 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVFileViewModel.swift; sourceTree = "<group>"; };
 		63B095F62976832C00E6BB21 /* DataFrame+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataFrame+.swift"; sourceTree = "<group>"; };
@@ -155,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				162EE0592950B0380065E103 /* FRWordListView.swift */,
+				63A6BC51297783FD000C7B9B /* FRWordListViewModel.swift */,
 				162EE05B2950B0840065E103 /* FRWordsTableView.swift */,
 				6371E0432951A1EB003A1A08 /* FRAddNewWordView.swift */,
 				EE60FB1F297545C7004F82E2 /* FRAddNewWordViewModel.swift */,
@@ -177,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
-				162EE05029509F4E0065E103 /* OptionSheetView.swift */,
 				6371E03F29515726003A1A08 /* AddNewWordView.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
@@ -231,6 +236,7 @@
 				63DC853F2950312F00461DEB /* GGomVoca.entitlements */,
 				63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */,
 				63DC85402950312F00461DEB /* Preview Content */,
+				1663906A2977BBDA00B3635F /* Localizable.strings */,
 			);
 			path = GGomVoca;
 			sourceTree = "<group>";
@@ -403,6 +409,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				ja,
+				ko,
 			);
 			mainGroup = 63DC85282950312E00461DEB;
 			packageReferences = (
@@ -422,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */,
+				166390682977BBDA00B3635F /* Localizable.strings in Resources */,
 				63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */,
 				6371E04E29530716003A1A08 /* Assets.xcassets in Resources */,
 			);
@@ -466,9 +476,9 @@
 				EA846B0B297A26B500D08DA9 /* AddNewWordViewModel.swift in Sources */,
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
-				162EE05229509F4E0065E103 /* OptionSheetView.swift in Sources */,
 				6371E0442951A1EB003A1A08 /* FRAddNewWordView.swift in Sources */,
 				EA846B09297A263700D08DA9 /* AddNewWordView2.swift in Sources */,
+				63A6BC52297783FD000C7B9B /* FRWordListViewModel.swift in Sources */,
 				6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */,
 				EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */,
 				6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */,
@@ -480,11 +490,26 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		1663906A2977BBDA00B3635F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				166390692977BBDA00B3635F /* en */,
+				1663906B2977BC0200B3635F /* fr */,
+				1663906C2977BC2800B3635F /* ja */,
+				1663906D2977E74D00B3635F /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		63DC85432950312F00461DEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -543,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
