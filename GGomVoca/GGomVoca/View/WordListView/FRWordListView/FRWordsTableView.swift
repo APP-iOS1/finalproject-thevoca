@@ -4,16 +4,18 @@ import Foundation
 
 struct FRWordsTableView: View {
     // MARK: Data Properties
-    @StateObject var viewModel: FRWordListViewModel = FRWordListViewModel()
+    @ObservedObject var viewModel: FRWordListViewModel
     
     // MARK: Super View Properties
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [UUID]
-    @Binding var selectedWord: Word
     
     // MARK: View Properies
     @Environment(\.dismiss) private var dismiss
     var backgroundColor: Color = Color("background")
+    @State var isShowingEditWordView: Bool = false
+    /// - Edit하려고 선택한 단어
+    @State var editingWord: Word = Word()
     
     var body: some View {
         GeometryReader { geo in
@@ -48,23 +50,6 @@ struct FRWordsTableView: View {
                                 }
                             }
                         }
-                        .contextMenu(ContextMenu {
-                            if selectedSegment == .normal {
-                                Button {
-                                    selectedWord = word
-                                    dismiss()
-                                } label: {
-                                    Label("수정하기", systemImage: "gearshape.fill")
-                                }
-                                
-                                Button {
-                                    // Voice Over
-                                } label: {
-                                    Label("발음 듣기", systemImage: "mic.fill")
-                                }
-                            }
-                            
-                        })
                         .listRowBackground(backgroundColor)
                         .contentShape(Rectangle())
                         .onTapGesture {
@@ -83,6 +68,22 @@ struct FRWordsTableView: View {
                                 Label("Delete", systemImage: "trash.fill")
                             }
                         }
+                        .contextMenu(ContextMenu {
+                            if selectedSegment == .normal {
+                                Button {
+                                    editingWord = word
+                                    isShowingEditWordView.toggle()
+                                } label: {
+                                    Label("수정하기", systemImage: "gearshape.fill")
+                                }
+                                
+                                Button {
+                                    // Voice Over
+                                } label: {
+                                    Label("발음 듣기", systemImage: "mic.fill")
+                                }
+                            }
+                        })
                     }
                 }
                 .navigationBarItems(trailing: EditButton())
@@ -90,6 +91,11 @@ struct FRWordsTableView: View {
                     print("refresh")
                 }
                 .listStyle(.plain)
+                // 단어 편집
+                .sheet(isPresented: $isShowingEditWordView) {
+                    FREditWordView(viewModel: viewModel, editingWord: $editingWord)
+                        .presentationDetents([.medium])
+                }
             }
             
         }

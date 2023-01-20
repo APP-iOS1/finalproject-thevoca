@@ -35,7 +35,7 @@ struct FRWordListView: View {
                 .verticalAlignSetting(.center)
                 
             } else {
-                FRWordsTableView(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords)
+                FRWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords)
                     .padding()
             }
             
