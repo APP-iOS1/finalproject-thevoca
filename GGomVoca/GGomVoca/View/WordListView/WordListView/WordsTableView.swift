@@ -78,7 +78,7 @@ struct WordsTableView: View {
                         }
                         
                         switch nationality {
-                        case "EN":
+                        case "EN", "FR":
                             Text("단어")
                                 .frame(maxWidth: .infinity, alignment: .center)
                             Text("뜻")
@@ -87,11 +87,6 @@ struct WordsTableView: View {
                             Text("단어")
                                 .frame(maxWidth: .infinity, alignment: .center)
                             Text("발음")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                            Text("뜻")
-                                .frame(maxWidth: .infinity, alignment: .center)
-                        case "FR":
-                            Text("단어")
                                 .frame(maxWidth: .infinity, alignment: .center)
                             Text("뜻")
                                 .frame(maxWidth: .infinity, alignment: .center)
