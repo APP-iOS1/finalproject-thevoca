@@ -42,7 +42,7 @@ struct WordsTableView: View {
                 Section {
                     ForEach(filteredWords) { word in
                         WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
-                            .addButtonActions(leadingButtons: [],
+                            .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
                                 case .delete:
