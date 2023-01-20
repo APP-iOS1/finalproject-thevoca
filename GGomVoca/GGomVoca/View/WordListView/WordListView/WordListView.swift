@@ -133,6 +133,7 @@ struct WordListView: View {
                 ToolbarItem {
                     Button {
                         isSelectionMode.toggle()
+                        multiSelection.removeAll()
                     } label: {
                         Text("취소")
                     }
