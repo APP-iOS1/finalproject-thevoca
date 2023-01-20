@@ -16,7 +16,7 @@ struct WordCell: View {
     @State var isTextShowing: Bool = true
     @State var isSelected: Bool = false
     
-    let nationality: Nationality
+    let nationality: String
     let word: Word
     
     var checkImage: Image {
@@ -39,9 +39,9 @@ struct WordCell: View {
             }
             
             switch nationality {
-            case .EN:
+            case "EN":
                 Text("EN")
-            case .KO, .JA, .CH:
+            case "JA":
                 HStack {
                     Text(word.word ?? "")
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -54,7 +54,7 @@ struct WordCell: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
                 }
-            case .FR:
+            case "FR":
                 Text(word.word ?? "")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
@@ -74,12 +74,8 @@ struct WordCell: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
-            case .DE:
-                Text("DE")
-            case .ES:
-                Text("ES")
-            case .IT:
-                Text("IT")
+            default:
+                Text("default")
             }
         }
         .background {

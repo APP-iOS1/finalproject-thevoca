@@ -48,7 +48,7 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: Nationality(rawValue: vocabulary.nationality!) ?? .KO)
+                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "KO")
             }
             Text(multiSelection.description)
                 
