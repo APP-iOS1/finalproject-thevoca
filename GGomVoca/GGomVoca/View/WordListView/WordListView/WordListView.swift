@@ -119,7 +119,7 @@ struct WordListView: View {
                         .disabled(true)
                         
                         NavigationLink {
-                            // ImportCSVFileView(vocabulary: vocabulary)
+                             ImportCSVFileView(vocabulary: vocabulary)
                         } label: {
                             HStack {
                                 Text("단어 가져오기")
