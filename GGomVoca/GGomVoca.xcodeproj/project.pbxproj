@@ -17,6 +17,7 @@
 		162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE0592950B0380065E103 /* FRWordListView.swift */; };
 		162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE05B2950B0840065E103 /* FRWordsTableView.swift */; };
 		16F432402952A46C000D74B0 /* EditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F4323F2952A46C000D74B0 /* EditWordView.swift */; };
+		16FFDC59297A6D680082007C /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FFDC58297A6D680082007C /* CSVFile.swift */; };
 		6369BC1B297A270A00D90D02 /* FREditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6369BC1A297A270A00D90D02 /* FREditWordView.swift */; };
 		6369BC1F297A7CFC00D90D02 /* FRWordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6369BC1E297A7CFC00D90D02 /* FRWordListViewModel.swift */; };
 		6371E04029515726003A1A08 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E03F29515726003A1A08 /* AddNewWordView.swift */; };
@@ -64,6 +65,7 @@
 		162EE0592950B0380065E103 /* FRWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		162EE05B2950B0840065E103 /* FRWordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRWordsTableView.swift; sourceTree = "<group>"; };
 		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
+		16FFDC58297A6D680082007C /* CSVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
 		6369BC1A297A270A00D90D02 /* FREditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FREditWordView.swift; sourceTree = "<group>"; };
 		6369BC1E297A7CFC00D90D02 /* FRWordListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordListViewModel.swift; sourceTree = "<group>"; };
 		6371E03F29515726003A1A08 /* AddNewWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		162EE03729507A690065E103 /* WordListView */ = {
 			isa = PBXGroup;
 			children = (
+				16FFDC57297A6D580082007C /* Model */,
 				EA30AF9629778FCA00C49CF3 /* WordListView */,
 				162EE04E29509F4E0065E103 /* CommonView */,
 				162EE04C29509F130065E103 /* JPWordListView */,
@@ -186,6 +189,14 @@
 				63B92945297A81A700D621CA /* EditWordViewModel.swift */,
 			);
 			path = CommonView;
+			sourceTree = "<group>";
+		};
+		16FFDC57297A6D580082007C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				16FFDC58297A6D680082007C /* CSVFile.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		63B095F1297631DF00E6BB21 /* Extension */ = {
@@ -443,6 +454,7 @@
 				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
 				63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */,
 				EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */,
+				16FFDC59297A6D680082007C /* CSVFile.swift in Sources */,
 				03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */,
 				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,

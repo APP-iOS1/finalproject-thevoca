@@ -22,6 +22,8 @@ struct FRWordListView: View {
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
     
+    // MARK: 단어장 내보내기 관련 State
+    @State var isExport: Bool = false
     
     
     var body: some View {
@@ -46,6 +48,15 @@ struct FRWordListView: View {
             }
             
         }
+        // 단어장 내보내기
+        .fileExporter(isPresented: $isExport, document: CSVFile(initialText: viewModel.buildDataForCSV(vocabularyID: vocabularyID)!), contentType: .commaSeparatedText, defaultFilename: "\(navigationTitle)",onCompletion: { result in
+            switch result {
+            case .success(let url):
+                print("Saved to \(url)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
             FRAddNewWordView(viewModel: viewModel, vocabulary: viewModel.selectedVocabulary, isShowingAddWordView: $isShowingAddWordView)
@@ -106,15 +117,15 @@ struct FRWordListView: View {
                         }
                     }
                     
-//                    Button {
-//                        print("export")
-//                    } label: {
-//                        HStack {
-//                            Text("단어 리스트 내보내기")
-//                            Image(systemName: "square.and.arrow.up")
-//                        }
-//                    }
-//                    .disabled(true)
+                    Button {
+                        print("export")
+                        isExport.toggle()
+                    } label: {
+                        HStack {
+                            Text("단어 리스트 내보내기")
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                    }
                     
                 } label: {
                     Image(systemName: "line.3.horizontal")

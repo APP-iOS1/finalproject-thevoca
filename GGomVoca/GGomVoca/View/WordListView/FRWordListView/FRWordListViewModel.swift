@@ -100,5 +100,27 @@ class FRWordListViewModel: ObservableObject {
         }
         return emptyMsg
     }
+    
+    // MARK: buildDataForCSV
+    func buildDataForCSV(vocabularyID: Vocabulary.ID) -> String? {
+        
+        // 1. find the vocabulary by id
+        let voca = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
+        var fullText = "word,option,meaning\n"
+        var aLine = ""
+        for target in voca.words ?? [] {
+            aLine = ""
+            if (target as AnyObject).deletedAt! == nil {
+                if target is Word {
+                    aLine = "\(String(describing: (target as AnyObject).word! ?? "")),\(String(describing: (target as AnyObject).option! ?? "")),\(String(describing: (target as AnyObject).meaning! ?? ""))"
+                }
+                fullText += aLine + "\n"
+            }
+        }
+        print("CSV En construction\n")     // For test
+        print(fullText)
+        print("***")
+        return fullText
+    }
 
 }
