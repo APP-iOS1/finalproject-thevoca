@@ -24,6 +24,7 @@ struct VocabularyCell: View {
                 WordListView(vocabulary: vocabulary)
                     .toolbar(.hidden, for: .tabBar)
             }, label: { VStack { Text(vocabulary.name ?? "")}})
+            
         }
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {

@@ -10,7 +10,7 @@ import Foundation
 class EditWordViewModel {
     var viewContext = PersistenceController.shared.container.viewContext
     
-    func editWord(editWord: Word, word: String, meaning: String, option: String = "") {
+    func editWord(vocabulary:Vocabulary, editWord: Word, word: String, meaning: String, option: String = "") {
         editWord.word = word
         editWord.meaning = meaning
         editWord.option = option
