@@ -67,6 +67,7 @@ struct AddNewWordView2: View {
                 case "FR":
                     Section(header: Text("성별")) {
                         Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
                             Text("남성형").tag("m")
                             Text("여성형").tag("f")
                         }
