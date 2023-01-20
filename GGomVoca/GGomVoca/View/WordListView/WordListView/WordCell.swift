@@ -87,12 +87,24 @@ struct WordCell: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    if selectedWord.contains(word.id!) {
-                        if let tmpIndex = selectedWord.firstIndex(of: word.id!) {
-                            selectedWord.remove(at: tmpIndex)
+                    // 단어장 편집모드에서 체크박스 뿐만이 아니라 cell을 눌러도 체크될 수 있도록
+                    if !isSelectionMode {
+                        if selectedWord.contains(word.id!) {
+                            if let tmpIndex = selectedWord.firstIndex(of: word.id!) {
+                                selectedWord.remove(at: tmpIndex)
+                            }
+                        } else {
+                            selectedWord.append(word.id!)
                         }
                     } else {
-                        selectedWord.append(word.id!)
+                        isSelected.toggle()
+                        if isSelected {
+                            // 선택된 단어를 Set에 삽입
+                            multiSelection.insert(word.word!)
+                        } else {
+                            // 선택해제된 단어를 Set에서 제거
+                            multiSelection.remove(word.word!)
+                        }
                     }
                 }
         }
