@@ -58,8 +58,11 @@ struct EditWordView: View {
                         .pickerStyle(.segmented)
                     }
                     
+                case "EN":
+                    EmptyView()
+                    
                 default:
-                    Text("")
+                    Text("default")
                 }
                 
                 Section(header: Text("뜻")) {

@@ -72,6 +72,8 @@ struct AddNewWordView2: View {
                         }
                         .pickerStyle(.segmented)
                     }
+                case "EN":
+                    EmptyView()
                 default:
                     Text("default")
                 }

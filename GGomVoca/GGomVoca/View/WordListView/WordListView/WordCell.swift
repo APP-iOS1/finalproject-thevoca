@@ -49,8 +49,6 @@ struct WordCell: View {
             }
             
             switch nationality {
-            case "EN":
-                Text("EN")
             case "JA":
                 HStack {
                     Text(word.word ?? "")
@@ -64,7 +62,7 @@ struct WordCell: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
                 }
-            case "FR":
+            case "FR", "EN":
                 Text(word.word ?? "")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
