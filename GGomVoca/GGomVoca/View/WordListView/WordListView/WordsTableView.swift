@@ -19,6 +19,8 @@ enum TempNationality: String, CaseIterable {
 }
 
 struct WordsTableView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var selectedSegment: ProfileSection
     @Binding var selectedWord: [UUID]
     
@@ -45,7 +47,14 @@ struct WordsTableView: View {
                                 switch button {
                                 case .delete:
                                     // 삭제에 필요한 메서드 넣기
-                                    print("clicked: \(button)")
+                                    word.deletedAt = "\(Date())"
+                                    print("현재 시간 데이터를 deleteAt prop에 update \(word.deletedAt!)")
+                                    // filteredWords에서는 진짜로 제거
+                                    if let index = filteredWords.firstIndex(of: word) {
+                                        print("\(index)")
+                                        filteredWords.remove(at: index)
+                                    }
+                                    try? viewContext.save()
                                 default:
                                     print("default")
                                 }
