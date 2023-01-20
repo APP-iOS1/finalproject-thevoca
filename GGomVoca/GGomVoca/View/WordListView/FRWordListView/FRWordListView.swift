@@ -16,17 +16,16 @@ struct FRWordListView: View {
     // MARK: View Properties
     @State var navigationTitle: String = ""
     @State private var selectedSegment: ProfileSection = .normal
+    /// - 단어 가리기/뜻 가리기 segment에서 현재 가려지 않은 단어
     @State private var unmaskedWords: [UUID] = []
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
-    @State var isShowingEditWordView: Bool = false
-    @State var selectedWord: Word = Word()
     
     var body: some View {
         VStack {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
-            if viewModel.filteredWords.count <= 0 {
+            if viewModel.words.count <= 0 {
                 VStack(spacing: 10) {
                     Image(systemName: "tray")
                         .font(.largeTitle)
@@ -36,20 +35,12 @@ struct FRWordListView: View {
                 .verticalAlignSetting(.center)
                 
             } else {
-                FRWordsTableView(selectedSegment: selectedSegment,
-                                 unmaskedWords: $unmaskedWords,
-                                 selectedWord: $selectedWord,
-                                 filteredWords: $viewModel.filteredWords)
+                FRWordsTableView(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords)
                     .padding()
             }
             
         }
-        // 단어 편집
-        .sheet(isPresented: $isShowingEditWordView) {
-            EditWordView(vocabularyNationality: viewModel.selectedVocabulary.nationality ?? "",
-                         selectedWord: $selectedWord)
-                .presentationDetents([.medium])
-        }
+        
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
             FRAddNewWordView(vocabulary: viewModel.selectedVocabulary)
@@ -70,7 +61,7 @@ struct FRWordListView: View {
             /// - 현재 단어장의 단어 개수
             ToolbarItem {
                 VStack(alignment: .center) {
-                    Text("\(viewModel.filteredWords.count)")
+                    Text("\(viewModel.words.count)")
                         .foregroundColor(.gray)
                 }
             }

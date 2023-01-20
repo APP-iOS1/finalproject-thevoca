@@ -3,25 +3,23 @@ import SwiftUI
 import Foundation
 
 struct FRWordsTableView: View {
+    // MARK: Data Properties
+    @StateObject var viewModel: FRWordListViewModel = FRWordListViewModel()
+    
     // MARK: Super View Properties
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [UUID]
     @Binding var selectedWord: Word
-    @Binding var filteredWords: [Word]
     
     // MARK: View Properies
     @Environment(\.dismiss) private var dismiss
     var backgroundColor: Color = Color("background")
     
-    
-    @Environment(\.managedObjectContext) private var viewContext
-
-    
     var body: some View {
         GeometryReader { geo in
             VStack {
                 List {
-                    ForEach(filteredWords) { word in
+                    ForEach(viewModel.words) { word in
                         ZStack {
                             Rectangle()
                                 .fill(backgroundColor)
@@ -71,8 +69,8 @@ struct FRWordsTableView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if unmaskedWords.contains(word.id!) {
-                                if let tmpIndex = unmaskedWords.firstIndex(of: word.id!) {
-                                    unmaskedWords.remove(at: tmpIndex)
+                                if let tempIndex = unmaskedWords.firstIndex(of: word.id!) {
+                                    unmaskedWords.remove(at: tempIndex)
                                 }
                             } else {
                                 unmaskedWords.append(word.id!)
@@ -80,14 +78,7 @@ struct FRWordsTableView: View {
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
-                                word.deletedAt = "\(Date())"
-                                print("현재 시간 데이터를 deleteAt prop에 update \(word.deletedAt!)")
-                                // filteredWords에서는 진짜로 제거
-//                                if let index = filteredWords.firstIndex(of: word) {
-//                                    print("\(index)")
-//                                    filteredWords.remove(at: index)
-//                                }
-//                                try? viewContext.save()
+                                viewModel.deleteWord(word: word)
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }

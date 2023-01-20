@@ -14,19 +14,19 @@ class FRWordListViewModel: ObservableObject {
     
     // MARK: View properties
     var selectedVocabulary: Vocabulary = Vocabulary()
-    
-    @Published var words: [Word] = [] {
-        didSet {
-            print("words changed")
-            filteredWords = words.filter { $0.deletedAt == "" || $0.deletedAt == nil }
-        }
-    }
-    
-    @Published var filteredWords: [Word] = []
+
+    @Published var words: [Word] = []
     
     func getVocabulary(vocabularyID: Vocabulary.ID) {
         selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
-        words = selectedVocabulary.words?.allObjects as? [Word] ?? []
-        print("getVocabulary", words, selectedVocabulary)
+        let allWords = selectedVocabulary.words?.allObjects as? [Word] ?? []
+        words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
+    }
+    
+    func deleteWord(word: Word) {
+        word.deletedAt = "\(Date())"
+        if let tempIndex = words.firstIndex(of: word) {
+            words.remove(at: tempIndex)
+        }
     }
 }
