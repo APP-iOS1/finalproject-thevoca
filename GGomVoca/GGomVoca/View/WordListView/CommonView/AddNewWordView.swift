@@ -53,7 +53,7 @@ struct AddNewWordView: View {
     var body: some View {
         NavigationView {
             Form {
-                Toggle("연속으로 단어 추가하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
                 
                 Section {
