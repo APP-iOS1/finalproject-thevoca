@@ -55,6 +55,11 @@ struct WordListView: View {
         }
         .navigationTitle(vocabulary.name ?? "unknown")
         .navigationBarTitleDisplayMode(.inline)
+        // 새 단어 추가 시트
+        .sheet(isPresented: $isShowingAddWordView) {
+            AddNewWordView2(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
+                .presentationDetents([.height(CGFloat(500))])
+        }
         .onAppear {
             words = vocabulary.words?.allObjects as! [Word]
         }
