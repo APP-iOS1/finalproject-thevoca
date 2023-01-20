@@ -34,7 +34,6 @@
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
-		EA30AF9C297794E500C49CF3 /* TempVocabulary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9B297794E500C49CF3 /* TempVocabulary.swift */; };
 		EA846B09297A263700D08DA9 /* AddNewWordView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA846B08297A263700D08DA9 /* AddNewWordView2.swift */; };
 		EA846B0B297A26B500D08DA9 /* AddNewWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA846B0A297A26B500D08DA9 /* AddNewWordViewModel.swift */; };
 		EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4FFA82977C8830070941A /* Modifiers.swift */; };
@@ -84,7 +83,6 @@
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
-		EA30AF9B297794E500C49CF3 /* TempVocabulary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempVocabulary.swift; sourceTree = "<group>"; };
 		EA846B08297A263700D08DA9 /* AddNewWordView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordView2.swift; sourceTree = "<group>"; };
 		EA846B0A297A26B500D08DA9 /* AddNewWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewWordViewModel.swift; sourceTree = "<group>"; };
 		EAB4FFA82977C8830070941A /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
@@ -278,7 +276,6 @@
 		EA30AF9629778FCA00C49CF3 /* WordListView */ = {
 			isa = PBXGroup;
 			children = (
-				EA30AF9B297794E500C49CF3 /* TempVocabulary.swift */,
 				EA30AF9729778FE200C49CF3 /* WordListView.swift */,
 				EA30AF992977908200C49CF3 /* WordsTableView.swift */,
 				EA30AF94297784AC00C49CF3 /* WordCell.swift */,
@@ -447,7 +444,6 @@
 				03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */,
 				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
-				EA30AF9C297794E500C49CF3 /* TempVocabulary.swift in Sources */,
 				63B095F3297631F100E6BB21 /* View+.swift in Sources */,
 				16F432402952A46C000D74B0 /* EditWordView.swift in Sources */,
 				EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */,
