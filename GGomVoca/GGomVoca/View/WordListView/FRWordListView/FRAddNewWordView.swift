@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FRAddNewWordView: View {
     // MARK: Data Properties
-    var viewModel : FRAddNewWordViewModel = FRAddNewWordViewModel()
+    var viewModel: FRWordListViewModel
     
     // MARK: Super View Properties
     var vocabulary: Vocabulary
@@ -61,6 +61,7 @@ struct FRAddNewWordView: View {
                 
                 Section("성별") {
                     Picker("성별", selection: $inputOption) {
+                        Text("성별 없음").tag("")
                         Text("남성형").tag("m")
                         Text("여성형").tag("f")
                     }

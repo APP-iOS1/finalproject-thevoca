@@ -40,14 +40,10 @@ struct FRWordListView: View {
             }
             
         }
-        
         // 새 단어 추가 시트
         .sheet(isPresented: $isShowingAddWordView) {
-            FRAddNewWordView(vocabulary: viewModel.selectedVocabulary)
+            FRAddNewWordView(viewModel: viewModel, vocabulary: viewModel.selectedVocabulary)
                 .presentationDetents([.height(CGFloat(500))])
-                .onDisappear {
-                    viewModel.getVocabulary(vocabularyID: vocabularyID)
-                }
         }
         /// - View가 보여질 때 Vocabulary의 ID값으로 해당하는 Vocabulary 객체를 가져옴
         /// - Vocabulary객체를 가져온 후 navigationTitle을 Vocabulary의 이름으로 가져옴

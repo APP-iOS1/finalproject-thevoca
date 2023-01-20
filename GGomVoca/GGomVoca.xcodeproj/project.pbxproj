@@ -42,7 +42,6 @@
 		EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05929518348004312CE /* CoredataRepository.swift */; };
 		EE57C05F2951885E004312CE /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05E2951885E004312CE /* TabbarView.swift */; };
 		EE60FB1E29754190004F82E2 /* JPAddNewWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60FB1D29754190004F82E2 /* JPAddNewWordViewModel.swift */; };
-		EE60FB20297545C7004F82E2 /* FRAddNewWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60FB1F297545C7004F82E2 /* FRAddNewWordViewModel.swift */; };
 		EE60FB22297546B1004F82E2 /* EditWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,7 +84,6 @@
 		EE57C05929518348004312CE /* CoredataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataRepository.swift; sourceTree = "<group>"; };
 		EE57C05E2951885E004312CE /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		EE60FB1D29754190004F82E2 /* JPAddNewWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPAddNewWordViewModel.swift; sourceTree = "<group>"; };
-		EE60FB1F297545C7004F82E2 /* FRAddNewWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRAddNewWordViewModel.swift; sourceTree = "<group>"; };
 		EE60FB21297546B1004F82E2 /* EditWordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,7 +142,6 @@
 				162EE05B2950B0840065E103 /* FRWordsTableView.swift */,
 				6369BC1A297A270A00D90D02 /* FREditWordView.swift */,
 				6371E0432951A1EB003A1A08 /* FRAddNewWordView.swift */,
-				EE60FB1F297545C7004F82E2 /* FRAddNewWordViewModel.swift */,
 			);
 			path = FRWordListView;
 			sourceTree = "<group>";
@@ -395,7 +392,6 @@
 			files = (
 				162EE05A2950B0380065E103 /* FRWordListView.swift in Sources */,
 				03F904E829514B9B003262AE /* SearchListCell.swift in Sources */,
-				EE60FB20297545C7004F82E2 /* FRAddNewWordViewModel.swift in Sources */,
 				EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */,
 				EE60FB22297546B1004F82E2 /* EditWordViewModel.swift in Sources */,
 				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
