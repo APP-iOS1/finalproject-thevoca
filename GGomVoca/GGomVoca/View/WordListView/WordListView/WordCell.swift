@@ -11,6 +11,10 @@ struct WordCell: View {
     @Binding var selectedSegment: ProfileSection
     @Binding var selectedWord: [UUID]
     
+    // MARK: 단어 수정 관련
+    @Binding var isShowingEditWordView: Bool
+    @Binding var bindingWord: Word // 편집하려는 단어 보내주기 위해서 사용
+    
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<String>
     @State var isTextShowing: Bool = true
@@ -101,6 +105,22 @@ struct WordCell: View {
                 isSelected = false
             }
         }
+        .contextMenu(ContextMenu {
+            if selectedSegment == .normal {
+                Button {
+                    bindingWord = word
+                    isShowingEditWordView.toggle()
+                } label: {
+                    Label("수정하기", systemImage: "gearshape.fill")
+                }
+                Button {
+                    // Voice Over
+                } label: {
+                    Label("발음 듣기", systemImage: "mic.fill")
+                }
+            }
+            
+        })
     }
 }
 

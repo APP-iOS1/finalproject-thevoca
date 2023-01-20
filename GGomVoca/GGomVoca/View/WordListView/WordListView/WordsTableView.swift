@@ -24,6 +24,10 @@ struct WordsTableView: View {
     
     @Binding var filteredWords: [Word]
     
+    // MARK: 단어 수정 관련
+    @Binding var isShowingEditWordView: Bool
+    @Binding var bindingWord: Word // 편집하려는 단어 보내주기 위해서 사용
+    
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<String>
     
@@ -35,7 +39,7 @@ struct WordsTableView: View {
                 
                 Section {
                     ForEach(filteredWords) { word in
-                        WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                        WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
                             .addButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {

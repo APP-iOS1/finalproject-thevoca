@@ -45,7 +45,7 @@ struct EditWordView: View {
                 }
                 
                 switch vocabulary.nationality {
-                case "JP":
+                case "JA":
                     Section(header: Text("발음")) {
                         TextField("발음을 입력하세요.", text: $inputOption)
                     }

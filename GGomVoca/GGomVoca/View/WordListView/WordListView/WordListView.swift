@@ -13,14 +13,15 @@ struct WordListView: View {
     
     // MARK: 단어 추가 버튼 관련 State
     @State var isShowingAddWordView: Bool = false
+    
+    // MARK: 단어 수정 관련 State
     @State var isShowingEditWordView: Bool = false
+    @State var bindingWord: Word = Word() // 편집하려는 단어 보내주기 위해서 사용
     
     // MARK: 단어장 편집모드 관련 State
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<String> = Set<String>()
     
-//    @State var vocabulary: Vocabulary
-//    @State var vocabulary: TempVocabulary = vocabularies[0]
     @State var vocabulary: Vocabulary
     
     @State var words: [Word] = [] {
@@ -48,7 +49,7 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
             } else {
-                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "KO")
+                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "KO")
             }
             Text(multiSelection.description)
                 
@@ -59,6 +60,11 @@ struct WordListView: View {
         .sheet(isPresented: $isShowingAddWordView) {
             AddNewWordView2(vocabulary: vocabulary, isShowingAddWordView: $isShowingAddWordView, words: $words, filteredWords: $filteredWords)
                 .presentationDetents([.height(CGFloat(500))])
+        }
+        // 단어 편집
+        .sheet(isPresented: $isShowingEditWordView) {
+            EditWordView(vocabulary: vocabulary, editShow: $isShowingEditWordView, bindingWord: $bindingWord, filteredWords: $filteredWords, words: $words)
+                .presentationDetents([.medium])
         }
         .onAppear {
             words = vocabulary.words?.allObjects as! [Word]
