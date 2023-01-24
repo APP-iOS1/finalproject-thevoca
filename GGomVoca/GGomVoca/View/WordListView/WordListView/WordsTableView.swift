@@ -27,7 +27,7 @@ struct WordsTableView: View {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
                     ForEach(viewModel.words) { word in
-                        WordCell(selectedSegment: $selectedSegment, selectedWord: $selectedWord, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: nationality, word: word)
+                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, editWord: $editWord, editingWord: $editingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: viewModel.nationality, word: word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
@@ -79,7 +79,7 @@ struct WordsTableView: View {
         } // ScrollView
         // 단어 편집
         .sheet(isPresented: $editWord) {
-            EditWordView(viewModel: viewModel, editingWord: $editingWord)
+            EditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
         }
     }
