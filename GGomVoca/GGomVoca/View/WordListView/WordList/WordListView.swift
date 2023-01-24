@@ -72,7 +72,7 @@ struct WordListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
-            navigationTitle = viewModel.nationality
+            navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
         // 새 단어 추가 시트
