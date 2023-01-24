@@ -14,6 +14,9 @@ class WordListViewModel: ObservableObject {
     
     // MARK: Vocabulary Properties
     var selectedVocabulary: Vocabulary = Vocabulary()
+    var nationality: String {
+        selectedVocabulary.nationality ?? ""
+    }
 
     @Published var words: [Word] = []
     
@@ -72,30 +75,26 @@ class WordListViewModel: ObservableObject {
     // MARK: 단어장의 word 배열이 비어있을 때 나타낼 Empty 메세지의 다국어 처리
     // TODO: Vocabulary 구조체 자체의 property로 넣을 수 없을지?
     func getEmptyWord() -> String {
-        let na = selectedVocabulary.nationality ?? "KO"
-        print("getEmptyWord", na)
         var emptyMsg: String {
-            get {
-                switch na {
-                case "CH":
-                    return "空"
-                case "DE":
-                    return "Geleert"
-                case "EN":
-                    return "Empty"
-                case "ES":
-                    return "Vacío"
-                case "FR":
-                    return "Vide"
-                case "IT":
-                    return "Vida"
-                case "KO":
-                    return "비어있는"
-                case "JA":
-                    return "空"
-                default :
-                    return " "
-                }
+            switch nationality {
+            case "CH":
+                return "空"
+            case "DE":
+                return "Geleert"
+            case "EN":
+                return "Empty"
+            case "ES":
+                return "Vacío"
+            case "FR":
+                return "Vide"
+            case "IT":
+                return "Vida"
+            case "KO":
+                return "비어있는"
+            case "JA":
+                return "空"
+            default :
+                return " "
             }
         }
         return emptyMsg
