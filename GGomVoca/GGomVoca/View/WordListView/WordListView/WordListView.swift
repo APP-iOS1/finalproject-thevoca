@@ -47,7 +47,7 @@ struct WordListView: View {
                 .verticalAlignSetting(.center)
                 
             } else {
-                WordsTableView(selectedSegment: $selectedSegment, selectedWord: $selectedWord, filteredWords: $filteredWords, isShowingEditWordView: $isShowingEditWordView, bindingWord: $bindingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: vocabulary.nationality ?? "KO")
+                WordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
             }
             
             if !multiSelection.isEmpty {
@@ -72,7 +72,7 @@ struct WordListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
-            navigationTitle = viewModel.selectedVocabulary.name ?? ""
+            navigationTitle = viewModel.nationality
             emptyMessage = viewModel.getEmptyWord()
         }
         // 새 단어 추가 시트
@@ -85,7 +85,7 @@ struct WordListView: View {
             if !isSelectionMode { // 기존에 보이는 툴바
                 ToolbarItem {
                     VStack(alignment: .center) {
-                        Text("\(viewModel.words)")
+                        Text("\(viewModel.words.count)")
                             .foregroundColor(.gray)
                     }
                 }

@@ -9,16 +9,16 @@ import SwiftUI
 
 struct WordsTableView: View {
     // MARK: SuperView Properties
-    @ObservedObject var viewModel: FRWordListViewModel
-    @Binding var selectedSegment: ProfileSection
+    @ObservedObject var viewModel: WordListViewModel
+    var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
     // MARK: View Properties
-    /// - 단어 수정에 대한 Properties
-    @State var editWord: Bool
+    /// - 단어 수정 관련 State
+    @State var editWord: Bool = false
     @State var editingWord: Word = Word()
     
-    /// - 단어 리스트 편집에 대한 Properties
+    /// - 단어 리스트 편집 관련 State
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<String>
     
@@ -55,7 +55,7 @@ struct WordsTableView: View {
                             }
                         }
                         
-                        switch viewModel.selectedVocabulary.nationality {
+                        switch viewModel.nationality {
                         case "EN", "FR":
                             Text("단어")
                                 .frame(maxWidth: .infinity, alignment: .center)
