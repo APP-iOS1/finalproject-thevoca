@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct WordCell: View {
+    // MARK: SuperView Properties
     @Binding var selectedSegment: ProfileSection
-    @Binding var selectedWord: [UUID]
+    @Binding var unmaskedWords: [Word.ID]
     
     // MARK: 단어 수정 관련
     @Binding var isShowingEditWordView: Bool
