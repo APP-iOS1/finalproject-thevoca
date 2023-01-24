@@ -79,7 +79,7 @@ struct WordsTableView: View {
         } // ScrollView
         // 단어 편집
         .sheet(isPresented: $editWord) {
-            FREditWordView(viewModel: viewModel, editingWord: $editingWord)
+            EditWordView(viewModel: viewModel, editingWord: $editingWord)
                 .presentationDetents([.medium])
         }
     }

@@ -29,7 +29,6 @@
 		63B095F3297631F100E6BB21 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F2297631F100E6BB21 /* View+.swift */; };
 		63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */; };
 		63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F62976832C00E6BB21 /* DataFrame+.swift */; };
-		63B92946297A81A700D621CA /* EditWordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B92945297A81A700D621CA /* EditWordViewModel.swift */; };
 		63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85342950312E00461DEB /* GGomVocaApp.swift */; };
 		63DC85372950312E00461DEB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85362950312E00461DEB /* Persistence.swift */; };
 		63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */; };
@@ -76,7 +75,6 @@
 		63B095F2297631F100E6BB21 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVFileViewModel.swift; sourceTree = "<group>"; };
 		63B095F62976832C00E6BB21 /* DataFrame+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataFrame+.swift"; sourceTree = "<group>"; };
-		63B92945297A81A700D621CA /* EditWordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditWordViewModel.swift; sourceTree = "<group>"; };
 		63DC85312950312E00461DEB /* GGomVoca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GGomVoca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63DC85342950312E00461DEB /* GGomVocaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GGomVocaApp.swift; sourceTree = "<group>"; };
 		63DC85362950312E00461DEB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -179,8 +177,6 @@
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
-				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
-				63B92945297A81A700D621CA /* EditWordViewModel.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -290,6 +286,7 @@
 				EA30AF94297784AC00C49CF3 /* WordCell.swift */,
 				EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */,
 				639B31EC29806E1600955DE4 /* AddNewWordView.swift */,
+				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 			);
 			path = WordListView;
 			sourceTree = "<group>";
@@ -463,7 +460,6 @@
 				EAB4FFAD2977C8FD0070941A /* CellButtonView.swift in Sources */,
 				EE1E4A032976831F00890CF7 /* VocabularyCellViewModel.swift in Sources */,
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
-				63B92946297A81A700D621CA /* EditWordViewModel.swift in Sources */,
 				162EE05629509F6D0065E103 /* JPWordListView.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
 				162EE05C2950B0840065E103 /* FRWordsTableView.swift in Sources */,
