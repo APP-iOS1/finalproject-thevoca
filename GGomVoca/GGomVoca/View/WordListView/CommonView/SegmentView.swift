@@ -16,7 +16,7 @@ enum ProfileSection : String, CaseIterable {
 
 struct SegmentView: View {
     @Binding var selectedSegment : ProfileSection
-    @Binding var selectedWord: [UUID]
+    @Binding var unmaskedWords: [Word.ID]
     
     var body: some View {
         VStack {
@@ -26,7 +26,7 @@ struct SegmentView: View {
                 }
             }
             .onChange(of: selectedSegment, perform: { newValue in
-                selectedWord = []
+                unmaskedWords = []
             })
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
