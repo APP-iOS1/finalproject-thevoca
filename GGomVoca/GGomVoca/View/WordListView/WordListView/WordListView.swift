@@ -59,9 +59,8 @@ struct WordListView: View {
                     HStack {
                         Spacer()
                         
-                        Button(action: {}) {
-                            Text("삭제")
-                                .foregroundColor(.red)
+                        Button("삭제", role: .destructive) {
+                            // TODO: 단어삭제를 위한 메서드 작성
                         }
                         .padding()
                     }
@@ -78,7 +77,7 @@ struct WordListView: View {
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
-            AddNewWordView2(vocabulary: vocabulary, isShowingAddWordView: $addNewWord, words: $words, filteredWords: $filteredWords)
+            AddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
                 .presentationDetents([.height(CGFloat(500))])
         }
         .toolbar {

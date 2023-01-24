@@ -55,10 +55,10 @@ class WordListViewModel: ObservableObject {
     }
     
     // MARK: 단어 추가하기
-    func addNewWord(vocabulary: Vocabulary, word: String, meaning: String, option: String = "") {
+    func addNewWord(word: String, meaning: String, option: String = "") {
         let newWord = Word(context: viewContext)
-        newWord.vocabularyID = vocabulary.id
-        newWord.vocabulary = vocabulary
+        newWord.vocabularyID = selectedVocabulary.id
+        newWord.vocabulary = selectedVocabulary
         newWord.id = UUID()
         newWord.word = word
         newWord.meaning = meaning
