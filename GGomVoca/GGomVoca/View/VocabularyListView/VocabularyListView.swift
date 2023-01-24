@@ -24,58 +24,57 @@ struct VocabularyListView: View {
     
     
     var body: some View {
-        if #available(iOS 16, *) {
-           // [iOS 16.0 버전 이상 인 경우 SplitView ]
-            NavigationSplitView(sidebar: {
-                
-                initVocaListView()
-            }, detail: {
-              //Navigation Split DetailView 단어장 화면 (WordListView)
-                VStack{
-                    
-                    if
-                        let vocaId = self.selectedVocaId,
-                        let nationality = getVocaItem(for: vocaId).nationality{
-                        switch nationality{
-                        case "JA":
-                           
-                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
-                            //TODO: 최근본 단어장 추가
-                        case "FR":
-                           
-                            FRWordListView(vocabularyID: vocaId)
-                            //TODO: 최근본 단어장 추가
-
-                        //TODO: 영어(En) 케이스 추가
-                        case "EN":
-                            FRWordListView(vocabularyID: vocaId)
-                        case "KO":
-                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
-                        default:
-                           
-                            FRWordListView(vocabularyID: vocaId)
-                        }
-
-
-                    }
-                    
-                    
-                    //
-                }
-                
-                    
-                
-                
-                
-            })
-        }
-        else {
+//        if #available(iOS 16, *) {
+//           // [iOS 16.0 버전 이상 인 경우 SplitView ]
+//            NavigationSplitView(sidebar: {
+//
+//                initVocaListView()
+//            }, detail: {
+//              //Navigation Split DetailView 단어장 화면 (WordListView)
+//                VStack{
+//
+//                    if
+//                        let vocaId = self.selectedVocaId,
+//                        let nationality = getVocaItem(for: vocaId).nationality{
+//                        switch nationality{
+//                        case "JA":
+//
+//                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
+//                            //TODO: 최근본 단어장 추가
+//                        case "FR":
+//
+//                            FRWordListView(vocabularyID: vocaId)
+//                            //TODO: 최근본 단어장 추가
+//
+//                        //TODO: 영어(En) 케이스 추가
+//                        case "EN":
+//                            FRWordListView(vocabularyID: vocaId)
+//                        case "KO":
+//                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
+//                        default:
+//
+//                            FRWordListView(vocabularyID: vocaId)
+//                        }
+//
+//
+//                    }
+//
+//
+//                    //
+//                }
+//
+//
+//
+//
+//
+//            })
+//        }
+//        else {
            // [iOS 16.0 버전 미만 인 경우 ]
             NavigationStack {
                 initVocaListView()
             }
-        }
-
+//        }
     }
     /*
      VocabularyList View

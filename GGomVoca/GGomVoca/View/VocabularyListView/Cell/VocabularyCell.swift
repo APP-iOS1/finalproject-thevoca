@@ -22,40 +22,42 @@ struct VocabularyCell: View {
         HStack {
             NavigationLink {
                 
-                switch vocabulary.nationality! {
-                case "JA" :
-                    JPWordListView(vocabulary: vocabulary)
-                        .onAppear {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture \(vocabulary.name)")
-                        }
-                    
-                case "FR" :
-                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-                        .onAppear {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture \(vocabulary.name)")
-                        }
-                case "EN" :
-                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-                        .onAppear {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture \(vocabulary.name)")
-                        }
-                case "KO" :
-                    JPWordListView(vocabulary: vocabulary)
-                        .onAppear {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture \(vocabulary.name)")
-                        }
-                    
-                default:
-                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-                        .onAppear {
-                            vm.manageRecentVocabulary(voca: vocabulary)
-                            print("gesture")
-                        }
-                }
+                WordListView(vocabularyID: vocabulary.id)
+                
+//                switch vocabulary.nationality! {
+//                case "JA" :
+//                    JPWordListView(vocabulary: vocabulary)
+//                        .onAppear {
+//                            vm.manageRecentVocabulary(voca: vocabulary)
+//                            print("gesture \(vocabulary.name)")
+//                        }
+//                    
+//                case "FR" :
+//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+//                        .onAppear {
+//                            vm.manageRecentVocabulary(voca: vocabulary)
+//                            print("gesture \(vocabulary.name)")
+//                        }
+//                case "EN" :
+//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+//                        .onAppear {
+//                            vm.manageRecentVocabulary(voca: vocabulary)
+//                            print("gesture \(vocabulary.name)")
+//                        }
+//                case "KO" :
+//                    JPWordListView(vocabulary: vocabulary)
+//                        .onAppear {
+//                            vm.manageRecentVocabulary(voca: vocabulary)
+//                            print("gesture \(vocabulary.name)")
+//                        }
+//                    
+//                default:
+//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+//                        .onAppear {
+//                            vm.manageRecentVocabulary(voca: vocabulary)
+//                            print("gesture")
+//                        }
+//                }
 
             } label: {
                 VStack { Text(vocabulary.name ?? "") }

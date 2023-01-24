@@ -140,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				16FFDC57297A6D580082007C /* Model */,
-				EA30AF9629778FCA00C49CF3 /* WordListView */,
+				EA30AF9629778FCA00C49CF3 /* WordList */,
 				162EE04E29509F4E0065E103 /* CommonView */,
 				162EE04C29509F130065E103 /* JPWordListView */,
 				162EE04B29509F040065E103 /* FRWordListView */,
@@ -277,7 +277,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		EA30AF9629778FCA00C49CF3 /* WordListView */ = {
+		EA30AF9629778FCA00C49CF3 /* WordList */ = {
 			isa = PBXGroup;
 			children = (
 				639B31EA298059CD00955DE4 /* WordListViewModel.swift */,
@@ -288,7 +288,7 @@
 				639B31EC29806E1600955DE4 /* AddNewWordView.swift */,
 				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 			);
-			path = WordListView;
+			path = WordList;
 			sourceTree = "<group>";
 		};
 		EAB4FFA72977C7D60070941A /* Modifier */ = {

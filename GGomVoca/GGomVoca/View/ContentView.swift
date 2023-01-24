@@ -25,7 +25,7 @@ struct ContentView: View {
                         if vocabulary.nationality == "FR" {
                             FRWordListView(vocabularyID: vocabulary.id ?? UUID())
                         } else {
-                            JPWordListView(vocabulary: vocabulary)
+                            WordListView(vocabularyID: vocabulary.id ?? UUID())
                         }
                     } label: {
                         Text(vocabulary.name ?? "")
