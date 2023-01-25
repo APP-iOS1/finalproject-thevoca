@@ -16,7 +16,7 @@ struct WordCell: View {
     @Binding var editingWord: Word // 편집하려는 단어 보내주기 위해서 사용
     /// - 단어 리스트 편집 관련 State
     @Binding var isSelectionMode: Bool
-    @Binding var multiSelection: Set<String>
+    @Binding var multiSelection: Set<Word>
     
     // MARK: View Properties
     @State var isSelected: Bool = false
@@ -25,7 +25,7 @@ struct WordCell: View {
     let word: Word
     
     var checkImage: Image {
-        isSelected ? Image(systemName: "checkmark.circle") : Image(systemName: "circle")
+        isSelected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
     }
     
     var body: some View {
@@ -36,15 +36,15 @@ struct WordCell: View {
                     isSelected.toggle()
                     
                     if isSelected {
-                        multiSelection.insert(word.id?.uuidString ?? "")
+                        multiSelection.insert(word)
                     } else {
-                        multiSelection.remove(word.id?.uuidString ?? "")
+                        multiSelection.remove(word)
                     }
                 } label: {
                     checkImage
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(isSelected ? .accentColor : .secondary)
                         .padding(.leading, 20)
                 }
             }
@@ -100,8 +100,8 @@ struct WordCell: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    // 단어장 편집모드에서 체크박스 뿐만이 아니라 cell을 눌러도 체크될 수 있도록
                     if !isSelectionMode {
+                        /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
                         if unmaskedWords.contains(word.id) {
                             if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
                                 unmaskedWords.remove(at: tmpIndex)
@@ -110,13 +110,14 @@ struct WordCell: View {
                             unmaskedWords.append(word.id)
                         }
                     } else {
+                        /// - 단어장 편집모드에서 체크박스 뿐만이 아니라 cell을 눌러도 체크될 수 있도록
                         isSelected.toggle()
                         if isSelected {
                             // 선택된 단어를 Set에 삽입
-                            multiSelection.insert(word.id?.uuidString ?? "")
+                            multiSelection.insert(word)
                         } else {
                             // 선택해제된 단어를 Set에서 제거
-                            multiSelection.remove(word.id?.uuidString ?? "")
+                            multiSelection.remove(word)
                         }
                     }
                 }

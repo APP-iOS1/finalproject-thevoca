@@ -27,10 +27,10 @@ struct WordListView: View {
     
     // MARK: 단어장 편집모드 관련 State
     @State var isSelectionMode: Bool = false
-    @State private var multiSelection: Set<String> = Set<String>()
+    @State private var multiSelection: Set<Word> = Set<Word>()
     
     var body: some View {
-        VStack{
+        VStack(spacing: 0) {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
             
             if viewModel.words.isEmpty {
@@ -45,7 +45,6 @@ struct WordListView: View {
                 }
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)
-                
             } else {
                 WordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
             }
@@ -61,6 +60,10 @@ struct WordListView: View {
                         
                         Button("삭제", role: .destructive) {
                             // TODO: 단어삭제를 위한 메서드 작성
+                            for word in multiSelection {
+                                viewModel.deleteWord(word: word)
+                            }
+                            isSelectionMode.toggle()
                         }
                         .padding()
                     }
@@ -68,7 +71,7 @@ struct WordListView: View {
                 }
             }
         }
-        .navigationTitle(navigationTitle)
+        .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
@@ -80,8 +83,17 @@ struct WordListView: View {
             AddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
                 .presentationDetents([.height(CGFloat(500))])
         }
+        // 단어장 내보내기
+        .fileExporter(isPresented: $isExport, document: CSVFile(initialText: viewModel.buildDataForCSV() ?? ""), contentType: .commaSeparatedText, defaultFilename: "\(navigationTitle)") { result in
+            switch result {
+            case .success(let url):
+                print("Saved to \(url)")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         .toolbar {
-            // TODO: toolbar State 분기
+            // TODO: 편집모드에 따른 toolbar State 분기
             if !isSelectionMode { // 기존에 보이는 툴바
                 ToolbarItem {
                     VStack(alignment: .center) {
@@ -136,25 +148,15 @@ struct WordListView: View {
                                 Image(systemName: "square.and.arrow.up")
                             }
                         }
-                        .disabled(true)
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
                 }
-            } else { // 새롭게 보이는 툴바
+            } else { // 편집모드에서 보이는 툴바
                 ToolbarItem {
-                    VStack(alignment: .center) {
-                        Text("\(multiSelection.count)")
-                            .foregroundColor(.gray)
-                    }
-                }
-                
-                ToolbarItem {
-                    Button {
+                    Button("취소", role: .cancel) {
                         isSelectionMode.toggle()
                         multiSelection.removeAll()
-                    } label: {
-                        Text("취소")
                     }
                 }
             }
