@@ -31,25 +31,60 @@ struct EditWordView: View {
     private var meaning: String {
         inputMeaning.trimmingCharacters(in: .whitespaces)
     }
+    
+    // 입력값이 공백일 때 경고메세지 출력 조건
+    @State private var isWordEmpty: Bool = false
+    @State private var isMeaningEmpty: Bool = false
 
     var body: some View {
         NavigationView {
             Form {
-                Section("단어") {
+                Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
-                }
-                
-                Section("성별") {
-                    Picker("성별", selection: $inputOption) {
-                        Text("성별 없음").tag("")
-                        Text("남성형").tag("m")
-                        Text("여성형").tag("f")
+                        .textInputAutocapitalization(.never)
+                } header: {
+                    HStack {
+                        Text("단어")
+                        if isWordEmpty {
+                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        }
                     }
-                    .pickerStyle(.segmented)
                 }
                 
-                Section("뜻") {
+                switch viewModel.selectedVocabulary.nationality {
+                case "KO", "JA":
+                    Section(header: Text("발음")) {
+                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                            .textInputAutocapitalization(.never)
+                    }
+                    
+                case "FR":
+                    Section(header: Text("성별")) {
+                        Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
+                            Text("남성형").tag("m")
+                            Text("여성형").tag("f")
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
+                case "EN":
+                    EmptyView()
+                    
+                default:
+                    Text("default")
+                }
+                
+                Section {
                     TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
+                        .textInputAutocapitalization(.never)
+                } header: {
+                    HStack {
+                        Text("뜻")
+                        if isMeaningEmpty {
+                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        }
+                    }
                 }
             }
             .navigationTitle("단어 수정")
@@ -67,13 +102,12 @@ struct EditWordView: View {
                 // 변경 내용 저장 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("변경") {
-                        if !word.isEmpty && !meaning.isEmpty {
+                        word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
+                        meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
+                        
+                        if !isWordEmpty && !isMeaningEmpty {
                             viewModel.updateWord(editWord: editingWord, word: word, meaning: meaning, option: option)
-                            
-                            inputWord = ""
-                            inputMeaning = ""
-                            inputOption = ""
-                            
+
                             editWord.toggle()
                         }
                     }
