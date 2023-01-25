@@ -39,6 +39,9 @@ class WordListViewModel: ObservableObject {
     // MARK: 단어 삭제하기
     func deleteWord(word: Word) {
         word.deletedAt = "\(Date())"
+        
+        saveContext()
+        
         if let tempIndex = words.firstIndex(of: word) {
             words.remove(at: tempIndex)
         }
@@ -101,7 +104,7 @@ class WordListViewModel: ObservableObject {
     }
 
     // MARK: Build Data For CSV
-    func buildDataForCSV(vocabularyID: Vocabulary.ID) -> String? {
+    func buildDataForCSV() -> String? {
         var fullText = "word,option,meaning\n"
         
         for word in words {
