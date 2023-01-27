@@ -40,7 +40,7 @@ struct WordListView: View {
                     HStack {
                         Text("\(emptyMessage) : ")
                             .bold()
-                        Text("비어있는")
+                        Text("비어 있는")
                     }
                 }
                 .foregroundColor(.gray)

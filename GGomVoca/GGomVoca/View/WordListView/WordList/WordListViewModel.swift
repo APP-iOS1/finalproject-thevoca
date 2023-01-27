@@ -93,9 +93,9 @@ class WordListViewModel: ObservableObject {
             case "IT":
                 return "Vida"
             case "KO":
-                return "비어있는"
+                return "비어 있는"
             case "JA":
-                return "空"
+                return "空っぽの"
             default :
                 return " "
             }
