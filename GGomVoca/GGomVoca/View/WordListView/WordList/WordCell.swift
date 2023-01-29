@@ -8,23 +8,21 @@
 import SwiftUI
 
 struct WordCell: View {
-    @Binding var selectedSegment: ProfileSection
-    @Binding var selectedWord: [UUID]
-    
-    // MARK: 단어 수정 관련
-    @Binding var isShowingEditWordView: Bool
-    @Binding var bindingWord: Word // 편집하려는 단어 보내주기 위해서 사용
-    
+    // MARK: SuperView Properties
+    var selectedSegment: ProfileSection
+    @Binding var unmaskedWords: [Word.ID]
+    /// - 단어 리스트 편집 관련 State
     @Binding var isSelectionMode: Bool
-    @Binding var multiSelection: Set<String>
-    @State var isTextShowing: Bool = true
+    @Binding var multiSelection: Set<Word>
+    
+    // MARK: View Properties
     @State var isSelected: Bool = false
     
     let nationality: String
     let word: Word
     
     var checkImage: Image {
-        isSelected ? Image(systemName: "checkmark.circle") : Image(systemName: "circle")
+        isSelected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
     }
     
     var body: some View {
@@ -35,53 +33,61 @@ struct WordCell: View {
                     isSelected.toggle()
                     
                     if isSelected {
-                        multiSelection.insert(word.id?.uuidString ?? "")
+                        multiSelection.insert(word)
                     } else {
-                        multiSelection.remove(word.id?.uuidString ?? "")
+                        multiSelection.remove(word)
                     }
                 } label: {
                     checkImage
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(isSelected ? .accentColor : .secondary)
                         .padding(.leading, 20)
                 }
             }
             
             switch nationality {
-            case "JA":
+            case "KO", "JA":
                 HStack {
                     Text(word.word ?? "")
                         .frame(maxWidth: .infinity, alignment: .center)
                         .multilineTextAlignment(.center)
-                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                     Text(word.option ?? "")
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                     Text(word.meaning ?? "")
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                        .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                        .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
             case "FR", "EN":
                 Text(word.word ?? "")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
-                    .opacity((selectedSegment == .wordTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                    .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                
                 HStack(spacing: 0) {
-//                    Image(systemName: word.option == "f" ? "f.square" : "m.square")
-//                        .font(.subheadline)
-//                        .opacity(0.5)
-//                    Text(word.meaning ?? "")
-                    Image(systemName: word.option == "f" ? "f.square" : word.option == "m" ? "m.square" : "" )
-                        .font(.subheadline)
-                        .opacity(0.5)
-                        .padding(.trailing, 5)
+                    // MARK: 단어의 성별에 따라 표시하는 이미지 변경
+                    switch word.option {
+                    case "f":
+                        Image(systemName: "f.square")
+                            .font(.subheadline)
+                            .opacity(0.5)
+                            .padding(.trailing, 5)
+                    case "m":
+                        Image(systemName: "m.square")
+                            .font(.subheadline)
+                            .opacity(0.5)
+                            .padding(.trailing, 5)
+                    default:
+                        EmptyView()
+                    }
 
                     Text(word.meaning ?? "")
-
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-                .opacity((selectedSegment == .meaningTest && !selectedWord.contains(word.id!)) ? 0 : 1)
+                .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
+                
             default:
                 Text("default")
             }
@@ -91,23 +97,24 @@ struct WordCell: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    // 단어장 편집모드에서 체크박스 뿐만이 아니라 cell을 눌러도 체크될 수 있도록
                     if !isSelectionMode {
-                        if selectedWord.contains(word.id!) {
-                            if let tmpIndex = selectedWord.firstIndex(of: word.id!) {
-                                selectedWord.remove(at: tmpIndex)
+                        /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
+                        if unmaskedWords.contains(word.id) {
+                            if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
+                                unmaskedWords.remove(at: tmpIndex)
                             }
                         } else {
-                            selectedWord.append(word.id!)
+                            unmaskedWords.append(word.id)
                         }
                     } else {
+                        /// - 단어장 편집모드에서 체크박스 뿐만이 아니라 cell을 눌러도 체크될 수 있도록
                         isSelected.toggle()
                         if isSelected {
                             // 선택된 단어를 Set에 삽입
-                            multiSelection.insert(word.id?.uuidString ?? "")
+                            multiSelection.insert(word)
                         } else {
                             // 선택해제된 단어를 Set에서 제거
-                            multiSelection.remove(word.id?.uuidString ?? "")
+                            multiSelection.remove(word)
                         }
                     }
                 }
@@ -121,22 +128,6 @@ struct WordCell: View {
                 isSelected = false
             }
         }
-        .contextMenu(ContextMenu {
-            if selectedSegment == .normal {
-                Button {
-                    bindingWord = word
-                    isShowingEditWordView.toggle()
-                } label: {
-                    Label("수정하기", systemImage: "gearshape.fill")
-                }
-                Button {
-                    // Voice Over
-                } label: {
-                    Label("발음 듣기", systemImage: "mic.fill")
-                }
-            }
-            
-        })
     }
 }
 

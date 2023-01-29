@@ -14,7 +14,7 @@ struct VocabularyListView: View {
     //뷰모델
     @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
     //NavigationSplitView 선택 단어장 Id
-    @State var selectedVocaId : UUID?
+    @State var selectedVocaId : Vocabulary.ID?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
     
@@ -26,61 +26,49 @@ struct VocabularyListView: View {
     var body: some View {
         if #available(iOS 16, *) {
            // [iOS 16.0 버전 이상 인 경우 SplitView ]
-            NavigationSplitView(sidebar: {
-                
+            NavigationSplitView {
                 initVocaListView()
-            }, detail: {
-              //Navigation Split DetailView 단어장 화면 (WordListView)
-                VStack{
-                    
-                    if
-                        let vocaId = self.selectedVocaId,
-                        let nationality = getVocaItem(for: vocaId).nationality{
-                        switch nationality{
-                        case "JA":
-                           
-                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
-                            //TODO: 최근본 단어장 추가
-                        case "FR":
-                           
-                            FRWordListView(vocabularyID: vocaId)
-                            //TODO: 최근본 단어장 추가
-
-                        //TODO: 영어(En) 케이스 추가
-                        case "EN":
-                            FRWordListView(vocabularyID: vocaId)
-                        case "KO":
-                            JPWordListView( vocabulary: getVocaItem(for: vocaId))
-                        default:
-                           
-                            FRWordListView(vocabularyID: vocaId)
-                        }
-
-
-                    }
-                    
-                    
-                    //
+            } detail: {
+                if let selectedVocaId {
+                    WordListView(vocabularyID: selectedVocaId)
                 }
-                
-                    
-                
-                
-                
-            })
+            }
+
+//            NavigationSplitView(sidebar: {
+//
+//            }, detail: {
+//              //Navigation Split DetailView 단어장 화면 (WordListView)
+//                ZStack{
+//                    if
+//                        let vocaId = self.selectedVocaId,
+//                        let nationality = getVocaItem(for: vocaId).nationality {
+//                        switch nationality{
+//                        case "KO":
+//                            KOWordListView(vocabularyID: vocaId)
+//                        case "EN":
+//                            FRWordListView(vocabularyID: vocaId)
+//                        case "JA":
+//                            JPWordListView(vocabulary: getVocaItem(for: vocaId))
+//                        case "FR":
+//                            FRWordListView(vocabularyID: vocaId)
+//                        default:
+//                            FRWordListView(vocabularyID: vocaId)
+//                        }
+//                    }
+//                }
+//            })
         }
         else {
            // [iOS 16.0 버전 미만 인 경우 ]
-            NavigationStack {
+            NavigationView {
                 initVocaListView()
             }
         }
-
     }
     /*
      VocabularyList View
      */
-    func initVocaListView() -> some View{
+    func initVocaListView() -> some View {
         List(selection: $selectedVocaId) {
             Section(header: Text("최근 본 단어장")) {
                 if !viewModel.recentVocabularyList.isEmpty {
@@ -97,9 +85,9 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             // !가 앞에 붙으면 내용이 반전
             Section(header: Text("즐겨찾기")) {
-           
                 if viewModel.favoriteVoca.count > 0 {
                     ForEach(viewModel.favoriteVoca) { vocabulary in
                         VocabularyCell(
@@ -115,19 +103,16 @@ struct VocabularyListView: View {
                 } else {
                     VStack {
                         HStack {
-//                                Spacer()
                             VStack(spacing: 4) {
                                 Text("즐겨찾기 된 단어장이 없습니다.")
                                 Text("오른쪽으로 밀어 즐겨찾기")
                             }
                             .horizontalAlignSetting(.center)
-//                                Spacer()
                         }
                     }
                     .foregroundColor(.gray)
                 }
             }
-            
             
             if !viewModel.koreanVoca.isEmpty {
                 Section(header: Text("한국어")) {
@@ -145,6 +130,7 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             if !viewModel.japaneseVoca.isEmpty {
                 Section(header: Text("일본어")) {
                     ForEach(viewModel.japaneseVoca) { vocabulary in
@@ -161,10 +147,10 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             if !viewModel.englishVoca.isEmpty {
                 Section(header: Text("영어")) {
                     ForEach(viewModel.englishVoca) { vocabulary in
-                        
                             VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
@@ -173,14 +159,13 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
-                        
                     }
                 }
             }
+            
             if !viewModel.chineseVoca.isEmpty {
                 Section(header: Text("중국어")) {
                     ForEach(viewModel.chineseVoca) { vocabulary in
-                        
                             VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
@@ -189,14 +174,13 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
-                        
                     }
                 }
             }
+            
             if !viewModel.frenchVoca.isEmpty {
                 Section(header: Text("프랑스어")) {
                     ForEach(viewModel.frenchVoca) { vocabulary in
-                        
                             VocabularyCell(favoriteCompletion: {
                                 print("click")
                                 viewModel.getVocabularyData()
@@ -209,6 +193,7 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             if !viewModel.germanVoca.isEmpty {
                 Section(header: Text("독일어")) {
                     ForEach(viewModel.germanVoca) { vocabulary in
@@ -225,6 +210,7 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             if !viewModel.spanishVoca.isEmpty {
                 Section(header: Text("스페인어")) {
                     ForEach(viewModel.spanishVoca) { vocabulary in
@@ -241,6 +227,7 @@ struct VocabularyListView: View {
                     }
                 }
             }
+            
             if !viewModel.italianVoca.isEmpty {
                 Section(header: Text("이탈리아어")) {
                     ForEach(viewModel.italianVoca) { vocabulary in
@@ -258,35 +245,28 @@ struct VocabularyListView: View {
                 }
             }
         }
-        .onAppear(perform: {
-            //fetch 단어장 data
-            viewModel.getVocabularyData()
-            viewModel.recentVocabularyList = getRecentVocabulary()
-            
-        })
-        
         .navigationBarTitle("단어장")
         .navigationBarItems(trailing: Button(action: {
             isShowingAddVocabulary.toggle()
-        }, label: {
-            Image(systemName: "plus")
-        })
-            .sheet(isPresented: $isShowingAddVocabulary, content: {
-                AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
-                    .presentationDetents([.height(CGFloat(270))])
-                    .onDisappear(perform: {
-                        //fetch 단어장 data
-                        viewModel.getVocabularyData()
-                    })
-            })
-        )
+        }, label: { Image(systemName: "plus") }))
+        .onAppear {
+            //fetch 단어장 data
+            viewModel.getVocabularyData()
+            viewModel.recentVocabularyList = getRecentVocabulary()
+        }
+        .sheet(isPresented: $isShowingAddVocabulary) {
+            AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
+                .presentationDetents([.height(CGFloat(270))])
+                .onDisappear {
+                    //fetch 단어장 data
+                    viewModel.getVocabularyData()
+                }
+        }
     }
-    
     
     func getVocaItem(for itemID: UUID) -> Vocabulary {
         print(itemID)
-        guard let vocaItem = viewModel.vocabularyList.first(where: { $0.id == itemID }) as? Vocabulary else{
-            
+        guard let vocaItem = viewModel.vocabularyList.first(where: {$0.id == itemID }) else {
             return Vocabulary()
         }
         
@@ -298,10 +278,9 @@ struct VocabularyListView: View {
         var result = [Vocabulary]()
         let vocaIds = UserManager.shared.recentVocabulary
         vocaIds.forEach{
-            if let id = UUID(uuidString: $0){
+            if let id = UUID(uuidString: $0) {
                 result.append(getVocaItem(for: id))
             }
-            
         }
         print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
         return result

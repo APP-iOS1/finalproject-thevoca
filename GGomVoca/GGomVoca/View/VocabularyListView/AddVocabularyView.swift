@@ -84,6 +84,6 @@ struct AddVocabularyView: View {
 
 struct AddVocabularyView_Previews: PreviewProvider {
     static var previews: some View {
-        AddVocabularyView(isShowingAddVocabulary: .constant(false))//, viewModel: .constant(<#T##value: VocabularyListViewModel##VocabularyListViewModel#>) )
+        AddVocabularyView(isShowingAddVocabulary: .constant(false))
     }
 }
