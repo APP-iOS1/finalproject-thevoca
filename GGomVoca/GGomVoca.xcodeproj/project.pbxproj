@@ -140,8 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				16FFDC57297A6D580082007C /* Model */,
-				EA30AF9629778FCA00C49CF3 /* WordList */,
 				162EE04E29509F4E0065E103 /* CommonView */,
+				EA30AF9629778FCA00C49CF3 /* WordList */,
 				162EE04C29509F130065E103 /* JPWordListView */,
 				162EE04B29509F040065E103 /* FRWordListView */,
 			);
@@ -175,8 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
-				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
+				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";

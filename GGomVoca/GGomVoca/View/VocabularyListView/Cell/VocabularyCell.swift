@@ -19,52 +19,49 @@ struct VocabularyCell: View {
     @State var isShowingDeleteAlert: Bool = false
     
     var body: some View {
-        HStack {
-            NavigationLink {
-                
-                WordListView(vocabularyID: vocabulary.id)
-                
-//                switch vocabulary.nationality! {
-//                case "JA" :
-//                    JPWordListView(vocabulary: vocabulary)
-//                        .onAppear {
-//                            vm.manageRecentVocabulary(voca: vocabulary)
-//                            print("gesture \(vocabulary.name)")
-//                        }
-//                    
-//                case "FR" :
-//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-//                        .onAppear {
-//                            vm.manageRecentVocabulary(voca: vocabulary)
-//                            print("gesture \(vocabulary.name)")
-//                        }
-//                case "EN" :
-//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-//                        .onAppear {
-//                            vm.manageRecentVocabulary(voca: vocabulary)
-//                            print("gesture \(vocabulary.name)")
-//                        }
-//                case "KO" :
-//                    JPWordListView(vocabulary: vocabulary)
-//                        .onAppear {
-//                            vm.manageRecentVocabulary(voca: vocabulary)
-//                            print("gesture \(vocabulary.name)")
-//                        }
-//                    
-//                default:
-//                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-//                        .onAppear {
-//                            vm.manageRecentVocabulary(voca: vocabulary)
-//                            print("gesture")
-//                        }
-//                }
-
-            } label: {
-                VStack { Text(vocabulary.name ?? "") }
-            }
+        NavigationLink {
+            WordListView(vocabularyID: vocabulary.id)
+            
+            //                switch vocabulary.nationality! {
+            //                case "JA" :
+            //                    JPWordListView(vocabulary: vocabulary)
+            //                        .onAppear {
+            //                            vm.manageRecentVocabulary(voca: vocabulary)
+            //                            print("gesture \(vocabulary.name)")
+            //                        }
+            //
+            //                case "FR" :
+            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+            //                        .onAppear {
+            //                            vm.manageRecentVocabulary(voca: vocabulary)
+            //                            print("gesture \(vocabulary.name)")
+            //                        }
+            //                case "EN" :
+            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+            //                        .onAppear {
+            //                            vm.manageRecentVocabulary(voca: vocabulary)
+            //                            print("gesture \(vocabulary.name)")
+            //                        }
+            //                case "KO" :
+            //                    JPWordListView(vocabulary: vocabulary)
+            //                        .onAppear {
+            //                            vm.manageRecentVocabulary(voca: vocabulary)
+            //                            print("gesture \(vocabulary.name)")
+            //                        }
+            //
+            //                default:
+            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
+            //                        .onAppear {
+            //                            vm.manageRecentVocabulary(voca: vocabulary)
+            //                            print("gesture")
+            //                        }
+            //                }
+            //
+        } label: {
+            Text(vocabulary.name ?? "")
         }
-        
-        //단어장 즐겨찾기 추가 스와이프
+    
+    //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
@@ -75,7 +72,7 @@ struct VocabularyCell: View {
             }
             .tint(vocabulary.isFavorite ? .gray : .yellow)
         }
-        //단어장 삭제 스와이프
+    //단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 //updateData(id: vocabulary.id!)
@@ -93,7 +90,7 @@ struct VocabularyCell: View {
                 
             }), secondaryButton: .cancel(Text("취소")))
         }
-    }
+}
 }
 
 //struct VocabularyCell_Previews: PreviewProvider {
