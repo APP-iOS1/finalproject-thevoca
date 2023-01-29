@@ -14,7 +14,7 @@ struct WordListView: View {
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
-    @State var navigationTitle: String = ""
+    @State private var navigationTitle: String = ""
     @State private var emptyMessage: String = ""
     @State private var selectedSegment: ProfileSection = .normal
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
@@ -22,10 +22,10 @@ struct WordListView: View {
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
-    // MARK: 단어장 내보내기 관련 State
+    /// - 단어장 내보내기 관련 State
     @State var isExport: Bool = false
     
-    // MARK: 단어장 편집모드 관련 State
+    /// - 단어장 편집모드 관련 State
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
     
@@ -56,14 +56,23 @@ struct WordListView: View {
                         .frame(height: 1)
                     
                     HStack {
+                        // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "folder")
+                        }
+
                         Spacer()
                         
-                        Button("삭제", role: .destructive) {
-                            // TODO: 단어삭제를 위한 메서드 작성
+                        // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
+                        Button(role: .destructive) {
                             for word in multiSelection {
                                 viewModel.deleteWord(word: word)
                             }
                             isSelectionMode.toggle()
+                        } label: {
+                            Image(systemName: "trash")
                         }
                         .padding()
                     }

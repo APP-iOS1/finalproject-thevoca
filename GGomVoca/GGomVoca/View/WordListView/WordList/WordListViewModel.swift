@@ -56,7 +56,7 @@ class WordListViewModel: ObservableObject {
         editWord.option = option
         
         saveContext()
-        
+
         words[tempIndex] = editWord
     }
     
@@ -80,22 +80,22 @@ class WordListViewModel: ObservableObject {
     func getEmptyWord() -> String {
         var emptyMsg: String {
             switch nationality {
+            case "KO":
+                return "비어 있는"
+            case "EN":
+                return "Empty"
+            case "JA":
+                return "空っぽの"
+            case "FR":
+                return "Vide"
             case "CH":
                 return "空"
             case "DE":
                 return "Geleert"
-            case "EN":
-                return "Empty"
             case "ES":
                 return "Vacío"
-            case "FR":
-                return "Vide"
             case "IT":
                 return "Vida"
-            case "KO":
-                return "비어 있는"
-            case "JA":
-                return "空っぽの"
             default :
                 return " "
             }

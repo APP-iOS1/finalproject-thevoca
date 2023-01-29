@@ -27,7 +27,7 @@ struct WordsTableView: View {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
                     ForEach(viewModel.words) { word in
-                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, editWord: $editWord, editingWord: $editingWord, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: viewModel.nationality, word: word)
+                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: viewModel.nationality, word: word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
@@ -37,14 +37,30 @@ struct WordsTableView: View {
                                     print("default")
                                 }
                             })
+                            .contextMenu {
+                                if selectedSegment == .normal {
+                                    Button {
+                                        editingWord = word
+                                        editWord.toggle()
+                                    } label: {
+                                        Label("수정하기", systemImage: "gearshape.fill")
+                                    }
+                                    
+                                    Button {
+                                        // Voice Over
+                                    } label: {
+                                        Label("발음 듣기", systemImage: "mic.fill")
+                                    }
+                                }
+                            }
+                        
                         Divider()
                     }
                 } header: {
                     VStack(spacing: 0) {
                         HStack {
                             if isSelectionMode {
-                                /// header도 밑의 내용과 같은 위치에 나오도록 하기위해서 circle image를 같이 띄워줌
-                                /// clear로 띄우거나 배경과 같은 색으로 띄워줘서 원 있는거 모르게 하기
+                                /// - 편집모드에서 header도 체크용 원만큼 오른쪽으로 밀리도록 하기 위해 circle image를 배경색과 같은색으로 띄움
                                 Image(systemName: "circle")
                                     .resizable()
                                     .frame(width: 25, height: 25)
@@ -53,15 +69,15 @@ struct WordsTableView: View {
                             }
                             
                             switch viewModel.nationality {
-                            case "EN", "FR":
-                                Text("단어")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                Text("뜻")
-                                    .frame(maxWidth: .infinity, alignment: .center)
                             case "KO", "JA":
                                 Text("단어")
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 Text("발음")
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                Text("뜻")
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                            case "EN", "FR":
+                                Text("단어")
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 Text("뜻")
                                     .frame(maxWidth: .infinity, alignment: .center)

@@ -11,9 +11,6 @@ struct WordCell: View {
     // MARK: SuperView Properties
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
-    /// - 단어 수정 관련 State
-    @Binding var editWord: Bool
-    @Binding var editingWord: Word // 편집하려는 단어 보내주기 위해서 사용
     /// - 단어 리스트 편집 관련 State
     @Binding var isSelectionMode: Bool
     @Binding var multiSelection: Set<Word>
@@ -129,21 +126,6 @@ struct WordCell: View {
             // 체크 해제
             if !selectMode {
                 isSelected = false
-            }
-        }
-        .contextMenu {
-            if selectedSegment == .normal {
-                Button {
-                    editingWord = word
-                    editWord.toggle()
-                } label: {
-                    Label("수정하기", systemImage: "gearshape.fill")
-                }
-                Button {
-                    // Voice Over
-                } label: {
-                    Label("발음 듣기", systemImage: "mic.fill")
-                }
             }
         }
     }
