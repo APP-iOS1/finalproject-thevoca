@@ -27,7 +27,9 @@ struct WordsTableView: View {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
                     ForEach(viewModel.words) { word in
-                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, nationality: viewModel.nationality, word: word)
+                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
+                                 isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
+                                 nationality: viewModel.nationality, word: word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
