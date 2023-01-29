@@ -33,30 +33,25 @@ struct VocabularyListView: View {
                     WordListView(vocabularyID: selectedVocaId)
                 }
             }
-
-//            NavigationSplitView(sidebar: {
-//
-//            }, detail: {
-//              //Navigation Split DetailView 단어장 화면 (WordListView)
-//                ZStack{
-//                    if
-//                        let vocaId = self.selectedVocaId,
-//                        let nationality = getVocaItem(for: vocaId).nationality {
-//                        switch nationality{
-//                        case "KO":
-//                            KOWordListView(vocabularyID: vocaId)
-//                        case "EN":
-//                            FRWordListView(vocabularyID: vocaId)
-//                        case "JA":
-//                            JPWordListView(vocabulary: getVocaItem(for: vocaId))
-//                        case "FR":
-//                            FRWordListView(vocabularyID: vocaId)
-//                        default:
-//                            FRWordListView(vocabularyID: vocaId)
-//                        }
+            
+//            NavigationSplitView {
+//                initVocaListView()
+//            } detail: {
+//                if let selectedVocaId, let nationality = getVocaItem(for: selectedVocaId).nationality {
+//                    switch nationality {
+//                    case "KO":
+//                        KOWordListView(vocabularyID: vocaId)
+//                    case "EN":
+//                        FRWordListView(vocabularyID: vocaId)
+//                    case "JA":
+//                        JPWordListView(vocabulary: getVocaItem(for: vocaId))
+//                    case "FR":
+//                        FRWordListView(vocabularyID: vocaId)
+//                    default:
+//                        WordListView(vocabularyID: vocaId)
 //                    }
 //                }
-//            })
+//            }
         }
         else {
            // [iOS 16.0 버전 미만 인 경우 ]
