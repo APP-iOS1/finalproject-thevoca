@@ -134,6 +134,7 @@
 				162EE04F29509F4E0065E103 /* SegmentView.swift */,
 				63B095F4297670C200E6BB21 /* ImportCSVFileViewModel.swift */,
 				6371E0452952058D003A1A08 /* ImportCSVFileView.swift */,
+				EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -181,9 +182,6 @@
 				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
 				EE57C05B29518833004312CE /* Component */,
 				63DC854B2950321D00461DEB /* View */,
-				63DC854A2950321500461DEB /* ViewModel */,
-				63DC85482950317D00461DEB /* Store */,
-				63DC8549295031E400461DEB /* Model */,
 				63DC85362950312E00461DEB /* Persistence.swift */,
 				6371E04D29530716003A1A08 /* Assets.xcassets */,
 				6371E04F29530737003A1A08 /* Launch Screen.storyboard */,
@@ -200,27 +198,6 @@
 				63DC85412950312F00461DEB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		63DC85482950317D00461DEB /* Store */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Store;
-			sourceTree = "<group>";
-		};
-		63DC8549295031E400461DEB /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		63DC854A2950321500461DEB /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		63DC854B2950321D00461DEB /* View */ = {
@@ -241,7 +218,6 @@
 				EA30AF9729778FE200C49CF3 /* WordListView.swift */,
 				EA30AF992977908200C49CF3 /* WordsTableView.swift */,
 				EA30AF94297784AC00C49CF3 /* WordCell.swift */,
-				EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */,
 				639B31EC29806E1600955DE4 /* AddNewWordView.swift */,
 				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 			);
