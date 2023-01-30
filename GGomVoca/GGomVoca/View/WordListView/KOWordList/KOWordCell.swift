@@ -46,50 +46,17 @@ struct KOWordCell: View {
                 }
             }
             
-            switch nationality {
-            case "KO", "JA":
-                HStack {
-                    Text(word.word ?? "")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .multilineTextAlignment(.center)
-                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                    Text(word.option ?? "")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                    Text(word.meaning ?? "")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                        .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                }
-            case "FR", "EN":
+            HStack {
                 Text(word.word ?? "")
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                
-                HStack(spacing: 0) {
-                    // MARK: 단어의 성별에 따라 표시하는 이미지 변경
-                    switch word.option {
-                    case "f":
-                        Image(systemName: "f.square")
-                            .font(.subheadline)
-                            .opacity(0.5)
-                            .padding(.trailing, 5)
-                    case "m":
-                        Image(systemName: "m.square")
-                            .font(.subheadline)
-                            .opacity(0.5)
-                            .padding(.trailing, 5)
-                    default:
-                        EmptyView()
-                    }
-
-                    Text(word.meaning ?? "")
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
-                
-            default:
-                Text("default")
+                Text(word.option ?? "")
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                Text(word.meaning ?? "")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             }
         }
         .background {
