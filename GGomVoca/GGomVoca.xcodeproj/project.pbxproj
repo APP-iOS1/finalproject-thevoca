@@ -11,6 +11,7 @@
 		03F904E829514B9B003262AE /* SearchListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904E729514B9B003262AE /* SearchListCell.swift */; };
 		03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F904EA295155B2003262AE /* SearchingWordModel.swift */; };
 		162EE05129509F4E0065E103 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE04F29509F4E0065E103 /* SegmentView.swift */; };
+		165BA9792987861D0067F217 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BA9782987861D0067F217 /* String+.swift */; };
 		16F432402952A46C000D74B0 /* EditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F4323F2952A46C000D74B0 /* EditWordView.swift */; };
 		16FFDC59297A6D680082007C /* CSVFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FFDC58297A6D680082007C /* CSVFile.swift */; };
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
@@ -71,6 +72,7 @@
 		03F904E729514B9B003262AE /* SearchListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchListCell.swift; sourceTree = "<group>"; };
 		03F904EA295155B2003262AE /* SearchingWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingWordModel.swift; sourceTree = "<group>"; };
 		162EE04F29509F4E0065E103 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		165BA9782987861D0067F217 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		16F4323F2952A46C000D74B0 /* EditWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWordView.swift; sourceTree = "<group>"; };
 		16FFDC58297A6D680082007C /* CSVFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVFile.swift; sourceTree = "<group>"; };
 		6371E0452952058D003A1A08 /* ImportCSVFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportCSVFileView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				63B095F2297631F100E6BB21 /* View+.swift */,
 				63B095F62976832C00E6BB21 /* DataFrame+.swift */,
+				165BA9782987861D0067F217 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
 				639B31EB298059CD00955DE4 /* WordListViewModel.swift in Sources */,
 				63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */,
+				165BA9792987861D0067F217 /* String+.swift in Sources */,
 				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
 				63EA4AC929875DF4009392EE /* ENAddNewWordView.swift in Sources */,
 				63EA4ABB29875DE8009392EE /* KOAddNewWordView.swift in Sources */,
