@@ -14,7 +14,7 @@ class JPWordListViewModel: ObservableObject {
     
     // MARK: Vocabulary Properties
     var selectedVocabulary: Vocabulary = Vocabulary()
-    var nationality: String = "JP"
+    var nationality: String = "JA"
 
     @Published var words: [Word] = []
     
