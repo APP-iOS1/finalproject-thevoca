@@ -1,16 +1,16 @@
 //
-//  JPAddNewWordView.swift
+//  AddNewWordView.swift
 //  GGomVoca
 //
-//  Created by Roen White on 2022/12/20.
+//  Created by do hee kim on 2023/01/20.
 //
 
 import SwiftUI
-//일본어 단어 추가 시트 뷰
-struct JPAddNewWordView: View {
+// 단어 추가 시트 뷰
+struct AddNewWordView2: View {
    
     var vocabulary: Vocabulary
-    var viewModel : JPAddNewWordViewModel = JPAddNewWordViewModel()
+    var viewModel : AddNewWordViewModel = AddNewWordViewModel()
     @Binding var isShowingAddWordView: Bool
     @Binding var words: [Word]
     @Binding var filteredWords: [Word]
@@ -43,7 +43,7 @@ struct JPAddNewWordView: View {
         NavigationStack {
             
             Form {
-                Toggle("계속 이어서 입력하기", isOn: $isContinue)
+                Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
                 
                 Section(header: HStack {
@@ -58,9 +58,25 @@ struct JPAddNewWordView: View {
                 }
                 .padding(0)
                 
-                Section(header: Text("발음")) {
-                    TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
-                        .textInputAutocapitalization(.never)
+                switch vocabulary.nationality {
+                case "JA":
+                    Section(header: Text("발음")) {
+                        TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                            .textInputAutocapitalization(.never)
+                    }
+                case "FR":
+                    Section(header: Text("성별")) {
+                        Picker("성별", selection: $inputOption) {
+                            Text("성별 없음").tag("")
+                            Text("남성형").tag("m")
+                            Text("여성형").tag("f")
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                case "EN":
+                    EmptyView()
+                default:
+                    Text("default")
                 }
                 
                 Section(header: HStack {

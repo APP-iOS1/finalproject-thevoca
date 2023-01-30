@@ -1,33 +1,22 @@
 //
-//  AddNewWordView.swift
+//  EditWordView.swift
 //  GGomVoca
 //
-//  Created by Roen White on 2022/12/20.
+//  Created by tae on 2022/12/21.
 //
 
 import SwiftUI
 
-// TODO: 입력값 디테일 잡기
-// [x] 공백일 때 경고메세지 보여주기
-// [x] 추가 완료 후 TextFeild Focus word칸으로 잡아주기
-// [x] 자동 대문자 방지
-// [] 입력 언어에 맞는 키보드
-
-struct AddNewWordView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        entity: Vocabulary.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Vocabulary.createdAt, ascending: true)],
-        animation: .default)
-    private var vocabularies: FetchedResults<Vocabulary>
+//단어 수정 뷰
+struct EditWordView: View {
+    // MARK: Data Properties
+    var viewModel: WordListViewModel
     
-    var vocabulary: Vocabulary
+    // MARK: Super View Properties
+    @Binding var editWord: Bool
+    @Binding var editingWord: Word
     
-    @Binding var isShowingAddWordView: Bool
-    
-    @State private var isContinue: Bool = false
-    
+    // MARK: View Properties
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
@@ -42,24 +31,17 @@ struct AddNewWordView: View {
     private var meaning: String {
         inputMeaning.trimmingCharacters(in: .whitespaces)
     }
-
+    
     // 입력값이 공백일 때 경고메세지 출력 조건
     @State private var isWordEmpty: Bool = false
     @State private var isMeaningEmpty: Bool = false
-    
-    // 추가 후 TextFeildFocus 이동
-    @FocusState private var wordFocused: Bool
-    
+
     var body: some View {
         NavigationView {
             Form {
-                Toggle("입력창 고정하기", isOn: $isContinue)
-                    .toggleStyle(.switch)
-                
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
-                        .focused($wordFocused)
                 } header: {
                     HStack {
                         Text("단어")
@@ -69,11 +51,13 @@ struct AddNewWordView: View {
                     }
                 }
                 
-                switch vocabulary.nationality {
-                case "JP":
+                switch viewModel.selectedVocabulary.nationality {
+                case "KO", "JA":
                     Section(header: Text("발음")) {
                         TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                            .textInputAutocapitalization(.never)
                     }
+                    
                 case "FR":
                     Section(header: Text("성별")) {
                         Picker("성별", selection: $inputOption) {
@@ -83,8 +67,12 @@ struct AddNewWordView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                default:
+                    
+                case "EN":
                     EmptyView()
+                    
+                default:
+                    Text("default")
                 }
                 
                 Section {
@@ -99,68 +87,32 @@ struct AddNewWordView: View {
                     }
                 }
             }
+            .navigationTitle("단어 수정")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("새 단어 추가")
+            .onAppear {
+                inputWord = editingWord.word!
+                inputOption = editingWord.option ?? ""
+                inputMeaning = editingWord.meaning!
+            }
             .toolbar {
+                // 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        isShowingAddWordView = false
-                    } label: {
-                        Text("취소").foregroundColor(.red)
-                    }
+                    Button("취소", role: .cancel) { editWord.toggle() }
                 }
+                // 변경 내용 저장 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button("변경") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
-                        if !word.isEmpty && !meaning.isEmpty {
-                            
-                            addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
-                            
-                            inputWord = ""
-                            inputMeaning = ""
-                            inputOption = ""
-                            
-                            if !isContinue {
-                                isShowingAddWordView = false
-                            }
-                            wordFocused = true
+                        if !isWordEmpty && !isMeaningEmpty {
+                            viewModel.updateWord(editWord: editingWord, word: word, meaning: meaning, option: option)
+
+                            editWord.toggle()
                         }
-                    } label: {
-                        Text("추가")
                     }
                 }
             }
         }
     }
-    
-    func addNewWord(vocabulary:Vocabulary, word: String, meaning: String, option: String = "") {
-        let newWord = Word(context: viewContext)
-        newWord.id = UUID()
-        newWord.word = word
-        newWord.meaning = meaning
-        newWord.option = option
-        newWord.vocabulary = vocabulary
-        newWord.vocabularyID = vocabulary.id
-        
-        saveContext()
-    }
-    
-    // MARK: saveContext
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
 }
-
-//struct AddNewWordView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack {
-//            AddNewWordView(vocabulary: , isShowingAddWordView: .constant(true))
-//        }
-//    }
-//}
