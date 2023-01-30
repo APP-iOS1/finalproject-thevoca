@@ -21,8 +21,6 @@ struct VocabularyListView: View {
     @State var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedItem: Vocabulary?
     
-    
-    
     var body: some View {
         if #available(iOS 16, *) {
            // [iOS 16.0 버전 이상 인 경우 SplitView ]
@@ -31,7 +29,7 @@ struct VocabularyListView: View {
             } detail: {
                 if let selectedVocaId,
                     let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-                        
+
                     switch nationality {
                     case "KO":
                         KOWordListView(vocabularyID: selectedVocaId)
@@ -44,13 +42,13 @@ struct VocabularyListView: View {
                     default:
                         WordListView(vocabularyID: selectedVocaId)
                     }
-                        
                 }
             }
         } else {
            // [iOS 16.0 버전 미만 인 경우 ]
             NavigationView {
                 initVocaListView()
+                    .navigationViewStyle(.stack)
             }
         }
     }

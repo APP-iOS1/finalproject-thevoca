@@ -19,44 +19,37 @@ struct VocabularyCell: View {
     @State var isShowingDeleteAlert: Bool = false
     
     var body: some View {
-        NavigationLink {
-            WordListView(vocabularyID: vocabulary.id)
-            
-            //                switch vocabulary.nationality! {
-            //                case "JA" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                case "FR" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "EN" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "KO" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                default:
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture")
-            //                        }
-            //                }
-            //
+        NavigationLink {            
+            switch vocabulary.nationality! {
+            case "KO" :
+                KOWordListView(vocabularyID: vocabulary.id)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+
+            case "EN" :
+                ENWordListView(vocabularyID: vocabulary.id)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+
+            case "JA" :
+                JPWordListView(vocabularyID: vocabulary.id)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+                
+            case "FR" :
+                FRWordListView(vocabularyID: vocabulary.id)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+            default:
+                WordListView(vocabularyID: vocabulary.id)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+            }
         } label: {
             Text(vocabulary.name ?? "")
         }
