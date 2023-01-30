@@ -21,16 +21,16 @@ struct WordSearchingView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack(spacing: 0) {
                 // MARK: 검색창
                 Form {
                     HStack {
                         Image(systemName: "magnifyingglass")
-                        TextField("단어 검색", text: $searchStr)
+                        TextField("단어를 입력해주세요.", text: $searchStr)
                     }
                 }
-                .frame(height: 60)
+                .frame(height: 50)
                 
                 // 검색어가 입력되지 않았을 때 나타낼 Placeholder
                 if searchStr.count == 0 {
@@ -48,11 +48,40 @@ struct WordSearchingView: View {
                     .horizontalAlignSetting(.center)
                     
                 } else {
-                    List {
-                        ForEach(allWords) { word in
-                            if ( word.meaning.lowercased().contains(lowerCasedSearchWord) ||
-                                word.word.lowercased().contains(lowerCasedSearchWord) ) {
-                                SearchListCell(word: word).padding(0)
+                    ScrollView {
+                        LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                            Section {
+                                ForEach(allWords) { word in
+                                    if ( word.meaning.lowercased().contains(lowerCasedSearchWord) ||
+                                         word.word.lowercased().contains(lowerCasedSearchWord) ) {
+                                        
+                                        VStack(spacing: 0) {
+                                            SearchListCell(word: word)
+                                            
+                                            Rectangle()
+                                                .foregroundColor(Color("toolbardivider"))
+                                                .frame(height: 1)
+                                        }
+                                        
+                                    }
+                                }
+                            } header: {
+                                VStack(spacing: 0) {
+                                    HStack(spacing: 0) {
+                                        Text("단어장")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                        Text("단어")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                        Text("뜻")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                    .frame(height: 40)
+                                    .background { Color("offwhite") }
+                                    
+                                    Rectangle()
+                                        .foregroundColor(Color("toolbardivider"))
+                                        .frame(height: 1)
+                                }
                             }
                         }
                     }
@@ -101,6 +130,8 @@ struct WordSearchingView: View {
 }
 
 struct WordSearchingView_Previews: PreviewProvider {
+    @Environment(\.managedObjectContext) private var viewContext
+    
     static var previews: some View {
         WordSearchingView()
     }
