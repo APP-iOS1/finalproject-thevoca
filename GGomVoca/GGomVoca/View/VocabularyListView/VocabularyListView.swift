@@ -22,33 +22,24 @@ struct VocabularyListView: View {
     @State private var selectedItem: Vocabulary?
     
     var body: some View {
-        if #available(iOS 16, *) {
-           // [iOS 16.0 버전 이상 인 경우 SplitView ]
-            NavigationSplitView {
-                initVocaListView()
-            } detail: {
-                if let selectedVocaId,
-                    let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-
-                    switch nationality {
-                    case "KO":
-                        KOWordListView(vocabularyID: selectedVocaId)
-                    case "EN":
-                        FRWordListView(vocabularyID: selectedVocaId)
-                    case "JA":
-                        JPWordListView(vocabularyID: selectedVocaId)
-                    case "FR":
-                        FRWordListView(vocabularyID: selectedVocaId)
-                    default:
-                        WordListView(vocabularyID: selectedVocaId)
-                    }
+        NavigationSplitView {
+            initVocaListView()
+        } detail: {
+            if let selectedVocaId,
+               let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
+                
+                switch nationality {
+                case "KO":
+                    KOWordListView(vocabularyID: selectedVocaId)
+                case "EN":
+                    ENWordListView(vocabularyID: selectedVocaId)
+                case "JA":
+                    JPWordListView(vocabularyID: selectedVocaId)
+                case "FR":
+                    FRWordListView(vocabularyID: selectedVocaId)
+                default:
+                    WordListView(vocabularyID: selectedVocaId)
                 }
-            }
-        } else {
-           // [iOS 16.0 버전 미만 인 경우 ]
-            NavigationView {
-                initVocaListView()
-                    .navigationViewStyle(.stack)
             }
         }
     }
