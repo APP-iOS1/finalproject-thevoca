@@ -21,6 +21,7 @@ struct VocabularyCell: View {
     var body: some View {
         NavigationLink {
             WordListView(vocabularyID: vocabulary.id)
+                .toolbar(.hidden, for: .tabBar)
             
             //                switch vocabulary.nationality! {
             //                case "JA" :
