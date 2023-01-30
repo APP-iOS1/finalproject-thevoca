@@ -48,11 +48,40 @@ struct WordSearchingView: View {
                     .horizontalAlignSetting(.center)
                     
                 } else {
-                    List {
-                        ForEach(allWords) { word in
-                            if ( word.meaning.lowercased().contains(lowerCasedSearchWord) ||
-                                word.word.lowercased().contains(lowerCasedSearchWord) ) {
-                                SearchListCell(word: word).padding(0)
+                    ScrollView {
+                        LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+                            Section {
+                                ForEach(allWords) { word in
+                                    if ( word.meaning.lowercased().contains(lowerCasedSearchWord) ||
+                                         word.word.lowercased().contains(lowerCasedSearchWord) ) {
+                                        
+                                        VStack(spacing: 0) {
+                                            SearchListCell(word: word)
+                                            
+                                            Rectangle()
+                                                .foregroundColor(Color("toolbardivider"))
+                                                .frame(height: 1)
+                                        }
+                                        
+                                    }
+                                }
+                            } header: {
+                                VStack(spacing: 0) {
+                                    HStack(spacing: 0) {
+                                        Text("단어장")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                        Text("단어")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                        Text("뜻")
+                                            .frame(maxWidth: .infinity, alignment: .center)
+                                    }
+                                    .frame(height: 40)
+                                    .background { Color("offwhite") }
+                                    
+                                    Rectangle()
+                                        .foregroundColor(Color("toolbardivider"))
+                                        .frame(height: 1)
+                                }
                             }
                         }
                     }
@@ -101,6 +130,8 @@ struct WordSearchingView: View {
 }
 
 struct WordSearchingView_Previews: PreviewProvider {
+    @Environment(\.managedObjectContext) private var viewContext
+    
     static var previews: some View {
         WordSearchingView()
     }
