@@ -63,6 +63,7 @@ struct ENWordListView: View {
                         } label: {
                             Image(systemName: "folder")
                         }
+                        .padding()
 
                         Spacer()
                         

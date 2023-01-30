@@ -63,6 +63,7 @@ struct KOWordListView: View {
                         } label: {
                             Image(systemName: "folder")
                         }
+                        .padding()
 
                         Spacer()
                         
