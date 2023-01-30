@@ -21,17 +21,8 @@ struct WordSearchingView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
-                // MARK: 검색창
-                Form {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        TextField("단어를 입력해주세요.", text: $searchStr)
-                    }
-                }
-                .frame(height: 50)
-                
                 // 검색어가 입력되지 않았을 때 나타낼 Placeholder
                 if searchStr.count == 0 {
                     HStack {
@@ -92,7 +83,7 @@ struct WordSearchingView: View {
                 let vocabularyList = searchResults() as [Vocabulary]
                 allWords = toSearchwords(vocaList: vocabularyList)
             }
-        }
+        }.searchable(text: $searchStr, prompt: "단어를 입력해주세요.")
     }
     // MARK: vocabulary를 fetch 받아오는 함수
     func searchResults() -> [Vocabulary] {
