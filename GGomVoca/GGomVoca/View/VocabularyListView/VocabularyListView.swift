@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct VocabularyListView: View {
-    
+    // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
-    //뷰모델
+    // MARK: View Properties
     @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
     //NavigationSplitView 선택 단어장 Id
     @State var selectedVocaId : Vocabulary.ID?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
     
-    @State var columnVisibility: NavigationSplitViewVisibility = .all
-    @State private var selectedItem: Vocabulary?
+//    @State private var editingVocabulary: Vocabulary = Vocabulary()
     
     var body: some View {
         NavigationSplitView {
