@@ -29,6 +29,7 @@ struct WordListView: View {
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
     @State var confirmationDialog: Bool = false
+    @State var moveWord: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -59,7 +60,7 @@ struct WordListView: View {
                     HStack {
                         // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
                         Button {
-                            
+                            moveWord.toggle()
                         } label: {
                             Image(systemName: "folder")
                         }
@@ -102,6 +103,11 @@ struct WordListView: View {
                 }
             }
         })
+        // 단어 이동 시트 (단어장 List)
+        .sheet(isPresented: $moveWord) {
+            MoveWordView(currentVocaViewModel: viewModel, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, moveWord: $moveWord, currentVocaID: vocabularyID)
+                .presentationDetents([.height(CGFloat(500))])
+        }
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
             AddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
