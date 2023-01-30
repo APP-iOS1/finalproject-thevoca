@@ -21,8 +21,6 @@ struct VocabularyListView: View {
     @State var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var selectedItem: Vocabulary?
     
-    
-    
     var body: some View {
         if #available(iOS 16, *) {
            // [iOS 16.0 버전 이상 인 경우 SplitView ]
@@ -44,7 +42,6 @@ struct VocabularyListView: View {
                     default:
                         WordListView(vocabularyID: selectedVocaId)
                     }
-
                 }
             }
         } else {
