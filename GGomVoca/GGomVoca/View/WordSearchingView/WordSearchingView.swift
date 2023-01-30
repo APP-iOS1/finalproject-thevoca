@@ -21,16 +21,16 @@ struct WordSearchingView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack(spacing: 0) {
                 // MARK: 검색창
                 Form {
                     HStack {
                         Image(systemName: "magnifyingglass")
-                        TextField("단어 검색", text: $searchStr)
+                        TextField("단어를 입력해주세요.", text: $searchStr)
                     }
                 }
-                .frame(height: 60)
+                .frame(height: 50)
                 
                 // 검색어가 입력되지 않았을 때 나타낼 Placeholder
                 if searchStr.count == 0 {
