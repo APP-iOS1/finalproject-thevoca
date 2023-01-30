@@ -47,19 +47,19 @@ struct ENWordCell: View {
             }
             
             Text(word.word ?? "")
-                .frame(maxWidth: .infinity, alignment: .center)
+                .horizontalAlignSetting(.center)
                 .multilineTextAlignment(.center)
                 .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 
 
             Text(word.meaning ?? "")
-                .frame(maxWidth: .infinity, alignment: .center)
+                .horizontalAlignSetting(.center)
                 .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
 
         }
         .background {
             Color.clear
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .horizontalAlignSetting(.center)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     if !isSelectionMode {
