@@ -33,7 +33,7 @@ struct EmptyWordListView: View {
     case "FR":
       return "VIDE"
     case "JA":
-      return ""
+      return "空っぽの"
     default:
       return ""
     }
