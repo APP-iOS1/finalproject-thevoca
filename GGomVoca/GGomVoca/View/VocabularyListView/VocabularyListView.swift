@@ -31,7 +31,7 @@ struct VocabularyListView: View {
             } detail: {
                 if let selectedVocaId,
                     let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-                        
+
                     switch nationality {
                     case "KO":
                         KOWordListView(vocabularyID: selectedVocaId)
@@ -44,13 +44,14 @@ struct VocabularyListView: View {
                     default:
                         WordListView(vocabularyID: selectedVocaId)
                     }
-                        
+
                 }
             }
         } else {
            // [iOS 16.0 버전 미만 인 경우 ]
             NavigationView {
                 initVocaListView()
+                    .navigationViewStyle(.stack)
             }
         }
     }
