@@ -28,6 +28,7 @@ struct WordListView: View {
     /// - 단어장 편집모드 관련 State
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
+    @State var confirmationDialog: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -68,10 +69,7 @@ struct WordListView: View {
                         
                         // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
                         Button(role: .destructive) {
-                            for word in multiSelection {
-                                viewModel.deleteWord(word: word)
-                            }
-                            isSelectionMode.toggle()
+                            confirmationDialog.toggle()
                         } label: {
                             Image(systemName: "trash")
                         }
@@ -88,6 +86,22 @@ struct WordListView: View {
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
+        // 단어 여러 개 삭제 여부
+        .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
+            Button(role: .destructive) {
+                for word in multiSelection {
+                    viewModel.deleteWord(word: word)
+                }
+                multiSelection.removeAll()
+                confirmationDialog.toggle()
+                isSelectionMode.toggle()
+            } label: {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("\(multiSelection.count)개의 단어 삭제")
+                }
+            }
+        })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
             AddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
