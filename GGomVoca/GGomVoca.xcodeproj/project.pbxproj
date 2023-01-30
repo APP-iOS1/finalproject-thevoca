@@ -51,6 +51,10 @@
 		63EA4AE629875E0A009392EE /* FRAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */; };
 		63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE129875E0A009392EE /* FRWordListView.swift */; };
 		EA1909E92987A8FA00B6209A /* MoveWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1909E82987A8FA00B6209A /* MoveWordView.swift */; };
+		EA1909EB2988471E00B6209A /* KOMoveWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1909EA2988471E00B6209A /* KOMoveWordView.swift */; };
+		EA1909ED2988477200B6209A /* ENMoveWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1909EC2988477200B6209A /* ENMoveWordView.swift */; };
+		EA1909EF2988477F00B6209A /* JPMoveWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1909EE2988477F00B6209A /* JPMoveWordView.swift */; };
+		EA1909F12988478A00B6209A /* FRMoveWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1909F02988478A00B6209A /* FRMoveWordView.swift */; };
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
@@ -115,6 +119,10 @@
 		63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRAddNewWordView.swift; sourceTree = "<group>"; };
 		63EA4AE129875E0A009392EE /* FRWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		EA1909E82987A8FA00B6209A /* MoveWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveWordView.swift; sourceTree = "<group>"; };
+		EA1909EA2988471E00B6209A /* KOMoveWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KOMoveWordView.swift; sourceTree = "<group>"; };
+		EA1909EC2988477200B6209A /* ENMoveWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENMoveWordView.swift; sourceTree = "<group>"; };
+		EA1909EE2988477F00B6209A /* JPMoveWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPMoveWordView.swift; sourceTree = "<group>"; };
+		EA1909F02988478A00B6209A /* FRMoveWordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRMoveWordView.swift; sourceTree = "<group>"; };
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
@@ -274,6 +282,7 @@
 				63EA4AB829875DE8009392EE /* KOWordCell.swift */,
 				63EA4AB929875DE8009392EE /* KOWordListView.swift */,
 				63EA4ABA29875DE8009392EE /* KOWordsTableView.swift */,
+				EA1909EA2988471E00B6209A /* KOMoveWordView.swift */,
 			);
 			path = KOWordList;
 			sourceTree = "<group>";
@@ -287,6 +296,7 @@
 				63EA4AC529875DF4009392EE /* ENWordListView.swift */,
 				63EA4AC629875DF4009392EE /* ENWordsTableView.swift */,
 				63EA4AC729875DF4009392EE /* ENWordListViewModel.swift */,
+				EA1909EC2988477200B6209A /* ENMoveWordView.swift */,
 			);
 			path = ENWordList;
 			sourceTree = "<group>";
@@ -300,6 +310,7 @@
 				63EA4AD229875E00009392EE /* JPEditWordView.swift */,
 				63EA4AD329875E00009392EE /* JPWordsTableView.swift */,
 				63EA4AD429875E00009392EE /* JPWordCell.swift */,
+				EA1909EE2988477F00B6209A /* JPMoveWordView.swift */,
 			);
 			path = JPWordList;
 			sourceTree = "<group>";
@@ -313,6 +324,7 @@
 				63EA4ADF29875E0A009392EE /* FRWordCell.swift */,
 				63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */,
 				63EA4AE129875E0A009392EE /* FRWordListView.swift */,
+				EA1909F02988478A00B6209A /* FRMoveWordView.swift */,
 			);
 			path = FRWordList;
 			sourceTree = "<group>";
@@ -483,11 +495,13 @@
 				03F904EB295155B2003262AE /* SearchingWordModel.swift in Sources */,
 				639B31EB298059CD00955DE4 /* WordListViewModel.swift in Sources */,
 				63B095F5297670C200E6BB21 /* ImportCSVFileViewModel.swift in Sources */,
+				EA1909EB2988471E00B6209A /* KOMoveWordView.swift in Sources */,
 				63DC853A2950312E00461DEB /* GGomVoca.xcdatamodeld in Sources */,
 				63EA4AC929875DF4009392EE /* ENAddNewWordView.swift in Sources */,
 				63EA4ABB29875DE8009392EE /* KOAddNewWordView.swift in Sources */,
 				63DC85352950312E00461DEB /* GGomVocaApp.swift in Sources */,
 				EE57C05A29518348004312CE /* CoredataRepository.swift in Sources */,
+				EA1909EF2988477F00B6209A /* JPMoveWordView.swift in Sources */,
 				16FFDC59297A6D680082007C /* CSVFile.swift in Sources */,
 				63EA4ACD29875DF4009392EE /* ENWordListViewModel.swift in Sources */,
 				03F904E529514A6E003262AE /* WordSearchingView.swift in Sources */,
@@ -496,6 +510,7 @@
 				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
 				63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
+				EA1909ED2988477200B6209A /* ENMoveWordView.swift in Sources */,
 				63EA4AD829875E00009392EE /* JPEditWordView.swift in Sources */,
 				63EA4ABE29875DE8009392EE /* KOWordCell.swift in Sources */,
 				63B095F3297631F100E6BB21 /* View+.swift in Sources */,
@@ -510,6 +525,7 @@
 				EAB4FFAD2977C8FD0070941A /* CellButtonView.swift in Sources */,
 				63EA4AD929875E00009392EE /* JPWordsTableView.swift in Sources */,
 				EA1909E92987A8FA00B6209A /* MoveWordView.swift in Sources */,
+				EA1909F12988478A00B6209A /* FRMoveWordView.swift in Sources */,
 				EE1E4A032976831F00890CF7 /* VocabularyCellViewModel.swift in Sources */,
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,

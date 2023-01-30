@@ -29,6 +29,7 @@ struct ENWordListView: View {
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
     @State var confirmationDialog: Bool = false
+    @State var moveWord: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -102,6 +103,11 @@ struct ENWordListView: View {
                 }
             }
         })
+        // 단어 이동 시트 (단어장 List)
+        .sheet(isPresented: $moveWord) {
+            ENMoveWordView(currentVocaViewModel: viewModel, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, moveWord: $moveWord, currentVocaID: vocabularyID)
+                .presentationDetents([.height(CGFloat(500))])
+        }
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
             ENAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
