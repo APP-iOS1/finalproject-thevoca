@@ -26,7 +26,7 @@ struct VocabularyListView: View {
         } detail: {
             if let selectedVocaId,
                let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-                
+
                 switch nationality {
                 case "KO":
                     KOWordListView(vocabularyID: selectedVocaId)
