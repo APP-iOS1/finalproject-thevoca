@@ -71,10 +71,10 @@ struct FRWordsTableView: View {
                             }
                             
                             Text("단어")
-                                .horizontalAlignSetting(.center)
+                                .frame(maxWidth: .infinity, alignment: .center)
                             
                             Text("뜻")
-                                .horizontalAlignSetting(.center)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
                         .frame(height: 40)
                         .background { Color("offwhite") }

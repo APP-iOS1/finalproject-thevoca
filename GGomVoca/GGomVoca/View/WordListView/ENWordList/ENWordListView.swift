@@ -28,8 +28,6 @@ struct ENWordListView: View {
     /// - 단어장 편집모드 관련 State
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
-    @State var confirmationDialog: Bool = false
-    @State var moveWord: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -58,13 +56,15 @@ struct ENWordListView: View {
                         } label: {
                             Image(systemName: "folder")
                         }
-                        .padding()
 
                         Spacer()
                         
                         // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
                         Button(role: .destructive) {
-                            confirmationDialog.toggle()
+                            for word in multiSelection {
+                                viewModel.deleteWord(word: word)
+                            }
+                            isSelectionMode.toggle()
                         } label: {
                             Image(systemName: "trash")
                         }
@@ -80,27 +80,6 @@ struct ENWordListView: View {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
-        }
-        // 단어 여러 개 삭제 여부
-        .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
-            Button(role: .destructive) {
-                for word in multiSelection {
-                    viewModel.deleteWord(word: word)
-                }
-                multiSelection.removeAll()
-                confirmationDialog.toggle()
-                isSelectionMode.toggle()
-            } label: {
-                HStack {
-                    Image(systemName: "trash")
-                    Text("\(multiSelection.count)개의 단어 삭제")
-                }
-            }
-        })
-        // 단어 이동 시트 (단어장 List)
-        .sheet(isPresented: $moveWord) {
-            ENMoveWordView(currentVocaViewModel: viewModel, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection, moveWord: $moveWord, currentVocaID: vocabularyID)
-                .presentationDetents([.height(CGFloat(500))])
         }
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
