@@ -47,7 +47,7 @@ struct FRWordCell: View {
             }
             
             Text(word.word ?? "")
-                .horizontalAlignSetting(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
                 .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             
@@ -70,12 +70,12 @@ struct FRWordCell: View {
                 
                 Text(word.meaning ?? "")
             }
-            .horizontalAlignSetting(.center)
+            .frame(maxWidth: .infinity, alignment: .center)
             .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
         }
         .background {
             Color.clear
-                .horizontalAlignSetting(.center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     if !isSelectionMode {

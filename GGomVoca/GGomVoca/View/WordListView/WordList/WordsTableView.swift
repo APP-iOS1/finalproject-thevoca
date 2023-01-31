@@ -73,16 +73,16 @@ struct WordsTableView: View {
                             switch viewModel.nationality {
                             case "KO", "JA":
                                 Text("단어")
-                                    .horizontalAlignSetting(.center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                                 Text("발음")
-                                    .horizontalAlignSetting(.center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                                 Text("뜻")
-                                    .horizontalAlignSetting(.center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                             case "EN", "FR":
                                 Text("단어")
-                                    .horizontalAlignSetting(.center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                                 Text("뜻")
-                                    .horizontalAlignSetting(.center)
+                                    .frame(maxWidth: .infinity, alignment: .center)
                             default:
                                 EmptyView()
                             }
