@@ -26,29 +26,34 @@ struct VocabularyCell: View {
             switch vocabulary.nationality! {
             case "KO" :
                 KOWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
                     .onAppear {
                         vm.manageRecentVocabulary(voca: vocabulary)
                     }
 
             case "EN" :
                 ENWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
                     .onAppear {
                         vm.manageRecentVocabulary(voca: vocabulary)
                     }
 
             case "JA" :
                 JPWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
                     .onAppear {
                         vm.manageRecentVocabulary(voca: vocabulary)
                     }
                 
             case "FR" :
                 FRWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
                     .onAppear {
                         vm.manageRecentVocabulary(voca: vocabulary)
                     }
             default:
                 WordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
                     .onAppear {
                         vm.manageRecentVocabulary(voca: vocabulary)
                     }

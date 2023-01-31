@@ -71,11 +71,11 @@ struct KOWordsTableView: View {
                             }
                             
                             Text("단어")
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .horizontalAlignSetting(.center)
                             Text("발음")
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .horizontalAlignSetting(.center)
                             Text("뜻")
-                                .frame(maxWidth: .infinity, alignment: .center)
+                                .horizontalAlignSetting(.center)
                         }
                         .frame(height: 40)
                         .background { Color("offwhite") }
