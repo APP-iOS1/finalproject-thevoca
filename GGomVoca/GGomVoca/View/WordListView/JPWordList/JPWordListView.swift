@@ -56,6 +56,7 @@ struct JPWordListView: View {
                         } label: {
                             Image(systemName: "folder")
                         }
+                        .padding()
 
                         Spacer()
                         

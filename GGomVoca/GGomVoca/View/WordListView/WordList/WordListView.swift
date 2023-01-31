@@ -56,6 +56,7 @@ struct WordListView: View {
                         } label: {
                             Image(systemName: "folder")
                         }
+                        .padding()
 
                         Spacer()
                         
