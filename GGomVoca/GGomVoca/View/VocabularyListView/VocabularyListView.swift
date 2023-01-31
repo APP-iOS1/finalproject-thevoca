@@ -8,49 +8,37 @@
 import SwiftUI
 
 struct VocabularyListView: View {
-    
+    // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
-    //뷰모델
+    // MARK: View Properties
     @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
     //NavigationSplitView 선택 단어장 Id
     @State var selectedVocaId : Vocabulary.ID?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
     
-    @State var columnVisibility: NavigationSplitViewVisibility = .all
-    @State private var selectedItem: Vocabulary?
-    
-    
+//    @State private var editingVocabulary: Vocabulary = Vocabulary()
     
     var body: some View {
-        if #available(iOS 16, *) {
-           // [iOS 16.0 버전 이상 인 경우 SplitView ]
-            NavigationSplitView {
-                initVocaListView()
-            } detail: {
-                if let selectedVocaId,
-                    let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-                        
-                    switch nationality {
-                    case "KO":
-                        KOWordListView(vocabularyID: selectedVocaId)
-                    case "EN":
-                        FRWordListView(vocabularyID: selectedVocaId)
-                    case "JA":
-                        JPWordListView(vocabularyID: selectedVocaId)
-                    case "FR":
-                        FRWordListView(vocabularyID: selectedVocaId)
-                    default:
-                        WordListView(vocabularyID: selectedVocaId)
-                    }
-                        
+        NavigationSplitView {
+            initVocaListView()
+        } detail: {
+            if let selectedVocaId,
+               let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
+                
+                switch nationality {
+                case "KO":
+                    KOWordListView(vocabularyID: selectedVocaId)
+                case "EN":
+                    ENWordListView(vocabularyID: selectedVocaId)
+                case "JA":
+                    JPWordListView(vocabularyID: selectedVocaId)
+                case "FR":
+                    FRWordListView(vocabularyID: selectedVocaId)
+                default:
+                    WordListView(vocabularyID: selectedVocaId)
                 }
-            }
-        } else {
-           // [iOS 16.0 버전 미만 인 경우 ]
-            NavigationView {
-                initVocaListView()
             }
         }
     }

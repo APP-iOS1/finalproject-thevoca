@@ -37,13 +37,7 @@ struct FRWordListView: View {
             
             if viewModel.words.isEmpty {
                 VStack(spacing: 10) {
-                    Image(systemName: "tray")
-                        .font(.largeTitle)
-                    HStack {
-                        Text("\(emptyMessage) : ")
-                            .bold()
-                        Text("비어 있는")
-                    }
+                  EmptyWordListView(lang: viewModel.nationality)
                 }
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)

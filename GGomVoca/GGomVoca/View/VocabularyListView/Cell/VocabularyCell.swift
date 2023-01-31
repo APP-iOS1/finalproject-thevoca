@@ -18,50 +18,49 @@ struct VocabularyCell: View {
     var vocabulary: Vocabulary
     @State var isShowingDeleteAlert: Bool = false
     
+    /// - 단어장 이름 수정 관련
+    @State private var editVocabularyName: Bool = false
+    
     var body: some View {
-        NavigationLink {
-            WordListView(vocabularyID: vocabulary.id)
-                .toolbar(.hidden, for: .tabBar)
-            
-            //                switch vocabulary.nationality! {
-            //                case "JA" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                case "FR" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "EN" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "KO" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                default:
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture")
-            //                        }
-            //                }
-            //
+        NavigationLink {            
+            switch vocabulary.nationality! {
+            case "KO" :
+                KOWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+
+            case "EN" :
+                ENWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+
+            case "JA" :
+                JPWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+                
+            case "FR" :
+                FRWordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+            default:
+                WordListView(vocabularyID: vocabulary.id)
+                    .toolbar(.hidden, for: .tabBar)
+                    .onAppear {
+                        vm.manageRecentVocabulary(voca: vocabulary)
+                    }
+            }
         } label: {
             Text(vocabulary.name ?? "")
         }
-    
     //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
@@ -82,8 +81,20 @@ struct VocabularyCell: View {
                 Label("Delete", systemImage: "trash.fill")
             }
         }
-        .alert(isPresented: $isShowingDeleteAlert) {
+        .contextMenu {
+            Button("단어장 이름 수정") {
+                editVocabularyName.toggle()
+            }
+        }
+        // MARK: 단어장 이름 수정 sheet
+        .sheet(isPresented: $editVocabularyName) {
+            favoriteCompletion()
+        } content: {
+            EditVocabularyView(vocabulary: vocabulary)
             
+        }
+        // TODO: confirmationDialog로 변경 필요
+        .alert(isPresented: $isShowingDeleteAlert) {
             Alert(title: Text("단어장을 삭제하면, \n 포함된 단어도 모두 삭제됩니다.\n 단어장을 삭제 하시겠습니까?"), primaryButton: .destructive(Text("삭제"), action: {
                 vm.updateDeletedData(id: vocabulary.id!)
                 //deleteRecentVocabulary(vocaId: vocabulary.id!)
