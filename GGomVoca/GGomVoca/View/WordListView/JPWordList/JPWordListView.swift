@@ -29,7 +29,8 @@ struct JPWordListView: View {
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
     // 단어 여러 개 삭제 시 확인 메시지
-    @State var confirmationDialog: Bool = false
+    @State var confirmationDialog: Bool = false // iPhone
+    @State var removeAlert: Bool = false // iPad
     
     var body: some View {
         VStack(spacing: 0) {
@@ -64,7 +65,11 @@ struct JPWordListView: View {
                         
                         // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
                         Button(role: .destructive) {
-                            confirmationDialog.toggle()
+                            if UIDevice.current.model == "iPhone" {
+                                confirmationDialog.toggle()
+                            } else if UIDevice.current.model == "iPad" {
+                                removeAlert.toggle()
+                            }
                         } label: {
                             Image(systemName: "trash")
                         }
@@ -81,7 +86,7 @@ struct JPWordListView: View {
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
-        // 단어 여러 개 삭제 여부
+        // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
             Button(role: .destructive) {
                 for word in multiSelection {
@@ -96,6 +101,26 @@ struct JPWordListView: View {
                     Text("\(multiSelection.count)개의 단어 삭제")
                 }
             }
+        })
+        // 단어 여러 개 삭제 여부 (iPad)
+        .alert("\(multiSelection.count)개의 단어를 삭제하시겠습니까?", isPresented: $removeAlert, actions: {
+            Button(role: .cancel) {
+                removeAlert.toggle()
+            } label: {
+                Text("Cancle")
+            }
+
+            Button(role: .destructive) {
+                for word in multiSelection {
+                    viewModel.deleteWord(word: word)
+                }
+                multiSelection.removeAll()
+                removeAlert.toggle()
+                isSelectionMode.toggle()
+            } label: {
+                Text("OK")
+            }
+
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
