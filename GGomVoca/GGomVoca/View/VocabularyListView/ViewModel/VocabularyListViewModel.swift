@@ -11,61 +11,41 @@ import SwiftUI
 
 //Server -> Repository(reposiroty pattern) -> ViewModel
 class VocabularyListViewModel : ObservableObject {
+    // MARK: Store Property
+    var repository : CoredataRepository = CoredataRepository()
     
-    var repository : CoredataRepository = CoredataRepository() //Store
-    //@Environment(\.managedObjectContext) private var viewContext -> Environment 래퍼 프로퍼티 정의 다시 공부하기(여기서 사용하면 안 됨)
-    @Published var vocabularyList : [Vocabulary]  = []
-    @Published  var recentVocabularyList : [Vocabulary]  = []
-    //즐겨찾기
-    @Published var favoriteVoca : [Vocabulary] = []
-    //한국어
-    @Published var koreanVoca : [Vocabulary] = []
-    //일본어
-    @Published var japaneseVoca : [Vocabulary] = []
-    //영어
-    @Published var englishVoca : [Vocabulary] = []
-    //중국어
-    @Published var chineseVoca : [Vocabulary] = []
-    //프랑스어
-    var frenchVoca : [Vocabulary] = []
-    //독일어
-    var germanVoca : [Vocabulary] = []
-    //스페인어
-    var spanishVoca : [Vocabulary] = []
-    //이탈리아어
-    var italianVoca : [Vocabulary] = []
+    // MARK: Published Properties
+    @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
+    @Published var recentVocabularyList : [Vocabulary] = [] // 최근 본 단어장
+    @Published var favoriteVoca         : [Vocabulary] = [] // 즐겨찾기
+    @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
+    @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
+    @Published var japaneseVoca         : [Vocabulary] = [] // 일본어 단어장
+    @Published var frenchVoca           : [Vocabulary] = [] // 프랑스어 단어장
     
     init(vocabularyList: [Vocabulary]) {
         self.vocabularyList = vocabularyList
     }
     
+    // MARK: Clear Vocabulary Lists
     func clearVoca() {
         vocabularyList = []
-//        recentVocabularyList = []
         favoriteVoca = []
         koreanVoca = []
         japaneseVoca = []
         englishVoca = []
-        chineseVoca = []
         frenchVoca = []
-        germanVoca = []
-        spanishVoca = []
-        italianVoca = []
     }
-    
-    /*
-     Get Vocabulary List
-     */
+
+    // MARK: Get Vocabulary Lists
     func getVocabularyData() {
-        
         var results = repository.getVocabularyData()
         clearVoca()
+        
         for voca in results {
             if voca.deleatedAt == nil {
-                print("name : \(voca.name!)")
-                print("isFavorite : \(voca.isFavorite)")
-                print("nationality : \(voca.nationality!)")
                 vocabularyList.append(voca)
+                
                 if voca.isFavorite {
                     favoriteVoca.append(voca)
                 }
@@ -76,13 +56,13 @@ class VocabularyListViewModel : ObservableObject {
                     continue
                 }
                 
-                if voca.nationality == "JA" {
-                    japaneseVoca.append(voca)
+                if voca.nationality == "EN" {
+                    englishVoca.append(voca)
                     continue
                 }
                 
-                if voca.nationality == "EN" {
-                    englishVoca.append(voca)
+                if voca.nationality == "JA" {
+                    japaneseVoca.append(voca)
                     continue
                 }
                 
@@ -90,67 +70,32 @@ class VocabularyListViewModel : ObservableObject {
                     frenchVoca.append(voca)
                     continue
                 }
-                
-                if voca.nationality == "CH" {
-                    chineseVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "DE" {
-                    germanVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "ES" {
-                    spanishVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "IT" {
-                    italianVoca.append(voca)
-                    continue
-                }
             }
         }
-        
-        
-//        self.vocabularyList = results.filter{
-//            $0.deleatedAt == nil || $0.deleatedAt?.count == 0
-//        }
-//        
-//        favoriteVoca = vocabularyList.filter {
-//            $0.isFavorite == true && $0.deleatedAt == nil
-//        }
-//        koreanVoca = results.filter {
-//            $0.nationality == "KO" && $0.deleatedAt == nil
-//        }
-//        japaneseVoca = results.filter {
-//            $0.nationality == "JA" && $0.deleatedAt == nil
-//        }
-//        englishVoca = results.filter {
-//            $0.nationality == "EN" && $0.deleatedAt == nil
-//        }
-//        chineseVoca = results.filter {
-//            $0.nationality == "CH" && $0.deleatedAt == nil
-//        }
-//        frenchVoca = results.filter {
-//            $0.nationality == "FR" && $0.deleatedAt == nil
-//        }
-//        germanVoca = results.filter {
-//            $0.nationality == "DE" && $0.deleatedAt == nil
-//        }
-//        spanishVoca = results.filter {
-//            $0.nationality == "ES" && $0.deleatedAt == nil
-//        }
-//        italianVoca = results.filter {
-//            $0.nationality == "IT" && $0.deleatedAt == nil
-//        }
-        
-        
-        
-//        return results
     }
     
+    // MARK: 최근 본 단어장을 UserDefault에서 삭제
+    func deleteRecentVoca(id : String) {
+        // [voca1, voca2]
+        var before =  UserManager.shared.recentVocabulary
+        if let idx = before.firstIndex(of: "\(id)"){
+            before.remove(at: idx)
+        }
+        UserManager.shared.recentVocabulary = before
+    }
     
-    
+    // MARK: 최근 본 단어장 관리 메서드
+    func manageRecentVocabulary(voca: Vocabulary) {
+        /// - 기존에 최근 본 단어장에 들어있는 단어장을 또 확인 한 경우 배열에서 지우고 배열의 첫번째 요소로 다시 삽입
+        deleteRecentVoca(id: "\(voca.id!)")
+        var before =  UserManager.shared.recentVocabulary
+        
+        before.insert("\(voca.id!)", at: 0)
+        
+        if before.count >= 4{
+            before.removeLast()
+        }
+
+        UserManager.shared.recentVocabulary = before
+    }
 }
