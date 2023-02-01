@@ -81,8 +81,11 @@ struct ImportCSVFileView: View {
                             let word = line[0] as? String ?? ""
                             let option = line[1] as? String ?? ""
                             let meaning = line[2] as? String ?? ""
-                            
-                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaning, option: option)
+                          var meaningArray: [String] = []
+                          if meaning.contains(",") {
+                            meaningArray = meaning.components(separatedBy: ",")
+                          }
+                            viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaningArray, option: option)
                             
                             dismiss()
                         }
