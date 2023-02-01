@@ -1,5 +1,5 @@
 //
-//  WordListView.swift
+//  ENWordListView.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/01/18.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct WordListView: View {
+struct ENWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var viewModel: WordListViewModel = WordListViewModel()
+    @StateObject var viewModel: ENENWordListViewModel = ENENWordListViewModel()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
@@ -43,7 +43,7 @@ struct WordListView: View {
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)
             } else {
-                WordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                ENWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
             }
             
             if !multiSelection.isEmpty {
@@ -124,7 +124,7 @@ struct WordListView: View {
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
-            AddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
+            ENAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
                 .presentationDetents([.height(CGFloat(500))])
         }
         // 단어장 내보내기

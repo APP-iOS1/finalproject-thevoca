@@ -1,5 +1,5 @@
 //
-//  WordListViewModel.swift
+//  KOWordListViewModel.swift
 //  GGomVoca
 //
 //  Created by Roen White on 2023/01/25.
@@ -7,16 +7,14 @@
 
 import Foundation
 
-class WordListViewModel: ObservableObject {
+class KOWordListViewModel: ObservableObject {
   // MARK: CoreData ViewContext
   var viewContext = PersistenceController.shared.container.viewContext
   var coreDataRepository = CoredataRepository()
 
   // MARK: Vocabulary Properties
   var selectedVocabulary: Vocabulary = Vocabulary()
-  var nationality: String {
-    selectedVocabulary.nationality ?? ""
-  }
+  var nationality: String = "KO"
 
   @Published var words: [Word] = []
 
@@ -118,5 +116,4 @@ class WordListViewModel: ObservableObject {
     }
     return fullText
   }
-
 }

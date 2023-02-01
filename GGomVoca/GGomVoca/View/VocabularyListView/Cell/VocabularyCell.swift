@@ -16,52 +16,15 @@ struct VocabularyCell: View {
     var deleteCompletion : () -> ()
     
     var vocabulary: Vocabulary
-    @State var isShowingDeleteAlert: Bool = false
+    @State private var deleteActionSheet: Bool = false
+    @State private var deleteAlert: Bool = false
+    
+    /// - 단어장 이름 수정 관련
+    @State private var editVocabularyName: Bool = false
     
     var body: some View {
-        NavigationLink {
-            WordListView(vocabularyID: vocabulary.id)
-            
-            //                switch vocabulary.nationality! {
-            //                case "JA" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                case "FR" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "EN" :
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //                case "KO" :
-            //                    JPWordListView(vocabulary: vocabulary)
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture \(vocabulary.name)")
-            //                        }
-            //
-            //                default:
-            //                    FRWordListView(vocabularyID: vocabulary.id ?? UUID())
-            //                        .onAppear {
-            //                            vm.manageRecentVocabulary(voca: vocabulary)
-            //                            print("gesture")
-            //                        }
-            //                }
-            //
-        } label: {
-            Text(vocabulary.name ?? "")
-        }
-    
-    //단어장 즐겨찾기 추가 스와이프
+        NavigationLink(vocabulary.name ?? "", value: vocabulary)
+        //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
@@ -72,25 +35,60 @@ struct VocabularyCell: View {
             }
             .tint(vocabulary.isFavorite ? .gray : .yellow)
         }
-    //단어장 삭제 스와이프
+        //단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
-                //updateData(id: vocabulary.id!)
-                isShowingDeleteAlert = true
+                let words = vocabulary.words?.allObjects as? [Word] ?? []
+                if words.isEmpty {
+                    vm.updateDeletedData(id: vocabulary.id!)
+                    deleteCompletion()
+                } else if UIDevice.current.model == "iPhone" {
+                    deleteActionSheet = true
+                } else {
+                    deleteAlert = true
+                }
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
         }
-        .alert(isPresented: $isShowingDeleteAlert) {
-            
-            Alert(title: Text("단어장을 삭제하면, \n 포함된 단어도 모두 삭제됩니다.\n 단어장을 삭제 하시겠습니까?"), primaryButton: .destructive(Text("삭제"), action: {
+        .contextMenu {
+            Button("단어장 이름 수정") {
+                editVocabularyName.toggle()
+            }
+        }
+        // MARK: 단어장 이름 수정 sheet
+        .sheet(isPresented: $editVocabularyName) {
+            favoriteCompletion()
+        } content: {
+            EditVocabularyView(vocabulary: vocabulary)
+        }
+        // MARK: iPhone에서 단어장을 삭제할 때 띄울 메세지
+        .actionSheet(isPresented: $deleteActionSheet) {
+            ActionSheet(title: Text("포함된 단어도 모두 삭제됩니다."), buttons: [
+                .destructive(Text("단어장 삭제"), action: {
+                    vm.updateDeletedData(id: vocabulary.id!)
+                    deleteCompletion()
+                }),
+                .cancel(Text("취소"))
+            ])
+        }
+        // MARK: iPad에서 단어장을 삭제할 때 띄울 메세지
+        .alert(isPresented: $deleteAlert) {
+            Alert(title: Text("포함된 단어도 모두 삭제됩니다."), primaryButton: .destructive(Text("단어장 삭제"), action: {
                 vm.updateDeletedData(id: vocabulary.id!)
-                //deleteRecentVocabulary(vocaId: vocabulary.id!)
                 deleteCompletion() //삭제 후 업데이트
-                
             }), secondaryButton: .cancel(Text("취소")))
         }
-}
+        // !!!: 추후 confirmationDialog가 안정화 되면 actionSheet대신 적용
+//        .confirmationDialog("단어장 삭제", isPresented: $deleteAlert) {
+//            Button("단어장 삭제", role: .destructive) {
+//                vm.updateDeletedData(id: vocabulary.id!)
+//                deleteCompletion()
+//            }
+//        } message: {
+//            Text("포함된 단어도 모두 삭제됩니다.")
+//        }
+    }
 }
 
 //struct VocabularyCell_Previews: PreviewProvider {

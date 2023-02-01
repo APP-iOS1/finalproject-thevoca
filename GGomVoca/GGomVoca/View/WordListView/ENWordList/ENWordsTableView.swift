@@ -1,5 +1,5 @@
 //
-//  WordsTableView.swift
+//  ENWordsTableView.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/01/18.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct WordsTableView: View {
+struct ENWordsTableView: View {
     // MARK: SuperView Properties
-    @ObservedObject var viewModel: WordListViewModel
+    @ObservedObject var viewModel: ENENWordListViewModel
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -27,7 +27,7 @@ struct WordsTableView: View {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
                     ForEach(viewModel.words) { word in
-                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
+                        ENWordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
                                  isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
                                  nationality: viewModel.nationality, word: word)
                             .addSwipeButtonActions(leadingButtons: [],
@@ -70,22 +70,11 @@ struct WordsTableView: View {
                                     .padding(.leading, 20)
                             }
                             
-                            switch viewModel.nationality {
-                            case "KO", "JA":
-                                Text("단어")
-                                    .horizontalAlignSetting(.center)
-                                Text("발음")
-                                    .horizontalAlignSetting(.center)
-                                Text("뜻")
-                                    .horizontalAlignSetting(.center)
-                            case "EN", "FR":
-                                Text("단어")
-                                    .horizontalAlignSetting(.center)
-                                Text("뜻")
-                                    .horizontalAlignSetting(.center)
-                            default:
-                                EmptyView()
-                            }
+                            Text("단어")
+                                .horizontalAlignSetting(.center)
+                            
+                            Text("뜻")
+                                .horizontalAlignSetting(.center)
                         }
                         .frame(height: 40)
                         .background { Color("offwhite") }
@@ -100,14 +89,14 @@ struct WordsTableView: View {
         } // ScrollView
         // MARK: 단어 편집 시트
         .sheet(isPresented: $editWord) {
-            EditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
+            ENEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
         }
     }
 }
 
-//struct WordsTableView_Previews: PreviewProvider {
+//struct ENWordsTableView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        WordsTableView(selectedSegment: .constant(.normal), selectedWord: .constant([]), filteredWords: .constant(FRWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR)
+//        ENWordsTableView(selectedSegment: .constant(.normal), selectedWord: .constant([]), filteredWords: .constant(FRWords), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR)
 //    }
 //}

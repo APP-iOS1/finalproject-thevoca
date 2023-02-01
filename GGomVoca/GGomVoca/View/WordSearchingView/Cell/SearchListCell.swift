@@ -13,28 +13,22 @@ struct SearchListCell: View {
     var word: SearchingWordModel
     
     var body: some View {
-            HStack(spacing: 0) {
-                Spacer()
-                Text("\(word.vocabulary.description)")
-                    .frame(width: 120)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                Text("\(word.word.description)")
-                    .frame(width: 100)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                Text("\(word.meaning.description)")
-                    .frame(width: 100)
-                    .multilineTextAlignment(.center)
-                    
-                Spacer()
-            }
-            .padding(.vertical, 8)
-            .ignoresSafeArea()
-            .listRowInsets(.init())
-        
-        
-        
+        HStack(spacing: 0) {
+            Text("\(word.vocabulary.description)")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+            
+            Text("\(word.word.description)")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+            
+            Text("\(word.meaning.description)")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .multilineTextAlignment(.center)
+            
+        }
+        .padding(.vertical, 8)
+        .ignoresSafeArea()
     }
 }
 

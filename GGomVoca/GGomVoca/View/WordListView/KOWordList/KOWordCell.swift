@@ -1,5 +1,5 @@
 //
-//  WordCell.swift
+//  KOWordCell.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/01/18.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WordCell: View {
+struct KOWordCell: View {
     // MARK: SuperView Properties
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
@@ -46,50 +46,17 @@ struct WordCell: View {
                 }
             }
             
-            switch nationality {
-            case "KO", "JA":
-                HStack {
-                    Text(word.word ?? "")
-                        .horizontalAlignSetting(.center)
-                        .multilineTextAlignment(.center)
-                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                    Text(word.option ?? "")
-                        .horizontalAlignSetting(.center)
-                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                    Text(word.meaning ?? "")
-                        .horizontalAlignSetting(.center)
-                        .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                }
-            case "FR", "EN":
+            HStack {
                 Text(word.word ?? "")
                     .horizontalAlignSetting(.center)
                     .multilineTextAlignment(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                
-                HStack(spacing: 0) {
-                    // MARK: 단어의 성별에 따라 표시하는 이미지 변경
-                    switch word.option {
-                    case "f":
-                        Image(systemName: "f.square")
-                            .font(.subheadline)
-                            .opacity(0.5)
-                            .padding(.trailing, 5)
-                    case "m":
-                        Image(systemName: "m.square")
-                            .font(.subheadline)
-                            .opacity(0.5)
-                            .padding(.trailing, 5)
-                    default:
-                        EmptyView()
-                    }
-
-                    Text(word.meaning ?? "")
-                }
-                .horizontalAlignSetting(.center)
-                .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
-                
-            default:
-                Text("default")
+                Text(word.option ?? "")
+                    .horizontalAlignSetting(.center)
+                    .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                Text(word.meaning ?? "")
+                    .horizontalAlignSetting(.center)
+                    .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             }
         }
         .background {
@@ -132,9 +99,9 @@ struct WordCell: View {
 }
 
 
-//struct WordCell_Previews: PreviewProvider {
+//struct KOWordCell_Previews: PreviewProvider {
 //    static var previews: some View {
-////        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
-//        WordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "과일의 설탕절임", option: "f", vocabularyID: "2", word: "confiture"))
+////        KOWordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .JP, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "승진", option: "しょうしん", vocabularyID: "1", word: "しんかんはつばいび"))
+//        KOWordCell(selectedSegment: .constant(.normal), selectedWord: .constant([]), isSelectionMode: .constant(false), multiSelection: .constant(Set<String>()), nationality: .FR, word: TempWord(correctCount: 0, createdAt: "2023-01-18", deletedAt: "", incorrectCount: 0, isMemorized: false, meaning: "과일의 설탕절임", option: "f", vocabularyID: "2", word: "confiture"))
 //    }
 //}
