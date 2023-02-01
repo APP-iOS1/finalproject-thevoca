@@ -17,34 +17,15 @@ struct VocabularyListView: View {
     @State var selectedVocaId : Vocabulary.ID?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
-    
-//    @State private var editingVocabulary: Vocabulary = Vocabulary()
-    
+        
     var body: some View {
-        NavigationSplitView {
+        NavigationView {
             initVocaListView()
-        } detail: {
-            if let selectedVocaId,
-               let nationality = getVocaItem(for: selectedVocaId ?? UUID()).nationality {
-
-                switch nationality {
-                case "KO":
-                    KOWordListView(vocabularyID: selectedVocaId)
-                case "EN":
-                    ENWordListView(vocabularyID: selectedVocaId)
-                case "JA":
-                    JPWordListView(vocabularyID: selectedVocaId)
-                case "FR":
-                    FRWordListView(vocabularyID: selectedVocaId)
-                default:
-                    WordListView(vocabularyID: selectedVocaId)
-                }
-            }
+                .navigationViewStyle(.stack)
         }
     }
-    /*
-     VocabularyList View
-     */
+
+    // MARK: VocabularyList View
     func initVocaListView() -> some View {
         List(selection: $selectedVocaId) {
             Section(header: Text("최근 본 단어장")) {
@@ -217,11 +198,11 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
-                        
                     }
                 }
             }
         }
+        .listStyle(.sidebar)
         .navigationBarTitle("단어장")
         .navigationBarItems(trailing: Button(action: {
             isShowingAddVocabulary.toggle()
