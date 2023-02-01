@@ -22,6 +22,16 @@ protocol CoreDataRepository {
     func fetchVocaData() -> AnyPublisher<[Vocabulary], CoredataRepoError>
     //MARK: 단어장 추가하기
     func postVocaData(vocaName : String, nationality: Nationality) -> AnyPublisher<Vocabulary, CoredataRepoError>
-//    func updateVocaData() -> AnyPublisher<String?, CoredataRepoError>
-//    func deleteVocaData() -> AnyPublisher<String?, CoredataRepoError>
+    //MARK: 단어장 좋아요 상태 업데이트
+    //TODO: Publisher 반환타입 수정
+    func updateVocaLike(id: UUID) -> AnyPublisher<String, CoredataRepoError>
+
+    //MARK: 단어장 삭제
+    //TODO: Publisher 반환타입 수정
+    func deletedVocaData(id: UUID) -> AnyPublisher<String, CoredataRepoError>
+    
+
+//    func updateVocaName(id : UUID, vocaName : String) -> AnyPublisher<String, CoredataRepoError>
+//
+    
 }

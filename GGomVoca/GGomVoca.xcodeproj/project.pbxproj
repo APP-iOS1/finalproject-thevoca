@@ -243,6 +243,7 @@
 		63DC85332950312E00461DEB /* GGomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				EE759529298A594600AB6E62 /* Service */,
 				EE75951E298A38A700AB6E62 /* Repository */,
 				EE1E49FD2976700800890CF7 /* Comfiguration */,
 				EAB4FFA72977C7D60070941A /* Modifier */,
@@ -441,6 +442,13 @@
 				EE759527298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift */,
 			);
 			path = CoreDataRepo;
+			sourceTree = "<group>";
+		};
+		EE759529298A594600AB6E62 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

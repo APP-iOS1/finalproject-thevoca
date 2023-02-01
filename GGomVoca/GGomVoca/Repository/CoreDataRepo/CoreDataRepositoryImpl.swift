@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import CoreData
 class CoreDataRepositoryImpl : CoreDataRepository {
-    
+
     // CloudKit database와 동기화하기 위해서는 NSPersistentCloudKitContainer로 변경
     let container: NSPersistentCloudKitContainer //NSPersistentContainer에서 변경
     
@@ -79,23 +79,46 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         
     }
     
+    /*
+    MARK: 단어장 좋아요 업데이트하기
+     */
+    func updateVocaLike(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
+        
+        return Future<String, CoredataRepoError>{[weak self] observer in
+            
+            guard let viewContext = self?.container.viewContext else{
+                return observer(.failure(CoredataRepoError.notFoundData))
+            }
+            
+            let vocabularyFetch = Vocabulary.fetchRequest()
+            vocabularyFetch.predicate = NSPredicate(format: "id = %@", id as CVarArg)
+            
+            let results = (try? viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+            do {
+                let objectUpdate = results[0]
+                objectUpdate.setValue(!objectUpdate.isFavorite, forKey: "isFavorite")
+                print(objectUpdate)
+                observer(.success("\(objectUpdate)"))
+            }
+        }.eraseToAnyPublisher()
+       
+    }
+ 
     
-//    
-//    func fetchVocaData() -> AnyPublisher<String?, CoredataRepoError> {
-//        
+    /*
+     MARK: 단어장 삭제 후 반영 함수
+     */
+    func deletedVocaData(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
+        return Future<String, CoredataRepoError>{observer in
+            observer(.success(""))
+            
+        }.eraseToAnyPublisher()
+    }
+    
+//    //MARK: 단어장 이름 업데이트
+//    func updateVocaName(id : UUID, vocaName : String) -> AnyPublisher<String, CoredataRepoError>{
+//
 //    }
-//    
-//    func postVocaData() -> AnyPublisher<String?, CoredataRepoError> {
-//        
-//    }
-//    
-//    func updateVocaData() -> AnyPublisher<String?, CoredataRepoError> {
-//        
-//    }
-//    
-//    func deleteVocaData() -> AnyPublisher<String?, CoredataRepoError> {
-//        
-//    }
-//    
+    
     
 }
