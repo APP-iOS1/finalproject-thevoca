@@ -16,7 +16,7 @@ struct Question: Identifiable {
     var isCorrect: Bool = false
 }
 
-class TestViewModel: ObservableObject {
+final class TestViewModel: ObservableObject {
     @Published var testPaper: [Question] = []
     // 현재 풀고 있는 문제 번호
     var currentQuestionNum: Int = 0
