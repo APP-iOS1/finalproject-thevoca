@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
+
 protocol VocabularyService{
-    
+   //MARK: 단어장 리스트 불러오기
+    func fetchVocabularyList() -> AnyPublisher<[Vocabulary], CoredataRepoError>
 }
 
 
