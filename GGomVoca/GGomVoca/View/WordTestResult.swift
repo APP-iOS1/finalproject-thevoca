@@ -13,45 +13,70 @@ struct WordTestResult: View {
     @ObservedObject var paperViewModel: TestViewModel
     let testMode: String
     
+    var correctCount: Int {
+        var cnt: Int = 0
+        for question in paperViewModel.testPaper {
+            if question.isCorrect == true { cnt += 1 }
+        }
+        return cnt
+    }
+    
     var body: some View {
         VStack {
-            Button {
-                isTestMode = false
-            } label: {
-                HStack(spacing: 5) {
-                    Image(systemName: "chevron.backward")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                    Text("단어장으로 돌아가기")
+            HStack {
+                Button {
+                    isTestMode = false
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: "chevron.backward")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                        Text("단어장으로 돌아가기")
+                    }
+                    .padding(.leading, 8)
+                    .padding(.vertical, 5)
                 }
-                .padding(.leading, 8)
-                .padding(.vertical, 5)
+                Spacer()
+                Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
+                    .padding(.trailing, 8)
             }
-            .horizontalAlignSetting(.leading)
             
-            Spacer()
-            
-            List(paperViewModel.testPaper) { paper in
-                HStack {
-                    switch testMode {
-                    case "word":
-                        Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                            .foregroundColor(.red)
-                        Text(paper.answer ?? "")
+            List {
+                Section {
+                    ForEach(paperViewModel.testPaper) { paper in
+                        HStack {
+                            switch testMode {
+                            case "word":
+                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
+                                    .foregroundColor(.red)
+                                Text(paper.answer ?? "")
+                                    .horizontalAlignSetting(.center)
+                                Text(paper.meaning)
+                                    .horizontalAlignSetting(.center)
+                            case "meaning":
+                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
+                                    .foregroundColor(.red)
+                                Text(paper.word)
+                                    .horizontalAlignSetting(.center)
+                                Text(paper.answer ?? "")
+                                    .horizontalAlignSetting(.center)
+                            default:
+                                Text("Empty")
+                            }
+                        }
+                    }
+                } header: {
+                    HStack {
+                        Text(Image(systemName: "circle"))
+                            .foregroundColor(.clear)
+                        Text("단어")
                             .horizontalAlignSetting(.center)
-                        Text(paper.meaning)
+                        Text("뜻")
                             .horizontalAlignSetting(.center)
-                    case "meaning":
-                        Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                            .foregroundColor(.red)
-                        Text(paper.word)
-                            .horizontalAlignSetting(.center)
-                        Text(paper.answer ?? "")
-                            .horizontalAlignSetting(.center)
-                    default:
-                        Text("Empty")
                     }
                 }
+
+                
             }
             .listStyle(.plain)
             
@@ -59,7 +84,6 @@ struct WordTestResult: View {
             
         }
         .navigationBarBackButtonHidden(true)
-        
     }
 }
 
