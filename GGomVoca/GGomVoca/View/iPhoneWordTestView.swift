@@ -73,8 +73,8 @@ struct iPhoneWordTestView: View {
                 .focused($focusedField, equals: .answer)
                 .onSubmit {
                     paperViewModel.saveAnswer(answer: answer)
-                    answer.removeAll()
                     if !paperViewModel.showSubmitButton() {
+                        answer.removeAll()
                         paperViewModel.restartTimer()
                     }
                     paperViewModel.showNextQuestion()
