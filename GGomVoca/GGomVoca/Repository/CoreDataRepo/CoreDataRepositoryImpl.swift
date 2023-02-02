@@ -80,9 +80,9 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     }
     
     /*
-    MARK: 단어장 좋아요 업데이트하기
+    MARK: 단어장 고정 상태 업데이트하기
      */
-    func updateVocaLike(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
+    func updatePinnedVoca(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
         
         return Future<String, CoredataRepoError>{[weak self] observer in
             
