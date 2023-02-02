@@ -76,48 +76,33 @@ struct VocabularyListView: View {
     // MARK: VocabularyList View
     func initVocaListView() -> some View {
         List(selection: $selectedVocabulary) {
-            // MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
-            if !viewModel.recentVocabularyList.isEmpty {
-                Section(header: Text("최근 본 단어장")) {
-                    ForEach(viewModel.recentVocabularyList) { vocabulary in
+            // MARK: 고정된 단어장;
+            if viewModel.favoriteVoca.count > 0 {
+                Section(header: Text("고정된 단어장")) {
+                    ForEach(viewModel.favoriteVoca) { vocabulary in
                         VocabularyCell(
                             favoriteCompletion: {
-                                print("cellClosure")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
-                                print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                     }
                 }
             }
-
-            // MARK: 즐겨찾기; 비어 있더라도 해당 기능을 알리기 위해 section 필요
-            Section(header: Text("즐겨찾기")) {
-                if viewModel.favoriteVoca.count > 0 {
-                    ForEach(viewModel.favoriteVoca) { vocabulary in
+            
+            // MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
+            if !viewModel.recentVocabularyList.isEmpty {
+                Section(header: Text("최근 본 단어장")) {
+                    ForEach(viewModel.recentVocabularyList) { vocabulary in
                         VocabularyCell(
                             favoriteCompletion: {
-                                print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
-                                print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                     }
-                } else {
-                    VStack {
-                        HStack {
-                            VStack(spacing: 4) {
-                                Text("즐겨찾기 된 단어장이 없습니다.")
-                                Text("오른쪽으로 밀어 즐겨찾기")
-                            }
-                            .horizontalAlignSetting(.center)
-                        }
-                    }
-                    .foregroundColor(.gray)
                 }
             }
             
@@ -126,10 +111,8 @@ struct VocabularyListView: View {
                 Section(header: Text("한국어")) {
                     ForEach(viewModel.koreanVoca) { vocabulary in
                         VocabularyCell(favoriteCompletion: {
-                            print("click")
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
-                            print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
@@ -142,10 +125,8 @@ struct VocabularyListView: View {
                 Section(header: Text("영어")) {
                     ForEach(viewModel.englishVoca) { vocabulary in
                             VocabularyCell(favoriteCompletion: {
-                                print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
-                                print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
@@ -158,10 +139,8 @@ struct VocabularyListView: View {
                 Section(header: Text("일본어")) {
                     ForEach(viewModel.japaneseVoca) { vocabulary in
                         VocabularyCell(favoriteCompletion: {
-                            print("click")
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
-                            print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
@@ -174,10 +153,8 @@ struct VocabularyListView: View {
                 Section(header: Text("프랑스어")) {
                     ForEach(viewModel.frenchVoca) { vocabulary in
                             VocabularyCell(favoriteCompletion: {
-                                print("click")
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
-                                print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
@@ -212,7 +189,6 @@ struct VocabularyListView: View {
     }
     
     func getVocaItem(for itemID: UUID) -> Vocabulary {
-        print(itemID)
         guard let vocaItem = viewModel.vocabularyList.first(where: {$0.id == itemID }) else {
             return Vocabulary()
         }
@@ -229,7 +205,6 @@ struct VocabularyListView: View {
                 result.append(getVocaItem(for: id))
             }
         }
-        print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
         return result
     }
 }
