@@ -36,6 +36,7 @@ final class TestViewModel: ObservableObject {
     var timer: AnyCancellable?
     let timeLimit = 15
     @Published var timeRemaining : Int = 0
+    var timeCountUp: Int = 0
     
     // MARK: saveContext
     func saveContext() {
@@ -145,12 +146,13 @@ final class TestViewModel: ObservableObject {
     }
     
     func cancelTimer() {
+        self.timeCountUp += (timeLimit - timeRemaining)
         timer?.cancel()
     }
     
-    func convertSecondsToTime() -> String {
-        let minutes = self.timeRemaining / 60
-        let seconds = self.timeRemaining % 60
+    func convertSecondsToTime(seconds: Int) -> String {
+        let minutes = seconds / 60
+        let seconds = seconds % 60
         return String(format: "%02i:%02i", minutes, seconds)
     }
 }

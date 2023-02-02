@@ -21,21 +21,57 @@ struct WordTestResult: View {
         return cnt
     }
     
+    var incorrectCount: Int {
+        var cnt: Int = 0
+        for question in paperViewModel.testPaper {
+            if question.isCorrect == false { cnt += 1 }
+        }
+        return cnt
+    }
+    
     var body: some View {
         VStack {
-            Button {
-                isTestMode = false
-            } label: {
-                HStack(spacing: 5) {
-                    Image(systemName: "chevron.backward")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                    Text("단어장으로 돌아가기")
+//            HStack {
+//                Button {
+//                    isTestMode = false
+//                } label: {
+//                    HStack(spacing: 5) {
+//                        Image(systemName: "chevron.backward")
+//                            .font(.title2)
+//                            .fontWeight(.medium)
+//                        Text("단어장으로 돌아가기")
+//                    }
+//                    .horizontalAlignSetting(.leading)
+//                    .padding(.leading, 8)
+//                    .padding(.top, 5)
+//                }
+//
+//            }
+            
+            HStack {
+                VStack(spacing: 5) {
+                    Text("걸린 시간")
+                        .bold()
+                    Text("\(paperViewModel.convertSecondsToTime(seconds: paperViewModel.timeCountUp))")
+                        .foregroundColor(.gray)
                 }
-                .horizontalAlignSetting(.leading)
-                .padding(.leading, 8)
-                .padding(.top, 5)
+                .horizontalAlignSetting(.center)
+                VStack(spacing: 5) {
+                    Text("맞은 개수")
+                        .bold()
+                    Text("\(correctCount)")
+                        .foregroundColor(.gray)
+                }
+                .horizontalAlignSetting(.center)
+                VStack(spacing: 5) {
+                    Text("틀린 개수")
+                        .bold()
+                    Text("\(incorrectCount)")
+                        .foregroundColor(.gray)
+                }
+                .horizontalAlignSetting(.center)
             }
+            .padding(.vertical, 15)
             
             List {
                 Section {
@@ -44,7 +80,7 @@ struct WordTestResult: View {
                             switch testMode {
                             case "word":
                                 Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                                    .frame(width: 40)
+//                                    .frame(width: 40)
                                     .foregroundColor(.red)
                                 Text(paper.answer ?? "")
                                     .horizontalAlignSetting(.center)
@@ -52,7 +88,7 @@ struct WordTestResult: View {
                                     .horizontalAlignSetting(.center)
                             case "meaning":
                                 Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                                    .frame(width: 40)
+//                                    .frame(width: 40)
                                     .foregroundColor(.red)
                                 Text(paper.word)
                                     .horizontalAlignSetting(.center)
@@ -65,8 +101,10 @@ struct WordTestResult: View {
                     }
                 } header: {
                     HStack {
-                        Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
-                            .frame(width: 40)
+                        Text(Image(systemName: "circle"))
+                            .foregroundColor(.clear)
+//                        Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
+//                            .frame(width: 40)
                         Text("단어")
                             .horizontalAlignSetting(.center)
                         Text("뜻")
@@ -82,6 +120,17 @@ struct WordTestResult: View {
             
         }
         .navigationBarBackButtonHidden(true)
+        .navigationTitle("시험 결과")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    isTestMode = false
+                } label: {
+                    Text("확인")
+                }
+
+            }
+        }
     }
 }
 

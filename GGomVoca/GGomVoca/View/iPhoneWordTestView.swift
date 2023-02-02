@@ -48,7 +48,7 @@ struct iPhoneWordTestView: View {
     
     // MARK: Timer에 관한 Property
     var timer: String {
-        paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime()
+        paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime(seconds: paperViewModel.timeRemaining)
     }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
