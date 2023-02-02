@@ -48,6 +48,7 @@ struct KOAddNewWordView: View {
           TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
             .textInputAutocapitalization(.never)
             .focused($wordFocused)
+            .shakeEffect(trigger: isWordEmpty)
         } header: {
           HStack {
             Text("단어")
@@ -55,7 +56,9 @@ struct KOAddNewWordView: View {
               Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
             }
           }
+
         }
+
 
         Section(header: Text("발음")) {
           TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
@@ -67,12 +70,14 @@ struct KOAddNewWordView: View {
             TextField("뜻을 입력하세요.", text: $mean, axis: .vertical)
               .textInputAutocapitalization(.never)
           }
+          .shakeEffect(trigger: isMeaningEmpty)
         } header: {
           HStack {
             Text("뜻")
 
             if isMeaningEmpty {
               Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+
             }
             Spacer()
             Button("+") {
@@ -85,6 +90,7 @@ struct KOAddNewWordView: View {
             }
           }
         }
+
       }
       .navigationBarTitleDisplayMode(.inline)
       .navigationTitle("새 단어 추가")
