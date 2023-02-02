@@ -119,7 +119,7 @@ struct iPhoneWordTestView: View {
                         paperViewModel.restartTimer()
                         focusedField = .answer
                     } label: {
-                        Text("PASS")
+                        Text("pass")
                     }
                     
                 }
