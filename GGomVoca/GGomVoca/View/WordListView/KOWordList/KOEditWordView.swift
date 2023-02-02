@@ -20,6 +20,7 @@ struct KOEditWordView: View {
   @State private var inputWord: String = ""
   @State private var inputOption: String = ""
   @State private var inputMeaning: String = ""
+  @State private var meanings: [String] = [""]
   
   // 입력값 공백 제거
   private var word: String {
@@ -57,8 +58,10 @@ struct KOEditWordView: View {
         }
         
         Section {
-          TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-            .textInputAutocapitalization(.never)
+          ForEach($meanings, id: \.self) { mean in
+            TextField("뜻을 입력하세요.", text: mean, axis: .vertical)
+              .textInputAutocapitalization(.never)
+          }
         } header: {
           HStack {
             Text("뜻")
@@ -74,6 +77,7 @@ struct KOEditWordView: View {
         inputWord = editingWord.word!
         inputOption = editingWord.option ?? ""
         inputMeaning = editingWord.meaning![0]
+        meanings = editingWord.meaning!
       }
       .toolbar {
         // 취소 버튼

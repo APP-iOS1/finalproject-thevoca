@@ -20,6 +20,7 @@ struct EditWordView: View {
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+  @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -92,7 +93,7 @@ struct EditWordView: View {
             .onAppear {
                 inputWord = editingWord.word!
                 inputOption = editingWord.option ?? ""
-                inputMeaning = editingWord.meaning![0]
+                meanings = editingWord.meaning!
             }
             .toolbar {
                 // 취소 버튼

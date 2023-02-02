@@ -18,6 +18,7 @@ struct JPAddNewWordView: View {
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+  @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -89,7 +90,7 @@ struct JPAddNewWordView: View {
                         
                         if !isWordEmpty && !isWordEmpty {
                             /// - 단어 추가
-                            viewModel.addNewWord(word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(word: word, meaning: meanings, option: option)
                             
                             /// - 단어 추가 후 textField 비우기
                             inputWord = ""

@@ -24,6 +24,7 @@ struct AddNewWordView: View {
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+    @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -87,11 +88,16 @@ struct AddNewWordView: View {
                 }
                 
                 Section {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-                        .textInputAutocapitalization(.never)
+                  ForEach($meanings, id: \.self) { $mean in
+                    TextField("뜻을 입력하세요.", text: $mean, axis: .vertical)
+                      .textInputAutocapitalization(.never)
+                  }
                 } header: {
                     HStack {
                         Text("뜻")
+                      Button("+") {
+                        meanings.append("")
+                      }
                         if isMeaningEmpty {
                             Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
                         }
@@ -111,10 +117,12 @@ struct AddNewWordView: View {
                     Button("추가") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
-                        
+                        print("meanings : \(meanings)")
+                      print("isWordEmpty : \(isWordEmpty)")
+                      print("isMeaningEmpty : \(isMeaningEmpty)")
                         if !isWordEmpty && !isWordEmpty {
                             /// - 단어 추가
-                            viewModel.addNewWord(word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(word: word, meaning: meanings, option: option)
                             
                             /// - 단어 추가 후 textField 비우기
                             inputWord = ""
