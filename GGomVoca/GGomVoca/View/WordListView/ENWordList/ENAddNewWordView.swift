@@ -32,8 +32,8 @@ struct ENAddNewWordView: View {
     private var option: String {
         inputOption.trimmingCharacters(in: .whitespaces)
     }
-    private var meaning: String {
-        inputMeaning.trimmingCharacters(in: .whitespaces)
+    private var meaning: [String] {
+        [inputMeaning.trimmingCharacters(in: .whitespaces)]
     }
     
     // 입력값이 공백일 때 경고메세지 출력 조건

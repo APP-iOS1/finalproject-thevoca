@@ -54,7 +54,7 @@ struct JPWordCell: View {
                 Text(word.option ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                Text(word.meaning ?? "")
+              Text(word.meaning!.joined(separator: ",") ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             }
@@ -94,6 +94,10 @@ struct JPWordCell: View {
             if !selectMode {
                 isSelected = false
             }
+        }
+        .onAppear {
+          print("word: \(word)")
+          print("meaning: \(word.meaning)")
         }
     }
 }

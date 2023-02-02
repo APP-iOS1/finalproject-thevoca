@@ -68,7 +68,7 @@ struct FRWordCell: View {
                     EmptyView()
                 }
                 
-                Text(word.meaning ?? "")
+              Text(word.meaning!.joined(separator: ",") ?? "")
             }
             .horizontalAlignSetting(.center)
             .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)

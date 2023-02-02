@@ -105,7 +105,7 @@ struct WordSearchingView: View {
                 let wordModel = SearchingWordModel(
                     vocabulary: voca.name ?? "",
                     word: word.word ?? "",
-                    meaning: word.meaning ?? "",
+                    meaning: word.meaning![0],
                     recentTestResults: word.recentTestResults ?? [],
                     correctCount: Int(word.correctCount),
                     incorrectCount: Int(word.incorrectCount)
