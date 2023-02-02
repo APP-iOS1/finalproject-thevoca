@@ -54,13 +54,13 @@ struct VocabularyCell: View {
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
         }
-        //단어장 즐겨찾기 추가 스와이프
+        //단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
                 favoriteCompletion()
             } label: {
-                Image(systemName: vocabulary.isFavorite ? "star.slash" : "star")
+                Image(systemName: vocabulary.isFavorite ? "pin.slash.fill" : "pin.fill")
             }
             .tint(vocabulary.isFavorite ? .gray : .yellow)
         }
