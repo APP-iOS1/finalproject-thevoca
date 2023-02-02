@@ -20,6 +20,7 @@ struct VocabularyCell: View {
     // MARK: View Properties
     @State private var deleteActionSheet: Bool = false
     @State private var deleteAlert: Bool = false
+    
     private var natianalityIcon: String {
         switch vocabulary.nationality {
         case "KO":
@@ -35,11 +36,24 @@ struct VocabularyCell: View {
         }
     }
     
+    private var wordsCount: Int {
+        let temp = vocabulary.words?.allObjects as? [Word]
+        /// - 삭제되지 않은 상태인 Word만 filter
+        let words = temp?.filter { $0.deletedAt == nil } ?? []
+        return words.count
+    }
+    
     /// - 단어장 이름 수정 관련
     @State private var editVocabularyName: Bool = false
     
     var body: some View {
-        NavigationLink("\(natianalityIcon) \(vocabulary.name ?? "")", value: vocabulary)
+        NavigationLink(value: vocabulary) {
+            HStack {
+                Text("\(natianalityIcon) \(vocabulary.name ?? "")")
+                Spacer()
+                Text("\(wordsCount)").foregroundColor(.gray)
+            }
+        }
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
