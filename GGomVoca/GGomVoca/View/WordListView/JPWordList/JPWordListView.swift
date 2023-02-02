@@ -89,6 +89,7 @@ struct JPWordListView: View {
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
+        // 시험 모드 시트
         .fullScreenCover(isPresented: $isTestMode, content: {
             TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
         })
