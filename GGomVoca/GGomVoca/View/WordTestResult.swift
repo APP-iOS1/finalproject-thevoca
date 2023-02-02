@@ -10,12 +10,12 @@ import SwiftUI
 struct WordTestResult: View {
     @Binding var isTestMode: Bool
     
-    @ObservedObject var paperViewModel: TestViewModel
+    @ObservedObject var vm: TestViewModel
     let testMode: String
     
     var correctCount: Int {
         var cnt: Int = 0
-        for question in paperViewModel.testPaper {
+        for question in vm.testPaper {
             if question.isCorrect == true { cnt += 1 }
         }
         return cnt
@@ -23,7 +23,7 @@ struct WordTestResult: View {
     
     var incorrectCount: Int {
         var cnt: Int = 0
-        for question in paperViewModel.testPaper {
+        for question in vm.testPaper {
             if question.isCorrect == false { cnt += 1 }
         }
         return cnt
@@ -52,7 +52,7 @@ struct WordTestResult: View {
                 VStack(spacing: 5) {
                     Text("걸린 시간")
                         .bold()
-                    Text("\(paperViewModel.convertSecondsToTime(seconds: paperViewModel.timeCountUp))")
+                    Text("\(vm.convertSecondsToTime(seconds: vm.timeCountUp))")
                         .foregroundColor(.gray)
                 }
                 .horizontalAlignSetting(.center)
@@ -75,7 +75,7 @@ struct WordTestResult: View {
             
             List {
                 Section {
-                    ForEach(paperViewModel.testPaper) { paper in
+                    ForEach(vm.testPaper) { paper in
                         HStack {
                             switch testMode {
                             case "word":
