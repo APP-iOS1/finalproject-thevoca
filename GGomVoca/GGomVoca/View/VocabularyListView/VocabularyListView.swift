@@ -90,7 +90,10 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 }
+                
             }
 
             // MARK: 즐겨찾기; 비어 있더라도 해당 기능을 알리기 위해 section 필요
@@ -107,6 +110,8 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 } else {
                     VStack {
                         HStack {
@@ -134,6 +139,8 @@ struct VocabularyListView: View {
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 }
             }
             
@@ -150,6 +157,8 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 }
             }
 
@@ -166,6 +175,8 @@ struct VocabularyListView: View {
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 }
             }
 
@@ -181,14 +192,17 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary)
-
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
                 }
             }
         }
         .navigationBarTitle("단어장")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                EditButton()
+                
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
@@ -231,6 +245,14 @@ struct VocabularyListView: View {
         }
         print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
         return result
+    }
+    
+    func move(from source: IndexSet, to destination: Int) {
+        viewModel.vocabularyList.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    func delete(at offsets: IndexSet) {
+        viewModel.vocabularyList.remove(atOffsets: offsets)
     }
 }
 
