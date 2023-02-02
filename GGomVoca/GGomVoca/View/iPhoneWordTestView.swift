@@ -42,8 +42,12 @@ struct iPhoneWordTestView: View {
     var timer: String {
         paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime()
     }
-    var isDisabled: Bool {
+    var timeOver: Bool {
         paperViewModel.timeRemaining == -1 ? true : false
+    }
+    
+    var isExsisLastAnswer: Bool {
+        paperViewModel.testPaper.last?.answer != nil ? true : false
     }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
@@ -70,10 +74,13 @@ struct iPhoneWordTestView: View {
                 .onSubmit {
                     paperViewModel.saveAnswer(answer: answer)
                     answer.removeAll()
-                    paperViewModel.restartTimer()
+                    if !paperViewModel.showSubmitButton() {
+                        paperViewModel.restartTimer()
+                    }
+                    paperViewModel.showNextQuestion()
                     focusedField = .answer
                 }
-                .disabled(isDisabled)
+                .disabled(timeOver||isExsisLastAnswer)
         }
         .onAppear {
             paperViewModel.createPaper(words: viewModel.words, isMemorized: isMemorized)
@@ -86,7 +93,9 @@ struct iPhoneWordTestView: View {
             if paperViewModel.showSubmitButton() {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        paperViewModel.saveAnswer(answer: answer)
+                        if paperViewModel.testPaper.last?.answer == nil {
+                            paperViewModel.saveAnswer(answer: answer)
+                        }
                         // 타이머 종료
                         paperViewModel.cancelTimer()
                         // 문제지 채점
@@ -104,6 +113,7 @@ struct iPhoneWordTestView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         paperViewModel.saveAnswer(answer: "")
+                        paperViewModel.showNextQuestion()
                         answer.removeAll()
                         paperViewModel.restartTimer()
                         focusedField = .answer

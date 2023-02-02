@@ -26,7 +26,7 @@ class TestViewModel: ObservableObject {
     }
     
     var timer: AnyCancellable?
-    let timeLimit = 3
+    let timeLimit = 15
     @Published var timeRemaining : Int = 0
     
     
@@ -60,6 +60,10 @@ class TestViewModel: ObservableObject {
     // MARK: - 답변 저장
     func saveAnswer(answer: String) {
         testPaper[currentQuestionNum].answer = answer
+    }
+    
+    // MARK: - 다음 문제 보여주기
+    func showNextQuestion() {
         // 문제가 남았다면 다음 문제로
         if currentQuestionNum + 1 < wholeQuestionNum {
             currentQuestionNum += 1
@@ -102,10 +106,10 @@ class TestViewModel: ObservableObject {
                 self.timeRemaining -= 1
                 if self.timeRemaining < 0 {
                     if self.currentQuestionNum >= self.wholeQuestionNum - 1 {
-                        self.saveAnswer(answer: "")
                         self.cancelTimer()
                     } else {
                         self.saveAnswer(answer: "")
+                        self.showNextQuestion()
                         self.restartTimer()
                     }
                 }
