@@ -17,6 +17,9 @@ struct VocabularyListView: View {
     @State var selectedVocabulary : Vocabulary?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
+    
+    // 편집 모드 관련
+    @State private var editMode: EditMode = .inactive
         
     @State var temp: Vocabulary?
     var body: some View {
@@ -88,7 +91,7 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -108,7 +111,7 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -137,7 +140,7 @@ struct VocabularyListView: View {
                             print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary)
+                        }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -155,7 +158,7 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -173,7 +176,7 @@ struct VocabularyListView: View {
                             print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary)
+                        }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -191,7 +194,7 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: move)
                     .onDelete(perform: delete)
@@ -201,7 +204,15 @@ struct VocabularyListView: View {
         .navigationBarTitle("단어장")
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                EditButton()
+                Button {
+                    if editMode == .inactive {
+                        editMode = .active
+                    } else {
+                        editMode = .inactive
+                    }
+                } label: {
+                    Text(editMode == .inactive ? "편집" : "완료")
+                }
                 
                 Button {
                     isShowingAddVocabulary.toggle()
@@ -223,6 +234,8 @@ struct VocabularyListView: View {
                     viewModel.getVocabularyData()
                 }
         }
+        .environment(\.editMode, $editMode)
+        .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
     }
     
     func getVocaItem(for itemID: UUID) -> Vocabulary {
