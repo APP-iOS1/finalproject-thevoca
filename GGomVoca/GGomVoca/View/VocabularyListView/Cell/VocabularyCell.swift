@@ -23,45 +23,7 @@ struct VocabularyCell: View {
     @State private var editVocabularyName: Bool = false
     
     var body: some View {
-        NavigationLink {
-            switch vocabulary.nationality! {
-            case "KO" :
-                KOWordListView(vocabularyID: vocabulary.id)
-                    .toolbar(.hidden, for: .tabBar)
-                    .onAppear {
-                        vm.manageRecentVocabulary(voca: vocabulary)
-                    }
-                
-            case "EN" :
-                ENWordListView(vocabularyID: vocabulary.id)
-                    .toolbar(.hidden, for: .tabBar)
-                    .onAppear {
-                        vm.manageRecentVocabulary(voca: vocabulary)
-                    }
-                
-            case "JA" :
-                JPWordListView(vocabularyID: vocabulary.id)
-                    .toolbar(.hidden, for: .tabBar)
-                    .onAppear {
-                        vm.manageRecentVocabulary(voca: vocabulary)
-                    }
-                
-            case "FR" :
-                FRWordListView(vocabularyID: vocabulary.id)
-                    .toolbar(.hidden, for: .tabBar)
-                    .onAppear {
-                        vm.manageRecentVocabulary(voca: vocabulary)
-                    }
-            default:
-                WordListView(vocabularyID: vocabulary.id)
-                    .toolbar(.hidden, for: .tabBar)
-                    .onAppear {
-                        vm.manageRecentVocabulary(voca: vocabulary)
-                    }
-            }
-        } label: {
-            Text(vocabulary.name ?? "")
-        }
+        NavigationLink(vocabulary.name ?? "", value: vocabulary)
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
@@ -99,7 +61,6 @@ struct VocabularyCell: View {
             favoriteCompletion()
         } content: {
             EditVocabularyView(vocabulary: vocabulary)
-            
         }
         // MARK: iPhone에서 단어장을 삭제할 때 띄울 메세지
         .actionSheet(isPresented: $deleteActionSheet) {
@@ -119,7 +80,7 @@ struct VocabularyCell: View {
             }), secondaryButton: .cancel(Text("취소")))
         }
         // !!!: 추후 confirmationDialog가 안정화 되면 actionSheet대신 적용
-//        .confirmationDialog("단어장 삭제", isPresented: $isDeleteVocabulary) {
+//        .confirmationDialog("단어장 삭제", isPresented: $deleteAlert) {
 //            Button("단어장 삭제", role: .destructive) {
 //                vm.updateDeletedData(id: vocabulary.id!)
 //                deleteCompletion()

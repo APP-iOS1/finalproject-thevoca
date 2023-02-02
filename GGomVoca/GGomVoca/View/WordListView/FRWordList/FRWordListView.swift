@@ -192,6 +192,13 @@ struct FRWordListView: View {
                                 Image(systemName: "square.and.arrow.up")
                             }
                         }
+                        
+                        NavigationLink(destination: MyNoteView(words: viewModel.words)) {
+                            HStack {
+                                Text("시험 결과 보기")
+                                Image(systemName: "chart.line.uptrend.xyaxis")
+                            }
+                        }
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
