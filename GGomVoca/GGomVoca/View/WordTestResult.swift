@@ -23,22 +23,18 @@ struct WordTestResult: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    isTestMode = false
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "chevron.backward")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("단어장으로 돌아가기")
-                    }
-                    .padding(.leading, 8)
-                    .padding(.vertical, 5)
+            Button {
+                isTestMode = false
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "chevron.backward")
+                        .font(.title2)
+                        .fontWeight(.medium)
+                    Text("단어장으로 돌아가기")
                 }
-                Spacer()
-                Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
-                    .padding(.trailing, 8)
+                .horizontalAlignSetting(.leading)
+                .padding(.leading, 8)
+                .padding(.top, 5)
             }
             
             List {
@@ -48,6 +44,7 @@ struct WordTestResult: View {
                             switch testMode {
                             case "word":
                                 Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
+                                    .frame(width: 40)
                                     .foregroundColor(.red)
                                 Text(paper.answer ?? "")
                                     .horizontalAlignSetting(.center)
@@ -55,6 +52,7 @@ struct WordTestResult: View {
                                     .horizontalAlignSetting(.center)
                             case "meaning":
                                 Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
+                                    .frame(width: 40)
                                     .foregroundColor(.red)
                                 Text(paper.word)
                                     .horizontalAlignSetting(.center)
@@ -67,8 +65,8 @@ struct WordTestResult: View {
                     }
                 } header: {
                     HStack {
-                        Text(Image(systemName: "circle"))
-                            .foregroundColor(.clear)
+                        Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
+                            .frame(width: 40)
                         Text("단어")
                             .horizontalAlignSetting(.center)
                         Text("뜻")
