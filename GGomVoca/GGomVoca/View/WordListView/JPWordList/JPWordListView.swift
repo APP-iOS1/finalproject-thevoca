@@ -33,7 +33,7 @@ struct JPWordListView: View {
     @State var removeAlert: Bool = false // iPad
     
     /// - 단어 시험모드 관련 State
-    @State var isTestMode: Bool = false
+    @State private var isTestMode: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
