@@ -90,7 +90,7 @@ struct JPWordListView: View {
             emptyMessage = viewModel.getEmptyWord()
         }
         .fullScreenCover(isPresented: $isTestMode, content: {
-            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID, viewModel: viewModel)
+            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
         })
         // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {

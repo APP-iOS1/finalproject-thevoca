@@ -17,7 +17,6 @@ struct iPhoneWordTestView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @ObservedObject var viewModel: JPWordListViewModel
     @StateObject var paperViewModel: TestViewModel = TestViewModel()
     
     // MARK: Test Mode에 관한 Properties
@@ -84,7 +83,8 @@ struct iPhoneWordTestView: View {
                 .disabled(timeOver||isExsisLastAnswer)
         }
         .onAppear {
-            paperViewModel.createPaper(words: viewModel.words, isMemorized: isMemorized)
+            paperViewModel.getVocabulary(vocabularyID: vocabularyID)
+            paperViewModel.createPaper(isMemorized: isMemorized)
             paperViewModel.startTimer()
             focusedField = .answer
         }
