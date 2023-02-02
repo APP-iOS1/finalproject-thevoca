@@ -61,6 +61,7 @@ struct iPhoneWordTestView: View {
             if !paperViewModel.testPaper.isEmpty {
                 Text(paperViewModel.showQuestion(testMode: testMode))
                     .font(.largeTitle)
+                    .frame(width: UIScreen.main.bounds.width * 0.9)
             }
             
             Spacer()
