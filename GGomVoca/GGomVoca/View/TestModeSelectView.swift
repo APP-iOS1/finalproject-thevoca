@@ -21,13 +21,14 @@ struct TestModeSelectView: View {
                 dismiss()
             } label: {
                 Image(systemName: "xmark")
+                    .foregroundColor(.gray)
             }
             .horizontalAlignSetting(.trailing)
             .padding()
             
             Spacer()
             
-            Group {
+            VStack(spacing: 15) {
                 NavigationLink {
                     iPhoneWordTestView(
                         isTestMode: $isTestMode,
@@ -38,6 +39,13 @@ struct TestModeSelectView: View {
                     )
                 } label: {
                     Text("전체 단어 시험")
+                        .foregroundColor(.black)
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.secondary, lineWidth: 1)
+                                .foregroundColor(.gray)
+                        }
                 }
 
                 
@@ -51,6 +59,13 @@ struct TestModeSelectView: View {
                     )
                 } label: {
                     Text("전체 뜻 시험")
+                        .foregroundColor(.black)
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.secondary, lineWidth: 1)
+                                .foregroundColor(.gray)
+                        }
                 }
                 
                 NavigationLink {
@@ -63,6 +78,13 @@ struct TestModeSelectView: View {
                     )
                 } label: {
                     Text("못외운 단어 시험")
+                        .foregroundColor(.black)
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.secondary, lineWidth: 1)
+                                .foregroundColor(.gray)
+                        }
                 }
                 
                 NavigationLink {
@@ -75,6 +97,13 @@ struct TestModeSelectView: View {
                     )
                 } label: {
                     Text("못외운 뜻 시험")
+                        .foregroundColor(.black)
+                        .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
+                        .background {
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.secondary, lineWidth: 1)
+                                .foregroundColor(.gray)
+                        }
                 }
             }
             
@@ -84,8 +113,8 @@ struct TestModeSelectView: View {
     }
 }
 
-//struct TestModeSelectView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TestModeSelectView(vocabularyID: UUID(uuidString: "64883267-186C-4053-A38E-940E6F6E7B41"), viewModel: JPWordListViewModel())
-//    }
-//}
+struct TestModeSelectView_Previews: PreviewProvider {
+    static var previews: some View {
+        TestModeSelectView(isTestMode: .constant(true), vocabularyID: UUID(uuidString: "64883267-186C-4053-A38E-940E6F6E7B41"), viewModel: JPWordListViewModel())
+    }
+}
