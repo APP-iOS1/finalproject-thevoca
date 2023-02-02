@@ -8,7 +8,7 @@
 import SwiftUI
 //단어장 셀 뷰
 struct VocabularyCell: View {
-    
+    // MARK: SuperView Properties
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
     //단어장 즐겨찾기 completion Handler
     var favoriteCompletion: () -> ()
@@ -16,20 +16,35 @@ struct VocabularyCell: View {
     var deleteCompletion : () -> ()
     
     var vocabulary: Vocabulary
+    
+    // MARK: View Properties
     @State private var deleteActionSheet: Bool = false
     @State private var deleteAlert: Bool = false
+    private var natianalityIcon: String {
+        switch vocabulary.nationality {
+        case "KO":
+            return "🇰🇷"
+        case "EN":
+            return "🇺🇸"
+        case "JA":
+            return "🇯🇵"
+        case "FR":
+            return "🇫🇷"
+        default:
+            return ""
+        }
+    }
     
     /// - 단어장 이름 수정 관련
     @State private var editVocabularyName: Bool = false
     
     var body: some View {
-        NavigationLink(vocabulary.name ?? "", value: vocabulary)
+        NavigationLink("\(natianalityIcon) \(vocabulary.name ?? "")", value: vocabulary)
         //단어장 즐겨찾기 추가 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
                 favoriteCompletion()
-                print("clickclick")
             } label: {
                 Image(systemName: vocabulary.isFavorite ? "star.slash" : "star")
             }
