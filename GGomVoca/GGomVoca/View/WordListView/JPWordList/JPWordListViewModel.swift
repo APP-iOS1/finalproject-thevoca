@@ -107,7 +107,8 @@ class JPWordListViewModel: ObservableObject {
         
         for word in words {
             var aLine = ""
-
+          var tmpMeaning = word.meaning!.joined(separator: ",")
+          tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
             if word.deletedAt == nil {
               aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(String(describing: word.meaning!.first ?? "" ))"
                 fullText += aLine + "\n"

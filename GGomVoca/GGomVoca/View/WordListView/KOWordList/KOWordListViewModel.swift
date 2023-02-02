@@ -107,7 +107,7 @@ class KOWordListViewModel: ObservableObject {
 
     for word in words {
       var aLine = ""
-      var tmpMeaning = String(describing: word.meaning![0] ?? "")
+      var tmpMeaning = word.meaning!.joined(separator: ",")
       tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
       if word.deletedAt == nil {
         aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(tmpMeaning)"

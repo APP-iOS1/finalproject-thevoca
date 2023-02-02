@@ -19,7 +19,7 @@ struct JPWordCell: View {
     @State var isSelected: Bool = false
     
     let nationality: String
-    let word: Word
+  @Binding var word: Word
     
     var checkImage: Image {
         isSelected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
@@ -54,7 +54,7 @@ struct JPWordCell: View {
                 Text(word.option ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-              Text(word.meaning!.joined(separator: ",") ?? "")
+              Text(word.meaning!.joined(separator: ", "))
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             }
@@ -97,7 +97,7 @@ struct JPWordCell: View {
         }
         .onAppear {
           print("word: \(word)")
-          print("meaning: \(word.meaning)")
+          print("meaning: \(String(describing: word.meaning))")
         }
     }
 }

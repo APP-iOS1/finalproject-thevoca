@@ -106,7 +106,8 @@ class ENENWordListViewModel: ObservableObject {
     
     for word in words {
       var aLine = ""
-      var tmpMeaning = ""
+      var tmpMeaning = word.meaning!.joined(separator: ",")
+      tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
       for meaning in word.meaning! {
         tmpMeaning += meaning
         tmpMeaning += ","

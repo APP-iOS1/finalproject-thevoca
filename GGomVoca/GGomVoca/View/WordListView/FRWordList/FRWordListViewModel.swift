@@ -107,11 +107,7 @@ class FRFRWordListViewModel: ObservableObject {
 
     for word in words {
       var aLine = ""
-      var tmpMeaning = ""
-      for meaning in word.meaning! {
-        tmpMeaning += meaning
-        tmpMeaning += ","
-      }
+      var tmpMeaning = word.meaning!.joined(separator: ",")
       tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
       if word.deletedAt == nil {
         aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(tmpMeaning)"

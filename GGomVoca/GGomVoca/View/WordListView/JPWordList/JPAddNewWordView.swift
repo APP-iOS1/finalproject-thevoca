@@ -63,17 +63,36 @@ struct JPAddNewWordView: View {
                 }
                 
                 Section {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-                        .textInputAutocapitalization(.never)
-                } header: {
-                    HStack {
-                        Text("뜻")
-                        if isMeaningEmpty {
-                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
-                        }
+                  ForEach(meanings.indices, id: \.self) { index in
+                    FieldView(value: Binding<String>(get: {
+                      guard index < meanings.count else { return "" }
+                      return meanings[index]
+                    }, set: { newValue in
+                      guard index < meanings.count else { return }
+                      meanings[index] = newValue
+                    })) {
+                      if meanings.count > 1 {
+                        meanings.remove(at: index)
+                      } else {
+                        // MARK: 최소 뜻 개수 1개 보장
+
+                      }
                     }
+                  }
+                  Button("뜻 추가하기") {
+                    meanings.append("")
+                  }
+                } header: {
+                  HStack {
+                    Text("뜻")
+                    if isMeaningEmpty {
+                      Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                    }
+                  }
                 }
-            }
+                .buttonStyle(.borderless)
+              }
+            .shakeEffect(trigger: isWordEmpty || isMeaningEmpty)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("새 단어 추가")
             .toolbar {
@@ -86,15 +105,25 @@ struct JPAddNewWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("추가") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
-                        meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
-                        
-                        if !isWordEmpty && !isWordEmpty {
+                      // MARK: 뜻이 입력되지 않은 element check
+                      meanings.contains("") ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
+                      print("meanings : \(meanings)")
+                      print("isWordEmpty : \(isWordEmpty)")
+                      print("isMeaningEmpty : \(isMeaningEmpty)")
+
+                      // MARK: 뜻 내부 String trim
+                      print("count: \(meanings.count)")
+                      for i in 0..<meanings.count {
+                        meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
+                        print("meaning \(i): \(meanings[i])")
+                      }
+                      if !isWordEmpty && !isMeaningEmpty {
                             /// - 단어 추가
                             viewModel.addNewWord(word: word, meaning: meanings, option: option)
                             
                             /// - 단어 추가 후 textField 비우기
                             inputWord = ""
-                            inputMeaning = ""
+                            meanings = [""]
                             inputOption = ""
 
                             /// - isContinue 상태에 따라 sheet를 닫지 않고 유지함

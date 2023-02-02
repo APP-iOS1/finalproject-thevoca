@@ -19,7 +19,7 @@ struct KOWordCell: View {
     @State var isSelected: Bool = false
     
     let nationality: String
-    let word: Word
+    @Binding var word: Word
     
     var checkImage: Image {
         isSelected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
