@@ -73,6 +73,7 @@
 		EE759528298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE759527298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift */; };
 		EE75952B298A5B7800AB6E62 /* VocabularyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75952A298A5B7800AB6E62 /* VocabularyService.swift */; };
 		EE75952D298A5BAC00AB6E62 /* VocabularyServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75952C298A5BAC00AB6E62 /* VocabularyServiceImpl.swift */; };
+		EEDCBFDD298B800A00A7B016 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = EEDCBFDC298B800A00A7B016 /* Swinject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEDCBFDD298B800A00A7B016 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +484,7 @@
 			);
 			name = GGomVoca;
 			packageProductDependencies = (
+				EEDCBFDC298B800A00A7B016 /* Swinject */,
 			);
 			productName = GGomVoca;
 			productReference = 63DC85312950312E00461DEB /* GGomVoca.app */;
@@ -512,6 +515,7 @@
 			);
 			mainGroup = 63DC85282950312E00461DEB;
 			packageReferences = (
+				EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 63DC85322950312E00461DEB /* Products */;
 			projectDirPath = "";
@@ -822,6 +826,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EEDCBFDC298B800A00A7B016 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */ = {
