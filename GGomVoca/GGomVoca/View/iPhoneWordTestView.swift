@@ -26,7 +26,7 @@ struct iPhoneWordTestView: View {
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
-    // testMode에 따른 placeholder
+    // testMode에 따른 textField placeholder
     var textFieldPlaceHolder: String {
         switch testMode {
         case "word":
@@ -37,16 +37,18 @@ struct iPhoneWordTestView: View {
             return ""
         }
     }
-    
-    var timer: String {
-        paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime()
-    }
+    // TextField disable에 관한 Properties
     var timeOver: Bool {
         paperViewModel.timeRemaining == -1 ? true : false
     }
     
     var isExsisLastAnswer: Bool {
         paperViewModel.testPaper.last?.answer != nil ? true : false
+    }
+    
+    // MARK: Timer에 관한 Property
+    var timer: String {
+        paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime()
     }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
@@ -72,13 +74,15 @@ struct iPhoneWordTestView: View {
                 .disableAutocorrection(true)
                 .focused($focusedField, equals: .answer)
                 .onSubmit {
+                    // 마지막 문제일 경우 답변 저장만 함
                     paperViewModel.saveAnswer(answer: answer)
+                    // 마지막 문제가 아닌 경우
                     if !paperViewModel.showSubmitButton() {
+                        paperViewModel.showNextQuestion()
                         answer.removeAll()
                         paperViewModel.restartTimer()
+                        focusedField = .answer
                     }
-                    paperViewModel.showNextQuestion()
-                    focusedField = .answer
                 }
                 .disabled(timeOver||isExsisLastAnswer)
         }
@@ -94,7 +98,7 @@ struct iPhoneWordTestView: View {
             if paperViewModel.showSubmitButton() {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if paperViewModel.testPaper.last?.answer == nil {
+                        if paperViewModel.testPaper.last?.answer == nil && paperViewModel.timeRemaining != -1 {
                             paperViewModel.saveAnswer(answer: answer)
                         }
                         // 타이머 종료
