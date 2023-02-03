@@ -45,7 +45,7 @@ class ENENWordListViewModel: ObservableObject {
   }
   
   // MARK: 단어 수정하기
-  func updateWord(editWord: Word, word: String, meaning: String, option: String = "") {
+  func updateWord(editWord: Word, word: String, meaning: [String], option: String = "") {
     guard let tempIndex = words.firstIndex(of: editWord) else { return }
     
     editWord.word = word
@@ -58,7 +58,7 @@ class ENENWordListViewModel: ObservableObject {
   }
   
   // MARK: 단어 추가하기
-  func addNewWord(word: String, meaning: String, option: String = "") {
+  func addNewWord(word: String, meaning: [String], option: String = "") {
     let newWord = Word(context: viewContext)
     newWord.vocabularyID = selectedVocabulary.id
     newWord.vocabulary = selectedVocabulary
@@ -106,7 +106,12 @@ class ENENWordListViewModel: ObservableObject {
     
     for word in words {
       var aLine = ""
-      var tmpMeaning = String(describing: word.meaning ?? "")
+      var tmpMeaning = word.meaning!.joined(separator: ",")
+      tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
+      for meaning in word.meaning! {
+        tmpMeaning += meaning
+        tmpMeaning += ","
+      }
       tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
       if word.deletedAt == nil {
         aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(tmpMeaning)"

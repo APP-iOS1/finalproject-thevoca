@@ -19,7 +19,7 @@ struct KOWordCell: View {
     @State var isSelected: Bool = false
     
     let nationality: String
-    let word: Word
+    @Binding var word: Word
     
     var checkImage: Image {
         isSelected ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "circle")
@@ -54,7 +54,7 @@ struct KOWordCell: View {
                 Text(word.option ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                Text(word.meaning ?? "")
+              Text(word.meaning!.joined(separator: ", "))
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
             }

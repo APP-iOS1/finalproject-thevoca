@@ -11,7 +11,7 @@ import Combine
 struct Question: Identifiable {
     var id: UUID
     var word: String
-    var meaning: String
+    var meaning: [String]
     var answer: String?
     var isCorrect: Bool = false
 }
@@ -73,7 +73,7 @@ final class TestViewModel: ObservableObject {
     func showQuestion(testMode: String) -> String {
         switch testMode {
         case "word":
-            return testPaper[currentQuestionNum].meaning
+          return testPaper[currentQuestionNum].meaning.joined(separator: ", ")
         case "meaning":
             return testPaper[currentQuestionNum].word
         default:
@@ -101,7 +101,9 @@ final class TestViewModel: ObservableObject {
     
     // MARK: - 시험지 채점
     func gradeTestPaper(testMode: String) {
-        for idx in 0..<testPaper.count {
+
+
+      for idx in testPaper.indices {
             switch testMode {
             case "word":
                 if testPaper[idx].word == testPaper[idx].answer {
@@ -110,7 +112,11 @@ final class TestViewModel: ObservableObject {
                     testPaper[idx].isCorrect = false
                 }
             case "meaning":
-                if testPaper[idx].meaning == testPaper[idx].answer {
+              // MARK: Tmp print
+              print("meaning : \(testPaper[idx].meaning)")
+              print("answer : \(testPaper[idx].answer?.components(separatedBy: ","))")
+              print("result : \(testPaper[idx].meaning == testPaper[idx].answer?.components(separatedBy: ","))")
+              if testPaper[idx].meaning == testPaper[idx].answer?.components(separatedBy: ",") {
                     testPaper[idx].isCorrect = true
                 } else {
                     testPaper[idx].isCorrect = false

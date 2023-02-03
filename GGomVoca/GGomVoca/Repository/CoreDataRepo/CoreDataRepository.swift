@@ -21,7 +21,7 @@ protocol CoreDataRepository {
     //MARK: 단어장 불러오기
     func fetchVocaData() -> AnyPublisher<[Vocabulary], CoredataRepoError>
     //MARK: 단어장 추가하기
-    func postVocaData(vocaName : String, nationality: Nationality) -> AnyPublisher<Vocabulary, CoredataRepoError>
+    func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, CoredataRepoError>
     //MARK: 단어장 고정 상태 업데이트
     //TODO: Publisher 반환타입 수정
     func updatePinnedVoca(id: UUID) -> AnyPublisher<String, CoredataRepoError>

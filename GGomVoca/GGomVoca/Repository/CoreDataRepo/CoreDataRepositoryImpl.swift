@@ -11,28 +11,19 @@ import CoreData
 class CoreDataRepositoryImpl : CoreDataRepository {
 
     // CloudKit database와 동기화하기 위해서는 NSPersistentCloudKitContainer로 변경
-    let container: NSPersistentCloudKitContainer //NSPersistentContainer에서 변경
     
-    init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "GGomVoca")
-        if inMemory {
-            container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        }
-        
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-            
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+    let context: NSManagedObjectContext
+
+    init(context: NSManagedObjectContext) {
+        self.context = context
     }
+    
     
     /*
     MARK: 데이터를 디스크에 저장하는 메서드
      */
     func saveContext() {
-        let context = container.viewContext
+        let context = context
         if context.hasChanges {
             do {
                 try context.save()
@@ -50,7 +41,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         return Future<[Vocabulary], CoredataRepoError>{observer in
             let vocabularyFetch = Vocabulary.fetchRequest()
 
-            let results = (try? self.container.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+            let results = (try? self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
             
             observer(.success(results))
         }.eraseToAnyPublisher()
@@ -59,11 +50,11 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     /*
     MARK: 단어장 추가하기
      */
-    func postVocaData(vocaName : String, nationality: Nationality) -> AnyPublisher<Vocabulary, CoredataRepoError> {
+    func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, CoredataRepoError> {
         
         return Future<Vocabulary, CoredataRepoError>{[weak self] observer in
             
-            guard let viewContext = self?.container.viewContext else{
+            guard let viewContext = self?.context else{
                 return observer(.failure(CoredataRepoError.notFoundData))
             }
             
@@ -74,6 +65,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             newVocabulary.createdAt = "\(Date())"
             newVocabulary.words = NSSet(array: [])
             print("newVocabulary \(newVocabulary)")
+            self?.saveContext()
             observer(.success(newVocabulary))
         }.eraseToAnyPublisher()
         
@@ -86,7 +78,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         
         return Future<String, CoredataRepoError>{[weak self] observer in
             
-            guard let viewContext = self?.container.viewContext else{
+            guard let viewContext = self?.context else{
                 return observer(.failure(CoredataRepoError.notFoundData))
             }
             
@@ -96,7 +88,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             let results = (try? viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
             do {
                 let objectUpdate = results[0]
-                objectUpdate.setValue(!objectUpdate.isFavorite, forKey: "isFavorite")
+                objectUpdate.setValue(!objectUpdate.isPinned, forKey: "isPinned")
                 print(objectUpdate)
                 observer(.success("\(objectUpdate)"))
             }
