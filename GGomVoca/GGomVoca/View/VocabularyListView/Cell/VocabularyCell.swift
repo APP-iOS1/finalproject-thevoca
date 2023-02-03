@@ -46,6 +46,9 @@ struct VocabularyCell: View {
     /// - 단어장 이름 수정 관련
     @State private var editVocabularyName: Bool = false
     
+    /// - 편집 모드 관련
+    @Binding var editMode: EditMode
+    
     var body: some View {
         NavigationLink(value: vocabulary) {
             HStack {
@@ -53,7 +56,33 @@ struct VocabularyCell: View {
                 Spacer()
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
-        }
+        }      
+//        HStack {
+//            Text(vocabulary.name ?? "")
+//            
+//            Spacer()
+//            
+//            // editmode가 아닐 때만 보여지고, editmode로 들어오면 사라지게
+//            if editMode == .inactive {
+//                Image(systemName: "chevron.right")
+//                .foregroundColor(.gray)
+//            }
+//            
+//            if editMode == .active {
+//                Button(action: {
+//                    editVocabularyName = true
+//                } ) {
+//                    Image(systemName: "info.circle")
+//                        .foregroundColor(.gray)
+//                }
+//                .buttonStyle(.plain) // List보다 버튼이 우선 순위를 갖도록
+//            }
+//        }
+//        // overlay & opacity로 실제로는 있지만 안보이게 구현
+//        .overlay(
+//            NavigationLink(vocabulary.name ?? "", value: vocabulary)
+//                .opacity(0)
+//        )
         //단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
