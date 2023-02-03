@@ -14,6 +14,7 @@ struct FieldView: View {
   var body: some View {
     HStack {
       TextField("뜻을 입력하세요.", text: $value)
+        .textInputAutocapitalization(.never)
       Button(action: {
         print("clicked?")
         onDelete()
