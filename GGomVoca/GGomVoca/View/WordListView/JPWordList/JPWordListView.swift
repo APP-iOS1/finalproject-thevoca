@@ -173,6 +173,15 @@ struct JPWordListView: View {
                         }
                         
                         Button {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
+                        } label: {
+                            HStack {
+                                Text("전체 발음 듣기")
+                                Image(systemName: "speaker.wave.3")
+                            }
+                        }
+                        
+                        Button {
                             viewModel.words.shuffle()
                         } label: {
                             HStack {
@@ -226,6 +235,9 @@ struct JPWordListView: View {
                     }
                 }
             }
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
