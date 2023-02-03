@@ -56,7 +56,7 @@ struct WordCell: View {
                     Text(word.option ?? "")
                         .horizontalAlignSetting(.center)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                    Text(word.meaning ?? "")
+                    Text(word.meaning!.joined(separator: ","))
                         .horizontalAlignSetting(.center)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
@@ -83,7 +83,7 @@ struct WordCell: View {
                         EmptyView()
                     }
 
-                    Text(word.meaning ?? "")
+                  Text(word.meaning!.joined(separator: ", "))
                 }
                 .horizontalAlignSetting(.center)
                 .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)

@@ -26,10 +26,10 @@ struct ENWordsTableView: View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
-                    ForEach(viewModel.words) { word in
+                    ForEach($viewModel.words) { $word in
                         ENWordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
                                  isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
-                                 nationality: viewModel.nationality, word: word)
+                                 nationality: viewModel.nationality, word: $word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
