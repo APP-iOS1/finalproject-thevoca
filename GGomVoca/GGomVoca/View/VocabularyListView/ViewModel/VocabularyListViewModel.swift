@@ -48,6 +48,7 @@ class VocabularyListViewModel : ObservableObject {
                 
                 if voca.isPinned {
                     favoriteVoca.append(voca)
+                    continue
                 }
                 
                 /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue
