@@ -35,6 +35,17 @@ struct JPWordListView: View {
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
+    /// 단어 듣기 관련 프로퍼티
+    private var selectedWords: [Word] {
+        var array = [Word]()
+        
+        self.multiSelection.forEach { word in
+            array.append(word)
+        }
+        
+        return array
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -63,6 +74,12 @@ struct JPWordListView: View {
                             Image(systemName: "folder")
                         }
                         .padding()
+                        
+                        Spacer()
+                        
+                        Button("선택한 단어 듣기") {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "ja-JP")
+                        }
                         
                         Spacer()
                         
