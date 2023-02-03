@@ -17,6 +17,9 @@ struct VocabularyListView: View {
     @State var selectedVocabulary : Vocabulary?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
+    
+    // 편집 모드 관련
+    @State private var editMode: EditMode = .inactive
         
     @State var temp: Vocabulary?
     var body: some View {
@@ -88,9 +91,16 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "recent")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "recent")
+                    })
                 }
+                
             }
 
             // MARK: 즐겨찾기; 비어 있더라도 해당 기능을 알리기 위해 section 필요
@@ -105,8 +115,14 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "favorite")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "favorite")
+                    })
                 } else {
                     VStack {
                         HStack {
@@ -132,8 +148,14 @@ struct VocabularyListView: View {
                             print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary)
+                        }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "KR")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "KR")
+                    })
                 }
             }
             
@@ -148,8 +170,14 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "EN")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "EN")
+                    })
                 }
             }
 
@@ -164,8 +192,14 @@ struct VocabularyListView: View {
                             print("deleteCompletion")
                             viewModel.getVocabularyData()
                             viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary)
+                        }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "JA")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "JA")
+                    })
                 }
             }
 
@@ -180,15 +214,30 @@ struct VocabularyListView: View {
                                 print("deleteCompletion")
                                 viewModel.getVocabularyData()
                                 viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
-
+                            }, vocabulary: vocabulary, editMode: $editMode)
                     }
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "FR")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "FR")
+                    })
                 }
             }
         }
         .navigationBarTitle("단어장")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    if editMode == .inactive {
+                        editMode = .active
+                    } else {
+                        editMode = .inactive
+                    }
+                } label: {
+                    Text(editMode == .inactive ? "편집" : "완료")
+                }
+                
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
@@ -209,6 +258,8 @@ struct VocabularyListView: View {
                     viewModel.getVocabularyData()
                 }
         }
+        .environment(\.editMode, $editMode)
+        .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
     }
     
     func getVocaItem(for itemID: UUID) -> Vocabulary {
@@ -231,6 +282,44 @@ struct VocabularyListView: View {
         }
         print( "getRecentVocabulary() :\(UserManager.shared.recentVocabulary)")
         return result
+    }
+    
+    func move(from source: IndexSet, to destination: Int, type: String) {
+        switch type {
+        case "KR":
+            viewModel.koreanVoca.move(fromOffsets: source, toOffset: destination)
+        case "EN":
+            viewModel.englishVoca.move(fromOffsets: source, toOffset: destination)
+        case "JA":
+            viewModel.japaneseVoca.move(fromOffsets: source, toOffset: destination)
+        case "FR":
+            viewModel.frenchVoca.move(fromOffsets: source, toOffset: destination)
+        case "recent":
+            viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
+        case "favorite":
+            viewModel.favoriteVoca.move(fromOffsets: source, toOffset: destination)
+        default:
+            break
+        }
+    }
+    
+    func delete(at offsets: IndexSet, type: String) {
+        switch type {
+        case "KR":
+            viewModel.koreanVoca.remove(atOffsets: offsets)
+        case "EN":
+            viewModel.englishVoca.remove(atOffsets: offsets)
+        case "JA":
+            viewModel.japaneseVoca.remove(atOffsets: offsets)
+        case "FR":
+            viewModel.frenchVoca.remove(atOffsets: offsets)
+        case "recent":
+            viewModel.recentVocabularyList.remove(atOffsets: offsets)
+        case "favorite":
+            viewModel.favoriteVoca.remove(atOffsets: offsets)
+        default:
+            break
+        }
     }
 }
 
