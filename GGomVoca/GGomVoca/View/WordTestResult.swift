@@ -90,7 +90,7 @@ struct WordTestResult: View {
                             .font(.body)
                         Text(paper.answer ?? "")
                             .horizontalAlignSetting(.center)
-                        Text(paper.meaning)
+                        Text(paper.meaning.joined(separator: ", "))
                             .horizontalAlignSetting(.center)
                     case "meaning":
                         Image(systemName: paper.isCorrect ? "circle" : "xmark")
