@@ -42,6 +42,7 @@ struct TabbarView: View {
 //                    Image(systemName: "gearshape")
 //                    Text("설정")
 //                }
+            //DependencyManager.shared.resolve(PracticeVocaListView.self)
         }
     }
 }
