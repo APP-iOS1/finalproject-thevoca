@@ -31,42 +31,44 @@ struct VocabularyListView: View {
             }
         } detail: {
             if let selectedVocabulary {
-                switch selectedVocabulary.nationality {
-                case "KO":
-                    KOWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "EN" :
-                    ENWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "JA" :
-                    JPWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "FR" :
-                    FRWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                default:
-                    WordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
+                NavigationStack {
+                    switch selectedVocabulary.nationality {
+                    case "KO":
+                        KOWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "EN" :
+                        ENWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "JA" :
+                        JPWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "FR" :
+                        FRWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    default:
+                        WordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    }
                 }
             } else {
                 Text("단어장을 선택하세요")
