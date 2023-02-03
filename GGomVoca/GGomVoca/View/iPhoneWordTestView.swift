@@ -42,7 +42,7 @@ struct iPhoneWordTestView: View {
         vm.timeRemaining == -1 ? true : false
     }
     
-    var isExsisLastAnswer: Bool {
+    var isExistLastAnswer: Bool {
         vm.testPaper.last?.answer != nil ? true : false
     }
     
@@ -84,7 +84,7 @@ struct iPhoneWordTestView: View {
                         focusedField = .answer
                     }
                 }
-                .disabled(timeOver||isExsisLastAnswer)
+                .disabled(timeOver||isExistLastAnswer)
         }
         .onAppear {
             vm.getVocabulary(vocabularyID: vocabularyID)

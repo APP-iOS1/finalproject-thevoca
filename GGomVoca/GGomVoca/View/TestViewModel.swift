@@ -13,7 +13,7 @@ struct Question: Identifiable {
     var word: String
     var meaning: [String]
     var answer: String?
-    var isCorrect: Bool = false
+  var isCorrect: Result = .Wrong
 }
 
 final class TestViewModel: ObservableObject {
@@ -107,19 +107,27 @@ final class TestViewModel: ObservableObject {
             switch testMode {
             case "word":
                 if testPaper[idx].word == testPaper[idx].answer {
-                    testPaper[idx].isCorrect = true
+                  testPaper[idx].isCorrect = .Right
                 } else {
-                    testPaper[idx].isCorrect = false
+                  testPaper[idx].isCorrect = .Wrong
                 }
             case "meaning":
               // MARK: Tmp print
               print("meaning : \(testPaper[idx].meaning)")
               print("answer : \(testPaper[idx].answer?.components(separatedBy: ","))")
-              print("result : \(testPaper[idx].meaning == testPaper[idx].answer?.components(separatedBy: ","))")
-              if testPaper[idx].meaning == testPaper[idx].answer?.components(separatedBy: ",") {
-                    testPaper[idx].isCorrect = true
+              // MARK: white space trim
+              var trimmedAnswer = testPaper[idx].answer?.components(separatedBy: ",")
+              for i in trimmedAnswer!.indices {
+                trimmedAnswer![i] = trimmedAnswer![i].trimmingCharacters(in: .whitespaces)
+              }
+              print("trimmedAnswer : \(trimmedAnswer)")
+              print("result : \(testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!))")
+              if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Right {
+                testPaper[idx].isCorrect = .Right
+                } else if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Wrong {
+                  testPaper[idx].isCorrect = .Wrong
                 } else {
-                    testPaper[idx].isCorrect = false
+                  testPaper[idx].isCorrect = .Half
                 }
             default:
                 print("default")
@@ -162,3 +170,5 @@ final class TestViewModel: ObservableObject {
         return String(format: "%02i:%02i", minutes, seconds)
     }
 }
+
+

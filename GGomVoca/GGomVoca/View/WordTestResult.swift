@@ -19,7 +19,7 @@ struct WordTestResult: View {
     var correctCount: Int {
         var cnt: Int = 0
         for question in vm.testPaper {
-            if question.isCorrect == true { cnt += 1 }
+          if question.isCorrect == .Right { cnt += 1 }
         }
         return cnt
     }
@@ -28,7 +28,7 @@ struct WordTestResult: View {
     var incorrectCount: Int {
         var cnt: Int = 0
         for question in vm.testPaper {
-            if question.isCorrect == false { cnt += 1 }
+          if question.isCorrect != .Right { cnt += 1 }
         }
         return cnt
     }
@@ -85,16 +85,16 @@ struct WordTestResult: View {
                 HStack {
                     switch testMode {
                     case "word":
-                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
-                            .foregroundColor(paper.isCorrect ? .green : .red)
+                      Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
+                        .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
                         Text(paper.answer ?? "")
                             .horizontalAlignSetting(.center)
                         Text(paper.meaning.joined(separator: ", "))
                             .horizontalAlignSetting(.center)
                     case "meaning":
-                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
-                            .foregroundColor(paper.isCorrect ? .green : .red)
+                      Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
+                        .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
                         Text(paper.word)
                             .horizontalAlignSetting(.center)
