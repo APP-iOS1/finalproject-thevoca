@@ -93,8 +93,12 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "recent")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "recent")
+                    })
                 }
                 
             }
@@ -113,8 +117,12 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "favorite")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "favorite")
+                    })
                 } else {
                     VStack {
                         HStack {
@@ -142,8 +150,12 @@ struct VocabularyListView: View {
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "KR")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "KR")
+                    })
                 }
             }
             
@@ -160,8 +172,12 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "EN")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "EN")
+                    })
                 }
             }
 
@@ -178,8 +194,12 @@ struct VocabularyListView: View {
                             viewModel.recentVocabularyList = getRecentVocabulary()
                         }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "JA")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "JA")
+                    })
                 }
             }
 
@@ -196,8 +216,12 @@ struct VocabularyListView: View {
                                 viewModel.recentVocabularyList = getRecentVocabulary()
                             }, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
+                    .onMove(perform: { source, destination in
+                        move(from: source, to: destination, type: "FR")
+                    })
+                    .onDelete(perform: { source in
+                        delete(at: source, type: "FR")
+                    })
                 }
             }
         }
@@ -260,12 +284,42 @@ struct VocabularyListView: View {
         return result
     }
     
-    func move(from source: IndexSet, to destination: Int) {
-        viewModel.vocabularyList.move(fromOffsets: source, toOffset: destination)
+    func move(from source: IndexSet, to destination: Int, type: String) {
+        switch type {
+        case "KR":
+            viewModel.koreanVoca.move(fromOffsets: source, toOffset: destination)
+        case "EN":
+            viewModel.englishVoca.move(fromOffsets: source, toOffset: destination)
+        case "JA":
+            viewModel.japaneseVoca.move(fromOffsets: source, toOffset: destination)
+        case "FR":
+            viewModel.frenchVoca.move(fromOffsets: source, toOffset: destination)
+        case "recent":
+            viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
+        case "favorite":
+            viewModel.favoriteVoca.move(fromOffsets: source, toOffset: destination)
+        default:
+            break
+        }
     }
     
-    func delete(at offsets: IndexSet) {
-        viewModel.vocabularyList.remove(atOffsets: offsets)
+    func delete(at offsets: IndexSet, type: String) {
+        switch type {
+        case "KR":
+            viewModel.koreanVoca.remove(atOffsets: offsets)
+        case "EN":
+            viewModel.englishVoca.remove(atOffsets: offsets)
+        case "JA":
+            viewModel.japaneseVoca.remove(atOffsets: offsets)
+        case "FR":
+            viewModel.frenchVoca.remove(atOffsets: offsets)
+        case "recent":
+            viewModel.recentVocabularyList.remove(atOffsets: offsets)
+        case "favorite":
+            viewModel.favoriteVoca.remove(atOffsets: offsets)
+        default:
+            break
+        }
     }
 }
 
