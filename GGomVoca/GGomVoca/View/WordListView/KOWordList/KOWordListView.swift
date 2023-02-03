@@ -32,6 +32,20 @@ struct KOWordListView: View {
     @State var confirmationDialog: Bool = false // iPhone
     @State var removeAlert: Bool = false // iPad
     
+    // 전체 발음 듣기 관련 State
+    @State private var isSpeech = false
+    
+    /// 단어 듣기 관련 프로퍼티
+    private var selectedWords: [Word] {
+        var array = [Word]()
+        
+        self.multiSelection.forEach { word in
+            array.append(word)
+        }
+        
+        return array
+    }
+    
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
@@ -56,6 +70,18 @@ struct KOWordListView: View {
                             .foregroundColor(Color("toolbardivider"))
                             .frame(height: 1)
                         
+                        Button("선택한 단어 듣기") {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "kr-KO")
+                        }
+                        
+                        Spacer()
+                        
+                        // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
+                        Button(role: .destructive) {
+                            if UIDevice.current.model == "iPhone" {
+                                confirmationDialog.toggle()
+                            } else if UIDevice.current.model == "iPad" {
+                                removeAlert.toggle()
                         HStack {
                             // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
                             Button {
@@ -135,6 +161,30 @@ struct KOWordListView: View {
                 KOAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
                     .presentationDetents([.height(CGFloat(500))])
             }
+        }
+        .toolbar {
+            // TODO: 편집모드에 따른 toolbar State 분기
+            if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSpeech.toggle()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else if isSelectionMode, !isSpeech {  // 편집 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSelectionMode.toggle()
+                        multiSelection.removeAll()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else { // 기본 모드
+                ToolbarItem {
+                    VStack(alignment: .center) {
+                        Text("\(viewModel.words.count)")
+                            .foregroundColor(.gray)
+                    }
             // 단어장 내보내기
             .fileExporter(isPresented: $isExport, document: CSVFile(initialText: viewModel.buildDataForCSV() ?? ""), contentType: .commaSeparatedText, defaultFilename: "\(navigationTitle)") { result in
                 switch result {
@@ -156,6 +206,16 @@ struct KOWordListView: View {
                     // + 버튼
                     ToolbarItem {
                         Button {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "kr-KO")
+                            isSpeech.toggle()
+                        } label: {
+                            HStack {
+                                Text("전체 발음 듣기")
+                                Image(systemName: "speaker.wave.3")
+                            }
+                        }
+                        Button {
+                            viewModel.words.shuffle()
                             addNewWord.toggle()
                         } label: {
                             Image(systemName: "plus")
@@ -223,6 +283,8 @@ struct KOWordListView: View {
                             Image(systemName: "line.3.horizontal")
                         }
                     }
+                }
+            }
                 } else { // 편집모드에서 보이는 툴바
                     ToolbarItem {
                         Button("취소", role: .cancel) {
@@ -231,7 +293,10 @@ struct KOWordListView: View {
                         }
                     }
                 }
+            }
         }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
