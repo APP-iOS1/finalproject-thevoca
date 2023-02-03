@@ -39,14 +39,14 @@ class VocabularyListViewModel : ObservableObject {
 
     // MARK: Get Vocabulary Lists
     func getVocabularyData() {
-        var results = repository.getVocabularyData()
+        let results = repository.getVocabularyData()
         clearVoca()
         
         for voca in results {
             if voca.deleatedAt == nil {
                 vocabularyList.append(voca)
                 
-                if voca.isFavorite {
+                if voca.isPinned {
                     favoriteVoca.append(voca)
                 }
                 

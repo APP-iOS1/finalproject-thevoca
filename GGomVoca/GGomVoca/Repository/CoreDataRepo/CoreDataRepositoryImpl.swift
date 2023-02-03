@@ -88,7 +88,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             let results = (try? viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
             do {
                 let objectUpdate = results[0]
-                objectUpdate.setValue(!objectUpdate.isFavorite, forKey: "isFavorite")
+                objectUpdate.setValue(!objectUpdate.isPinned, forKey: "isPinned")
                 print(objectUpdate)
                 observer(.success("\(objectUpdate)"))
             }
