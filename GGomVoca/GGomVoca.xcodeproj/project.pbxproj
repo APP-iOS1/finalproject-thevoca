@@ -57,6 +57,7 @@
 		63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE129875E0A009392EE /* FRWordListView.swift */; };
 		63EA4AE92987B0B5009392EE /* EditVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */; };
 		C08DB58F2989FCD700403F59 /* MyNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB58E2989FCD700403F59 /* MyNoteView.swift */; };
+		C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */; };
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
@@ -143,6 +144,7 @@
 		63EA4AE129875E0A009392EE /* FRWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVocabularyView.swift; sourceTree = "<group>"; };
 		C08DB58E2989FCD700403F59 /* MyNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteView.swift; sourceTree = "<group>"; };
+		C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		63DC85332950312E00461DEB /* GGomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				C08DB5EC298CD25300403F59 /* Util */,
 				EEDCBFDE298B810200A7B016 /* DI */,
 				EE759529298A594600AB6E62 /* Service */,
 				EE75951E298A38A700AB6E62 /* Repository */,
@@ -379,6 +382,14 @@
 				C08DB58E2989FCD700403F59 /* MyNoteView.swift */,
 			);
 			path = MyNoteView;
+			sourceTree = "<group>";
+		};
+		C08DB5EC298CD25300403F59 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		EA30AF9629778FCA00C49CF3 /* WordList */ = {
@@ -633,6 +644,7 @@
 				EAEF3169298AB721009CE764 /* TestViewModel.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
 				63EA4AD829875E00009392EE /* JPEditWordView.swift in Sources */,
+				C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */,
 				63EA4ABE29875DE8009392EE /* KOWordCell.swift in Sources */,
 				635CBD5A298A693A0071328E /* iPadWordTestView.swift in Sources */,
 				EE759528298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift in Sources */,
@@ -655,11 +667,8 @@
 				63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */,
 				EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,
-
 				EEDCBFE9298BB2ED00A7B016 /* PracticePersistence.swift in Sources */,
-
 				EAEF3167298A4205009CE764 /* WordTestResult.swift in Sources */,
-
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
@@ -807,10 +816,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
-				DEVELOPMENT_TEAM = Q57K6D2JP2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GGomVoca/Info.plist;
@@ -832,6 +842,7 @@
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -848,10 +859,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
-				DEVELOPMENT_TEAM = Q57K6D2JP2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GGomVoca/Info.plist;
@@ -873,6 +885,7 @@
 				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
