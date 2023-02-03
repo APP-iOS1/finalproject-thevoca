@@ -158,6 +158,14 @@ struct KOWordListView: View {
                 ToolbarItem {
                     Menu {
                         Button {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "kr-KO")
+                        } label: {
+                            HStack {
+                                Text("전체 발음 듣기")
+                                Image(systemName: "speaker.wave.3")
+                            }
+                        }
+                        Button {
                             viewModel.words.shuffle()
                         } label: {
                             HStack {
@@ -211,6 +219,9 @@ struct KOWordListView: View {
                     }
                 }
             }
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
