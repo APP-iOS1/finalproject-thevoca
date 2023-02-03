@@ -36,7 +36,7 @@ struct KOAddNewWordView: View {
   @FocusState private var wordFocused: Bool
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       Form {
         Toggle("입력창 고정하기", isOn: $isContinue)
           .toggleStyle(.switch)

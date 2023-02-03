@@ -31,42 +31,44 @@ struct VocabularyListView: View {
             }
         } detail: {
             if let selectedVocabulary {
-                switch selectedVocabulary.nationality {
-                case "KO":
-                    KOWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "EN" :
-                    ENWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "JA" :
-                    JPWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                case "FR" :
-                    FRWordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
-                default:
-                    WordListView(vocabularyID: selectedVocabulary.id)
-                        .id(selectedVocabulary.id)
-                        .toolbar(.hidden, for: .tabBar)
-                        .onAppear {
-                            viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                        }
+                NavigationStack {
+                    switch selectedVocabulary.nationality {
+                    case "KO":
+                        KOWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "EN" :
+                        ENWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "JA" :
+                        JPWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    case "FR" :
+                        FRWordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    default:
+                        WordListView(vocabularyID: selectedVocabulary.id)
+                            .id(selectedVocabulary.id)
+                            .toolbar(.hidden, for: .tabBar)
+                            .onAppear {
+                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
+                            }
+                    }
                 }
             } else {
                 Text("단어장을 선택하세요")
@@ -84,9 +86,9 @@ struct VocabularyListView: View {
     func initVocaListView() -> some View {
         List(selection: $selectedVocabulary) {
             // MARK: 고정된 단어장;
-            if !viewModel.favoriteVoca.isEmpty {
+            if !viewModel.pinnedVocabularyList.isEmpty {
                 Section("고정된 단어장") {
-                    ForEach(viewModel.favoriteVoca) { vocabulary in
+                    ForEach(viewModel.pinnedVocabularyList) { vocabulary in
                         VocabularyCell(
                             favoriteCompletion: {
                                 viewModel.getVocabularyData()
@@ -311,7 +313,7 @@ struct VocabularyListView: View {
         case "recent":
             viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
         case "favorite":
-            viewModel.favoriteVoca.move(fromOffsets: source, toOffset: destination)
+            viewModel.pinnedVocabularyList.move(fromOffsets: source, toOffset: destination)
         default:
             break
         }
@@ -330,7 +332,7 @@ struct VocabularyListView: View {
         case "recent":
             viewModel.recentVocabularyList.remove(atOffsets: offsets)
         case "favorite":
-            viewModel.favoriteVoca.remove(atOffsets: offsets)
+            viewModel.pinnedVocabularyList.remove(atOffsets: offsets)
         default:
             break
         }

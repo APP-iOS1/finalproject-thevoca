@@ -56,7 +56,9 @@ struct VocabularyCell: View {
                 Spacer()
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
-        }      
+        }
+        .isDetailLink(true)
+        
 //        HStack {
 //            Text(vocabulary.name ?? "")
 //            

@@ -17,7 +17,7 @@ class VocabularyListViewModel : ObservableObject {
     // MARK: Published Properties
     @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
     @Published var recentVocabularyList : [Vocabulary] = [] // 최근 본 단어장
-    @Published var favoriteVoca         : [Vocabulary] = [] // 즐겨찾기
+    @Published var pinnedVocabularyList : [Vocabulary] = [] // 즐겨찾기
     @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
     @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
     @Published var japaneseVoca         : [Vocabulary] = [] // 일본어 단어장
@@ -30,7 +30,7 @@ class VocabularyListViewModel : ObservableObject {
     // MARK: Clear Vocabulary Lists
     func clearVoca() {
         vocabularyList = []
-        favoriteVoca = []
+        pinnedVocabularyList = []
         koreanVoca = []
         japaneseVoca = []
         englishVoca = []
@@ -47,7 +47,8 @@ class VocabularyListViewModel : ObservableObject {
                 vocabularyList.append(voca)
                 
                 if voca.isPinned {
-                    favoriteVoca.append(voca)
+                    pinnedVocabularyList.append(voca)
+                    continue
                 }
                 
                 /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue

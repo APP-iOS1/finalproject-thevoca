@@ -38,7 +38,7 @@ struct KOEditWordView: View {
   @State private var isMeaningEmpty: Bool = false
   
   var body: some View {
-    NavigationView {
+    NavigationStack {
       Form {
         Section {
           TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
