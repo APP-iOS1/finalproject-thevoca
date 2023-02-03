@@ -114,10 +114,8 @@ struct JPAddNewWordView: View {
                       print("isMeaningEmpty : \(isMeaningEmpty)")
 
                       // MARK: 뜻 내부 String trim
-                      print("count: \(meanings.count)")
-                      for i in 0..<meanings.count {
+                      for i in meanings.indices {
                         meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
-                        print("meaning \(i): \(meanings[i])")
                       }
                       if !isWordEmpty && !isMeaningEmpty {
                             /// - 단어 추가

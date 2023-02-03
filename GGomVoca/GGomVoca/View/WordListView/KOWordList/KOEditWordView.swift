@@ -116,10 +116,8 @@ struct KOEditWordView: View {
             print("isMeaningEmpty : \(isMeaningEmpty)")
 
             // MARK: 뜻 내부 String trim
-            print("count: \(meanings.count)")
-            for i in 0..<meanings.count {
+            for i in meanings.indices {
               meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
-              print("meaning \(i): \(meanings[i])")
             }
             if !isWordEmpty && !isMeaningEmpty {
               viewModel.updateWord(editWord: editingWord, word: word, meaning: meanings, option: option)
