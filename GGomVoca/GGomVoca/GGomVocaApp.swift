@@ -19,4 +19,10 @@ struct GGomVocaApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
+    /*
+     DI 
+     */
+    init(){
+        DependencyManager.shared.register()
+    }
 }

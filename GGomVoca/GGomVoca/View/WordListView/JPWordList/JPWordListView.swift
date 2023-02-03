@@ -32,6 +32,9 @@ struct JPWordListView: View {
     @State var confirmationDialog: Bool = false // iPhone
     @State var removeAlert: Bool = false // iPad
     
+    /// - 단어 시험모드 관련 State
+    @State private var isTestMode: Bool = false
+    
     var body: some View {
         VStack(spacing: 0) {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -86,6 +89,9 @@ struct JPWordListView: View {
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
+        .fullScreenCover(isPresented: $isTestMode, content: {
+            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID, viewModel: viewModel)
+        })
         // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
             Button(role: .destructive) {
@@ -157,6 +163,15 @@ struct JPWordListView: View {
                 // 햄버거 버튼
                 ToolbarItem {
                     Menu {
+                        Button {
+                            isTestMode.toggle()
+                        } label: {
+                            HStack {
+                                Text("시험 보기")
+                                Image(systemName: "square.and.pencil")
+                            }
+                        }
+                        
                         Button {
                             viewModel.words.shuffle()
                         } label: {
