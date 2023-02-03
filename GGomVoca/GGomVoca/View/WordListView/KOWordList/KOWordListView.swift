@@ -32,6 +32,9 @@ struct KOWordListView: View {
     @State var confirmationDialog: Bool = false // iPhone
     @State var removeAlert: Bool = false // iPad
     
+    // 전체 발음 듣기 관련 State
+    @State private var isSpeech = false
+    
     /// 단어 듣기 관련 프로퍼티
     private var selectedWords: [Word] {
         var array = [Word]()
@@ -155,7 +158,22 @@ struct KOWordListView: View {
         }
         .toolbar {
             // TODO: 편집모드에 따른 toolbar State 분기
-            if !isSelectionMode { // 기존에 보이는 툴바
+            if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSpeech.toggle()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else if isSelectionMode, !isSpeech {  // 편집 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSelectionMode.toggle()
+                        multiSelection.removeAll()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else { // 기본 모드
                 ToolbarItem {
                     VStack(alignment: .center) {
                         Text("\(viewModel.words.count)")
@@ -176,6 +194,7 @@ struct KOWordListView: View {
                     Menu {
                         Button {
                             SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "kr-KO")
+                            isSpeech.toggle()
                         } label: {
                             HStack {
                                 Text("전체 발음 듣기")
@@ -226,13 +245,6 @@ struct KOWordListView: View {
                         }
                     } label: {
                         Image(systemName: "line.3.horizontal")
-                    }
-                }
-            } else { // 편집모드에서 보이는 툴바
-                ToolbarItem {
-                    Button("취소", role: .cancel) {
-                        isSelectionMode.toggle()
-                        multiSelection.removeAll()
                     }
                 }
             }
