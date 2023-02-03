@@ -46,7 +46,7 @@ class VocabularyListViewModel : ObservableObject {
             if voca.deleatedAt == nil {
                 vocabularyList.append(voca)
                 
-                if voca.isFavorite {
+                if voca.isPinned {
                     favoriteVoca.append(voca)
                 }
                 

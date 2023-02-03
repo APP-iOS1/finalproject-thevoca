@@ -11,7 +11,7 @@ struct VocabularyModel : Identifiable, Hashable {
     var name: String // 단어장 이름
     var nationality: Nationality // 국가
     var words: [Word] = [] // 단어 배열
-    var isFavorite: Bool = false // 단어장 즐겨찾기
+    var isPinned: Bool = false // 단어장 즐겨찾기
     var created: Date = Date.now // 생성일시
     var deleted: Date? // 삭제된 날짜
 }

@@ -71,7 +71,7 @@ class VocabularyCellViewModel{
         do {
 
             let objectUpdate = results[0]
-            objectUpdate.setValue(!objectUpdate.isFavorite, forKey: "isFavorite")
+            objectUpdate.setValue(!objectUpdate.isPinned, forKey: "isPinned")
             print(objectUpdate)
             do {
                 try managedContext.save()

@@ -60,9 +60,9 @@ struct VocabularyCell: View {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
                 favoriteCompletion()
             } label: {
-                Image(systemName: vocabulary.isFavorite ? "pin.slash.fill" : "pin.fill")
+                Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
             }
-            .tint(vocabulary.isFavorite ? .gray : .yellow)
+            .tint(vocabulary.isPinned ? .gray : .yellow)
         }
         //단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
