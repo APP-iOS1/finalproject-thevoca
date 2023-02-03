@@ -22,7 +22,7 @@ struct SearchListCell: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
             
-            Text("\(word.meaning.description)")
+            Text("\(word.meaning.joined(separator: ", "))")
                 .frame(maxWidth: .infinity, alignment: .center)
                 .multilineTextAlignment(.center)
             
