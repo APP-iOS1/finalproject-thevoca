@@ -8,15 +8,27 @@
 import SwiftUI
 
 struct WordTestResult: View {
+    // 시험지 fullscreen 닫기 위한 Property
     @Binding var isTestMode: Bool
     
-    @ObservedObject var paperViewModel: TestViewModel
+    // MARK: Data Properties
+    @ObservedObject var vm: TestViewModel
     let testMode: String
     
+    // 맞은 개수
     var correctCount: Int {
         var cnt: Int = 0
-        for question in paperViewModel.testPaper {
+        for question in vm.testPaper {
             if question.isCorrect == true { cnt += 1 }
+        }
+        return cnt
+    }
+    
+    //틀린 개수
+    var incorrectCount: Int {
+        var cnt: Int = 0
+        for question in vm.testPaper {
+            if question.isCorrect == false { cnt += 1 }
         }
         return cnt
     }
@@ -24,66 +36,95 @@ struct WordTestResult: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    isTestMode = false
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "chevron.backward")
-                            .font(.title2)
-                            .fontWeight(.medium)
-                        Text("단어장으로 돌아가기")
-                    }
-                    .padding(.leading, 8)
-                    .padding(.vertical, 5)
+                VStack(spacing: 5) {
+                    Text("걸린 시간")
+                        .foregroundColor(.gray)
+                    Text("\(vm.convertSecondsToTime(seconds: vm.timeCountUp))")
+                        .bold()
                 }
-                Spacer()
-                Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
-                    .padding(.trailing, 8)
+                .horizontalAlignSetting(.center)
+                VStack(spacing: 5) {
+                    Text("맞은 개수")
+                        .foregroundColor(.gray)
+                    Text("\(correctCount)")
+                        .bold()
+                }
+                .horizontalAlignSetting(.center)
+                VStack(spacing: 5) {
+                    Text("틀린 개수")
+                        .foregroundColor(.gray)
+                    Text("\(incorrectCount)")
+                        .bold()
+                }
+                .horizontalAlignSetting(.center)
+            }
+            .padding(.vertical, 15)
+            
+            HStack {
+                Text(Image(systemName: "circle"))
+                    .foregroundColor(.clear)
+                Text("단어")
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.secondary)
+                    .horizontalAlignSetting(.center)
+                Text("뜻")
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.secondary)
+                    .horizontalAlignSetting(.center)
+            }
+            .padding(.horizontal, 20)
+            .background {
+                Rectangle()
+                    .fill(Color("fourseason"))
+                    .frame(height: 30)
             }
             
-            List {
-                Section {
-                    ForEach(paperViewModel.testPaper) { paper in
-                        HStack {
-                            switch testMode {
-                            case "word":
-                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                                    .foregroundColor(.red)
-                                Text(paper.answer ?? "")
-                                    .horizontalAlignSetting(.center)
-                              Text(paper.meaning.joined(separator: ", "))
-                                    .horizontalAlignSetting(.center)
-                            case "meaning":
-                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-                                    .foregroundColor(.red)
-                                Text(paper.word)
-                                    .horizontalAlignSetting(.center)
-                                Text(paper.answer ?? "")
-                                    .horizontalAlignSetting(.center)
-                            default:
-                                Text("Empty")
-                            }
-                        }
-                    }
-                } header: {
-                    HStack {
-                        Text(Image(systemName: "circle"))
-                            .foregroundColor(.clear)
-                        Text("단어")
+            List(vm.testPaper) { paper in
+                HStack {
+                    switch testMode {
+                    case "word":
+                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
+                            .foregroundColor(paper.isCorrect ? .green : .red)
+                            .font(.body)
+                        Text(paper.answer ?? "")
                             .horizontalAlignSetting(.center)
-                        Text("뜻")
+                        Text(paper.meaning)
                             .horizontalAlignSetting(.center)
+                    case "meaning":
+                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
+                            .foregroundColor(paper.isCorrect ? .green : .red)
+                            .font(.body)
+                        Text(paper.word)
+                            .horizontalAlignSetting(.center)
+                        Text(paper.answer ?? "")
+                            .horizontalAlignSetting(.center)
+                    default:
+                        Text("Empty")
                     }
                 }
-
                 
             }
             .listStyle(.plain)
+            .padding(.top, -10)
             
             Spacer()
             
         }
         .navigationBarBackButtonHidden(true)
+        .navigationTitle("시험 결과")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    isTestMode = false
+                } label: {
+                    Text("확인")
+                }
+                
+            }
+        }
+        
     }
 }
 

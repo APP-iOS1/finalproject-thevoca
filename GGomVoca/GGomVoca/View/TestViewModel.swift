@@ -17,6 +17,14 @@ struct Question: Identifiable {
 }
 
 final class TestViewModel: ObservableObject {
+    // MARK: CoreData ViewContext
+    var viewContext = PersistenceController.shared.container.viewContext
+    var coreDataRepository = CoredataRepository()
+    
+    // MARK: Vocabulary Properties
+    var selectedVocabulary: Vocabulary = Vocabulary()
+    @Published var words: [Word] = []
+    
     @Published var testPaper: [Question] = []
     // 현재 풀고 있는 문제 번호
     var currentQuestionNum: Int = 0
@@ -28,10 +36,26 @@ final class TestViewModel: ObservableObject {
     var timer: AnyCancellable?
     let timeLimit = 15
     @Published var timeRemaining : Int = 0
+    var timeCountUp: Int = 0
     
+    // MARK: saveContext
+    func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
+    }
+    
+    // MARK: - 일치하는 id의 단어장 불러오기
+    func getVocabulary(vocabularyID: Vocabulary.ID) {
+        selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
+        let allWords = selectedVocabulary.words?.allObjects as? [Word] ?? []
+        words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
+    }
     
     // MARK: - 시험지 생성
-    func createPaper(words: [Word], isMemorized: Bool) {
+    func createPaper(isMemorized: Bool) {
         for word in words {
             if isMemorized {
                 // 모든 단어 시험지에 추가
@@ -128,12 +152,13 @@ final class TestViewModel: ObservableObject {
     }
     
     func cancelTimer() {
+        self.timeCountUp += (timeLimit - timeRemaining)
         timer?.cancel()
     }
     
-    func convertSecondsToTime() -> String {
-        let minutes = self.timeRemaining / 60
-        let seconds = self.timeRemaining % 60
+    func convertSecondsToTime(seconds: Int) -> String {
+        let minutes = seconds / 60
+        let seconds = seconds % 60
         return String(format: "%02i:%02i", minutes, seconds)
     }
 }
