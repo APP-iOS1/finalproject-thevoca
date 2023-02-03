@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct WordTestResult: View {
+    // 시험지 fullscreen 닫기 위한 Property
     @Binding var isTestMode: Bool
     
+    // MARK: Data Properties
     @ObservedObject var vm: TestViewModel
     let testMode: String
     
+    // 맞은 개수
     var correctCount: Int {
         var cnt: Int = 0
         for question in vm.testPaper {
@@ -21,6 +24,7 @@ struct WordTestResult: View {
         return cnt
     }
     
+    //틀린 개수
     var incorrectCount: Int {
         var cnt: Int = 0
         for question in vm.testPaper {
@@ -84,7 +88,6 @@ struct WordTestResult: View {
                         Image(systemName: paper.isCorrect ? "circle" : "xmark")
                             .foregroundColor(paper.isCorrect ? .green : .red)
                             .font(.body)
-                        
                         Text(paper.answer ?? "")
                             .horizontalAlignSetting(.center)
                         Text(paper.meaning)
