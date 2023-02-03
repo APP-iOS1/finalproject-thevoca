@@ -51,7 +51,7 @@ struct WordTestResult: View {
                                     .foregroundColor(.red)
                                 Text(paper.answer ?? "")
                                     .horizontalAlignSetting(.center)
-                                Text(paper.meaning)
+                              Text(paper.meaning.joined(separator: ", "))
                                     .horizontalAlignSetting(.center)
                             case "meaning":
                                 Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
