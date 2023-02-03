@@ -31,90 +31,80 @@ struct WordTestResult: View {
     
     var body: some View {
         VStack {
-//            HStack {
-//                Button {
-//                    isTestMode = false
-//                } label: {
-//                    HStack(spacing: 5) {
-//                        Image(systemName: "chevron.backward")
-//                            .font(.title2)
-//                            .fontWeight(.medium)
-//                        Text("단어장으로 돌아가기")
-//                    }
-//                    .horizontalAlignSetting(.leading)
-//                    .padding(.leading, 8)
-//                    .padding(.top, 5)
-//                }
-//
-//            }
-            
             HStack {
                 VStack(spacing: 5) {
                     Text("걸린 시간")
-                        .bold()
-                    Text("\(vm.convertSecondsToTime(seconds: vm.timeCountUp))")
                         .foregroundColor(.gray)
+                    Text("\(vm.convertSecondsToTime(seconds: vm.timeCountUp))")
+                        .bold()
                 }
                 .horizontalAlignSetting(.center)
                 VStack(spacing: 5) {
                     Text("맞은 개수")
-                        .bold()
-                    Text("\(correctCount)")
                         .foregroundColor(.gray)
+                    Text("\(correctCount)")
+                        .bold()
                 }
                 .horizontalAlignSetting(.center)
                 VStack(spacing: 5) {
                     Text("틀린 개수")
-                        .bold()
-                    Text("\(incorrectCount)")
                         .foregroundColor(.gray)
+                    Text("\(incorrectCount)")
+                        .bold()
                 }
                 .horizontalAlignSetting(.center)
             }
             .padding(.vertical, 15)
             
-            List {
-                Section {
-                    ForEach(vm.testPaper) { paper in
-                        HStack {
-                            switch testMode {
-                            case "word":
-                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-//                                    .frame(width: 40)
-                                    .foregroundColor(.red)
-                                Text(paper.answer ?? "")
-                                    .horizontalAlignSetting(.center)
-                                Text(paper.meaning)
-                                    .horizontalAlignSetting(.center)
-                            case "meaning":
-                                Text(paper.isCorrect ? Image(systemName: "circle") : Image(systemName: "xmark"))
-//                                    .frame(width: 40)
-                                    .foregroundColor(.red)
-                                Text(paper.word)
-                                    .horizontalAlignSetting(.center)
-                                Text(paper.answer ?? "")
-                                    .horizontalAlignSetting(.center)
-                            default:
-                                Text("Empty")
-                            }
-                        }
-                    }
-                } header: {
-                    HStack {
-                        Text(Image(systemName: "circle"))
-                            .foregroundColor(.clear)
-//                        Text("\(correctCount) / \(paperViewModel.wholeQuestionNum)")
-//                            .frame(width: 40)
-                        Text("단어")
+            HStack {
+                Text(Image(systemName: "circle"))
+                    .foregroundColor(.clear)
+                Text("단어")
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.secondary)
+                    .horizontalAlignSetting(.center)
+                Text("뜻")
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(.secondary)
+                    .horizontalAlignSetting(.center)
+            }
+            .padding(.horizontal, 20)
+            .background {
+                Rectangle()
+                    .fill(Color("fourseason"))
+                    .frame(height: 30)
+            }
+            
+            List(vm.testPaper) { paper in
+                HStack {
+                    switch testMode {
+                    case "word":
+                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
+                            .foregroundColor(paper.isCorrect ? .green : .red)
+                            .font(.body)
+                        
+                        Text(paper.answer ?? "")
                             .horizontalAlignSetting(.center)
-                        Text("뜻")
+                        Text(paper.meaning)
                             .horizontalAlignSetting(.center)
+                    case "meaning":
+                        Image(systemName: paper.isCorrect ? "circle" : "xmark")
+                            .foregroundColor(paper.isCorrect ? .green : .red)
+                            .font(.body)
+                        Text(paper.word)
+                            .horizontalAlignSetting(.center)
+                        Text(paper.answer ?? "")
+                            .horizontalAlignSetting(.center)
+                    default:
+                        Text("Empty")
                     }
                 }
-
                 
             }
             .listStyle(.plain)
+            .padding(.top, -10)
             
             Spacer()
             
@@ -128,9 +118,10 @@ struct WordTestResult: View {
                 } label: {
                     Text("확인")
                 }
-
+                
             }
         }
+        
     }
 }
 
