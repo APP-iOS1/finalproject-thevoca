@@ -13,17 +13,17 @@ struct VocabularyListView: View {
     
     // MARK: View Properties
     @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
+    @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
     //NavigationSplitView 선택 단어장 Id
-    @State var selectedVocabulary : Vocabulary?
+    @State private var selectedVocabulary : Vocabulary?
     //단어장 추가 뷰 show flag
-    @State var isShowingAddVocabulary: Bool = false
+    @State private var isShowingAddVocabulary: Bool = false
     
     // 편집 모드 관련
     @State private var editMode: EditMode = .inactive
-        
-    @State var temp: Vocabulary?
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $splitViewVisibility) {
             if viewModel.vocabularyList.isEmpty {
                 emptyVocabularyView()
             } else {
@@ -56,10 +56,14 @@ struct VocabularyListView: View {
                     }
                 }
             } else {
-                Text("단어장을 선택하세요")
+                if viewModel.vocabularyList.isEmpty {
+                    Text("왼쪽 사이드바에서 단어장을 추가하고 선택하세요.")
+                } else {
+                    Text("왼쪽에서 단어장을 선택하세요")
+                }
             }
         }
-        .navigationSplitViewStyle(.prominentDetail)
+        .navigationSplitViewStyle(.balanced)
         .onAppear {
             //fetch 단어장 data
             viewModel.getVocabularyData()
