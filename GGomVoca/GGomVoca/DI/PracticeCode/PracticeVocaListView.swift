@@ -18,6 +18,8 @@ struct PracticeVocaListView: View {
     @State var selectedVocaId : Vocabulary.ID?
     //단어장 추가 뷰 show flag
     @State var isShowingAddVocabulary: Bool = false
+    
+    @State private var editMode: EditMode = .inactive
         
     var body: some View {
         NavigationView {
@@ -43,7 +45,7 @@ struct PracticeVocaListView: View {
                                 print("deleteCompletion")
                                 //viewModel.getVocabularyData()
                                // viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary)
+                            }, vocabulary: vocabulary, editMode: $editMode)
                             
                         }
                     }
