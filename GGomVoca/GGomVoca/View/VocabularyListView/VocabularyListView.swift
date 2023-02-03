@@ -21,7 +21,11 @@ struct VocabularyListView: View {
     @State var temp: Vocabulary?
     var body: some View {
         NavigationSplitView {
-            initVocaListView()
+            if viewModel.vocabularyList.isEmpty {
+                emptyVocabularyView()
+            } else {
+                initVocaListView()
+            }
         } detail: {
             if let selectedVocabulary {
                 switch selectedVocabulary.nationality {
@@ -77,8 +81,8 @@ struct VocabularyListView: View {
     func initVocaListView() -> some View {
         List(selection: $selectedVocabulary) {
             // MARK: 고정된 단어장;
-            if viewModel.favoriteVoca.count > 0 {
-                Section(header: Text("고정된 단어장")) {
+            if !viewModel.favoriteVoca.isEmpty {
+                Section("고정된 단어장") {
                     ForEach(viewModel.favoriteVoca) { vocabulary in
                         VocabularyCell(
                             favoriteCompletion: {
@@ -93,7 +97,7 @@ struct VocabularyListView: View {
             
             // MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
             if !viewModel.recentVocabularyList.isEmpty {
-                Section(header: Text("최근 본 단어장")) {
+                Section("최근 본 단어장") {
                     ForEach(viewModel.recentVocabularyList) { vocabulary in
                         VocabularyCell(
                             favoriteCompletion: {
@@ -108,7 +112,7 @@ struct VocabularyListView: View {
             
             // MARK: 한국어
             if !viewModel.koreanVoca.isEmpty {
-                Section(header: Text("한국어")) {
+                Section("한국어") {
                     ForEach(viewModel.koreanVoca) { vocabulary in
                         VocabularyCell(favoriteCompletion: {
                             viewModel.getVocabularyData()
@@ -122,7 +126,7 @@ struct VocabularyListView: View {
             
             // MARK: 영어
             if !viewModel.englishVoca.isEmpty {
-                Section(header: Text("영어")) {
+                Section("영어") {
                     ForEach(viewModel.englishVoca) { vocabulary in
                             VocabularyCell(favoriteCompletion: {
                                 viewModel.getVocabularyData()
@@ -136,7 +140,7 @@ struct VocabularyListView: View {
 
             // MARK: 일본어
             if !viewModel.japaneseVoca.isEmpty {
-                Section(header: Text("일본어")) {
+                Section("일본어") {
                     ForEach(viewModel.japaneseVoca) { vocabulary in
                         VocabularyCell(favoriteCompletion: {
                             viewModel.getVocabularyData()
@@ -150,7 +154,7 @@ struct VocabularyListView: View {
 
             // MARK: 프랑스어
             if !viewModel.frenchVoca.isEmpty {
-                Section(header: Text("프랑스어")) {
+                Section("프랑스어") {
                     ForEach(viewModel.frenchVoca) { vocabulary in
                             VocabularyCell(favoriteCompletion: {
                                 viewModel.getVocabularyData()
@@ -173,10 +177,34 @@ struct VocabularyListView: View {
                 }
             }
         }
-        .onAppear {
-            //fetch 단어장 data
-            viewModel.getVocabularyData()
-            viewModel.recentVocabularyList = getRecentVocabulary()
+        .sheet(isPresented: $isShowingAddVocabulary) {
+            AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
+                .presentationDetents([.height(CGFloat(270))])
+                .onDisappear {
+                    //fetch 단어장 data
+                    viewModel.getVocabularyData()
+                }
+        }
+    }
+    
+    // MARK: VocabularyList가 하나도 없을 때 나타낼 View
+    func emptyVocabularyView() -> some View {
+        VStack(spacing: 10) {
+            Text("단어장 없음").font(.title3)
+            Text("+ 버튼을 눌러 단어장을 생성하세요")
+        }
+        .foregroundColor(.gray)
+//        .verticalAlignSetting(.top)
+        .padding()
+        .navigationBarTitle("단어장")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    isShowingAddVocabulary.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
             AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
