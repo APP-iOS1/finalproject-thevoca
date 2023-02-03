@@ -75,28 +75,28 @@ class VocabularyListViewModel : ObservableObject {
         }
     }
     
-    // MARK: 최근 본 단어장을 UserDefault에서 삭제
-    func deleteRecentVoca(id : String) {
-        // [voca1, voca2]
-        var before =  UserManager.shared.recentVocabulary
-        if let idx = before.firstIndex(of: "\(id)"){
-            before.remove(at: idx)
-        }
-        UserManager.shared.recentVocabulary = before
-    }
-    
-    // MARK: 최근 본 단어장 관리 메서드
-    func manageRecentVocabulary(voca: Vocabulary) {
-        /// - 기존에 최근 본 단어장에 들어있는 단어장을 또 확인 한 경우 배열에서 지우고 배열의 첫번째 요소로 다시 삽입
-        deleteRecentVoca(id: "\(voca.id!)")
-        var before =  UserManager.shared.recentVocabulary
-        
-        before.insert("\(voca.id!)", at: 0)
-        
-        if before.count >= 4{
-            before.removeLast()
-        }
-
-        UserManager.shared.recentVocabulary = before
-    }
+//    // MARK: 최근 본 단어장을 UserDefault에서 삭제
+//    func deleteRecentVoca(id : String) {
+//        // [voca1, voca2]
+//        var before =  UserManager.shared.recentVocabulary
+//        if let idx = before.firstIndex(of: "\(id)"){
+//            before.remove(at: idx)
+//        }
+//        UserManager.shared.recentVocabulary = before
+//    }
+//
+//    // MARK: 최근 본 단어장 관리 메서드
+//    func manageRecentVocabulary(voca: Vocabulary) {
+//        /// - 기존에 최근 본 단어장에 들어있는 단어장을 또 확인 한 경우 배열에서 지우고 배열의 첫번째 요소로 다시 삽입
+//        deleteRecentVoca(id: "\(voca.id!)")
+//        var before =  UserManager.shared.recentVocabulary
+//
+//        before.insert("\(voca.id!)", at: 0)
+//
+//        if before.count >= 4{
+//            before.removeLast()
+//        }
+//
+//        UserManager.shared.recentVocabulary = before
+//    }
 }
