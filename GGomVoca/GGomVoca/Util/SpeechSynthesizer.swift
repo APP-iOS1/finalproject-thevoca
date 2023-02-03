@@ -8,9 +8,14 @@
 import AVFoundation
 import Foundation
 
+enum SpeechType {
+    case single
+    case many
+}
+
 protocol TTSProtocol {
     /// 단어 하나를 읽어주는 메서드
-    func speakWordAndMeaning(_ word: Word, to language: String)
+    func speakWordAndMeaning(_ word: Word, to language: String, _ type: SpeechType)
     
     /// 여러개의 단어를 읽어주는 메서드
     func speakWordsAndMeanings(_ words: [Word], to language: String)
@@ -40,11 +45,13 @@ final class SpeechSynthesizer: TTSProtocol {
     private init() {}
     
     /// 단어 하나를 읽어주는 메서드
-    func speakWordAndMeaning(_ word: Word, to language: String) {
+    func speakWordAndMeaning(_ word: Word, to language: String, _ type: SpeechType) {
         let wordUtterance = AVSpeechUtterance(string: word.word ?? "") // TTS로 들려줄 단어 설정
         wordUtterance.voice = AVSpeechSynthesisVoice(language: language) // 언어 설정
         wordUtterance.postUtteranceDelay = intervalOfWordAndMeaning // 다음 단어와의 시간 간격 설정
         self.instance.speak(wordUtterance) // TTS 작동
+        
+        if type == SpeechType.single { return } // contextMenu로 접근한 경우
         
         // meaning 타입이 [String?]라서 순회하는 방식으로 구현
         word.meaning?.forEach { meaning in
@@ -59,7 +66,7 @@ final class SpeechSynthesizer: TTSProtocol {
     /// 단어 하나를 읽어주는 메서드를 재사용하는 방식으로 구현
     func speakWordsAndMeanings(_ words: [Word], to language: String) {
         words.forEach { word in
-            self.speakWordAndMeaning(word, to: language)
+            self.speakWordAndMeaning(word, to: language, .many)
         }
     }
     
