@@ -43,6 +43,7 @@ struct ENEditWordView: View {
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 } header: {
                     HStack {
                         Text("단어")

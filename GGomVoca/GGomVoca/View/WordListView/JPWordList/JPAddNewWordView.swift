@@ -47,6 +47,7 @@ struct JPAddNewWordView: View {
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         .focused($wordFocused)
                 } header: {
                     HStack {
@@ -60,6 +61,7 @@ struct JPAddNewWordView: View {
                 Section(header: Text("발음")) {
                     TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 }
                 
                 Section {

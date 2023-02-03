@@ -68,6 +68,7 @@ struct AddNewWordView: View {
                     Section(header: Text("발음")) {
                         TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                             .textInputAutocapitalization(.never)
+                            .disableAutocorrection(true)
                     }
                     
                 case "FR":
@@ -91,6 +92,7 @@ struct AddNewWordView: View {
                   ForEach($meanings, id: \.self) { $mean in
                     TextField("뜻을 입력하세요.", text: $mean, axis: .vertical)
                       .textInputAutocapitalization(.never)
+                      .disableAutocorrection(true)
                   }
                 } header: {
                     HStack {
