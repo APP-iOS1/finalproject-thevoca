@@ -37,12 +37,12 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     MARK: 단어장 불러오기
      */
     func fetchVocaData() -> AnyPublisher<[Vocabulary], CoredataRepoError> {
-        
+//        var cloudControlloer =  VocabularyController() //test
         return Future<[Vocabulary], CoredataRepoError>{observer in
             let vocabularyFetch = Vocabulary.fetchRequest()
 
             let results = (try? self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
-            
+//            print(cloudControlloer.fetchVocabulary(completion: {value in print("ok : \(value)")}))
             observer(.success(results))
         }.eraseToAnyPublisher()
         
@@ -51,7 +51,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     MARK: 단어장 추가하기
      */
     func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, CoredataRepoError> {
-        
+        var cloudControlloer =  VocabularyController() //test
         return Future<Vocabulary, CoredataRepoError>{[weak self] observer in
             
             guard let viewContext = self?.context else{
@@ -66,6 +66,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             newVocabulary.words = NSSet(array: [])
             print("newVocabulary \(newVocabulary)")
             self?.saveContext()
+            cloudControlloer.saveVocabulary(vocabulary: newVocabulary)
             observer(.success(newVocabulary))
         }.eraseToAnyPublisher()
         
