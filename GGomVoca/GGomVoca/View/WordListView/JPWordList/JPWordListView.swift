@@ -199,6 +199,7 @@ struct JPWordListView: View {
                                 Image(systemName: "square.and.arrow.down")
                             }
                         }
+                        .isDetailLink(true)
                         
                         Button {
                             isExport.toggle()
@@ -215,6 +216,8 @@ struct JPWordListView: View {
                                 Image(systemName: "chart.line.uptrend.xyaxis")
                             }
                         }
+                        .isDetailLink(true)
+                        
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
