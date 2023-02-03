@@ -15,6 +15,7 @@ struct FieldView: View {
     HStack {
       TextField("뜻을 입력하세요.", text: $value)
         .textInputAutocapitalization(.never)
+        .disableAutocorrection(true)
       Button(action: {
         print("clicked?")
         onDelete()
