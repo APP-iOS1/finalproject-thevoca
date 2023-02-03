@@ -39,7 +39,7 @@ class VocabularyListViewModel : ObservableObject {
 
     // MARK: Get Vocabulary Lists
     func getVocabularyData() {
-        var results = repository.getVocabularyData()
+        let results = repository.getVocabularyData()
         clearVoca()
         
         for voca in results {
