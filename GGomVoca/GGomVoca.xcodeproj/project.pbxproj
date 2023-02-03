@@ -79,6 +79,12 @@
 		EE759528298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE759527298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift */; };
 		EE75952B298A5B7800AB6E62 /* VocabularyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75952A298A5B7800AB6E62 /* VocabularyService.swift */; };
 		EE75952D298A5BAC00AB6E62 /* VocabularyServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75952C298A5BAC00AB6E62 /* VocabularyServiceImpl.swift */; };
+		EEDCBFDD298B800A00A7B016 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = EEDCBFDC298B800A00A7B016 /* Swinject */; };
+		EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFDF298B811A00A7B016 /* DependencyManager.swift */; };
+		EEDCBFE3298B816A00A7B016 /* PracticeVocaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */; };
+		EEDCBFE5298B818C00A7B016 /* PracticeVocaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */; };
+		EEDCBFE7298B9DA000A7B016 /* PracticeAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */; };
+		EEDCBFE9298BB2ED00A7B016 /* PracticePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +163,11 @@
 		EE759527298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepositoryImpl.swift; sourceTree = "<group>"; };
 		EE75952A298A5B7800AB6E62 /* VocabularyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyService.swift; sourceTree = "<group>"; };
 		EE75952C298A5BAC00AB6E62 /* VocabularyServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyServiceImpl.swift; sourceTree = "<group>"; };
+		EEDCBFDF298B811A00A7B016 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
+		EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocaListView.swift; sourceTree = "<group>"; };
+		EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocaListViewModel.swift; sourceTree = "<group>"; };
+		EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeAddView.swift; sourceTree = "<group>"; };
+		EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePersistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEDCBFDD298B800A00A7B016 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +271,7 @@
 		63DC85332950312E00461DEB /* GGomVoca */ = {
 			isa = PBXGroup;
 			children = (
+				EEDCBFDE298B810200A7B016 /* DI */,
 				EE759529298A594600AB6E62 /* Service */,
 				EE75951E298A38A700AB6E62 /* Repository */,
 				EE1E49FD2976700800890CF7 /* Comfiguration */,
@@ -491,6 +504,26 @@
 			path = Vocabulary;
 			sourceTree = "<group>";
 		};
+		EEDCBFDE298B810200A7B016 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				EEDCBFE1298B814400A7B016 /* PracticeCode */,
+				EEDCBFDF298B811A00A7B016 /* DependencyManager.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		EEDCBFE1298B814400A7B016 /* PracticeCode */ = {
+			isa = PBXGroup;
+			children = (
+				EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */,
+				EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */,
+				EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */,
+				EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */,
+			);
+			path = PracticeCode;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -508,6 +541,7 @@
 			);
 			name = GGomVoca;
 			packageProductDependencies = (
+				EEDCBFDC298B800A00A7B016 /* Swinject */,
 			);
 			productName = GGomVoca;
 			productReference = 63DC85312950312E00461DEB /* GGomVoca.app */;
@@ -538,6 +572,7 @@
 			);
 			mainGroup = 63DC85282950312E00461DEB;
 			packageReferences = (
+				EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 63DC85322950312E00461DEB /* Products */;
 			projectDirPath = "";
@@ -609,11 +644,17 @@
 				EE1E4A032976831F00890CF7 /* VocabularyCellViewModel.swift in Sources */,
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
+				EEDCBFE5298B818C00A7B016 /* PracticeVocaListViewModel.swift in Sources */,
 				63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */,
 				EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,
+
+				EEDCBFE9298BB2ED00A7B016 /* PracticePersistence.swift in Sources */,
+
 				EAEF3167298A4205009CE764 /* WordTestResult.swift in Sources */,
+
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
+				EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
 				63EA4AC029875DE8009392EE /* KOWordsTableView.swift in Sources */,
 				63EA4ABD29875DE8009392EE /* KOEditWordView.swift in Sources */,
@@ -633,8 +674,10 @@
 				165BA97B29879A090067F217 /* EmptyWordListView.swift in Sources */,
 				63EA4AC829875DF4009392EE /* ENEditWordView.swift in Sources */,
 				EE57C05F2951885E004312CE /* TabbarView.swift in Sources */,
+				EEDCBFE7298B9DA000A7B016 /* PracticeAddView.swift in Sources */,
 				EE759520298A38BC00AB6E62 /* CloudKitRepository.swift in Sources */,
 				63EA4ACC29875DF4009392EE /* ENWordsTableView.swift in Sources */,
+				EEDCBFE3298B816A00A7B016 /* PracticeVocaListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -854,6 +897,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EEDCBFDC298B800A00A7B016 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		63DC85382950312E00461DEB /* GGomVoca.xcdatamodeld */ = {
