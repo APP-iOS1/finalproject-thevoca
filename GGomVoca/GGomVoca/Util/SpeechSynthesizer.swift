@@ -55,10 +55,16 @@ final class SpeechSynthesizer: TTSProtocol {
         }
     }
     
-    /// 여러개의 단어를 읽어주는 메서드
+    /// 여러 개의 단어를 읽어주는 메서드
     /// 단어 하나를 읽어주는 메서드를 재사용하는 방식으로 구현
-    func speakWordsAndMeanings(_ words: [Word], to language: String) { }
+    func speakWordsAndMeanings(_ words: [Word], to language: String) {
+        words.forEach { word in
+            self.speakWordAndMeaning(word, to: language)
+        }
+    }
     
     /// 단어 읽기를 멈추는 메서드 (onDisapper)
-    func stopSpeaking() { }
+    func stopSpeaking() {
+        self.instance.stopSpeaking(at: .immediate)
+    }
 }
