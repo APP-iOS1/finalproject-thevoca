@@ -46,8 +46,11 @@ class DependencyManager {
     }
     // Model (Repository)
     func registerRepositories() {
-        container.register(CoreDataRepository.self) { _ in CoreDataRepositoryImpl() }
+        container.register(CoreDataRepository.self) { _ in CoreDataRepositoryImpl(context: PersistenceController.shared.container.viewContext) }
     }
     
+    func resolve<Service>(_ serviceType: Service.Type) -> Service? {
+        return container.resolve(serviceType)
+    }
 
 }

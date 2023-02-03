@@ -77,6 +77,8 @@
 		EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFDF298B811A00A7B016 /* DependencyManager.swift */; };
 		EEDCBFE3298B816A00A7B016 /* PracticeVocaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */; };
 		EEDCBFE5298B818C00A7B016 /* PracticeVocaListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */; };
+		EEDCBFE7298B9DA000A7B016 /* PracticeAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */; };
+		EEDCBFE9298BB2ED00A7B016 /* PracticePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +154,8 @@
 		EEDCBFDF298B811A00A7B016 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocaListView.swift; sourceTree = "<group>"; };
 		EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeVocaListViewModel.swift; sourceTree = "<group>"; };
+		EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeAddView.swift; sourceTree = "<group>"; };
+		EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticePersistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -488,6 +492,8 @@
 			children = (
 				EEDCBFE2298B816A00A7B016 /* PracticeVocaListView.swift */,
 				EEDCBFE4298B818C00A7B016 /* PracticeVocaListViewModel.swift */,
+				EEDCBFE6298B9DA000A7B016 /* PracticeAddView.swift */,
+				EEDCBFE8298BB2ED00A7B016 /* PracticePersistence.swift */,
 			);
 			path = PracticeCode;
 			sourceTree = "<group>";
@@ -613,6 +619,7 @@
 				63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */,
 				EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,
+				EEDCBFE9298BB2ED00A7B016 /* PracticePersistence.swift in Sources */,
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
@@ -632,6 +639,7 @@
 				165BA97B29879A090067F217 /* EmptyWordListView.swift in Sources */,
 				63EA4AC829875DF4009392EE /* ENEditWordView.swift in Sources */,
 				EE57C05F2951885E004312CE /* TabbarView.swift in Sources */,
+				EEDCBFE7298B9DA000A7B016 /* PracticeAddView.swift in Sources */,
 				EE759520298A38BC00AB6E62 /* CloudKitRepository.swift in Sources */,
 				63EA4ACC29875DF4009392EE /* ENWordsTableView.swift in Sources */,
 				EEDCBFE3298B816A00A7B016 /* PracticeVocaListView.swift in Sources */,
