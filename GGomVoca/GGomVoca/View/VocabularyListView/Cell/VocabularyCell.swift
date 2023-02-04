@@ -11,7 +11,7 @@ struct VocabularyCell: View {
     // MARK: SuperView Properties
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
     //단어장 즐겨찾기 completion Handler
-    var favoriteCompletion: () -> ()
+    var pinnedCompletion: () -> ()
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
     @Binding var selectedVocabulary: Vocabulary?
@@ -90,7 +90,7 @@ struct VocabularyCell: View {
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
-                favoriteCompletion()
+                pinnedCompletion()
             } label: {
                 Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
             }
@@ -114,13 +114,38 @@ struct VocabularyCell: View {
             }
         }
         .contextMenu {
-            Button("단어장 이름 수정") {
+            Button {
+                vm.updateFavoriteVocabulary(id: vocabulary.id!)
+                pinnedCompletion()
+            } label: {
+                if vocabulary.isPinned {
+                    HStack {
+                        Text("단어장 고정 해제")
+                        Spacer()
+                        Image(systemName: "pin.slash")
+                    }
+                } else {
+                    HStack {
+                        Text("단어장 고정")
+                        Spacer()
+                        Image(systemName: "pin")
+                    }
+                }
+            }
+
+            Button {
                 editVocabularyName.toggle()
+            } label: {
+                HStack {
+                    Text("단어장 이름 변경")
+                    Spacer()
+                    Image(systemName: "pencil")
+                }
             }
         }
         // MARK: 단어장 이름 수정 sheet
         .sheet(isPresented: $editVocabularyName) {
-            favoriteCompletion()
+            pinnedCompletion()
         } content: {
             EditVocabularyView(vocabulary: vocabulary)
         }

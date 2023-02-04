@@ -74,7 +74,7 @@ struct DisplaySplitView: View {
                 Section("고정된 단어장") {
                     ForEach(viewModel.pinnedVocabularyList) { vocabulary in
                         VocabularyCell(
-                            favoriteCompletion: {
+                            pinnedCompletion: {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
@@ -126,7 +126,7 @@ struct DisplaySplitView: View {
             if !viewModel.koreanVoca.isEmpty {
                 Section("한국어") {
                     ForEach(viewModel.koreanVoca) { vocabulary in
-                        VocabularyCell(favoriteCompletion: {
+                        VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
@@ -146,7 +146,7 @@ struct DisplaySplitView: View {
             if !viewModel.englishVoca.isEmpty {
                 Section("영어") {
                     ForEach(viewModel.englishVoca) { vocabulary in
-                            VocabularyCell(favoriteCompletion: {
+                            VocabularyCell(pinnedCompletion: {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
@@ -166,7 +166,7 @@ struct DisplaySplitView: View {
             if !viewModel.japaneseVoca.isEmpty {
                 Section("일본어") {
                     ForEach(viewModel.japaneseVoca) { vocabulary in
-                        VocabularyCell(favoriteCompletion: {
+                        VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
@@ -186,7 +186,7 @@ struct DisplaySplitView: View {
             if !viewModel.frenchVoca.isEmpty {
                 Section("프랑스어") {
                     ForEach(viewModel.frenchVoca) { vocabulary in
-                            VocabularyCell(favoriteCompletion: {
+                            VocabularyCell(pinnedCompletion: {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
