@@ -8,32 +8,31 @@
 import SwiftUI
 
 struct EditVocabularyView: View {
-    // MARK: CoreData 관련 property
+    // MARK: Environment Properties
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) private var dismiss
     
     // MARK: SuperView Properties
     var vocabulary: Vocabulary
     
     // MARK: View Properties
-    @Environment(\.dismiss) private var dismiss
-    @State var vocabularyNameInput: String = ""
+    @State var inputVocabularyName: String = ""
     @State var nationality: String = ""
     @State var isShowingMessage: Bool = false
     
+    /// - 입력값 양옆 공백 제거
     private var vocabularyName: String {
-        vocabularyNameInput.trimmingCharacters(in: .whitespaces)
+        inputVocabularyName.trimmingCharacters(in: .whitespaces)
     }
     
     var body: some View {
         NavigationStack {
-            if isShowingMessage {
-                Text("\(Image(systemName: "exclamationmark.circle")) 단어장 이름을 입력해 주세요!")
-                    .foregroundColor(.gray)
-            }
-            
             Form {
-                TextField("단어장 이름을 입력하세요", text: $vocabularyNameInput)
-                Picker(selection: $nationality, label: Text("언어")) {
+                Section("단어장 제목") {
+                    TextField("단어장의 제목을 입력하세요", text: $inputVocabularyName)
+                }
+                
+                Picker(selection: $nationality, label: Text("공부하는 언어")) {
                     ForEach(Nationality.allCases, id: \.rawValue) { nationality in
                         Text(nationality.rawValue)
                             .tag(nationality)
@@ -42,28 +41,24 @@ struct EditVocabularyView: View {
                 .disabled(true)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("단어장 수정")
+            .navigationBarTitle("단어장 제목 변경")
             .onAppear {
-                vocabularyNameInput = vocabulary.name ?? ""
+                inputVocabularyName = vocabulary.name ?? ""
                 nationality = vocabulary.nationality ?? ""
             }
             .toolbar {
                 /// - 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("취소", role: .cancel) {
+                    Button("취소", role: .cancel) { dismiss() }
+                }
+                /// - 완료 버튼
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("완료") {
+                        editVocabularyName(vocabulary: vocabulary, vocabularyName: inputVocabularyName)
                         dismiss()
                     }
-                }
-                /// - 수정버튼
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("수정") {
-                        if vocabularyName.isEmpty {
-                            isShowingMessage = true
-                        } else {
-                            editVocabularyName(vocabulary: vocabulary, vocabularyName: vocabularyName)
-                            dismiss()
-                        }
-                    }
+                    /// - 단어장 이름이 공백인 경우 버튼 비활성화
+                    .disabled(vocabularyName.isEmpty)
                 }
             }
         }
