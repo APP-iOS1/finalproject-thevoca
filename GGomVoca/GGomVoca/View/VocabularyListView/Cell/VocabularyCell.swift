@@ -10,7 +10,8 @@ import SwiftUI
 struct VocabularyCell: View {
     // MARK: SuperView Properties
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
-    //단어장 즐겨찾기 completion Handler
+    // TODO: 최근 본 단어장 코드 완전히 걷어 낼때 refreshCompletion으로 변경하고 deleteComletion 삭제
+    //단어장 고정하기 completion Handler
     var pinnedCompletion: () -> ()
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
@@ -21,6 +22,10 @@ struct VocabularyCell: View {
     // MARK: View Properties
     @State private var deleteActionSheet: Bool = false
     @State private var deleteAlert: Bool = false
+    /// - 단어장 이름 수정 관련
+    @State private var editVocabularyName: Bool = false
+    /// - 편집 모드 관련
+    @Binding var editMode: EditMode
     
     private var natianalityIcon: String {
         switch vocabulary.nationality {
@@ -44,12 +49,6 @@ struct VocabularyCell: View {
         return words.count
     }
     
-    /// - 단어장 이름 수정 관련
-    @State private var editVocabularyName: Bool = false
-    
-    /// - 편집 모드 관련
-    @Binding var editMode: EditMode
-    
     var body: some View {
         NavigationLink(value: vocabulary) {
             HStack {
@@ -57,20 +56,18 @@ struct VocabularyCell: View {
                 Spacer()
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
-        }
-        .isDetailLink(true)
-        
+            
 //        HStack {
 //            Text(vocabulary.name ?? "")
-//            
+//
 //            Spacer()
-//            
+//
 //            // editmode가 아닐 때만 보여지고, editmode로 들어오면 사라지게
 //            if editMode == .inactive {
 //                Image(systemName: "chevron.right")
 //                .foregroundColor(.gray)
 //            }
-//            
+//
 //            if editMode == .active {
 //                Button(action: {
 //                    editVocabularyName = true
@@ -86,6 +83,8 @@ struct VocabularyCell: View {
 //            NavigationLink(vocabulary.name ?? "", value: vocabulary)
 //                .opacity(0)
 //        )
+        }
+        .isDetailLink(true)
         //단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
@@ -143,9 +142,9 @@ struct VocabularyCell: View {
                 }
             }
         }
-        // MARK: 단어장 이름 수정 sheet
+        // MARK: 단어장 이름 변경 sheet
         .sheet(isPresented: $editVocabularyName) {
-            pinnedCompletion()
+            pinnedCompletion() // vocabularyListView를 re-render하게 함
         } content: {
             EditVocabularyView(vocabulary: vocabulary)
         }

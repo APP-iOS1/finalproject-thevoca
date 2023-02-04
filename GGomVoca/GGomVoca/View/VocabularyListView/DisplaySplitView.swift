@@ -261,7 +261,6 @@ struct DisplaySplitView: View {
         
     }
 
-    
     // MARK: selectedVocabulary가 nil이면서 vocabularyList의 상태에 따라 분기되는 Detail View 및 공통 수정자
     func notSelectedVocabularyView() -> some View {
         Group {

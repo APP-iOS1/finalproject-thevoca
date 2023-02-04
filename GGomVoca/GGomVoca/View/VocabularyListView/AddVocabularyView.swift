@@ -24,8 +24,8 @@ struct AddVocabularyView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("단어장 이름") {
-                    TextField("단어장 이름을 입력하세요.", text: $inputVocabularyName)
+                Section("단어장 제목") {
+                    TextField("단어장의 제목을 입력하세요.", text: $inputVocabularyName)
                 }
 
                 Picker(selection: $nationality, label: Text("공부하는 언어")) {
@@ -36,7 +36,7 @@ struct AddVocabularyView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("단어장 추가")
+            .navigationBarTitle("새로운 단어장")
             .toolbar {
                 /// - 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -55,9 +55,7 @@ struct AddVocabularyView: View {
         }
     }
     
-    /*
-     Post 단어장 추가
-     */
+    // MARK: 단어장 추가
     private func addVocabulary() { //name: String, nationality: String
         withAnimation {
             let newVocabulary = Vocabulary(context: viewContext)
