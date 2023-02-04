@@ -136,7 +136,7 @@ struct VocabularyCell: View {
                 editVocabularyName.toggle()
             } label: {
                 HStack {
-                    Text("단어장 이름 변경")
+                    Text("단어장 제목 변경")
                     Spacer()
                     Image(systemName: "pencil")
                 }

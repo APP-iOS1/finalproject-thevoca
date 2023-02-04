@@ -313,6 +313,10 @@ struct DisplaySplitView: View {
                     Image(systemName: "trash")
                     Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
                 }
+                HStack {
+                    Image(systemName: "pencil")
+                    Text("단어장을 길게 누르면 단어장의 제목을 변경할 수 있습니다.")
+                }
             }
         }
     }
