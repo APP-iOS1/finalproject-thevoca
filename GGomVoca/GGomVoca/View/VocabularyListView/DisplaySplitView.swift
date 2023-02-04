@@ -24,11 +24,7 @@ struct DisplaySplitView: View {
     
     var body: some View {
         NavigationSplitView(columnVisibility: $splitViewVisibility) {
-            if viewModel.vocabularyList.isEmpty {
-                emptyVocabularyListView()
-            } else {
-                vocabularyListView()
-            }
+            sidebarView()
         } detail: {
             if let selectedVocabulary {
                 NavigationStack {
@@ -56,7 +52,7 @@ struct DisplaySplitView: View {
                     }
                 }
             } else {
-                nilSelectedVocaView()
+                notSelectedVocabularyView()
             }
         }
         .navigationSplitViewStyle(.balanced)
@@ -65,11 +61,69 @@ struct DisplaySplitView: View {
             viewModel.getVocabularyData()
         }
     }
+    
+    // MARK: VocabularyList의 상태에 따라 분기되는 Sidebar View 및 공통 수정자
+    func sidebarView() -> some View {
+        Group {
+            if viewModel.vocabularyList.isEmpty {
+                emptyVocabularyListView()
+            } else {
+                vocabularyListView()
+            }
+        }
+        .navigationBarTitle("단어장")
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Button {
+                    isShowingAddVocabulary.toggle()
+                } label: {
+                    Image(systemName: "folder.badge.plus")
+//                        HStack(spacing: 3) {
+//                            Image(systemName: "plus.circle.fill")
+//                            Text("단어장 추가")
+//                        }
+                }
+                Spacer()
+            }
+            
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    if editMode == .inactive {
+                        editMode = .active
+                    } else {
+                        editMode = .inactive
+                    }
+                } label: {
+                    Text(editMode == .inactive ? "편집" : "완료")
+                }
+                
+                
+            }
+        }
+        .sheet(isPresented: $isShowingAddVocabulary) {
+            AddVocabularyView()
+                .presentationDetents([.height(CGFloat(270))])
+                .onDisappear {
+                    //fetch 단어장 data
+                    viewModel.getVocabularyData()
+                }
+        }
+    }
+    
+    // MARK: VocabularyList가 비어있을 때 표시되는 sidebar View
+    func emptyVocabularyListView() -> some View {
+        VStack(spacing: 10) {
+            Text("단어장 없음").font(.title3)
+            Text("하단의 버튼을 눌러 단어장을 생성하세요")
+        }
+        .foregroundColor(.gray)
+        .padding()
+    }
 
-    // MARK: VocabularyList View
+    // MARK: VocabularyList가 비어있지 않을 때 표시되는 sidebar view
     func vocabularyListView() -> some View {
         List(selection: $selectedVocabulary) {
-            // MARK: 고정된 단어장;
+            // MARK: 고정된 단어장
             if !viewModel.pinnedVocabularyList.isEmpty {
                 Section("고정된 단어장") {
                     ForEach(viewModel.pinnedVocabularyList) { vocabulary in
@@ -202,111 +256,66 @@ struct DisplaySplitView: View {
                 }
             }
         }
-        .navigationBarTitle("단어장")
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    if editMode == .inactive {
-                        editMode = .active
-                    } else {
-                        editMode = .inactive
-                    }
-                } label: {
-                    Text(editMode == .inactive ? "편집" : "완료")
-                }
-                
-                Button {
-                    isShowingAddVocabulary.toggle()
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-        }
-        .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView()
-                .presentationDetents([.height(CGFloat(270))])
-                .onDisappear {
-                    //fetch 단어장 data
-                    viewModel.getVocabularyData()
-                }
-        }
-    }
-    
-    // MARK: VocabularyList가 하나도 없을 때 나타낼 View
-    func emptyVocabularyListView() -> some View {
-        VStack(spacing: 10) {
-            Text("단어장 없음").font(.title3)
-            Text("+ 버튼을 눌러 단어장을 생성하세요")
-        }
-        .foregroundColor(.gray)
-        .padding()
-        .navigationBarTitle("단어장")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    isShowingAddVocabulary.toggle()
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-        }
-        .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView()
-                .presentationDetents([.height(CGFloat(270))])
-                .onDisappear {
-                    //fetch 단어장 data
-                    viewModel.getVocabularyData()
-                }
-        }
         .environment(\.editMode, $editMode)
         .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
+        
     }
+
     
-    // MARK: selectedVocabulary가 nil이고 VocabularyList의 isEmpty에 따른 detail View
-    func nilSelectedVocaView() -> some View {
-        VStack {
+    // MARK: selectedVocabulary가 nil이면서 vocabularyList의 상태에 따라 분기되는 Detail View 및 공통 수정자
+    func notSelectedVocabularyView() -> some View {
+        Group {
             if viewModel.vocabularyList.isEmpty {
-                VStack(spacing: 10) {
-                    HStack {
-                        Image(systemName: "sidebar.left")
-                            .font(.largeTitle)
-                            .fontWeight(.light)
-                        Image(systemName: "arrow.right")
-                        Image(systemName: "plus.circle")
-                            .font(.largeTitle)
-                            .fontWeight(.light)
-                        Image(systemName: "arrow.right")
-                        Image(systemName: "character.book.closed")
-                            .font(.largeTitle)
-                            .fontWeight(.light)
-                    }
-                    
-                    Text("왼쪽 사이드바에서 단어장을 추가하세요.")
-                }
-                .padding(.top, 25)
-                
+                emptyVocabularyListDetailView()
             } else {
-                VStack(spacing: 10) {
-                    Text("왼쪽 사이드바에서 단어장을 선택하세요.")
-                        .font(.title2)
-                        .padding(.bottom, 10)
-                    VStack(alignment: .center, spacing: 10) {
-                        HStack {
-                            Image(systemName: "pin")
-                            Text("단어장을 왼쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
-                        }
-                        HStack {
-                            Image(systemName: "trash")
-                            Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
-                        }
-                    }
-                }
-                
+                vocabularyListDetailView()
             }
         }
-        .navigationTitle("") // 이걸 안 해주면, 보고 있던 단어장을 삭제했을 때, 그 삭제한 단어장 이름이 계속 남아있음
+        .navigationTitle("") // 이게 없으면, 보고 있던 단어장을 삭제했을 때 그 삭제한 단어장 이름이 계속 남아있음
         .foregroundColor(.gray)
         .padding(.top, 15)
+    }
+    
+    // MARK: VocabularyList가 비어있을 때 표시되는 detail View
+    func emptyVocabularyListDetailView() -> some View {
+        VStack(spacing: 10) {
+            HStack {
+                Image(systemName: "sidebar.left")
+                    .font(.largeTitle)
+                    .fontWeight(.light)
+                Image(systemName: "arrow.right")
+                Image(systemName: "folder.badge.plus")
+//                        Image(systemName: "plus.circle")
+                    .font(.largeTitle)
+                    .fontWeight(.light)
+                Image(systemName: "arrow.right")
+                Image(systemName: "character.book.closed")
+                    .font(.largeTitle)
+                    .fontWeight(.light)
+            }
+            
+            Text("왼쪽 사이드바에서 단어장을 추가하세요.")
+        }
+        .padding(.bottom, 65)
+    }
+    
+    // MARK: VocabularyList가 비어있지 않을 때 표시되는 detail View
+    func vocabularyListDetailView() -> some View {
+        VStack(spacing: 10) {
+            Text("왼쪽 사이드바에서 단어장을 선택하세요.")
+                .font(.title2)
+                .padding(.bottom, 10)
+            VStack(alignment: .center, spacing: 10) {
+                HStack {
+                    Image(systemName: "pin")
+                    Text("단어장을 왼쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
+                }
+                HStack {
+                    Image(systemName: "trash")
+                    Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
+                }
+            }
+        }
     }
     
     

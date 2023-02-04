@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-/*
- 단어 추가 모달
- */
 struct AddVocabularyView: View {
     // MARK: Environment Properties
     @Environment(\.managedObjectContext) private var viewContext
@@ -79,7 +76,6 @@ struct AddVocabularyView: View {
     // MARK: saveContext
     func saveContext() {
         do {
-            print("saveContext")
             try viewContext.save()
         } catch {
             print("Error saving managed object context: \(error)")
