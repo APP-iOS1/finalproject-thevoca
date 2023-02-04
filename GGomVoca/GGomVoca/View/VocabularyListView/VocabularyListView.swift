@@ -56,11 +56,49 @@ struct VocabularyListView: View {
                     }
                 }
             } else {
-                if viewModel.vocabularyList.isEmpty {
-                    Text("왼쪽 사이드바에서 단어장을 추가하고 선택하세요.")
-                } else {
-                    Text("왼쪽에서 단어장을 선택하세요")
+                VStack {
+                    if viewModel.vocabularyList.isEmpty {
+                        VStack(spacing: 10) {
+                            HStack {
+                                Image(systemName: "sidebar.left")
+                                    .font(.largeTitle)
+                                    .fontWeight(.light)
+                                Image(systemName: "arrow.right")
+                                Image(systemName: "plus.circle")
+                                    .font(.largeTitle)
+                                    .fontWeight(.light)
+                                Image(systemName: "arrow.right")
+                                Image(systemName: "character.book.closed")
+                                    .font(.largeTitle)
+                                    .fontWeight(.light)
+                            }
+                            
+                            Text("왼쪽 사이드바에서 단어장을 추가하세요.")
+                        }
+                        .padding(.top, 25)
+                        
+                    } else {
+                        VStack(spacing: 10) {
+                            Text("왼쪽 사이드바에서 단어장을 선택하세요.")
+                                .font(.title2)
+                                .padding(.bottom, 10)
+                            VStack(alignment: .center, spacing: 10) {
+                                HStack {
+                                    Image(systemName: "pin")
+                                    Text("단어장을 왼쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
+                                }
+                                HStack {
+                                    Image(systemName: "trash")
+                                    Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
+                                }
+                            }
+                        }
+                        
+                    }
                 }
+                .navigationTitle("") // 이걸 안 해주면, 보고 있던 단어장을 삭제했을 때, 그 삭제한 단어장 이름이 계속 남아있음
+                .foregroundColor(.gray)
+                .padding(.top, 15)
             }
         }
         .navigationSplitViewStyle(.balanced)
@@ -83,7 +121,7 @@ struct VocabularyListView: View {
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
 //                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "recent")
@@ -135,7 +173,7 @@ struct VocabularyListView: View {
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
 //                            viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary, editMode: $editMode)
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "KR")
@@ -155,7 +193,7 @@ struct VocabularyListView: View {
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
 //                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "EN")
@@ -175,7 +213,7 @@ struct VocabularyListView: View {
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
 //                            viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary, editMode: $editMode)
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "JA")
@@ -195,7 +233,7 @@ struct VocabularyListView: View {
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
 //                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "FR")
