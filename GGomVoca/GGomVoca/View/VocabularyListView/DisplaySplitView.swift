@@ -223,7 +223,7 @@ struct DisplaySplitView: View {
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
+            AddVocabularyView()
                 .presentationDetents([.height(CGFloat(270))])
                 .onDisappear {
                     //fetch 단어장 data
@@ -251,7 +251,7 @@ struct DisplaySplitView: View {
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView(isShowingAddVocabulary: $isShowingAddVocabulary)
+            AddVocabularyView()
                 .presentationDetents([.height(CGFloat(270))])
                 .onDisappear {
                     //fetch 단어장 data
