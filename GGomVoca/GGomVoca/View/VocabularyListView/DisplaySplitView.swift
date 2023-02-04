@@ -7,27 +7,27 @@
 
 import SwiftUI
 
-struct VocabularyListView: View {
+struct DisplaySplitView: View {
     // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
     // MARK: View Properties
     @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
+    @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
     //NavigationSplitView 선택 단어장 Id
-    @State var selectedVocabulary : Vocabulary?
+    @State private var selectedVocabulary : Vocabulary?
     //단어장 추가 뷰 show flag
-    @State var isShowingAddVocabulary: Bool = false
+    @State private var isShowingAddVocabulary: Bool = false
     
     // 편집 모드 관련
     @State private var editMode: EditMode = .inactive
-        
-    @State var temp: Vocabulary?
+    
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $splitViewVisibility) {
             if viewModel.vocabularyList.isEmpty {
-                emptyVocabularyView()
+                emptyVocabularyListView()
             } else {
-                initVocaListView()
+                vocabularyListView()
             }
         } detail: {
             if let selectedVocabulary {
@@ -37,53 +37,37 @@ struct VocabularyListView: View {
                         KOWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
                             .toolbar(.hidden, for: .tabBar)
-                            .onAppear {
-                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                            }
                     case "EN" :
                         ENWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
                             .toolbar(.hidden, for: .tabBar)
-                            .onAppear {
-                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                            }
                     case "JA" :
                         JPWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
                             .toolbar(.hidden, for: .tabBar)
-                            .onAppear {
-                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                            }
                     case "FR" :
                         FRWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
                             .toolbar(.hidden, for: .tabBar)
-                            .onAppear {
-                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                            }
                     default:
                         WordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
                             .toolbar(.hidden, for: .tabBar)
-                            .onAppear {
-                                viewModel.manageRecentVocabulary(voca: selectedVocabulary)
-                            }
                     }
                 }
             } else {
-                Text("단어장을 선택하세요")
+                nilSelectedVocaView()
             }
         }
-        .navigationSplitViewStyle(.prominentDetail)
+        .navigationSplitViewStyle(.balanced)
         .onAppear {
             //fetch 단어장 data
             viewModel.getVocabularyData()
-            viewModel.recentVocabularyList = getRecentVocabulary()
         }
     }
 
     // MARK: VocabularyList View
-    func initVocaListView() -> some View {
+    func vocabularyListView() -> some View {
         List(selection: $selectedVocabulary) {
             // MARK: 고정된 단어장;
             if !viewModel.pinnedVocabularyList.isEmpty {
@@ -94,8 +78,8 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
-                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+//                                viewModel.recentVocabularyList = getRecentVocabulary()
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "recent")
@@ -104,21 +88,20 @@ struct VocabularyListView: View {
                         delete(at: source, type: "recent")
                     })
                 }
-                
             }
             
-            // MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
-            if !viewModel.recentVocabularyList.isEmpty {
-                Section("최근 본 단어장") {
-                    ForEach(viewModel.recentVocabularyList) { vocabulary in
-                        VocabularyCell(
-                            favoriteCompletion: {
-                                viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
-                    }
+//             MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
+//            if !viewModel.recentVocabularyList.isEmpty {
+//                Section("최근 본 단어장") {
+//                    ForEach(viewModel.recentVocabularyList) { vocabulary in
+//                        VocabularyCell(
+//                            favoriteCompletion: {
+//                                viewModel.getVocabularyData()
+//                            }, deleteCompletion: {
+//                                viewModel.getVocabularyData()
+//                                viewModel.recentVocabularyList = getRecentVocabulary()
+//                            }, vocabulary: vocabulary, editMode: $editMode)
+//                    }
 //                    .onMove(perform: { source, destination in
 //                        move(from: source, to: destination, type: "favorite")
 //                    })
@@ -136,8 +119,8 @@ struct VocabularyListView: View {
 //                        }
 //                    }
 //                    .foregroundColor(.gray)
-                }
-            }
+//                }
+//            }
             
             // MARK: 한국어
             if !viewModel.koreanVoca.isEmpty {
@@ -147,8 +130,8 @@ struct VocabularyListView: View {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-                            viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary, editMode: $editMode)
+//                            viewModel.recentVocabularyList = getRecentVocabulary()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "KR")
@@ -167,8 +150,8 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
-                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+//                                viewModel.recentVocabularyList = getRecentVocabulary()
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "EN")
@@ -187,8 +170,8 @@ struct VocabularyListView: View {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-                            viewModel.recentVocabularyList = getRecentVocabulary()
-                        }, vocabulary: vocabulary, editMode: $editMode)
+//                            viewModel.recentVocabularyList = getRecentVocabulary()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "JA")
@@ -207,8 +190,8 @@ struct VocabularyListView: View {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
-                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+//                                viewModel.recentVocabularyList = getRecentVocabulary()
+                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
                         move(from: source, to: destination, type: "FR")
@@ -250,13 +233,12 @@ struct VocabularyListView: View {
     }
     
     // MARK: VocabularyList가 하나도 없을 때 나타낼 View
-    func emptyVocabularyView() -> some View {
+    func emptyVocabularyListView() -> some View {
         VStack(spacing: 10) {
             Text("단어장 없음").font(.title3)
             Text("+ 버튼을 눌러 단어장을 생성하세요")
         }
         .foregroundColor(.gray)
-//        .verticalAlignSetting(.top)
         .padding()
         .navigationBarTitle("단어장")
         .toolbar {
@@ -280,6 +262,54 @@ struct VocabularyListView: View {
         .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
     }
     
+    // MARK: selectedVocabulary가 nil이고 VocabularyList의 isEmpty에 따른 detail View
+    func nilSelectedVocaView() -> some View {
+        VStack {
+            if viewModel.vocabularyList.isEmpty {
+                VStack(spacing: 10) {
+                    HStack {
+                        Image(systemName: "sidebar.left")
+                            .font(.largeTitle)
+                            .fontWeight(.light)
+                        Image(systemName: "arrow.right")
+                        Image(systemName: "plus.circle")
+                            .font(.largeTitle)
+                            .fontWeight(.light)
+                        Image(systemName: "arrow.right")
+                        Image(systemName: "character.book.closed")
+                            .font(.largeTitle)
+                            .fontWeight(.light)
+                    }
+                    
+                    Text("왼쪽 사이드바에서 단어장을 추가하세요.")
+                }
+                .padding(.top, 25)
+                
+            } else {
+                VStack(spacing: 10) {
+                    Text("왼쪽 사이드바에서 단어장을 선택하세요.")
+                        .font(.title2)
+                        .padding(.bottom, 10)
+                    VStack(alignment: .center, spacing: 10) {
+                        HStack {
+                            Image(systemName: "pin")
+                            Text("단어장을 왼쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
+                        }
+                        HStack {
+                            Image(systemName: "trash")
+                            Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
+                        }
+                    }
+                }
+                
+            }
+        }
+        .navigationTitle("") // 이걸 안 해주면, 보고 있던 단어장을 삭제했을 때, 그 삭제한 단어장 이름이 계속 남아있음
+        .foregroundColor(.gray)
+        .padding(.top, 15)
+    }
+    
+    
     func getVocaItem(for itemID: UUID) -> Vocabulary {
         guard let vocaItem = viewModel.vocabularyList.first(where: {$0.id == itemID }) else {
             return Vocabulary()
@@ -288,17 +318,21 @@ struct VocabularyListView: View {
         return vocaItem
     }
     
-    // 3개의 단어장 불러오기
-    func getRecentVocabulary() -> [Vocabulary] {
-        var result = [Vocabulary]()
-        let vocaIds = UserManager.shared.recentVocabulary
-        vocaIds.forEach{
-            if let id = UUID(uuidString: $0) {
-                result.append(getVocaItem(for: id))
-            }
-        }
-        return result
-    }
+//    // 3개의 단어장 불러오기
+//    func getRecentVocabulary() -> [Vocabulary] {
+//        var result = [Vocabulary]()
+//        print("아직 돌기전", result)
+//        let vocaIds = UserManager.shared.recentVocabulary
+//        print("vocaIds", vocaIds)
+//        for vocaId in vocaIds {
+//            if let id = UUID(uuidString: vocaId) {
+//                print(id)
+//                result.append(getVocaItem(for: id))
+//            }
+//        }
+//
+//        return result
+//    }
     
     func move(from source: IndexSet, to destination: Int, type: String) {
         switch type {
@@ -310,8 +344,8 @@ struct VocabularyListView: View {
             viewModel.japaneseVoca.move(fromOffsets: source, toOffset: destination)
         case "FR":
             viewModel.frenchVoca.move(fromOffsets: source, toOffset: destination)
-        case "recent":
-            viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
+//        case "recent":
+//            viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
         case "favorite":
             viewModel.pinnedVocabularyList.move(fromOffsets: source, toOffset: destination)
         default:
@@ -329,8 +363,8 @@ struct VocabularyListView: View {
             viewModel.japaneseVoca.remove(atOffsets: offsets)
         case "FR":
             viewModel.frenchVoca.remove(atOffsets: offsets)
-        case "recent":
-            viewModel.recentVocabularyList.remove(atOffsets: offsets)
+//        case "recent":
+//            viewModel.recentVocabularyList.remove(atOffsets: offsets)
         case "favorite":
             viewModel.pinnedVocabularyList.remove(atOffsets: offsets)
         default:
@@ -341,6 +375,6 @@ struct VocabularyListView: View {
 
 struct VocabularyListView_Previews: PreviewProvider {
     static var previews: some View {
-        VocabularyListView()
+        DisplaySplitView()
     }
 }

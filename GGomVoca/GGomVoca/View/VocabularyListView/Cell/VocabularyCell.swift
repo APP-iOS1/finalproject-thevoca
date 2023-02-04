@@ -14,6 +14,7 @@ struct VocabularyCell: View {
     var favoriteCompletion: () -> ()
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
+    @Binding var selectedVocabulary: Vocabulary?
     
     var vocabulary: Vocabulary
     
@@ -107,6 +108,7 @@ struct VocabularyCell: View {
                 } else {
                     deleteAlert = true
                 }
+                selectedVocabulary = nil
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
