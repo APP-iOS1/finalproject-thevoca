@@ -25,18 +25,23 @@ class VocabularyServiceImpl: VocabularyService{
     
     //MARK: 단어장 리스트 불러오기
     func fetchVocabularyList() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
-        var cloudControlloer =  VocabularyController() //test
         
-        cloudControlloer.fetchVocabulary(completion: {voca in
-            
-        })
-        return coreDataRepo.fetchVocaData()
-        
+        let publisher = cloudDataRepo.syncVocaData() //cloud DB와 coreData DB 동기화
+            .flatMap{_ in self.coreDataRepo.fetchVocaData()} //동기화된 CoreData 데이터 불러오기
+           .eraseToAnyPublisher()
+           
+       return publisher
     }
     
     //MARK: 단어장 추가하기
     func postVocaData(vocaName: String, nationality: String) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
-        return coreDataRepo.postVocaData(vocaName: vocaName, nationality: nationality)
+        //Create New Voca at CoreData -> Create New Voca Cloud
+        let publisher = coreDataRepo.postVocaData(vocaName: vocaName, nationality: nationality)
+            .flatMap{ voca in self.cloudDataRepo.postVocaData(vocabulary: voca)}
+           .eraseToAnyPublisher()
+           
+       return publisher
+       
     }
     //MARK: 단어장 고정 상태 업데이트
     //TODO: Publisher 반환타입 수정
@@ -47,6 +52,12 @@ class VocabularyServiceImpl: VocabularyService{
     //MARK: 단어장 삭제
     //TODO: Publisher 반환타입 수정
     func deletedVocaData(id: UUID) -> AnyPublisher<String, FirstPartyRepoError> {
-        return coreDataRepo.deletedVocaData(id: id)
+        let voca = PracticePersistence.shared.fetchVocabularyFromCoreData(withID: id.uuidString)
+        //Delete Voca at CoreData -> Delete Voca Cloud
+        let publisher = cloudDataRepo.deleteVocaData(record: voca!.ckRecord)
+            .flatMap{ voca in self.coreDataRepo.deletedVocaData(id: id)}
+           .eraseToAnyPublisher()
+           
+       return publisher
     }
 }

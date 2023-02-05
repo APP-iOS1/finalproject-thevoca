@@ -51,7 +51,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     MARK: 단어장 추가하기
      */
     func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
-        var cloudControlloer =  VocabularyController() //test
+      
         return Future<Vocabulary, FirstPartyRepoError>{[weak self] observer in
             
             guard let viewContext = self?.context else{
@@ -67,7 +67,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             newVocabulary.updatedAt = "\(Date())"
             print("newVocabulary \(newVocabulary)")
             self?.saveContext()
-            cloudControlloer.saveVocabulary(vocabulary: newVocabulary)
+           
             observer(.success(newVocabulary))
         }.eraseToAnyPublisher()
         
