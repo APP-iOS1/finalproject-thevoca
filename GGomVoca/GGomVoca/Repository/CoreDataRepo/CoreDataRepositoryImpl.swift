@@ -37,13 +37,19 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     MARK: 단어장 불러오기
      */
     func fetchVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
-       
         return Future<[Vocabulary], FirstPartyRepoError>{observer in
             let vocabularyFetch = Vocabulary.fetchRequest()
-
-            let results = (try? self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+            
+            do {
+                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary])
+                observer(.success(results))
+            }catch{
+                observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
+            }
+            
+           
 //            print(cloudControlloer.fetchVocabulary(completion: {value in print("ok : \(value)")}))
-            observer(.success(results))
+            
         }.eraseToAnyPublisher()
         
     }

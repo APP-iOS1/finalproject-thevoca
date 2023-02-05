@@ -10,15 +10,13 @@ import CloudKit
 import Combine
 class CloudKitRepositoryImpl : CloudKitRepository {
 
-    
-    
     //기본 싱글톤 인스턴스를 통해 얻은 private Cloud 데이터베이스 컨테이너
     let database = CKContainer.default().privateCloudDatabase
     
     func syncVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
-        let predicate =  NSPredicate(value: false)
-        let query = CKQuery(recordType: Vocabulary.recordType, predicate: predicate)
-        
+        let predicate =  NSPredicate(value: true)
+        //let query = CKQuery(recordType: Vocabulary.recordType, predicate: predicate)
+        let query = CKQuery(recordType: "Vocabulary", predicate: predicate)
         var vocaList = [Vocabulary]()
         return Future<[Vocabulary], FirstPartyRepoError>{[weak self]observer in
             self?.database.perform(query, inZoneWith: nil) { (records, error) in
@@ -27,7 +25,6 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
                     return
                 }
-                print("fetch record : \(String(describing: records))")
                 
                 //MARK:  Cloud와 CoreData에서 fetch한 각 Vocabulary의 버전 체크
                 records?.forEach{ record in
@@ -36,9 +33,9 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     
                     if let coreDataVocabulary = PracticePersistence.shared.fetchVocabularyFromCoreData(withID: cloudVocaId ?? ""){
                         //MARK: Coredata가 최신인 경우.
-                        if coreDataVocabulary.updatedAt ?? "" > "\(String(describing: cloudVocaUpdatedAt))"{
+                        if coreDataVocabulary.updatedAt ?? "" > "\(cloudVocaUpdatedAt)"{
                             vocaList.append(coreDataVocabulary)
-                        }else{
+                        }else if coreDataVocabulary.updatedAt ?? "" < "\(cloudVocaUpdatedAt)"{
                             //MARK: Cloud가 최신인 경우
                             //기존 Voca 제거
                             PracticePersistence.shared.deleteVocabularyFromCoreData(withID: cloudVocaId ?? "")

@@ -9,11 +9,6 @@ import Foundation
 import Combine
 import CoreData
 
-//Coredata, Cloudkit Repository Error Type
-enum FirstPartyRepoError: Error{
-    case notFoundDataFromCoreData
-    case notFoundDataFromCloudKit
-}
 
 
 protocol CoreDataRepository {

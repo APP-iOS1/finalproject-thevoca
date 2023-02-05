@@ -27,9 +27,11 @@ class VocabularyServiceImpl: VocabularyService{
     func fetchVocabularyList() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
         
         let publisher = cloudDataRepo.syncVocaData() //cloud DB와 coreData DB 동기화
-            .flatMap{_ in self.coreDataRepo.fetchVocaData()} //동기화된 CoreData 데이터 불러오기
+            .flatMap{value in
+                return self.coreDataRepo.fetchVocaData()} //동기화된 CoreData 데이터 불러오기
            .eraseToAnyPublisher()
            
+    
        return publisher
     }
     
