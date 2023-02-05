@@ -85,7 +85,7 @@ struct VocabularyCell: View {
 //        )
         }
         .isDetailLink(true)
-        //단어장 고정하기 스와이프
+        // 단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
@@ -95,7 +95,7 @@ struct VocabularyCell: View {
             }
             .tint(vocabulary.isPinned ? .gray : .yellow)
         }
-        //단어장 삭제 스와이프
+        // 단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 let words = vocabulary.words?.allObjects as? [Word] ?? []
@@ -150,20 +150,25 @@ struct VocabularyCell: View {
         }
         // MARK: iPhone에서 단어장을 삭제할 때 띄울 메세지
         .actionSheet(isPresented: $deleteActionSheet) {
-            ActionSheet(title: Text("포함된 단어도 모두 삭제됩니다."), buttons: [
-                .destructive(Text("단어장 삭제"), action: {
-                    vm.updateDeletedData(id: vocabulary.id!)
-                    deleteCompletion()
-                }),
-                .cancel(Text("취소"))
-            ])
+            ActionSheet(title: Text("'\(vocabulary.name ?? "")' 단어장을 삭제 하시겠습니까?"),
+                        message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
+                        buttons: [
+                            .destructive(Text("단어장 삭제")) {
+                                vm.updateDeletedData(id: vocabulary.id!)
+                                deleteCompletion()
+                            },
+                            .cancel(Text("취소"))
+                        ])
         }
         // MARK: iPad에서 단어장을 삭제할 때 띄울 메세지
         .alert(isPresented: $deleteAlert) {
-            Alert(title: Text("포함된 단어도 모두 삭제됩니다."), primaryButton: .destructive(Text("단어장 삭제"), action: {
-                vm.updateDeletedData(id: vocabulary.id!)
-                deleteCompletion() //삭제 후 업데이트
-            }), secondaryButton: .cancel(Text("취소")))
+            Alert(title: Text("'\(vocabulary.name ?? "")' 단어장을 삭제 하시겠습니까?"),
+                  message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
+                  primaryButton: .destructive(Text("단어장 삭제")) {
+                    vm.updateDeletedData(id: vocabulary.id!)
+                    deleteCompletion() //삭제 후 업데이트
+                    },
+                  secondaryButton: .cancel(Text("취소")))
         }
         // !!!: 추후 confirmationDialog가 안정화 되면 actionSheet대신 적용
 //        .confirmationDialog("단어장 삭제", isPresented: $deleteAlert) {
