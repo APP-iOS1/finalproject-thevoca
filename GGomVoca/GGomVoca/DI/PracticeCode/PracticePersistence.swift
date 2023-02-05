@@ -49,6 +49,38 @@ struct PracticePersistence {
         }
     }
     
+    func fetchVocabularyFromCoreData(withID id: String) -> Vocabulary? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Vocabulary")
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
+        
+        do {
+            let result = try self.container.viewContext.fetch(fetchRequest) as! [Vocabulary]
+            return result.first
+        } catch {
+            print("Error fetching vocabulary from Core Data: \(error)")
+            return nil
+        }
+    }
+    
+    
+    func deleteVocabularyFromCoreData(withID id: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Vocabulary")
+        let predicate = NSPredicate(format: "id == %@", id)
+        fetchRequest.predicate = predicate
+        
+        do {
+            let result = try self.container.viewContext.fetch(fetchRequest) as! [Vocabulary]
+            let vocabularyToDelete = result.first
+            self.container.viewContext.delete(vocabularyToDelete!)
+            try self.container.viewContext.save()
+        } catch {
+            print("Error deleting vocabulary from Core Data: \(error)")
+        }
+    }
+    
+    
+    
     func refrechContext() {
         let context = container.viewContext
         context.refreshAllObjects()

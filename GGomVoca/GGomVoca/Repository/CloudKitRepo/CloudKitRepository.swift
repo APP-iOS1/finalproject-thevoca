@@ -7,17 +7,17 @@
 
 import Foundation
 import Combine
-
-enum CloudRepoError: Error{
-    case notFoundData
-    
-    
-}
+import CoreData
+import CloudKit
 
 
 protocol CloudKitRepository {
-    func fetchVocaData() -> AnyPublisher<String?, CloudRepoError>
-    func postVocaData() -> AnyPublisher<String?, CloudRepoError>
-    func updateVocaData() -> AnyPublisher<String?, CloudRepoError>
-    func deleteVocaData() -> AnyPublisher<String?, CloudRepoError>
+    //MARK: CloudKit으로부터 Voca 동기화
+    func syncVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError>
+    //MARK: Post New Voca CloudKit
+    func postVocaData(vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, FirstPartyRepoError>
+    //MARK: Update Voca  CloudKit
+    func updateVocaData(vocabulary: Vocabulary) -> AnyPublisher<String, FirstPartyRepoError>
+    //MARK: Delete Voca CloudKit
+    func deleteVocaData(record: CKRecord) -> AnyPublisher<String, FirstPartyRepoError>
 }

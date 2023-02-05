@@ -64,18 +64,10 @@ struct PracticeAddView: View {
                 
             }, receiveValue: {value in
                 print(value.name)
+                print("postVocaData result : \(value)")
                 service.saveContext()
             })
-//        withAnimation {
-//            let newVocabulary = Vocabulary(context: viewContext)
-//            newVocabulary.id = UUID()
-//            newVocabulary.name = "\(self.vocabularyName)" // name
-//            newVocabulary.nationality = "\(self.nationality)" //"\(self.nationality)" // nationality
-//            newVocabulary.createdAt = "\(Date())"
-//            newVocabulary.words = NSSet(array: [])
-//            print("newVocabulary \(newVocabulary)")
-//            saveContext()
-//        }
+
     }
     
     
