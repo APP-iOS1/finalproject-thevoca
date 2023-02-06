@@ -66,7 +66,7 @@ struct ImportCSVFileView: View {
       }
       .padding(20)
       .frame(minHeight: 400)
-      .background(Color("background"))
+      .background(Color("offwhite"))
       .cornerRadius(15)
       .overlay(
         RoundedRectangle(cornerRadius: 15)

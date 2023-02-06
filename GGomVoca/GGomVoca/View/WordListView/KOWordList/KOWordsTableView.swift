@@ -49,7 +49,7 @@ struct KOWordsTableView: View {
                                     }
                                     
                                     Button {
-                                        // Voice Over
+                                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ko-KR", .single)
                                     } label: {
                                         Label("발음 듣기", systemImage: "mic.fill")
                                     }
@@ -92,6 +92,9 @@ struct KOWordsTableView: View {
         .sheet(isPresented: $editWord) {
             KOEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }

@@ -33,19 +33,17 @@ struct PracticeVocaListView: View {
       
             // !가 앞에 붙으면 내용이 반전
             Section(header: Text("즐겨찾기")) {
-                
                 if !viewModel.vocaList.isEmpty {
                     Section(header: Text("테스트")) {
                         ForEach(viewModel.vocaList) { vocabulary in
-                            
-                            VocabularyCell(favoriteCompletion: {
-                                print("click")
-                                //viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                print("deleteCompletion")
-                                //viewModel.getVocabularyData()
-                               // viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, vocabulary: vocabulary, editMode: $editMode)
+//                            VocabularyCell(favoriteCompletion: {
+//                                print("click")
+//                                //viewModel.getVocabularyData()
+//                            }, deleteCompletion: {
+//                                print("deleteCompletion")
+//                                //viewModel.getVocabularyData()
+//                               // viewModel.recentVocabularyList = getRecentVocabulary()
+//                            }, vocabulary: vocabulary, editMode: $editMode)
                             
                         }
                     }

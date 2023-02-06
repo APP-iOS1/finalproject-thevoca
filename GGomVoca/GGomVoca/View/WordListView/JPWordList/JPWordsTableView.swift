@@ -47,9 +47,8 @@ struct JPWordsTableView: View {
                                     } label: {
                                         Label("수정하기", systemImage: "gearshape.fill")
                                     }
-                                    
                                     Button {
-                                        // Voice Over
+                                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ja-JP", .single)
                                     } label: {
                                         Label("발음 듣기", systemImage: "mic.fill")
                                     }
@@ -92,6 +91,9 @@ struct JPWordsTableView: View {
         .sheet(isPresented: $editWord) {
             JPEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }

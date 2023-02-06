@@ -10,16 +10,22 @@ import SwiftUI
 struct VocabularyCell: View {
     // MARK: SuperView Properties
     var vm : VocabularyCellViewModel = VocabularyCellViewModel()
-    //단어장 즐겨찾기 completion Handler
-    var favoriteCompletion: () -> ()
+    // TODO: 최근 본 단어장 코드 완전히 걷어 낼때 refreshCompletion으로 변경하고 deleteComletion 삭제
+    //단어장 고정하기 completion Handler
+    var pinnedCompletion: () -> ()
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
+    @Binding var selectedVocabulary: Vocabulary?
     
     var vocabulary: Vocabulary
     
     // MARK: View Properties
     @State private var deleteActionSheet: Bool = false
     @State private var deleteAlert: Bool = false
+    /// - 단어장 이름 수정 관련
+    @State private var editVocabularyName: Bool = false
+    /// - 편집 모드 관련
+    @Binding var editMode: EditMode
     
     private var natianalityIcon: String {
         switch vocabulary.nationality {
@@ -43,12 +49,6 @@ struct VocabularyCell: View {
         return words.count
     }
     
-    /// - 단어장 이름 수정 관련
-    @State private var editVocabularyName: Bool = false
-    
-    /// - 편집 모드 관련
-    @Binding var editMode: EditMode
-    
     var body: some View {
         NavigationLink(value: vocabulary) {
             HStack {
@@ -56,18 +56,18 @@ struct VocabularyCell: View {
                 Spacer()
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
-        }      
+            
 //        HStack {
 //            Text(vocabulary.name ?? "")
-//            
+//
 //            Spacer()
-//            
+//
 //            // editmode가 아닐 때만 보여지고, editmode로 들어오면 사라지게
 //            if editMode == .inactive {
 //                Image(systemName: "chevron.right")
 //                .foregroundColor(.gray)
 //            }
-//            
+//
 //            if editMode == .active {
 //                Button(action: {
 //                    editVocabularyName = true
@@ -83,17 +83,19 @@ struct VocabularyCell: View {
 //            NavigationLink(vocabulary.name ?? "", value: vocabulary)
 //                .opacity(0)
 //        )
-        //단어장 고정하기 스와이프
+        }
+        .isDetailLink(true)
+        // 단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
-                favoriteCompletion()
+                pinnedCompletion()
             } label: {
                 Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
             }
             .tint(vocabulary.isPinned ? .gray : .yellow)
         }
-        //단어장 삭제 스와이프
+        // 단어장 삭제 스와이프
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
                 let words = vocabulary.words?.allObjects as? [Word] ?? []
@@ -105,37 +107,68 @@ struct VocabularyCell: View {
                 } else {
                     deleteAlert = true
                 }
+                selectedVocabulary = nil
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
         }
         .contextMenu {
-            Button("단어장 이름 수정") {
+            Button {
+                vm.updateFavoriteVocabulary(id: vocabulary.id!)
+                pinnedCompletion()
+            } label: {
+                if vocabulary.isPinned {
+                    HStack {
+                        Text("단어장 고정 해제")
+                        Spacer()
+                        Image(systemName: "pin.slash")
+                    }
+                } else {
+                    HStack {
+                        Text("단어장 고정")
+                        Spacer()
+                        Image(systemName: "pin")
+                    }
+                }
+            }
+
+            Button {
                 editVocabularyName.toggle()
+            } label: {
+                HStack {
+                    Text("단어장 제목 변경")
+                    Spacer()
+                    Image(systemName: "pencil")
+                }
             }
         }
-        // MARK: 단어장 이름 수정 sheet
+        // MARK: 단어장 이름 변경 sheet
         .sheet(isPresented: $editVocabularyName) {
-            favoriteCompletion()
+            pinnedCompletion() // vocabularyListView를 re-render하게 함
         } content: {
             EditVocabularyView(vocabulary: vocabulary)
         }
         // MARK: iPhone에서 단어장을 삭제할 때 띄울 메세지
         .actionSheet(isPresented: $deleteActionSheet) {
-            ActionSheet(title: Text("포함된 단어도 모두 삭제됩니다."), buttons: [
-                .destructive(Text("단어장 삭제"), action: {
-                    vm.updateDeletedData(id: vocabulary.id!)
-                    deleteCompletion()
-                }),
-                .cancel(Text("취소"))
-            ])
+            ActionSheet(title: Text("'\(vocabulary.name ?? "")' 단어장을 삭제 하시겠습니까?"),
+                        message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
+                        buttons: [
+                            .destructive(Text("단어장 삭제")) {
+                                vm.updateDeletedData(id: vocabulary.id!)
+                                deleteCompletion()
+                            },
+                            .cancel(Text("취소"))
+                        ])
         }
         // MARK: iPad에서 단어장을 삭제할 때 띄울 메세지
         .alert(isPresented: $deleteAlert) {
-            Alert(title: Text("포함된 단어도 모두 삭제됩니다."), primaryButton: .destructive(Text("단어장 삭제"), action: {
-                vm.updateDeletedData(id: vocabulary.id!)
-                deleteCompletion() //삭제 후 업데이트
-            }), secondaryButton: .cancel(Text("취소")))
+            Alert(title: Text("'\(vocabulary.name ?? "")' 단어장을 삭제 하시겠습니까?"),
+                  message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
+                  primaryButton: .destructive(Text("단어장 삭제")) {
+                    vm.updateDeletedData(id: vocabulary.id!)
+                    deleteCompletion() //삭제 후 업데이트
+                    },
+                  secondaryButton: .cancel(Text("취소")))
         }
         // !!!: 추후 confirmationDialog가 안정화 되면 actionSheet대신 적용
 //        .confirmationDialog("단어장 삭제", isPresented: $deleteAlert) {

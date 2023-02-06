@@ -13,7 +13,6 @@ struct TestModeSelectView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @ObservedObject var viewModel: JPWordListViewModel
     
     var body: some View {
         NavigationStack {
@@ -33,7 +32,6 @@ struct TestModeSelectView: View {
                     iPhoneWordTestView(
                         isTestMode: $isTestMode,
                         vocabularyID: vocabularyID,
-                        viewModel: viewModel,
                         testMode: "word",
                         isMemorized: true
                     )
@@ -53,7 +51,6 @@ struct TestModeSelectView: View {
                     iPhoneWordTestView(
                         isTestMode: $isTestMode,
                         vocabularyID: vocabularyID,
-                        viewModel: viewModel,
                         testMode: "meaning",
                         isMemorized: true
                     )
@@ -72,7 +69,6 @@ struct TestModeSelectView: View {
                     iPhoneWordTestView(
                         isTestMode: $isTestMode,
                         vocabularyID: vocabularyID,
-                        viewModel: viewModel,
                         testMode: "word",
                         isMemorized: false
                     )
@@ -91,7 +87,6 @@ struct TestModeSelectView: View {
                     iPhoneWordTestView(
                         isTestMode: $isTestMode,
                         vocabularyID: vocabularyID,
-                        viewModel: viewModel,
                         testMode: "meaning",
                         isMemorized: false
                     )
@@ -115,6 +110,6 @@ struct TestModeSelectView: View {
 
 struct TestModeSelectView_Previews: PreviewProvider {
     static var previews: some View {
-        TestModeSelectView(isTestMode: .constant(true), vocabularyID: UUID(uuidString: "64883267-186C-4053-A38E-940E6F6E7B41"), viewModel: JPWordListViewModel())
+        TestModeSelectView(isTestMode: .constant(true), vocabularyID: UUID(uuidString: "64883267-186C-4053-A38E-940E6F6E7B41"))
     }
 }
