@@ -32,7 +32,7 @@ struct iPadWordTestView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var vm: iPadWordTestViewModel = iPadWordTestViewModel()
+    @StateObject var vm: TestViewModel = TestViewModel()
     
     // MARK: SuperView Properties
     let testType: String
@@ -68,6 +68,9 @@ struct iPadWordTestView: View {
     func cancelTimer() {
         self.timer.upstream.connect().cancel()
     }
+    
+    // 시험 종료 후 결과지로 이동하기 위한 Property
+    @State var isFinished: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -120,7 +123,8 @@ struct iPadWordTestView: View {
         .navigationTitle("남은 시간 : \(timeRemaining)")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            vm.createPaper(vocabularyID: vocabularyID, isMemorized: isMemorized)
+            vm.getVocabulary(vocabularyID: vocabularyID)
+            vm.createPaper(isMemorized: isMemorized)
             answers = Array(repeating: "", count: vm.testPaper.count)
             calcRemain()
         }
@@ -137,7 +141,19 @@ struct iPadWordTestView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("제출") {
-                    print("제출")
+                    for idx in answers.indices {
+                        if answers[idx].isEmpty {
+                            vm.saveAnswer(answer: "")
+                        } else {
+                            vm.saveAnswer(answer: answers[idx])
+                        }
+                        vm.showNextQuestion()
+                    }
+                    vm.gradeTestPaper(testMode: testType)
+                    isFinished = true
+                }
+                .navigationDestination(isPresented: $isFinished) {
+                    WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testType)
                 }
             }
         }

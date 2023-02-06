@@ -63,7 +63,6 @@
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
-		EA7E9FB12990CA870046F081 /* iPadWordTestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7E9FB02990CA870046F081 /* iPadWordTestViewModel.swift */; };
 		EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4FFA82977C8830070941A /* Modifiers.swift */; };
 		EAB4FFAD2977C8FD0070941A /* CellButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */; };
 		EAEF31632989F488009CE764 /* iPhoneWordTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF31622989F488009CE764 /* iPhoneWordTestView.swift */; };
@@ -155,7 +154,6 @@
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
-		EA7E9FB02990CA870046F081 /* iPadWordTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadWordTestViewModel.swift; sourceTree = "<group>"; };
 		EAB4FFA82977C8830070941A /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
 		EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellButtonView.swift; sourceTree = "<group>"; };
 		EAEF31622989F488009CE764 /* iPhoneWordTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPhoneWordTestView.swift; sourceTree = "<group>"; };
@@ -331,7 +329,6 @@
 				EAEF31622989F488009CE764 /* iPhoneWordTestView.swift */,
 				EAEF3166298A4205009CE764 /* WordTestResult.swift */,
 				635CBD59298A693A0071328E /* iPadWordTestView.swift */,
-				EA7E9FB02990CA870046F081 /* iPadWordTestViewModel.swift */,
 				16E1ECC6298CE54A00BA4C9C /* Result.swift */,
 			);
 			path = View;
@@ -691,7 +688,6 @@
 				63EA4AC029875DE8009392EE /* KOWordsTableView.swift in Sources */,
 				63EA4ABD29875DE8009392EE /* KOEditWordView.swift in Sources */,
 				639B31ED29806E1700955DE4 /* AddNewWordView.swift in Sources */,
-				EA7E9FB12990CA870046F081 /* iPadWordTestViewModel.swift in Sources */,
 				EAEF31652989F84F009CE764 /* TestModeSelectView.swift in Sources */,
 				EE75952D298A5BAC00AB6E62 /* VocabularyServiceImpl.swift in Sources */,
 				EE759522298A3A0E00AB6E62 /* CloudKitRepositoryImpl.swift in Sources */,
