@@ -82,11 +82,20 @@ struct ImportCSVFileView: View {
               let option = line[1] as? String ?? ""
               let meaning = line[2] as? String ?? ""
               var meaningArray: [String] = []
+              // MARK: 복수 개의 뜻을 가지고 있을 경우, 배열로 생성
               if meaning.contains(",") {
-                meaningArray = meaning.components(separatedBy: ",")
+                  // MARK: comma를 기준으로 배열로 변환
+                  meaningArray = meaning.components(separatedBy: ",")
+
+                  // MARK: 각 단어가 좌우 공백이 포함되어 있을 경우, 공백 제거
+                  for index in meaningArray.indices {
+                      meaningArray[index] = meaningArray[index].trimmingCharacters(in: .whitespaces)
+                  }
+
               } else {
-                meaningArray.append(meaning)
+                  meaningArray.append(meaning)
               }
+
               viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaningArray, option: option)
 
               dismiss()
