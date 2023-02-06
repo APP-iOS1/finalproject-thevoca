@@ -13,7 +13,7 @@ struct Question: Identifiable {
     var word: String
     var meaning: [String]
     var answer: String?
-  var isCorrect: Result = .Wrong
+    var isCorrect: Result = .Wrong
 }
 
 final class TestViewModel: ObservableObject {
@@ -133,6 +133,41 @@ final class TestViewModel: ObservableObject {
                 print("default")
             }
         }
+    }
+    
+    // MARK: - Core Data에 시험결과 저장
+    func testResult() {
+        for word in words {
+            // 처음 시험을 보는 단어장의 경우 recentTestResults가 nil이므로 빈 배열 생성
+            if word.recentTestResults == nil {
+                word.recentTestResults = []
+            } else {
+                // nil이 아닐 때 element가 5개 이상이라면
+                if word.recentTestResults!.count >= 5 {
+                    word.recentTestResults!.removeFirst()
+                }
+            }
+            // 시험 본 단어 update
+            if let tempWord = testPaper.filter({ $0.word == word.word }).first {
+                print("[test!] \(tempWord)")
+                if tempWord.isCorrect == .Right {
+                    word.recentTestResults?.append("O")
+                    word.correctCount += 1
+                } else {
+                    word.recentTestResults?.append("X")
+                    word.incorrectCount += 1
+                }
+            } else {
+                // 시험 안 본 단어 update
+                print("[isMemorized] \(word)")
+                word.recentTestResults?.append("-")
+            }
+            // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
+            if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
+                word.isMemorized = true
+            }
+        }
+        saveContext()
     }
     
     // MARK: - Timer 관련 메서드

@@ -105,6 +105,7 @@ struct iPhoneWordTestView: View {
                         vm.cancelTimer()
                         // 문제지 채점
                         vm.gradeTestPaper(testMode: testMode)
+                        vm.testResult()
                         isFinished = true
                     } label: {
                         Text("제출")
