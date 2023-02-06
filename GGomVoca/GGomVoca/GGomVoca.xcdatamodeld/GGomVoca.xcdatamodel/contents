@@ -7,6 +7,7 @@
         <attribute name="isPinned" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="nationality" optional="YES" attributeType="String"/>
+        <attribute name="updatedAt" optional="YES" attributeType="String"/>
         <relationship name="words" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="vocabulary" inverseEntity="Word"/>
     </entity>
     <entity name="Word" representedClassName="Word" syncable="YES" codeGenerationType="class">

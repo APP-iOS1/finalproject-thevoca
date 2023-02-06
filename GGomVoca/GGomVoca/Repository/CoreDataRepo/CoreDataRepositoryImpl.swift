@@ -36,26 +36,32 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     /*
     MARK: 단어장 불러오기
      */
-    func fetchVocaData() -> AnyPublisher<[Vocabulary], CoredataRepoError> {
-//        var cloudControlloer =  VocabularyController() //test
-        return Future<[Vocabulary], CoredataRepoError>{observer in
+    func fetchVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
+        return Future<[Vocabulary], FirstPartyRepoError>{observer in
             let vocabularyFetch = Vocabulary.fetchRequest()
-
-            let results = (try? self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+            
+            do {
+                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary])
+                observer(.success(results))
+            }catch{
+                observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
+            }
+            
+           
 //            print(cloudControlloer.fetchVocabulary(completion: {value in print("ok : \(value)")}))
-            observer(.success(results))
+            
         }.eraseToAnyPublisher()
         
     }
     /*
     MARK: 단어장 추가하기
      */
-    func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, CoredataRepoError> {
-        var cloudControlloer =  VocabularyController() //test
-        return Future<Vocabulary, CoredataRepoError>{[weak self] observer in
+    func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
+      
+        return Future<Vocabulary, FirstPartyRepoError>{[weak self] observer in
             
             guard let viewContext = self?.context else{
-                return observer(.failure(CoredataRepoError.notFoundData))
+                return observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
             }
             
             let newVocabulary = Vocabulary(context: viewContext)
@@ -64,9 +70,10 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             newVocabulary.nationality = "\(nationality)" //"\(self.nationality)" // nationality
             newVocabulary.createdAt = "\(Date())"
             newVocabulary.words = NSSet(array: [])
+            newVocabulary.updatedAt = "\(Date())"
             print("newVocabulary \(newVocabulary)")
             self?.saveContext()
-            cloudControlloer.saveVocabulary(vocabulary: newVocabulary)
+           
             observer(.success(newVocabulary))
         }.eraseToAnyPublisher()
         
@@ -75,12 +82,12 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     /*
     MARK: 단어장 고정 상태 업데이트하기
      */
-    func updatePinnedVoca(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
+    func updatePinnedVoca(id: UUID) -> AnyPublisher<String, FirstPartyRepoError> {
         
-        return Future<String, CoredataRepoError>{[weak self] observer in
+        return Future<String, FirstPartyRepoError>{[weak self] observer in
             
             guard let viewContext = self?.context else{
-                return observer(.failure(CoredataRepoError.notFoundData))
+                return observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
             }
             
             let vocabularyFetch = Vocabulary.fetchRequest()
@@ -101,8 +108,8 @@ class CoreDataRepositoryImpl : CoreDataRepository {
     /*
      MARK: 단어장 삭제 후 반영 함수
      */
-    func deletedVocaData(id: UUID) -> AnyPublisher<String, CoredataRepoError> {
-        return Future<String, CoredataRepoError>{observer in
+    func deletedVocaData(id: UUID) -> AnyPublisher<String, FirstPartyRepoError> {
+        return Future<String, FirstPartyRepoError>{observer in
             observer(.success(""))
             
         }.eraseToAnyPublisher()

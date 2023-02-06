@@ -40,14 +40,19 @@ class DependencyManager {
     // Model (Service)
     func registerServices() {
         container.register(VocabularyService.self) { resolver in
-            let repository = resolver.resolve(CoreDataRepository.self)!
-            return VocabularyServiceImpl(repo: repository)
+            let coreDataRepository = resolver.resolve(CoreDataRepository.self)!
+            let cloudDataRepository = resolver.resolve(CloudKitRepository.self)!
+            return VocabularyServiceImpl(coreDataRepo: coreDataRepository,
+                                         cloudDataRepo: cloudDataRepository)
         }
     }
     // Model (Repository)
     func registerRepositories() {
         container.register(CoreDataRepository.self) { _ in CoreDataRepositoryImpl(context: PracticePersistence.shared.container.viewContext) }
+        container.register(CloudKitRepository.self) { _ in CloudKitRepositoryImpl() }
     }
+    
+    
     
     func resolve<Service>(_ serviceType: Service.Type) -> Service? {
         return container.resolve(serviceType)

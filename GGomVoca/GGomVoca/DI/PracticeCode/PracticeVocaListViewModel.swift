@@ -18,15 +18,21 @@ class PracticeVocaListViewModel : ObservableObject{
     @Published var vocaList : [Vocabulary] = []
     
     func getVocaListData(){
-        print(" getVocaListData()")
+       
         service.fetchVocabularyList()
-            .sink(receiveCompletion: {_ in
-                
+            .sink(receiveCompletion: {observer in
+                switch observer {
+                case .failure(let error):
+                    print(error)
+                    return
+                case .finished:
+                    return
+                }
             }, receiveValue: {
                 vocaList in
-                print(" getVocaListData \(vocaList)")
                 self.vocaList = vocaList
             })
+            .store(in: &bag)
             
     }
 }

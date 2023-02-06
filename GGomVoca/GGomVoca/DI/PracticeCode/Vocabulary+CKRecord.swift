@@ -19,22 +19,24 @@ extension Vocabulary {
               let id = UUID(uuidString: idString),
               let isPinned = ckRecord["isPinned"] as? Bool,
               let name = ckRecord["name"] as? String,
-              let deleatedAt = ckRecord["deleatedAt"] as? String,
+              //let deleatedAt = ckRecord["deleatedAt"] as? String,
               let createdAt = ckRecord["createdAt"] as? String,
-              let nationality = ckRecord["nationality"] as? String
+              let nationality = ckRecord["nationality"] as? String,
+              let updatedAt = ckRecord["updatedAt"] as? String
                 
         else {
+            print("from result : \(ckRecord) = fail")
             return nil
         }
-        
+        print("from result : \(ckRecord) = success")
         let vocabulary = Vocabulary(context: PracticePersistence.shared.container.viewContext)
         vocabulary.id = id
         vocabulary.isPinned = isPinned
         vocabulary.name = name
         vocabulary.createdAt = createdAt
-        vocabulary.deleatedAt = deleatedAt
+        //vocabulary.deleatedAt = deleatedAt
         vocabulary.nationality = nationality
-        
+        vocabulary.updatedAt = updatedAt
         return vocabulary
     }
     
@@ -46,67 +48,7 @@ extension Vocabulary {
         record["createdAt"] = createdAt
         record["deleatedAt"] = deleatedAt
         record["nationality"] = nationality
-        
+        record["updatedAt"] = updatedAt
         return record
-    }
-}
-//test용 바꿀예정
-class VocabularyController {
-    let database = CKContainer.default().privateCloudDatabase
-    
-    func saveVocabulary(vocabulary: Vocabulary) {
-        let record = vocabulary.ckRecord
-        
-        database.save(record) { (ckRecord, error) in
-            if let error = error {
-                print("Error saving vocabulary: \(error.localizedDescription)")
-                return
-            }
-            print("ckRecord : \(ckRecord)")
-            PracticePersistence.shared.saveContext()
-        }
-    }
-    
-    func fetchVocabulary(withID id: String, completion: @escaping (Vocabulary?) -> Void) {
-        let predicate = NSPredicate(format: "id == %@", id)
-        let query = CKQuery(recordType: Vocabulary.recordType, predicate: predicate)
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                print("Error fetching vocabulary: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            print("fetch record : \(records)")
-            guard let record = records?.first,
-                let vocabulary = Vocabulary.from(ckRecord: record) else {
-                    completion(nil)
-                    return
-            }
-            
-            completion(vocabulary)
-        }
-    }
-    
-    func fetchVocabulary(completion: @escaping (Vocabulary?) -> Void) {
-        let predicate =  NSPredicate(value: false)
-       
-        let query = CKQuery(recordType: Vocabulary.recordType, predicate: predicate)
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-            if let error = error {
-                print("Error fetching vocabulary: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            print("fetch record : \(records)")
-            guard let record = records?.first,
-                let vocabulary = Vocabulary.from(ckRecord: record) else {
-                    completion(nil)
-                    return
-            }
-            
-            completion(vocabulary)
-        }
     }
 }

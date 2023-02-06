@@ -96,6 +96,10 @@ struct PracticeVocaListView: View {
 
 struct PracticeVocaListView_Previews: PreviewProvider {
     static var previews: some View {
-        PracticeVocaListView(viewModel: PracticeVocaListViewModel(service: VocabularyServiceImpl(repo: CoreDataRepositoryImpl(context: PersistenceController.shared.container.viewContext))))
+        PracticeVocaListView(viewModel: PracticeVocaListViewModel(
+            service: VocabularyServiceImpl(
+                coreDataRepo: CoreDataRepositoryImpl(
+                    context: PersistenceController.shared.container.viewContext),
+                cloudDataRepo: CloudKitRepositoryImpl())))
     }
 }
