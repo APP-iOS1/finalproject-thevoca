@@ -17,8 +17,7 @@ struct iPhoneWordTestView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @ObservedObject var viewModel: JPWordListViewModel
-    @StateObject var paperViewModel: TestViewModel = TestViewModel()
+    @StateObject var vm: TestViewModel = TestViewModel()
     
     // MARK: Test Mode에 관한 Properties
     let testMode: String
@@ -27,7 +26,7 @@ struct iPhoneWordTestView: View {
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
-    // testMode에 따른 placeholder
+    // testMode에 따른 textField placeholder
     var textFieldPlaceHolder: String {
         switch testMode {
         case "word":
@@ -38,16 +37,18 @@ struct iPhoneWordTestView: View {
             return ""
         }
     }
-    
-    var timer: String {
-        paperViewModel.timeRemaining == -1 ? "⏰ Time Over" : paperViewModel.convertSecondsToTime()
-    }
+    // TextField disable에 관한 Properties
     var timeOver: Bool {
-        paperViewModel.timeRemaining == -1 ? true : false
+        vm.timeRemaining == -1 ? true : false
     }
     
-    var isExsisLastAnswer: Bool {
-        paperViewModel.testPaper.last?.answer != nil ? true : false
+    var isExistLastAnswer: Bool {
+        vm.testPaper.last?.answer != nil ? true : false
+    }
+    
+    // MARK: Timer에 관한 Property
+    var timer: String {
+        vm.timeRemaining == -1 ? "⏰ Time Over" : vm.convertSecondsToTime(seconds: vm.timeRemaining)
     }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
@@ -58,8 +59,8 @@ struct iPhoneWordTestView: View {
             
             Spacer()
             
-            if !paperViewModel.testPaper.isEmpty {
-                Text(paperViewModel.showQuestion(testMode: testMode))
+            if !vm.testPaper.isEmpty {
+                Text(vm.showQuestion(testMode: testMode))
                     .font(.largeTitle)
                     .frame(width: UIScreen.main.bounds.width * 0.9)
             }
@@ -73,50 +74,53 @@ struct iPhoneWordTestView: View {
                 .disableAutocorrection(true)
                 .focused($focusedField, equals: .answer)
                 .onSubmit {
-                    paperViewModel.saveAnswer(answer: answer)
-                    answer.removeAll()
-                    if !paperViewModel.showSubmitButton() {
-                        paperViewModel.restartTimer()
+                    // 마지막 문제일 경우 답변 저장만 함
+                    vm.saveAnswer(answer: answer)
+                    // 마지막 문제가 아닌 경우
+                    if !vm.showSubmitButton() {
+                        vm.showNextQuestion()
+                        answer.removeAll()
+                        vm.restartTimer()
+                        focusedField = .answer
                     }
-                    paperViewModel.showNextQuestion()
-                    focusedField = .answer
                 }
-                .disabled(timeOver||isExsisLastAnswer)
+                .disabled(timeOver||isExistLastAnswer)
         }
         .onAppear {
-            paperViewModel.createPaper(words: viewModel.words, isMemorized: isMemorized)
-            paperViewModel.startTimer()
+            vm.getVocabulary(vocabularyID: vocabularyID)
+            vm.createPaper(isMemorized: isMemorized)
+            vm.startTimer()
             focusedField = .answer
         }
         .navigationTitle("\(timer)")
         .toolbar {
             // 마지막 문제일 때는 제출 버튼
-            if paperViewModel.showSubmitButton() {
+            if vm.showSubmitButton() {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if paperViewModel.testPaper.last?.answer == nil {
-                            paperViewModel.saveAnswer(answer: answer)
+                        if vm.testPaper.last?.answer == nil && vm.timeRemaining != -1 {
+                            vm.saveAnswer(answer: answer)
                         }
                         // 타이머 종료
-                        paperViewModel.cancelTimer()
+                        vm.cancelTimer()
                         // 문제지 채점
-                        paperViewModel.gradeTestPaper(testMode: testMode)
+                        vm.gradeTestPaper(testMode: testMode)
                         isFinished = true
                     } label: {
                         Text("제출")
                     }
                     .navigationDestination(isPresented: $isFinished) {
-                        WordTestResult(isTestMode: $isTestMode, paperViewModel: paperViewModel, testMode: testMode)
+                        WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testMode)
                     }
                 }
                 // 마지막 문제가 아닐 때는 PASS 버튼
             } else {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        paperViewModel.saveAnswer(answer: "")
-                        paperViewModel.showNextQuestion()
+                        vm.saveAnswer(answer: "")
+                        vm.showNextQuestion()
                         answer.removeAll()
-                        paperViewModel.restartTimer()
+                        vm.restartTimer()
                         focusedField = .answer
                     } label: {
                         Text("pass")

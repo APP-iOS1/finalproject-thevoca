@@ -32,6 +32,9 @@ struct ENWordListView: View {
     @State var confirmationDialog: Bool = false // iPhone
     @State var removeAlert: Bool = false // iPad
     
+    /// - 단어 시험모드 관련 State
+    @State private var isTestMode: Bool = false
+    
     var body: some View {
         VStack(spacing: 0) {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -86,6 +89,10 @@ struct ENWordListView: View {
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
         }
+        // 시험 모드 시트
+        .fullScreenCover(isPresented: $isTestMode, content: {
+            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+        })
         // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
             Button(role: .destructive) {
@@ -158,6 +165,15 @@ struct ENWordListView: View {
                 ToolbarItem {
                     Menu {
                         Button {
+                            isTestMode.toggle()
+                        } label: {
+                            HStack {
+                                Text("시험 보기")
+                                Image(systemName: "square.and.pencil")
+                            }
+                        }
+                        
+                        Button {
                             viewModel.words.shuffle()
                         } label: {
                             HStack {
@@ -183,6 +199,7 @@ struct ENWordListView: View {
                                 Image(systemName: "square.and.arrow.down")
                             }
                         }
+                        .isDetailLink(true)
                         
                         Button {
                             isExport.toggle()
@@ -199,6 +216,8 @@ struct ENWordListView: View {
                                 Image(systemName: "chart.line.uptrend.xyaxis")
                             }
                         }
+                        .isDetailLink(true)
+                        
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
