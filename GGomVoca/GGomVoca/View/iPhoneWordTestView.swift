@@ -26,6 +26,7 @@ struct iPhoneWordTestView: View {
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
+    
     // testMode에 따른 textField placeholder
     var textFieldPlaceHolder: String {
         switch testMode {
@@ -67,6 +68,9 @@ struct iPhoneWordTestView: View {
             
             Spacer()
             
+            if timeOver||isExistLastAnswer {
+                Text("\(Image(systemName: "exclamationmark.circle")) 우상단의 제출 버튼을 눌러주세요")
+            }
             TextField("\(textFieldPlaceHolder)", text: $answer)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
