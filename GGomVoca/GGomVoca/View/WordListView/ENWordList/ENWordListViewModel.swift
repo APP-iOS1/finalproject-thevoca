@@ -108,11 +108,6 @@ class ENENWordListViewModel: ObservableObject {
       var aLine = ""
       var tmpMeaning = word.meaning!.joined(separator: ",")
       tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
-      for meaning in word.meaning! {
-        tmpMeaning += meaning
-        tmpMeaning += ","
-      }
-      tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
       if word.deletedAt == nil {
         aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(tmpMeaning)"
         fullText += aLine + "\n"
