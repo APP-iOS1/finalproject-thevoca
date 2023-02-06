@@ -104,6 +104,9 @@ struct WordTestResult: View {
                         Text("Empty")
                     }
                 }
+                .alignmentGuide(.listRowSeparatorLeading) { d in
+                    d[.leading]
+                }
                 
             }
             .listStyle(.plain)
