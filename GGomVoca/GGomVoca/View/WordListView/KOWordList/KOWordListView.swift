@@ -69,13 +69,7 @@ struct KOWordListView: View {
                         Rectangle()
                             .foregroundColor(Color("toolbardivider"))
                             .frame(height: 1)
-                        
-                        Button("선택한 단어 듣기") {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "kr-KO")
-                        }
-                        
-                        Spacer()
-                        
+
                         HStack {
                             // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
                             Button {
@@ -84,6 +78,12 @@ struct KOWordListView: View {
                                 Image(systemName: "folder")
                             }
                             .padding()
+                            
+                            Spacer()
+                            
+                            Button("선택한 단어 듣기") {
+                                SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "kr-KO")
+                            }
                             
                             Spacer()
                             
@@ -172,119 +172,91 @@ struct KOWordListView: View {
                             SpeechSynthesizer.shared.stopSpeaking()
                         }
                     }
-                } else { // 기본 모드
+                } else  {
                     ToolbarItem {
                         VStack(alignment: .center) {
                             Text("\(viewModel.words.count)")
                                 .foregroundColor(.gray)
                         }
-                        // 단어장 내보내기
-                        .fileExporter(isPresented: $isExport, document: CSVFile(initialText: viewModel.buildDataForCSV() ?? ""), contentType: .commaSeparatedText, defaultFilename: "\(navigationTitle)") { result in
-                            switch result {
-                            case .success(let url):
-                                print("Saved to \(url)")
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                            }
+                    }
+                    // + 버튼
+                    ToolbarItem {
+                        Button {
+                            addNewWord.toggle()
+                        } label: {
+                            Image(systemName: "plus")
                         }
-                        .toolbar {
-                            // TODO: 편집모드에 따른 toolbar State 분기
-                            if !isSelectionMode { // 기존에 보이는 툴바
-                                ToolbarItem {
-                                    VStack(alignment: .center) {
-                                        Text("\(viewModel.words.count)")
-                                            .foregroundColor(.gray)
-                                    }
-                                }
-                                // + 버튼
-                                ToolbarItem {
-                                    Button {
-                                        SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "kr-KO")
-                                        isSpeech.toggle()
-                                    } label: {
-                                        HStack {
-                                            Text("전체 발음 듣기")
-                                            Image(systemName: "speaker.wave.3")
-                                        }
-                                    }
-                                    Button {
-                                        viewModel.words.shuffle()
-                                        addNewWord.toggle()
-                                    } label: {
-                                        Image(systemName: "plus")
-                                    }
-                                }
-                                
-                                // 햄버거 버튼
-                                ToolbarItem {
-                                    Menu {
-                                        Button {
-                                            isTestMode.toggle()
-                                        } label: {
-                                            HStack {
-                                                Text("시험 보기")
-                                                Image(systemName: "square.and.pencil")
-                                            }
-                                        }
-                                        
-                                        Button {
-                                            viewModel.words.shuffle()
-                                        } label: {
-                                            HStack {
-                                                Text("단어 순서 섞기")
-                                                Image(systemName: "shuffle")
-                                            }
-                                        }
-                                        
-                                        Button {
-                                            isSelectionMode.toggle()
-                                        } label: {
-                                            HStack {
-                                                Text("단어장 편집하기")
-                                                Image(systemName: "checkmark.circle")
-                                            }
-                                        }
-                                        
-                                        NavigationLink {
-                                            ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
-                                        } label: {
-                                            HStack {
-                                                Text("단어 가져오기")
-                                                Image(systemName: "square.and.arrow.down")
-                                            }
-                                        }
-                                        .isDetailLink(true)
-                                        
-                                        Button {
-                                            isExport.toggle()
-                                        } label: {
-                                            HStack {
-                                                Text("단어 리스트 내보내기")
-                                                Image(systemName: "square.and.arrow.up")
-                                            }
-                                        }
-                                        
-                                        NavigationLink(destination: MyNoteView(words: viewModel.words)) {
-                                            HStack {
-                                                Text("시험 결과 보기")
-                                                Image(systemName: "chart.line.uptrend.xyaxis")
-                                            }
-                                        }
-                                        .isDetailLink(true)
-                                        
-                                    } label: {
-                                        Image(systemName: "line.3.horizontal")
-                                    }
+                    }
+                    
+                    // 햄버거 버튼
+                    ToolbarItem {
+                        Menu {
+                            Button {
+                                isTestMode.toggle()
+                            } label: {
+                                HStack {
+                                    Text("시험 보기")
+                                    Image(systemName: "square.and.pencil")
                                 }
                             }
-                            else { // 편집모드에서 보이는 툴바
-                                ToolbarItem {
-                                    Button("취소", role: .cancel) {
-                                        isSelectionMode.toggle()
-                                        multiSelection.removeAll()
-                                    }
+                            
+                            Button {
+                                SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "kr-KO")
+                                isSpeech.toggle()
+                            } label: {
+                                HStack {
+                                    Text("전체 발음 듣기")
+                                    Image(systemName: "speaker.wave.3")
                                 }
                             }
+                            
+                            Button {
+                                viewModel.words.shuffle()
+                            } label: {
+                                HStack {
+                                    Text("단어 순서 섞기")
+                                    Image(systemName: "shuffle")
+                                }
+                            }
+                            
+                            Button {
+                                isSelectionMode.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어장 편집하기")
+                                    Image(systemName: "checkmark.circle")
+                                }
+                            }
+                            
+                            NavigationLink {
+                                ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
+                            } label: {
+                                HStack {
+                                    Text("단어 가져오기")
+                                    Image(systemName: "square.and.arrow.down")
+                                }
+                            }
+                            .isDetailLink(true)
+                            
+                            Button {
+                                isExport.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어 리스트 내보내기")
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+                            }
+                            
+                            NavigationLink(destination: MyNoteView(words: viewModel.words)) {
+                                HStack {
+                                    Text("시험 결과 보기")
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                }
+                            }
+                            .isDetailLink(true)
+                            
+                        } label: {
+                            Image(systemName: "line.3.horizontal")
                         }
                     }
                 }
