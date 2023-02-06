@@ -35,6 +35,20 @@ struct FRWordListView: View {
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
+    // 전체 발음 듣기 관련 State
+    @State private var isSpeech = false
+    
+    /// 단어 듣기 관련 프로퍼티
+    private var selectedWords: [Word] {
+        var array = [Word]()
+        
+        self.multiSelection.forEach { word in
+            array.append(word)
+        }
+        
+        return array
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
@@ -63,6 +77,12 @@ struct FRWordListView: View {
                             Image(systemName: "folder")
                         }
                         .padding()
+                        
+                        Spacer()
+                        
+                        Button("선택한 단어 듣기") {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "fr-FR")
+                        }
                         
                         Spacer()
                         
@@ -145,7 +165,22 @@ struct FRWordListView: View {
         }
         .toolbar {
             // TODO: 편집모드에 따른 toolbar State 분기
-            if !isSelectionMode { // 기존에 보이는 툴바
+            if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSpeech.toggle()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else if isSelectionMode, !isSpeech {  // 편집 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSelectionMode.toggle()
+                        multiSelection.removeAll()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else {
                 ToolbarItem {
                     VStack(alignment: .center) {
                         Text("\(viewModel.words.count)")
@@ -170,6 +205,16 @@ struct FRWordListView: View {
                             HStack {
                                 Text("시험 보기")
                                 Image(systemName: "square.and.pencil")
+                            }
+                        }
+                        
+                        Button {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "fr-FR")
+                            isSpeech.toggle()
+                        } label: {
+                            HStack {
+                                Text("전체 발음 듣기")
+                                Image(systemName: "speaker.wave.3")
                             }
                         }
                         
@@ -222,14 +267,10 @@ struct FRWordListView: View {
                         Image(systemName: "line.3.horizontal")
                     }
                 }
-            } else { // 편집모드에서 보이는 툴바
-                ToolbarItem {
-                    Button("취소", role: .cancel) {
-                        isSelectionMode.toggle()
-                        multiSelection.removeAll()
-                    }
-                }
             }
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
