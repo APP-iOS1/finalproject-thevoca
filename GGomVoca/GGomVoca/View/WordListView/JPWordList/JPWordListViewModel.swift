@@ -101,19 +101,19 @@ class JPWordListViewModel: ObservableObject {
         return emptyMsg
     }
 
-    // MARK: Build Data For CSV
-    func buildDataForCSV() -> String? {
-        var fullText = "word,option,meaning\n"
-        
-        for word in words {
-            var aLine = ""
-          var tmpMeaning = word.meaning!.joined(separator: ",")
-          tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
-            if word.deletedAt == nil {
-              aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(String(describing: word.meaning!.first ?? "" ))"
-                fullText += aLine + "\n"
-            }
-        }
-        return fullText
+  // MARK: Build Data For CSV
+  func buildDataForCSV() -> String? {
+    var fullText = "word,option,meaning\n"
+
+    for word in words {
+      var aLine = ""
+      var tmpMeaning = word.meaning!.joined(separator: ",")
+      tmpMeaning = tmpMeaning.multiCheck ? tmpMeaning.reformForCSV : tmpMeaning
+      if word.deletedAt == nil {
+        aLine = "\(String(describing: word.word ?? "")),\(String(describing: word.option ?? "")),\(tmpMeaning)"
+        fullText += aLine + "\n"
+      }
     }
+    return fullText
+  }
 }
