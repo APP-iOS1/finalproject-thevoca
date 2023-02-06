@@ -55,7 +55,7 @@ struct DisplaySplitView: View {
                 notSelectedVocabularyView()
             }
         }
-        .navigationSplitViewStyle(.balanced)
+        .navigationSplitViewStyle(.automatic)
         .onAppear {
             //fetch 단어장 data
             viewModel.getVocabularyData()
@@ -74,16 +74,18 @@ struct DisplaySplitView: View {
         .navigationBarTitle("단어장")
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
+//                    Image(systemName: "plus.circle")
                     Image(systemName: "folder.badge.plus")
-//                        HStack(spacing: 3) {
-//                            Image(systemName: "plus.circle.fill")
-//                            Text("단어장 추가")
-//                        }
+//                    Image(systemName: "doc.badge.plus")
+//                    HStack(spacing: 3) {
+//                        Image(systemName: "plus.circle")
+//                        Text("단어장 추가")
+//                    }
                 }
-                Spacer()
             }
             
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -295,23 +297,22 @@ struct DisplaySplitView: View {
             
             Text("왼쪽 사이드바에서 단어장을 추가하세요.")
         }
-        .padding(.bottom, 65)
     }
     
     // MARK: VocabularyList가 비어있지 않을 때 표시되는 detail View
     func vocabularyListDetailView() -> some View {
-        VStack(spacing: 10) {
+        VStack(alignment:.leading, spacing: 10) {
             Text("왼쪽 사이드바에서 단어장을 선택하세요.")
                 .font(.title2)
                 .padding(.bottom, 10)
-            VStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Image(systemName: "pin")
-                    Text("단어장을 왼쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
+                    Text("단어장을 오른쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다.")
                 }
                 HStack {
                     Image(systemName: "trash")
-                    Text("단어장을 오른쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
+                    Text("단어장을 왼쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다.")
                 }
                 HStack {
                     Image(systemName: "pencil")
