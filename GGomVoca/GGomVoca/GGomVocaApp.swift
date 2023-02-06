@@ -15,7 +15,7 @@ struct GGomVocaApp: App {
         WindowGroup {
 //            ContentView()
             // environment -> view에 접근
-            TabbarView()
+            DisplaySplitView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
