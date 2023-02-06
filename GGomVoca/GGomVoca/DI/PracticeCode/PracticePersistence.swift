@@ -22,7 +22,8 @@ struct PracticePersistence {
                     fatalError("Unresolved error \(error), \(error.userInfo)")
                 }
             })
-            
+        //NSManagedObjectContext. 스토어의 URL, 유형(예: SQLite), 마이그레이션 또는 버전 관리와 같은 옵션과 같은 스토어 구성 옵션을 제공
+        //관리 개체 컨텍스트를 기본 영구 저장소에 연결하는 데 사용
             let description = NSPersistentStoreDescription()
             description.type = NSSQLiteStoreType
             description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: "iCloud.LikeLion.GGomVoca")
