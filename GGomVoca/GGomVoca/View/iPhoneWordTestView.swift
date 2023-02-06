@@ -77,14 +77,19 @@ struct iPhoneWordTestView: View {
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .focused($focusedField, equals: .answer)
+                .submitLabel(.done)
                 .onSubmit {
-                    // 마지막 문제일 경우 답변 저장만 함
-                    vm.saveAnswer(answer: answer)
-                    // 마지막 문제가 아닌 경우
-                    if !vm.showSubmitButton() {
-                        vm.showNextQuestion()
-                        answer.removeAll()
-                        vm.restartTimer()
+                    if !answer.isEmpty {
+                        // 마지막 문제일 경우 답변 저장만 함
+                        vm.saveAnswer(answer: answer)
+                        // 마지막 문제가 아닌 경우
+                        if !vm.showSubmitButton() {
+                            vm.showNextQuestion()
+                            answer.removeAll()
+                            vm.restartTimer()
+                            focusedField = .answer
+                        }
+                    } else {
                         focusedField = .answer
                     }
                 }
