@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import CoreData
 class CoreDataRepositoryImpl : CoreDataRepository {
+   
 
     // CloudKit database와 동기화하기 위해서는 NSPersistentCloudKitContainer로 변경
     
@@ -34,9 +35,9 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         }
     }
     /*
-    MARK: 단어장 불러오기
+    MARK: 단어장 리스트 불러오기
      */
-    func fetchVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
+    func fetchVocaListData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
         return Future<[Vocabulary], FirstPartyRepoError>{observer in
             let vocabularyFetch = Vocabulary.fetchRequest()
             
@@ -53,8 +54,43 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         }.eraseToAnyPublisher()
         
     }
+    
     /*
-    MARK: 단어장 추가하기
+    MARK: 단어장 id로 불러오기
+     */
+    
+    func getVocabularyFromID(vocabularyID: UUID) -> AnyPublisher<Vocabulary, FirstPartyRepoError>{
+        return Future<Vocabulary, FirstPartyRepoError>{observer in
+            let vocabularyFetch = Vocabulary.fetchRequest()
+            vocabularyFetch.predicate = NSPredicate(format: "id == %@", vocabularyID as CVarArg)
+            
+            do {
+                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+                var voca = results.first ?? Vocabulary()
+                observer(.success(voca))
+            }catch{
+                print("\(error)")
+                observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
+            }
+            
+        }.eraseToAnyPublisher()
+        
+    }
+    
+    //MARK: 단어리스트 불러오기
+    func getWordListFromVoca(voca: Vocabulary) -> AnyPublisher<[Word], FirstPartyRepoError> {
+        return Future<[Word], FirstPartyRepoError>{observer in
+            var words = [Word]()
+            let allWords = voca.words?.allObjects as? [Word] ?? []
+            words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
+            observer(.success(words))
+        }.eraseToAnyPublisher()
+        
+    }
+    
+    
+    /*
+     MARK: 단어장 추가하기
      */
     func postVocaData(vocaName : String, nationality: String) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
       
@@ -78,6 +114,27 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         }.eraseToAnyPublisher()
         
     }
+    
+    // MARK: 단어 추가하기
+    func addNewWord(word: String, meaning: [String], option: String, voca: Vocabulary) -> AnyPublisher<Word, FirstPartyRepoError> {
+        return Future<Word, FirstPartyRepoError>{[weak self] observer in
+            guard let viewContext = self?.context else{
+                return observer(.failure(FirstPartyRepoError.notFoundDataFromCoreData))
+            }
+            let newWord = Word(context: viewContext)
+            newWord.vocabularyID = voca.id
+            newWord.vocabulary = voca
+            newWord.id = UUID()
+            newWord.word = word
+            newWord.meaning = meaning
+            newWord.option = option
+
+            self?.saveContext()
+            observer(.success(newWord))
+        }.eraseToAnyPublisher()
+    }
+    
+   
     
     /*
     MARK: 단어장 고정 상태 업데이트하기
@@ -103,6 +160,18 @@ class CoreDataRepositoryImpl : CoreDataRepository {
         }.eraseToAnyPublisher()
        
     }
+    //MARK: 단어 수정하기
+    func updateWord(editWord: Word, word: String, meaning: [String], option: String) -> AnyPublisher<Word, FirstPartyRepoError> {
+        return Future<Word, FirstPartyRepoError>{[weak self] observer in
+            editWord.word = word
+            editWord.meaning = meaning
+            editWord.option = option
+
+            self?.saveContext()
+            observer(.success(editWord))
+        }.eraseToAnyPublisher()
+    }
+    
  
     
     /*
@@ -114,6 +183,22 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             
         }.eraseToAnyPublisher()
     }
+    
+    //MARK: 단어 삭제
+    func deleteWord(word: Word) -> AnyPublisher<String, FirstPartyRepoError> {
+        return Future<String, FirstPartyRepoError>{[weak self] observer in
+            
+            word.deletedAt = "\(Date())"
+
+            self?.saveContext()
+            observer(.success("로컬DB 단어 삭제 성공"))
+        }.eraseToAnyPublisher()
+       
+
+    }
+   
+
+    
     
 //    //MARK: 단어장 이름 업데이트
 //    func updateVocaName(id : UUID, vocaName : String) -> AnyPublisher<String, CoredataRepoError>{

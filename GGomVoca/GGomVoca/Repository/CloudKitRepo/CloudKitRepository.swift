@@ -14,6 +14,9 @@ import CloudKit
 protocol CloudKitRepository {
     //MARK: CloudKit으로부터 Voca 동기화
     func syncVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError>
+    
+    
+    
     //MARK: Post New Voca CloudKit
     func postVocaData(vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, FirstPartyRepoError>
     //MARK: Update Voca  CloudKit

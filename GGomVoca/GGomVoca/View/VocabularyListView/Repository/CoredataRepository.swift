@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 import SwiftUI
-
+//제거할 예정
 struct CoredataRepository{
     static var shared = CoredataRepository()
     
@@ -29,7 +29,6 @@ struct CoredataRepository{
 //        vocabularyFetch.predicate = NSPredicate(format: "title CONTAINS[c] %@",searchingFor)
         //vocabularyFetch.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         let results = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
-       
         return results
     }
     
