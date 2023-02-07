@@ -48,12 +48,21 @@ struct TestModeSelectView: View {
 
                 
                 NavigationLink {
-                    iPhoneWordTestView(
-                        isTestMode: $isTestMode,
-                        vocabularyID: vocabularyID,
-                        testMode: "meaning",
-                        isMemorized: true
-                    )
+                    if UIDevice.current.model == "iPhone" {
+                        iPhoneWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testMode: "meaning",
+                            isMemorized: true
+                        )
+                    } else if UIDevice.current.model == "iPad" {
+                        iPadWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testType: "meaning",
+                            isMemorized: true
+                        )
+                    }
                 } label: {
                     Text("전체 뜻 시험")
                         .foregroundColor(.black)
