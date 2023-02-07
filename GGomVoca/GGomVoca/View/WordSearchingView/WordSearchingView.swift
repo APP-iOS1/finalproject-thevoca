@@ -43,7 +43,7 @@ struct WordSearchingView: View {
                         LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                             Section {
                                 ForEach(allWords) { word in
-                                    if ( word.meaning.lowercased().contains(lowerCasedSearchWord) ||
+                                  if ( word.meaning.joined(separator: ", ").lowercased().contains(lowerCasedSearchWord) ||
                                          word.word.lowercased().contains(lowerCasedSearchWord) ) {
                                         
                                         VStack(spacing: 0) {
@@ -105,7 +105,7 @@ struct WordSearchingView: View {
                 let wordModel = SearchingWordModel(
                     vocabulary: voca.name ?? "",
                     word: word.word ?? "",
-                    meaning: word.meaning ?? "",
+                    meaning: word.meaning ?? [],
                     recentTestResults: word.recentTestResults ?? [],
                     correctCount: Int(word.correctCount),
                     incorrectCount: Int(word.incorrectCount)

@@ -19,7 +19,7 @@ struct TabbarView: View {
     
     var body: some View {
         TabView {
-            VocabularyListView()
+            DisplaySplitView()
                 .tabItem {
                     Image(systemName: "list.star")
                     Text("단어장")
@@ -42,6 +42,7 @@ struct TabbarView: View {
 //                    Image(systemName: "gearshape")
 //                    Text("설정")
 //                }
+            //DependencyManager.shared.resolve(PracticeVocaListView.self)
         }
     }
 }

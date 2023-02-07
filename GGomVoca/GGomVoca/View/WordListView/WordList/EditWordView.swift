@@ -20,6 +20,7 @@ struct EditWordView: View {
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+  @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -28,8 +29,8 @@ struct EditWordView: View {
     private var option: String {
         inputOption.trimmingCharacters(in: .whitespaces)
     }
-    private var meaning: String {
-        inputMeaning.trimmingCharacters(in: .whitespaces)
+    private var meaning: [String] {
+        [inputMeaning.trimmingCharacters(in: .whitespaces)]
     }
     
     // 입력값이 공백일 때 경고메세지 출력 조건
@@ -37,11 +38,12 @@ struct EditWordView: View {
     @State private var isMeaningEmpty: Bool = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 } header: {
                     HStack {
                         Text("단어")
@@ -56,6 +58,7 @@ struct EditWordView: View {
                     Section(header: Text("발음")) {
                         TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                             .textInputAutocapitalization(.never)
+                            .disableAutocorrection(true)
                     }
                     
                 case "FR":
@@ -78,6 +81,7 @@ struct EditWordView: View {
                 Section {
                     TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 } header: {
                     HStack {
                         Text("뜻")
@@ -92,7 +96,7 @@ struct EditWordView: View {
             .onAppear {
                 inputWord = editingWord.word!
                 inputOption = editingWord.option ?? ""
-                inputMeaning = editingWord.meaning!
+                meanings = editingWord.meaning!
             }
             .toolbar {
                 // 취소 버튼

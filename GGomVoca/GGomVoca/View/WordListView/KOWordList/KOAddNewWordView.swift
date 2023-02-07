@@ -10,14 +10,15 @@ import SwiftUI
 struct KOAddNewWordView: View {
     // MARK: Super View Properties
     var viewModel : KOWordListViewModel
-    @Binding var addNewWord: Bool
     
     // MARK: View Properties
+    @Environment(\.dismiss) private var dismiss
     @State private var isContinue: Bool = false
     /// - 입력값 관련
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+    @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -25,9 +26,6 @@ struct KOAddNewWordView: View {
     }
     private var option: String {
         inputOption.trimmingCharacters(in: .whitespaces)
-    }
-    private var meaning: String {
-        inputMeaning.trimmingCharacters(in: .whitespaces)
     }
     
     // 입력값이 공백일 때 경고메세지 출력 조건
@@ -38,7 +36,7 @@ struct KOAddNewWordView: View {
     @FocusState private var wordFocused: Bool
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Toggle("입력창 고정하기", isOn: $isContinue)
                     .toggleStyle(.switch)
@@ -46,7 +44,9 @@ struct KOAddNewWordView: View {
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                         .focused($wordFocused)
+                    
                 } header: {
                     HStack {
                         Text("단어")
@@ -59,11 +59,28 @@ struct KOAddNewWordView: View {
                 Section(header: Text("발음")) {
                     TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 }
                 
                 Section {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-                        .textInputAutocapitalization(.never)
+                    ForEach(meanings.indices, id: \.self) { index in
+                        FieldView(value: Binding<String>(get: {
+                            guard index < meanings.count else { return "" }
+                            return meanings[index]
+                        }, set: { newValue in
+                            guard index < meanings.count else { return }
+                            meanings[index] = newValue
+                        })) {
+                            if meanings.count > 1 {
+                                meanings.remove(at: index)
+                            } else {
+                                // MARK: 최소 뜻 개수 1개 보장
+                                
+                            }
+                        }
+                    }
+                    
+                    Button("뜻 추가하기") { meanings.append("") }
                 } header: {
                     HStack {
                         Text("뜻")
@@ -72,36 +89,47 @@ struct KOAddNewWordView: View {
                         }
                     }
                 }
+                .buttonStyle(.borderless)
             }
+            .shakeEffect(trigger: isWordEmpty || isMeaningEmpty)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("새 단어 추가")
+            .onAppear { wordFocused = true }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("취소", role: .cancel) {
-                        addNewWord = false
+                        dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("추가") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
-                        meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
                         
-                        if !isWordEmpty && !isWordEmpty {
+                        // MARK: 뜻이 입력되지 않은 element check
+                        meanings.contains("") ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
+                        
+                        // MARK: 뜻 내부 String trim
+                        print("count: \(meanings.count)")
+                        for i in meanings.indices {
+                            meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
+                            print("meaning \(i): \(meanings[i])")
+                        }
+                        if !isWordEmpty && !isMeaningEmpty {
                             /// - 단어 추가
-                            viewModel.addNewWord(word: word, meaning: meaning, option: option)
+                            viewModel.addNewWord(word: word, meaning: meanings, option: option)
                             
                             /// - 단어 추가 후 textField 비우기
                             inputWord = ""
-                            inputMeaning = ""
+                            meanings = [""]
                             inputOption = ""
-
+                            
                             /// - isContinue 상태에 따라 sheet를 닫지 않고 유지함
                             if !isContinue {
-                                addNewWord = false
-                                /// - 단어를 입력하는 TextField로 Focus 이동
-                                wordFocused = true
+                                dismiss()
                             }
+                            /// - 단어를 입력하는 TextField로 Focus 이동
+                            wordFocused = true
                         }
                     }
                 }

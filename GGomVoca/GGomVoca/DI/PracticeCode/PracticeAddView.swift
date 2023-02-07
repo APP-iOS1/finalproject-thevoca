@@ -1,16 +1,15 @@
 //
-//  AddVocabularyView.swift
+//  PracticeAddView.swift
 //  GGomVoca
 //
-//  Created by JeongMin Ko on 2022/12/20.
+//  Created by JeongMin Ko on 2023/02/02.
 //
 
 import SwiftUI
 
-/*
- 단어 추가 모달
- */
-struct AddVocabularyView: View {
+struct PracticeAddView: View {
+    
+    var service : VocabularyService
     
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -58,16 +57,17 @@ struct AddVocabularyView: View {
      Post 단어장 추가
      */
     private func addVocabulary() { //name: String, nationality: String
-        withAnimation {
-            let newVocabulary = Vocabulary(context: viewContext)
-            newVocabulary.id = UUID()
-            newVocabulary.name = "\(self.vocabularyName)" // name
-            newVocabulary.nationality = "\(self.nationality)" //"\(self.nationality)" // nationality
-            newVocabulary.createdAt = "\(Date())"
-            newVocabulary.words = NSSet(array: [])
-            print("newVocabulary \(newVocabulary)")
-            saveContext()
-        }
+        
+        service.postVocaData(vocaName: "\(self.vocabularyName)", nationality: "\(self.nationality)")
+            .sink(receiveCompletion: {value in
+                
+                
+            }, receiveValue: {value in
+                print(value.name)
+                print("postVocaData result : \(value)")
+                service.saveContext()
+            })
+
     }
     
     
@@ -82,8 +82,8 @@ struct AddVocabularyView: View {
     }
 }
 
-struct AddVocabularyView_Previews: PreviewProvider {
+struct PracticeAddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddVocabularyView(isShowingAddVocabulary: .constant(false))
+        PracticeAddView(service: DependencyManager.shared.resolve(VocabularyService.self)!, isShowingAddVocabulary: .constant(false))
     }
 }

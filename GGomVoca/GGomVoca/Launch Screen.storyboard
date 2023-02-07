@@ -28,8 +28,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="꼼꼬미단어장" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh4-PD-zl5">
-                                <rect key="frame" x="108" y="522" width="177" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The Voca" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rh4-PD-zl5">
+                                <rect key="frame" x="123" y="549" width="147" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="6cQ-wy-Prm"/>
                                     <constraint firstAttribute="width" constant="177" id="8VO-iu-X84"/>
@@ -60,6 +60,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launchIcon" width="512" height="512"/>
+        <image name="launchIcon" width="1024" height="1024"/>
     </resources>
 </document>

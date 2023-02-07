@@ -26,10 +26,10 @@ struct FRWordsTableView: View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
-                    ForEach(viewModel.words) { word in
+                    ForEach($viewModel.words) { $word in
                         FRWordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
                                  isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
-                                 nationality: viewModel.nationality, word: word)
+                                 nationality: viewModel.nationality, word: $word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
@@ -49,7 +49,7 @@ struct FRWordsTableView: View {
                                     }
                                     
                                     Button {
-                                        // Voice Over
+                                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "fr-FR", .single)
                                     } label: {
                                         Label("발음 듣기", systemImage: "mic.fill")
                                     }

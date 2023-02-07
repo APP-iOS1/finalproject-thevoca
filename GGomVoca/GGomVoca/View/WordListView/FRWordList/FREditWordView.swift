@@ -20,6 +20,7 @@ struct FREditWordView: View {
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
+  @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -28,8 +29,8 @@ struct FREditWordView: View {
     private var option: String {
         inputOption.trimmingCharacters(in: .whitespaces)
     }
-    private var meaning: String {
-        inputMeaning.trimmingCharacters(in: .whitespaces)
+    private var meaning: [String] {
+        [inputMeaning.trimmingCharacters(in: .whitespaces)]
     }
     
     // 입력값이 공백일 때 경고메세지 출력 조건
@@ -37,11 +38,12 @@ struct FREditWordView: View {
     @State private var isMeaningEmpty: Bool = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("단어를 입력하세요.", text: $inputWord, axis: .vertical)
                         .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
                 } header: {
                     HStack {
                         Text("단어")
@@ -61,23 +63,45 @@ struct FREditWordView: View {
                 }
                 
                 Section {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-                        .textInputAutocapitalization(.never)
-                } header: {
-                    HStack {
-                        Text("뜻")
-                        if isMeaningEmpty {
-                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
-                        }
+
+                  ForEach(meanings.indices, id: \.self) { index in
+                    FieldView(value: Binding<String>(get: {
+                      guard index < meanings.count else { return "" }
+                      return meanings[index]
+                    }, set: { newValue in
+                      guard index < meanings.count else { return }
+                      meanings[index] = newValue
+                    })) {
+                      if meanings.count > 1 {
+                        meanings.remove(at: index)
+                      } else {
+                        // MARK: 최소 뜻 개수 1개 보장
+
+                      }
                     }
+                  }
+                  Button("뜻 추가하기") {
+                    meanings.append("")
+                  }
+                } header: {
+                  HStack {
+                    Text("뜻")
+                    if isMeaningEmpty {
+                      Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+
+                    }
+                  }
                 }
-            }
+                .buttonStyle(.borderless)
+              }
+              .shakeEffect(trigger: isWordEmpty || isMeaningEmpty)
             .navigationTitle("단어 수정")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 inputWord = editingWord.word!
                 inputOption = editingWord.option ?? ""
-                inputMeaning = editingWord.meaning!
+                inputMeaning = editingWord.meaning![0]
+              meanings = editingWord.meaning!
             }
             .toolbar {
                 // 취소 버튼
@@ -88,10 +112,18 @@ struct FREditWordView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("변경") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
-                        meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
-                        
+                      // MARK: 뜻이 입력되지 않은 element check
+                      meanings.contains("") ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
+                      print("meanings : \(meanings)")
+                      print("isWordEmpty : \(isWordEmpty)")
+                      print("isMeaningEmpty : \(isMeaningEmpty)")
+
+                      // MARK: 뜻 내부 String trim
+                      for i in meanings.indices {
+                        meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
+                      }
                         if !isWordEmpty && !isMeaningEmpty {
-                            viewModel.updateWord(editWord: editingWord, word: word, meaning: meaning, option: option)
+                            viewModel.updateWord(editWord: editingWord, word: word, meaning: meanings, option: option)
 
                             editWord.toggle()
                         }

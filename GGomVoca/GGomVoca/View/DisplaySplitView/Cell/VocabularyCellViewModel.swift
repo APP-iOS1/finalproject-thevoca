@@ -24,7 +24,7 @@ class VocabularyCellViewModel{
             objectUpdate.setValue("\(Date())", forKey: "deleatedAt")
             
             /// - 단어장 삭제 시 최근 본 단어장에서도 삭제
-            deleteRecentVoca(id: "\(id)")
+//            deleteRecentVoca(id: "\(id)")
             
             try self.viewContext.save()
            
@@ -38,15 +38,16 @@ class VocabularyCellViewModel{
         }
     }
     
-    // MARK: 최근 본 단어장을 UserDefault에서 삭제
-    func deleteRecentVoca(id : String) {
-        // [voca1, voca2]
-        var before =  UserManager.shared.recentVocabulary
-        if let idx = before.firstIndex(of: "\(id)"){
-            before.remove(at: idx)
-        }
-        UserManager.shared.recentVocabulary = before
-    }
+//    // MARK: 최근 본 단어장을 UserDefault에서 삭제
+//    func deleteRecentVoca(id : String) {
+//        // [voca1, voca2]
+//        var before =  UserManager.shared.recentVocabulary
+//        if let idx = before.firstIndex(of: "\(id)"){
+//            before.remove(at: idx)
+//            print("최근본 단어장에서 삭제")
+//        }
+//        UserManager.shared.recentVocabulary = before
+//    }
         
     func saveContext() {
         do {
@@ -61,17 +62,15 @@ class VocabularyCellViewModel{
      즐겨찾기 업데이트
      */
     func updateFavoriteVocabulary(id: UUID) {
-
         let managedContext = viewContext
         let vocabularyFetch = Vocabulary.fetchRequest()
         vocabularyFetch.predicate = NSPredicate(format: "id = %@", id as CVarArg)
-        //vocabularyFetch.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+
         let results = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
         
         do {
-
             let objectUpdate = results[0]
-            objectUpdate.setValue(!objectUpdate.isFavorite, forKey: "isFavorite")
+            objectUpdate.setValue(!objectUpdate.isPinned, forKey: "isPinned")
             print(objectUpdate)
             do {
                 try managedContext.save()
@@ -80,4 +79,6 @@ class VocabularyCellViewModel{
             }
         } 
     }
+    
+    
 }

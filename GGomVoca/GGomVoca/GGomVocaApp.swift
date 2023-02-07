@@ -13,10 +13,14 @@ struct GGomVocaApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
             // environment -> view에 접근
-            TabbarView()
+            DisplaySplitView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+    }
+    
+    // MARK: DI
+    init(){
+        DependencyManager.shared.register()
     }
 }

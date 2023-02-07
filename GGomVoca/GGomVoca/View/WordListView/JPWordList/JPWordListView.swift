@@ -16,9 +16,20 @@ struct JPWordListView: View {
     /// - onAppear 될 때 viewModel에서 값 할당
     @State private var navigationTitle: String = ""
     @State private var emptyMessage: String = ""
-    @State private var selectedSegment: ProfileSection = .normal
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
-    
+    @State private var sort: Int = 0
+    private var selectedSegment: ProfileSection {
+        switch sort {
+        case 1:
+          return .wordTest
+        case 2:
+          return .meaningTest
+        default:
+          return .normal
+        }
+    }
+
+    @State private var selectedOrder: String = "사전순"
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -32,9 +43,25 @@ struct JPWordListView: View {
     @State var confirmationDialog: Bool = false // iPhone
     @State var removeAlert: Bool = false // iPad
     
+    /// - 단어 시험모드 관련 State
+    @State private var isTestMode: Bool = false
+    
+    // 전체 발음 듣기 관련 State
+    @State private var isSpeech = false
+    
+    /// 단어 듣기 관련 프로퍼티
+    private var selectedWords: [Word] {
+        var array = [Word]()
+        
+        self.multiSelection.forEach { word in
+            array.append(word)
+        }
+        
+        return array
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
-            SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
             
             if viewModel.words.isEmpty {
                 VStack(spacing: 10) {
@@ -63,6 +90,12 @@ struct JPWordListView: View {
                         
                         Spacer()
                         
+                        Button("선택한 단어 듣기") {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "ja-JP")
+                        }
+                        
+                        Spacer()
+                        
                         // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
                         Button(role: .destructive) {
                             if UIDevice.current.model == "iPhone" {
@@ -85,7 +118,12 @@ struct JPWordListView: View {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
+            print(viewModel.words)
         }
+        // 시험 모드 시트
+        .fullScreenCover(isPresented: $isTestMode, content: {
+            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+        })
         // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
             Button(role: .destructive) {
@@ -124,7 +162,7 @@ struct JPWordListView: View {
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
-            JPAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
+            JPAddNewWordView(viewModel: viewModel)
                 .presentationDetents([.height(CGFloat(500))])
         }
         // 단어장 내보내기
@@ -138,13 +176,28 @@ struct JPWordListView: View {
         }
         .toolbar {
             // TODO: 편집모드에 따른 toolbar State 분기
-            if !isSelectionMode { // 기존에 보이는 툴바
+            if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
                 ToolbarItem {
-                    VStack(alignment: .center) {
-                        Text("\(viewModel.words.count)")
-                            .foregroundColor(.gray)
+                    Button("취소", role: .cancel) {
+                        isSpeech.toggle()
+                        SpeechSynthesizer.shared.stopSpeaking()
                     }
                 }
+            } else if isSelectionMode, !isSpeech {  // 편집 모드
+                ToolbarItem {
+                    Button("취소", role: .cancel) {
+                        isSelectionMode.toggle()
+                        multiSelection.removeAll()
+                        SpeechSynthesizer.shared.stopSpeaking()
+                    }
+                }
+            } else {
+//                ToolbarItem {
+//                    VStack(alignment: .center) {
+//                        Text("\(viewModel.words.count)")
+//                            .foregroundColor(.gray)
+//                    }
+//                }
                 // + 버튼
                 ToolbarItem {
                     Button {
@@ -153,57 +206,123 @@ struct JPWordListView: View {
                         Image(systemName: "plus")
                     }
                 }
-                
+
+
                 // 햄버거 버튼
                 ToolbarItem {
+
                     Menu {
-                        Button {
-                            viewModel.words.shuffle()
-                        } label: {
-                            HStack {
-                                Text("단어 순서 섞기")
-                                Image(systemName: "shuffle")
+                        Section {
+                            Menu {
+                                Picker(selection: $sort, label: Text("")) {
+                                    Text("모두 보기").tag(0)
+                                    Text("뜻만 보기").tag(1)
+                                    Text("단어만 보기").tag(2)
+                                }
+                                .onChange(of: sort) { _ in
+                                    unmaskedWords = []
+                                }
+                            } label: {
+                                Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
+                                Image(systemName: "eye.fill")
                             }
-                        }
-                        
-                        Button {
-                            isSelectionMode.toggle()
-                        } label: {
-                            HStack {
-                                Text("단어장 편집하기")
-                                Image(systemName: "checkmark.circle")
+
+                            Button {
+                                isTestMode.toggle()
+                            } label: {
+                                HStack {
+                                  Text("시험 보기")
+                                  Image(systemName: "square.and.pencil")
+                                }
                             }
-                        }
-                        
-                        NavigationLink {
-                            ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
-                        } label: {
-                            HStack {
-                                Text("단어 가져오기")
-                                Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(.orange)
+
+                            NavigationLink(destination: MyNoteView(words: viewModel.words)) {
+                                HStack {
+                                    Text("시험 결과 보기")
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                }
                             }
+                            .isDetailLink(true)
+
                         }
-                        
-                        Button {
-                            isExport.toggle()
-                        } label: {
-                            HStack {
-                                Text("단어 리스트 내보내기")
-                                Image(systemName: "square.and.arrow.up")
+
+
+                        Section {
+                            Menu {
+                                Button("시간순") {
+                                    selectedOrder = "시간순"
+                                    //                              for i in viewModel.words.indices {
+                                    //                                print("createdAt: \(viewModel.words[i].createdAt)")
+                                    //                              }
+                                    viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
+                                }
+
+                                Button("사전순") {
+                                    selectedOrder = "사전순"
+                                    viewModel.words.sort { $0.word! < $1.word! }
+                                }
+
+                                Button {
+                                    viewModel.words.shuffle()
+                                    selectedOrder = "랜덤"
+                                } label: {
+                                    Text("랜덤")
+                                }
+
+                            } label: {
+                                Text("정렬 옵션: \n · \(Text(selectedOrder))")
+                                Image(systemName: "arrow.up.arrow.down")
                             }
-                        }
+
+                            Button {
+                                isSelectionMode.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어장 편집하기")
+                                    Image(systemName: "checkmark.circle")
+                                }
+                            }
+
+                            NavigationLink {
+                                ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
+                            } label: {
+                                HStack {
+                                    Text("단어장 가져오기")
+                                    Image(systemName: "square.and.arrow.down")
+                                }
+                            }
+                            .isDetailLink(true)
+
+                            Button {
+                                isExport.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어장 내보내기")
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+                            }
+
+                      }
+
+                      Button {
+                          SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                          isSpeech.toggle()
+                      } label: {
+                          HStack {
+                              Text("전체 발음 듣기")
+                              Image(systemName: "speaker.wave.3")
+                          }
+                      }
+
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
                 }
-            } else { // 편집모드에서 보이는 툴바
-                ToolbarItem {
-                    Button("취소", role: .cancel) {
-                        isSelectionMode.toggle()
-                        multiSelection.removeAll()
-                    }
-                }
             }
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }

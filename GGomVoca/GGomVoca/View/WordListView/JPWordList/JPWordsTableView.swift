@@ -26,10 +26,10 @@ struct JPWordsTableView: View {
         ScrollView {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
-                    ForEach(viewModel.words) { word in
+                    ForEach($viewModel.words) { $word in
                         JPWordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
                                  isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
-                                 nationality: viewModel.nationality, word: word)
+                                 nationality: viewModel.nationality, word: $word)
                             .addSwipeButtonActions(leadingButtons: [],
                                               trailingButton:  [.delete], onClick: { button in
                                 switch button {
@@ -47,9 +47,8 @@ struct JPWordsTableView: View {
                                     } label: {
                                         Label("수정하기", systemImage: "gearshape.fill")
                                     }
-                                    
                                     Button {
-                                        // Voice Over
+                                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ja-JP", .single)
                                     } label: {
                                         Label("발음 듣기", systemImage: "mic.fill")
                                     }
@@ -92,6 +91,9 @@ struct JPWordsTableView: View {
         .sheet(isPresented: $editWord) {
             JPEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
