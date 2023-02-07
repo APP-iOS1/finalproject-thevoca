@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TestModeSelectView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @Binding var isTestMode: Bool
     
@@ -46,7 +47,7 @@ struct TestModeSelectView: View {
                     }
                 } label: {
                     Text("전체 단어 시험")
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 5)
@@ -74,7 +75,7 @@ struct TestModeSelectView: View {
                     }
                 } label: {
                     Text("전체 뜻 시험")
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 5)
@@ -101,7 +102,7 @@ struct TestModeSelectView: View {
                     }
                 } label: {
                     Text("못외운 단어 시험")
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 5)
@@ -128,7 +129,7 @@ struct TestModeSelectView: View {
                     }
                 } label: {
                     Text("못외운 뜻 시험")
-                        .foregroundColor(.black)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
                         .background {
                             RoundedRectangle(cornerRadius: 5)
