@@ -11,12 +11,11 @@ struct DisplaySplitView: View {
     // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
-    // MARK: UserDefaults
-    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs  : [String]?
-    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String]?
-    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String]?
-    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String]?
-    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String]?
+    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs   = UserManager.shared.pinnedVocabularyIDs
+    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs   = UserManager.shared.koreanVocabularyIDs
+    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs  = UserManager.shared.englishVocabularyIDs
+    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs = UserManager.shared.japanishVocabularyIDs
+    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs   = UserManager.shared.frenchVocabularyIDs
     
     // MARK: View Properties
     @StateObject var viewModel = DisplaySplitViewModel(vocabularyList: [])
@@ -96,11 +95,10 @@ struct DisplaySplitView: View {
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView()
+            AddVocabularyView(addCompletion: viewModel.getVocabularyData)
                 .presentationDetents([.height(CGFloat(270))])
                 .onDisappear {
-                    //fetch 단어장 data
-                    viewModel.getVocabularyData()
+//                    print(koreanVocabularyIDs)
                 }
         }
     }
@@ -171,28 +169,15 @@ struct DisplaySplitView: View {
 //                }
 //            }
             
-            if let koreanVocabularyIDs {
-                Section("임시 한국어") {
+            // MARK: 한국어
+            if !koreanVocabularyIDs.isEmpty {
+                Section("한국어") {
                     ForEach(koreanVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
-                    }
-                }
-            }
-            
-            // MARK: 한국어
-            if !viewModel.koreanVoca.isEmpty {
-                Section("한국어") {
-                    ForEach(viewModel.koreanVoca) { vocabulary in
-                        VocabularyCell(pinnedCompletion: {
-                            viewModel.getVocabularyData()
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
-//                            viewModel.recentVocabularyList = getRecentVocabulary()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
@@ -205,61 +190,61 @@ struct DisplaySplitView: View {
             }
             
             // MARK: 영어
-            if !viewModel.englishVoca.isEmpty {
+            if !englishVocabularyIDs.isEmpty {
                 Section("영어") {
-                    ForEach(viewModel.englishVoca) { vocabulary in
-                            VocabularyCell(pinnedCompletion: {
-                                viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                    ForEach(englishVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
+                        }, deleteCompletion: {
+                            viewModel.getVocabularyData()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "EN")
+                        move(from: source, to: destination, type: "KR")
                     })
                     .onDelete(perform: { source in
-                        delete(at: source, type: "EN")
+                        delete(at: source, type: "KR")
                     })
                 }
             }
 
             // MARK: 일본어
-            if !viewModel.japaneseVoca.isEmpty {
+            if !japanishVocabularyIDs.isEmpty {
                 Section("일본어") {
-                    ForEach(viewModel.japaneseVoca) { vocabulary in
+                    ForEach(japanishVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-//                            viewModel.recentVocabularyList = getRecentVocabulary()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "JA")
+                        move(from: source, to: destination, type: "KR")
                     })
                     .onDelete(perform: { source in
-                        delete(at: source, type: "JA")
+                        delete(at: source, type: "KR")
                     })
                 }
             }
-
+            
             // MARK: 프랑스어
-            if !viewModel.frenchVoca.isEmpty {
+            if !frenchVocabularyIDs.isEmpty {
                 Section("프랑스어") {
-                    ForEach(viewModel.frenchVoca) { vocabulary in
-                            VocabularyCell(pinnedCompletion: {
-                                viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                    ForEach(frenchVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
+                        }, deleteCompletion: {
+                            viewModel.getVocabularyData()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "FR")
+                        move(from: source, to: destination, type: "KR")
                     })
                     .onDelete(perform: { source in
-                        delete(at: source, type: "FR")
+                        delete(at: source, type: "KR")
                     })
                 }
             }

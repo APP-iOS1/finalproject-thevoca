@@ -95,7 +95,7 @@ class DisplaySplitViewModel : ObservableObject {
         return vocabulary
     }
     
-//    // MARK: 최근 본 단어장을 UserDefault에서 삭제
+    // MARK: 최근 본 단어장을 UserDefault에서 삭제
 //    func deleteRecentVoca(id : String) {
 //        // [voca1, voca2]
 //        var before =  UserManager.shared.recentVocabulary

@@ -38,6 +38,42 @@ class VocabularyCellViewModel{
         }
     }
     
+    // MARK: 단어장을 UserDefaults에서 삭제
+    func deleteVocaInAppdata(id: String) {
+        var pinnedVocabularyIDs = UserDefaults.standard.stringArray(forKey: "pinnedVocabularyIDs")
+        var koreanVocabularyIDs = UserDefaults.standard.stringArray(forKey: "koreanVocabularyIDs")
+        var englishVocabularyIDs = UserDefaults.standard.stringArray(forKey: "englishVocabularyIDs")
+        var japanishVocabularyIDs = UserDefaults.standard.stringArray(forKey: "japanishVocabularyIDs")
+        var frenchVocabularyIDs = UserDefaults.standard.stringArray(forKey: "frenchVocabularyIDs")
+        
+        if ((pinnedVocabularyIDs?.contains(id)) != nil) {
+            if let index = pinnedVocabularyIDs?.firstIndex(of: id) {
+                pinnedVocabularyIDs?.remove(at: index)
+                if pinnedVocabularyIDs?.isEmpty != nil { pinnedVocabularyIDs = nil }
+            }
+        } else if ((koreanVocabularyIDs?.contains(id)) != nil) {
+            if let index = koreanVocabularyIDs?.firstIndex(of: id) {
+                koreanVocabularyIDs?.remove(at: index)
+                if koreanVocabularyIDs?.isEmpty != nil { koreanVocabularyIDs = nil }
+            }
+        } else if ((englishVocabularyIDs?.contains(id)) != nil) {
+            if let index = englishVocabularyIDs?.firstIndex(of: id) {
+                englishVocabularyIDs?.remove(at: index)
+                if englishVocabularyIDs?.isEmpty != nil { englishVocabularyIDs = nil }
+            }
+        } else if ((japanishVocabularyIDs?.contains(id)) != nil) {
+            if let index = japanishVocabularyIDs?.firstIndex(of: id) {
+                japanishVocabularyIDs?.remove(at: index)
+                if japanishVocabularyIDs?.isEmpty != nil { japanishVocabularyIDs = nil }
+            }
+        } else if ((frenchVocabularyIDs?.contains(id)) != nil) {
+            if let index = frenchVocabularyIDs?.firstIndex(of: id) {
+                frenchVocabularyIDs?.remove(at: index)
+                if frenchVocabularyIDs?.isEmpty != nil { frenchVocabularyIDs = nil }
+            }
+        }
+    }
+    
 //    // MARK: 최근 본 단어장을 UserDefault에서 삭제
 //    func deleteRecentVoca(id : String) {
 //        // [voca1, voca2]

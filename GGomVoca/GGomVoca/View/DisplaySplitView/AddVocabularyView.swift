@@ -12,11 +12,8 @@ struct AddVocabularyView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
-    // MARK: UserDefaults
-    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String]?
-    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String]?
-    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String]?
-    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String]?
+    // MARK: SuperView properties
+    let addCompletion: () -> ()
     
     // MARK: View Properties
     @State var inputVocabularyName: String = ""
@@ -73,36 +70,10 @@ struct AddVocabularyView: View {
             newVocabulary.words = NSSet(array: [])
             
             saveContext()
+            addCompletion()
             
-            switch newVocabulary.nationality {
-            case "KO":
-                print("추가 시작")
-                if var koreanVocabularyIDs {
-                    koreanVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
-                } else {
-                    koreanVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
-                }
-            case "EN":
-                if var englishVocabularyIDs {
-                    englishVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
-                } else {
-                    englishVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
-                }
-            case "JA":
-                if var japanishVocabularyIDs {
-                    japanishVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
-                } else {
-                    japanishVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
-                }
-            case "FR":
-                if var frenchVocabularyIDs {
-                    frenchVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
-                } else {
-                    frenchVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
-                }
-            default:
-                break
-            }
+            /// - AppStorage에도 저장
+            UserManager.addVocabulary(id: newVocabulary.id?.uuidString ?? "", nationality: nationality)
         }
     }
     
@@ -117,8 +88,8 @@ struct AddVocabularyView: View {
     }
 }
 
-struct AddVocabularyView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddVocabularyView()
-    }
-}
+//struct AddVocabularyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddVocabularyView(addCompletion: )
+//    }
+//}
