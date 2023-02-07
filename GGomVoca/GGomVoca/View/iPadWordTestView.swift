@@ -36,7 +36,7 @@ struct iPadWordTestView: View {
     
     // MARK: SuperView Properties
     let testType: String
-    let isMemorized: Bool
+    let isWholeWord: Bool
     
     // MARK: View Properties
     @State private var answers: [String] = []
@@ -126,7 +126,7 @@ struct iPadWordTestView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             vm.getVocabulary(vocabularyID: vocabularyID)
-            vm.createPaper(isMemorized: isMemorized)
+            vm.createPaper(isWholeWord: isWholeWord)
             answers = Array(repeating: "", count: vm.testPaper.count)
             calcRemain()
         }

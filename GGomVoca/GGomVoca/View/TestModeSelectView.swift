@@ -34,14 +34,14 @@ struct TestModeSelectView: View {
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "word",
-                            isMemorized: true
+                            isWholeWord: true
                         )
                     } else if UIDevice.current.model == "iPad" {
                         iPadWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "word",
-                            isMemorized: true
+                            isWholeWord: true
                         )
                     }
                 } label: {
@@ -62,14 +62,14 @@ struct TestModeSelectView: View {
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "meaning",
-                            isMemorized: true
+                            isWholeWord: true
                         )
                     } else if UIDevice.current.model == "iPad" {
                         iPadWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "meaning",
-                            isMemorized: true
+                            isWholeWord: true
                         )
                     }
                 } label: {
@@ -89,14 +89,14 @@ struct TestModeSelectView: View {
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "word",
-                            isMemorized: false
+                            isWholeWord: false
                         )
                     } else if UIDevice.current.model == "iPad" {
                         iPadWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "word",
-                            isMemorized: false
+                            isWholeWord: false
                         )
                     }
                 } label: {
@@ -116,14 +116,14 @@ struct TestModeSelectView: View {
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "meaning",
-                            isMemorized: false
+                            isWholeWord: false
                         )
                     } else if UIDevice.current.model == "iPad" {
                         iPadWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
                             testType: "meaning",
-                            isMemorized: false
+                            isWholeWord: false
                         )
                     }
                 } label: {

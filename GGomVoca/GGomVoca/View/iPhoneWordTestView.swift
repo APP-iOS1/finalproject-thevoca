@@ -21,7 +21,7 @@ struct iPhoneWordTestView: View {
     
     // MARK: Test Mode에 관한 Properties
     let testType: String
-    let isMemorized: Bool
+    let isWholeWord: Bool
     
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
@@ -97,7 +97,7 @@ struct iPhoneWordTestView: View {
         }
         .onAppear {
             vm.getVocabulary(vocabularyID: vocabularyID)
-            vm.createPaper(isMemorized: isMemorized)
+            vm.createPaper(isWholeWord: isWholeWord)
             vm.startTimer()
             focusedField = .answer
         }
