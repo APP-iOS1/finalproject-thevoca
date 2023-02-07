@@ -12,6 +12,8 @@ import CloudKit
 
 //CoreData Vocabulary Type <-> CloudKit Vocabulary Type
 extension Vocabulary {
+    
+    // Define the record types in CloudKit
     static let recordType = "Vocabulary"
     // CKRecord object -> Vocabulary object 변환
     static func from(ckRecord: CKRecord) -> Vocabulary? {
@@ -40,9 +42,11 @@ extension Vocabulary {
         return vocabulary
     }
     
+    
+    // Define a word record
     var ckRecord: CKRecord {
         let record = CKRecord(recordType: Vocabulary.recordType)
-        record["id"] = id?.uuidString
+        record["id"] = id?.uuidString ?? ""
         record["isPinned"] = isPinned
         record["name"] = name
         record["createdAt"] = createdAt

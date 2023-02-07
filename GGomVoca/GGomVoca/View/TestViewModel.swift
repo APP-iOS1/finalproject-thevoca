@@ -13,7 +13,7 @@ struct Question: Identifiable {
     var word: String
     var meaning: [String]
     var answer: String?
-  var isCorrect: Result = .Wrong
+    var isCorrect: Result = .Wrong
 }
 
 final class TestViewModel: ObservableObject {
@@ -33,9 +33,14 @@ final class TestViewModel: ObservableObject {
         testPaper.count
     }
     
+    // MARK: Timer Properties
     var timer: AnyCancellable?
-    let timeLimit = 15
+    // 한 문제당 주어지는 시간
+    let iPhoneTimeLimit = 15
+    let iPadTimeLimit = 30
+    // 남은 시간 표시하기 위한 property
     @Published var timeRemaining : Int = 0
+    // 걸린 시간 표시하기 위한 property
     var timeCountUp: Int = 0
     
     // MARK: saveContext
@@ -55,9 +60,9 @@ final class TestViewModel: ObservableObject {
     }
     
     // MARK: - 시험지 생성
-    func createPaper(isMemorized: Bool) {
+    func createPaper(isWholeWord: Bool) {
         for word in words {
-            if isMemorized {
+            if isWholeWord {
                 // 모든 단어 시험지에 추가
                 testPaper.append(Question(id: word.id!, word: word.word!, meaning: word.meaning!))
             } else {
@@ -70,8 +75,8 @@ final class TestViewModel: ObservableObject {
     }
     
     // MARK: - 문제 출제
-    func showQuestion(testMode: String) -> String {
-        switch testMode {
+    func showQuestion(testType: String) -> String {
+        switch testType {
         case "word":
           return testPaper[currentQuestionNum].meaning.joined(separator: ", ")
         case "meaning":
@@ -94,17 +99,12 @@ final class TestViewModel: ObservableObject {
         }
     }
     
-    // MARK: - 제출 버튼 여부
-    func showSubmitButton() -> Bool {
-        currentQuestionNum + 1 == testPaper.count
-    }
-    
     // MARK: - 시험지 채점
-    func gradeTestPaper(testMode: String) {
+    func gradeTestPaper(testType: String) {
 
 
       for idx in testPaper.indices {
-            switch testMode {
+            switch testType {
             case "word":
                 if testPaper[idx].word == testPaper[idx].answer {
                   testPaper[idx].isCorrect = .Right
@@ -135,17 +135,70 @@ final class TestViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Core Data에 시험결과 저장
+    func testResult() {
+        for word in words {
+            // 처음 시험을 보는 단어장의 경우 recentTestResults가 nil이므로 빈 배열 생성
+            if word.recentTestResults == nil {
+                word.recentTestResults = []
+            } else {
+                // nil이 아닐 때 element가 5개 이상이라면
+                if word.recentTestResults!.count >= 5 {
+                    word.recentTestResults!.removeFirst()
+                }
+            }
+            // 시험 본 단어 update
+            if let tempWord = testPaper.filter({ $0.word == word.word }).first {
+                print("[test!] \(tempWord)")
+                if tempWord.isCorrect == .Right {
+                    word.recentTestResults?.append("O")
+                    word.correctCount += 1
+                } else {
+                    word.recentTestResults?.append("X")
+                    word.incorrectCount += 1
+                }
+            } else {
+                // 시험 안 본 단어 update
+                print("[isMemorized] \(word)")
+                word.recentTestResults?.append("-")
+            }
+            // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
+            if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
+                word.isMemorized = true
+            }
+        }
+        saveContext()
+    }
+    
     // MARK: - Timer 관련 메서드
-    func startTimer() {
-        timeRemaining = timeLimit
+    // iPad용 Timer
+    func startiPadTimer() {
+        timeRemaining = iPadTimeLimit * testPaper.count
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
                 self.timeRemaining -= 1
+                self.timeCountUp += 1
                 if self.timeRemaining < 0 {
+                    self.cancelTimer()
+                }
+            }
+    }
+    
+    // iPone용 Timer
+    func startTimer() {
+        timeRemaining = iPhoneTimeLimit
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.timeRemaining -= 1
+                self.timeCountUp += 1
+                if self.timeRemaining < 0 {
+                    // 마지막 문제인 경우
                     if self.currentQuestionNum >= self.wholeQuestionNum - 1 {
                         self.cancelTimer()
                     } else {
+                        // 마지막 문제가 아니면 다음 문제로 넘어감
                         self.saveAnswer(answer: "")
                         self.showNextQuestion()
                         self.restartTimer()
@@ -160,10 +213,9 @@ final class TestViewModel: ObservableObject {
     }
     
     func cancelTimer() {
-        self.timeCountUp += (timeLimit - timeRemaining)
         timer?.cancel()
     }
-    
+
     func convertSecondsToTime(seconds: Int) -> String {
         let minutes = seconds / 60
         let seconds = seconds % 60

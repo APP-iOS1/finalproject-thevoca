@@ -13,7 +13,7 @@ struct WordTestResult: View {
     
     // MARK: Data Properties
     @ObservedObject var vm: TestViewModel
-    let testMode: String
+    let testType: String
     
     // 맞은 개수
     var correctCount: Int {
@@ -83,13 +83,22 @@ struct WordTestResult: View {
             
             List(vm.testPaper) { paper in
                 HStack {
-                    switch testMode {
+                    switch testType {
                     case "word":
                       Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
-                        Text(paper.answer ?? "")
-                            .horizontalAlignSetting(.center)
+                        VStack {
+                            if !paper.answer!.isEmpty {
+                                Text(paper.answer!)
+                                    .strikethrough(paper.isCorrect == .Right ? false : true)
+                            }
+                            if paper.isCorrect != .Right {
+                                Text(paper.word)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .horizontalAlignSetting(.center)
                         Text(paper.meaning.joined(separator: ", "))
                             .horizontalAlignSetting(.center)
                     case "meaning":
@@ -98,8 +107,17 @@ struct WordTestResult: View {
                             .font(.body)
                         Text(paper.word)
                             .horizontalAlignSetting(.center)
-                        Text(paper.answer ?? "")
-                            .horizontalAlignSetting(.center)
+                        VStack {
+                            if !paper.answer!.isEmpty {
+                                Text(paper.answer!)
+                                    .strikethrough(paper.isCorrect == .Right ? false : true)
+                            }
+                            if paper.isCorrect != .Right {
+                                Text(paper.meaning.joined(separator: ", "))
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .horizontalAlignSetting(.center)
                     default:
                         Text("Empty")
                     }
