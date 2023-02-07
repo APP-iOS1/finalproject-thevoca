@@ -31,7 +31,6 @@ struct ENWordListView: View {
       }
     }
 
-    @State private var orderSort: Int = 0
     @State private var selectedOrder: String = "사전순"
 
     /// - 단어 추가 버튼 관련 State
@@ -251,6 +250,9 @@ struct ENWordListView: View {
                         Menu {
                             Button("시간순") {
                               selectedOrder = "시간순"
+//                              for i in viewModel.words.indices {
+//                                print("createdAt: \(viewModel.words[i].createdAt)")
+//                              }
                               viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
                             }
 
