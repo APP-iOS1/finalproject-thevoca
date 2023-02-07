@@ -9,9 +9,9 @@
 import SwiftUI
 
 enum ProfileSection : String, CaseIterable {
-    case normal = "전체 보기"
-    case wordTest = "단어 가리기"
-    case meaningTest = "뜻 가리기"
+    case normal = "모두 보기"
+    case wordTest = "뜻만 보기"
+    case meaningTest = "단어만 보기"
 }
 
 struct SegmentView: View {
