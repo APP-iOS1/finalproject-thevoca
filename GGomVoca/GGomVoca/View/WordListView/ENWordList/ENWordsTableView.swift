@@ -49,7 +49,7 @@ struct ENWordsTableView: View {
                                     }
                                     
                                     Button {
-                                        // Voice Over
+                                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "en-US", .single)
                                     } label: {
                                         Label("발음 듣기", systemImage: "mic.fill")
                                     }
