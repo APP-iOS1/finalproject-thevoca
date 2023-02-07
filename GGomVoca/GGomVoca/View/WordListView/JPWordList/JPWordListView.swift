@@ -214,9 +214,12 @@ struct JPWordListView: View {
                         Section {
                             Menu {
                                 Picker(selection: $sort, label: Text("")) {
-                                  Text("모두 보기").tag(0)
-                                  Text("뜻만 보기").tag(1)
-                                  Text("단어만 보기").tag(2)
+                                    Text("모두 보기").tag(0)
+                                    Text("뜻만 보기").tag(1)
+                                    Text("단어만 보기").tag(2)
+                                }
+                                .onChange(of: sort) { _ in
+                                    unmaskedWords = []
                                 }
                             } label: {
                                 Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")

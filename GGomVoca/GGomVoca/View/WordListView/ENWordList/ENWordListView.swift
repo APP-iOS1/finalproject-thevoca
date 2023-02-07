@@ -21,14 +21,14 @@ struct ENWordListView: View {
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
     @State private var sort: Int = 0
     private var selectedSegment: ProfileSection {
-      switch sort {
-      case 1:
-        return .wordTest
-      case 2:
-        return .meaningTest
-      default:
-        return .normal
-      }
+        switch sort {
+        case 1:
+            return .wordTest
+        case 2:
+            return .meaningTest
+        default:
+            return .normal
+        }
     }
 
     @State private var selectedOrder: String = "사전순"
@@ -218,9 +218,12 @@ struct ENWordListView: View {
                         Section {
                             Menu {
                                 Picker(selection: $sort, label: Text("")) {
-                                  Text("모두 보기").tag(0)
-                                  Text("뜻만 보기").tag(1)
-                                  Text("단어만 보기").tag(2)
+                                    Text("모두 보기").tag(0)
+                                    Text("뜻만 보기").tag(1)
+                                    Text("단어만 보기").tag(2)
+                                }
+                                .onChange(of: sort) { _ in
+                                    unmaskedWords = []
                                 }
                             } label: {
                                 Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
