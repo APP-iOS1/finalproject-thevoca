@@ -89,8 +89,10 @@ struct WordTestResult: View {
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
                         VStack {
-                            Text(paper.answer ?? "")
-                                .strikethrough(paper.isCorrect == .Right ? false : true)
+                            if !paper.answer!.isEmpty {
+                                Text(paper.answer!)
+                                    .strikethrough(paper.isCorrect == .Right ? false : true)
+                            }
                             if paper.isCorrect != .Right {
                                 Text(paper.word)
                                     .foregroundColor(.red)
@@ -106,8 +108,10 @@ struct WordTestResult: View {
                         Text(paper.word)
                             .horizontalAlignSetting(.center)
                         VStack {
-                            Text(paper.answer ?? "")
-                                .strikethrough(paper.isCorrect == .Right ? false : true)
+                            if !paper.answer!.isEmpty {
+                                Text(paper.answer!)
+                                    .strikethrough(paper.isCorrect == .Right ? false : true)
+                            }
                             if paper.isCorrect != .Right {
                                 Text(paper.meaning.joined(separator: ", "))
                                     .foregroundColor(.red)
