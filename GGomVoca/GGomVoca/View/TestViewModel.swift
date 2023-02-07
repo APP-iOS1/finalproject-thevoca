@@ -14,6 +14,7 @@ struct Question: Identifiable {
     var meaning: [String]
     var answer: String?
     var isCorrect: Result = .Wrong
+    var isToggleMemorize: Bool = false
 }
 
 final class TestViewModel: ObservableObject {
@@ -101,8 +102,6 @@ final class TestViewModel: ObservableObject {
     
     // MARK: - 시험지 채점
     func gradeTestPaper(testType: String) {
-
-
       for idx in testPaper.indices {
             switch testType {
             case "word":
@@ -149,23 +148,34 @@ final class TestViewModel: ObservableObject {
             }
             // 시험 본 단어 update
             if let tempWord = testPaper.filter({ $0.word == word.word }).first {
-                print("[test!] \(tempWord)")
+//                print("[test!] \(tempWord)")
                 if tempWord.isCorrect == .Right {
                     word.recentTestResults?.append("O")
                     word.correctCount += 1
+                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
+                    // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
+                    if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
+                        word.isMemorized = true
+                        for (idx, paper) in testPaper.enumerated() {
+                            if word.id == paper.id {
+                                testPaper[idx].isToggleMemorize = true
+                                print("[testPaper] \(testPaper)")
+                                break
+                            }
+                        }
+                    }
                 } else {
                     word.recentTestResults?.append("X")
                     word.incorrectCount += 1
+                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
                 }
             } else {
                 // 시험 안 본 단어 update
-                print("[isMemorized] \(word)")
+//                print("[isMemorized] \(word)")
                 word.recentTestResults?.append("-")
+                print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
             }
-            // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
-            if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
-                word.isMemorized = true
-            }
+            
         }
         saveContext()
     }

@@ -24,7 +24,7 @@ struct WordTestResult: View {
         return cnt
     }
     
-    //틀린 개수
+    // 틀린 개수
     var incorrectCount: Int {
         var cnt: Int = 0
         for question in vm.testPaper {
@@ -33,6 +33,9 @@ struct WordTestResult: View {
         return cnt
     }
     
+    // isMemorized 변경되는 단어 체크 표시 유무
+    @State var checkLabel: Bool  = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -40,21 +43,21 @@ struct WordTestResult: View {
                     Text("걸린 시간")
                         .foregroundColor(.gray)
                     Text("\(vm.convertSecondsToTime(seconds: vm.timeCountUp))")
-                        .bold()
+                        .font(.title2)
                 }
                 .horizontalAlignSetting(.center)
                 VStack(spacing: 5) {
                     Text("맞은 개수")
                         .foregroundColor(.gray)
                     Text("\(correctCount)")
-                        .bold()
+                        .font(.title2)
                 }
                 .horizontalAlignSetting(.center)
                 VStack(spacing: 5) {
                     Text("틀린 개수")
                         .foregroundColor(.gray)
                     Text("\(incorrectCount)")
-                        .bold()
+                        .font(.title2)
                 }
                 .horizontalAlignSetting(.center)
             }
@@ -73,6 +76,11 @@ struct WordTestResult: View {
                     .bold()
                     .foregroundColor(.secondary)
                     .horizontalAlignSetting(.center)
+                if checkLabel {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.clear)
+                        .font(.body)
+                }
             }
             .padding(.horizontal, 20)
             .background {
@@ -101,6 +109,13 @@ struct WordTestResult: View {
                         .horizontalAlignSetting(.center)
                         Text(paper.meaning.joined(separator: ", "))
                             .horizontalAlignSetting(.center)
+                        
+                        if checkLabel {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(paper.isToggleMemorize ? .green : .clear)
+                                .font(.body)
+                        }
+                        
                     case "meaning":
                       Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
@@ -118,6 +133,13 @@ struct WordTestResult: View {
                             }
                         }
                         .horizontalAlignSetting(.center)
+                        
+                        if checkLabel {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(paper.isToggleMemorize ? .green : .clear)
+                                .font(.body)
+                        }
+                        
                     default:
                         Text("Empty")
                     }
@@ -130,8 +152,15 @@ struct WordTestResult: View {
             .listStyle(.plain)
             .padding(.top, -10)
             
-            Spacer()
-            
+            Text("\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다.")
+                .foregroundColor(.gray)
+                .frame(width: UIScreen.main.bounds.width * 0.9)
+                .multilineTextAlignment(.center)
+        }
+        .onAppear {
+            if vm.testPaper.filter({ $0.isToggleMemorize == true }).count > 0 {
+                checkLabel = true
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("시험 결과")
