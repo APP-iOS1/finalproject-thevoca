@@ -95,11 +95,6 @@ final class TestViewModel: ObservableObject {
         }
     }
     
-    // MARK: - 제출 버튼 여부
-    func showSubmitButton() -> Bool {
-        currentQuestionNum + 1 == testPaper.count
-    }
-    
     // MARK: - 시험지 채점
     func gradeTestPaper(testType: String) {
 

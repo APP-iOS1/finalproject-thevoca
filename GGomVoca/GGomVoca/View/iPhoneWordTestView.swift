@@ -83,7 +83,7 @@ struct iPhoneWordTestView: View {
                         // 마지막 문제일 경우 답변 저장만 함
                         vm.saveAnswer(answer: answer)
                         // 마지막 문제가 아닌 경우
-                        if !vm.showSubmitButton() {
+                        if !isExistLastAnswer {
                             vm.showNextQuestion()
                             answer.removeAll()
                             vm.restartTimer()
@@ -103,12 +103,13 @@ struct iPhoneWordTestView: View {
         }
         .navigationTitle("\(timer)")
         .toolbar {
-            // 마지막 문제일 때는 제출 버튼
-            if vm.showSubmitButton() {
+            // 마지막 문제까지 제출하거나 제한 시간이 끝난 경우 제출 버튼 나옴
+            if isExistLastAnswer || vm.timeRemaining == -1 {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if vm.testPaper.last?.answer == nil && vm.timeRemaining != -1 {
-                            vm.saveAnswer(answer: answer)
+                        // 마지막 submit 안하고 timeover된 경우
+                        if vm.testPaper.last?.answer == nil {
+                            vm.saveAnswer(answer: "")
                         }
                         // 타이머 종료
                         vm.cancelTimer()
@@ -130,7 +131,9 @@ struct iPhoneWordTestView: View {
                         vm.saveAnswer(answer: "")
                         vm.showNextQuestion()
                         answer.removeAll()
-                        vm.restartTimer()
+                        if !isExistLastAnswer {
+                            vm.restartTimer()
+                        }
                         focusedField = .answer
                     } label: {
                         Text("pass")
