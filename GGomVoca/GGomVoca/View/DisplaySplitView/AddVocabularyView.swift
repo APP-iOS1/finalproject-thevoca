@@ -12,6 +12,9 @@ struct AddVocabularyView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
+    // MARK: SuperView properties
+    let addCompletion: () -> ()
+    
     // MARK: View Properties
     @FocusState private var focusingVocabularyTitle: Bool
     @State var inputVocabularyName: String = ""
@@ -70,6 +73,10 @@ struct AddVocabularyView: View {
             newVocabulary.words = NSSet(array: [])
             
             saveContext()
+            addCompletion()
+            
+            /// - AppStorage에도 저장
+            UserManager.addVocabulary(id: newVocabulary.id!.uuidString, nationality: "\(nationality)")
         }
     }
     
@@ -84,8 +91,8 @@ struct AddVocabularyView: View {
     }
 }
 
-struct AddVocabularyView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddVocabularyView()
-    }
-}
+//struct AddVocabularyView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddVocabularyView(addCompletion: )
+//    }
+//}

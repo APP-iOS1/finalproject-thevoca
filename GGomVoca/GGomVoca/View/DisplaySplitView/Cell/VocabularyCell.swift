@@ -16,8 +16,14 @@ struct VocabularyCell: View {
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
     @Binding var selectedVocabulary: Vocabulary?
-    
     var vocabulary: Vocabulary
+    
+    // MARK: UserDefaults
+    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs  : [String]?
+    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String]?
+    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String]?
+    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String]?
+    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String]?
     
     // MARK: View Properties
     @State private var deleteActionSheet: Bool = false
@@ -56,33 +62,6 @@ struct VocabularyCell: View {
                 Spacer()
                 Text("\(wordsCount)").foregroundColor(.gray)
             }
-            
-//        HStack {
-//            Text(vocabulary.name ?? "")
-//
-//            Spacer()
-//
-//            // editmode가 아닐 때만 보여지고, editmode로 들어오면 사라지게
-//            if editMode == .inactive {
-//                Image(systemName: "chevron.right")
-//                .foregroundColor(.gray)
-//            }
-//
-//            if editMode == .active {
-//                Button(action: {
-//                    editVocabularyName = true
-//                } ) {
-//                    Image(systemName: "info.circle")
-//                        .foregroundColor(.gray)
-//                }
-//                .buttonStyle(.plain) // List보다 버튼이 우선 순위를 갖도록
-//            }
-//        }
-//        // overlay & opacity로 실제로는 있지만 안보이게 구현
-//        .overlay(
-//            NavigationLink(vocabulary.name ?? "", value: vocabulary)
-//                .opacity(0)
-//        )
         }
         .isDetailLink(true)
         // 단어장 고정하기 스와이프
@@ -90,24 +69,32 @@ struct VocabularyCell: View {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
                 pinnedCompletion()
+                UserManager.pinnedVocabulary(id: vocabulary.id!.uuidString, nationality: vocabulary.nationality!)
             } label: {
                 Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
             }
             .tint(vocabulary.isPinned ? .gray : .yellow)
         }
-        // 단어장 삭제 스와이프
+        // MARK: 단어장 삭제 Swipe
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
             Button(role: .destructive) {
-                let words = vocabulary.words?.allObjects as? [Word] ?? []
+                /// - 단어장에 단어가 하나도 없으면(deletedAt만 있거나) 바로 삭제, 그렇지 않으면 alert 띄움
+                var words = vocabulary.words?.allObjects as? [Word] ?? []
+                words = words.filter { $0.deletedAt != nil }
                 if words.isEmpty {
                     vm.updateDeletedData(id: vocabulary.id!)
                     deleteCompletion()
+                    UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                 } else if UIDevice.current.model == "iPhone" {
                     deleteActionSheet = true
                 } else {
                     deleteAlert = true
                 }
-                selectedVocabulary = nil
+                
+                /// - 삭제하는 단어장이 detail View에 띄워져 있는 경우 지워줌
+                if selectedVocabulary == vocabulary {
+                    selectedVocabulary = nil
+                }                
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
@@ -156,6 +143,7 @@ struct VocabularyCell: View {
                             .destructive(Text("단어장 삭제")) {
                                 vm.updateDeletedData(id: vocabulary.id!)
                                 deleteCompletion()
+                                UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                             },
                             .cancel(Text("취소"))
                         ])
@@ -167,6 +155,7 @@ struct VocabularyCell: View {
                   primaryButton: .destructive(Text("단어장 삭제")) {
                     vm.updateDeletedData(id: vocabulary.id!)
                     deleteCompletion() //삭제 후 업데이트
+                    UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                     },
                   secondaryButton: .cancel(Text("취소")))
         }

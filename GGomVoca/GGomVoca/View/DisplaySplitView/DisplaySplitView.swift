@@ -11,8 +11,15 @@ struct DisplaySplitView: View {
     // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
+    // MARK: UbiquitousStorage Property
+    @UbiquitousStorage(key: "pinnedVocabularyIDs",   defaultValue: []) var pinnedVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "koreanVocabularyIDs",   defaultValue: []) var koreanVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "englishVocabularyIDs",  defaultValue: []) var englishVocabularyIDs : [String]
+    @UbiquitousStorage(key: "japanishVocabularyIDs", defaultValue: []) var japanishVocabularyIDs: [String]
+    @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
+    
     // MARK: View Properties
-    @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
+    @StateObject var viewModel = DisplaySplitViewModel(vocabularyList: [])
     @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
     //NavigationSplitView 선택 단어장 Id
     @State private var selectedVocabulary : Vocabulary?
@@ -78,37 +85,20 @@ struct DisplaySplitView: View {
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
-//                    Image(systemName: "plus.circle")
+                    //                    Image(systemName: "plus.circle")
                     Image(systemName: "folder.badge.plus")
-//                    Image(systemName: "doc.badge.plus")
-//                    HStack(spacing: 3) {
-//                        Image(systemName: "plus.circle")
-//                        Text("단어장 추가")
-//                    }
+                    //                    Image(systemName: "doc.badge.plus")
+                    //                    HStack(spacing: 3) {
+                    //                        Image(systemName: "plus.circle")
+                    //                        Text("단어장 추가")
+                    //                    }
                 }
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    if editMode == .inactive {
-                        editMode = .active
-                    } else {
-                        editMode = .inactive
-                    }
-                } label: {
-                    Text(editMode == .inactive ? "편집" : "완료")
-                }
-                
-                
+                .disabled(editMode == .active)
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView()
+            AddVocabularyView(addCompletion: viewModel.getVocabularyData)
                 .presentationDetents([.height(CGFloat(270))])
-                .onDisappear {
-                    //fetch 단어장 data
-                    viewModel.getVocabularyData()
-                }
         }
     }
     
@@ -126,27 +116,30 @@ struct DisplaySplitView: View {
     func vocabularyListView() -> some View {
         List(selection: $selectedVocabulary) {
             // MARK: 고정된 단어장
-            if !viewModel.pinnedVocabularyList.isEmpty {
+            if !pinnedVocabularyIDs.isEmpty {
                 Section("고정된 단어장") {
-                    ForEach(viewModel.pinnedVocabularyList) { vocabulary in
+                    ForEach(pinnedVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(
                             pinnedCompletion: {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
                             }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "recent")
-                    })
-                    .onDelete(perform: { source in
-                        delete(at: source, type: "recent")
-                    })
+                    .onDelete { indexSet in
+                        for offset in indexSet {
+                            let deleted = UserManager.editModeDeleteVocabulary(at: offset, in: "pinned")
+                            viewModel.deleteVocabulary(id: deleted)
+                        }
+                    }
+                    .onMove { from, to in
+                        UserManager.shared.pinnedVocabularyIDs.move(fromOffsets: from, toOffset: to)
+                    }
                 }
             }
-            
-//             MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
+
+//            MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
 //            if !viewModel.recentVocabularyList.isEmpty {
 //                Section("최근 본 단어장") {
 //                    ForEach(viewModel.recentVocabularyList) { vocabulary in
@@ -179,88 +172,117 @@ struct DisplaySplitView: View {
 //            }
             
             // MARK: 한국어
-            if !viewModel.koreanVoca.isEmpty {
+            if !koreanVocabularyIDs.isEmpty {
                 Section("한국어") {
-                    ForEach(viewModel.koreanVoca) { vocabulary in
+                    ForEach(koreanVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-//                            viewModel.recentVocabularyList = getRecentVocabulary()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "KR")
-                    })
-                    .onDelete(perform: { source in
-                        delete(at: source, type: "KR")
-                    })
+                    .onDelete { indexSet in
+                        for offset in indexSet {
+                            let deleted = UserManager.editModeDeleteVocabulary(at: offset, in: "korean")
+                            viewModel.deleteVocabulary(id: deleted)
+                        }
+                    }
+                    .onMove { from, to in
+                        UserManager.shared.koreanVocabularyIDs.move(fromOffsets: from, toOffset: to)
+                    }
                 }
             }
             
             // MARK: 영어
-            if !viewModel.englishVoca.isEmpty {
+            if !englishVocabularyIDs.isEmpty {
                 Section("영어") {
-                    ForEach(viewModel.englishVoca) { vocabulary in
-                            VocabularyCell(pinnedCompletion: {
-                                viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
-                    }
-                    .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "EN")
-                    })
-                    .onDelete(perform: { source in
-                        delete(at: source, type: "EN")
-                    })
-                }
-            }
-
-            // MARK: 일본어
-            if !viewModel.japaneseVoca.isEmpty {
-                Section("일본어") {
-                    ForEach(viewModel.japaneseVoca) { vocabulary in
+                    ForEach(englishVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: {
                             viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
-//                            viewModel.recentVocabularyList = getRecentVocabulary()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "JA")
-                    })
-                    .onDelete(perform: { source in
-                        delete(at: source, type: "JA")
-                    })
+                    .onDelete { indexSet in
+                        for offset in indexSet {
+                            let deleted = UserManager.editModeDeleteVocabulary(at: offset, in: "english")
+                            viewModel.deleteVocabulary(id: deleted)
+                        }
+                    }
+                    .onMove { from, to in
+                        UserManager.shared.englishVocabularyIDs.move(fromOffsets: from, toOffset: to)
+                    }
                 }
             }
 
-            // MARK: 프랑스어
-            if !viewModel.frenchVoca.isEmpty {
-                Section("프랑스어") {
-                    ForEach(viewModel.frenchVoca) { vocabulary in
-                            VocabularyCell(pinnedCompletion: {
-                                viewModel.getVocabularyData()
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
-                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+            // MARK: 일본어
+            if !japanishVocabularyIDs.isEmpty {
+                Section("일본어") {
+                    ForEach(japanishVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
+                        }, deleteCompletion: {
+                            viewModel.getVocabularyData()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
-                    .onMove(perform: { source, destination in
-                        move(from: source, to: destination, type: "FR")
-                    })
-                    .onDelete(perform: { source in
-                        delete(at: source, type: "FR")
-                    })
+                    .onDelete { indexSet in
+                        for offset in indexSet {
+                            let deleted = UserManager.editModeDeleteVocabulary(at: offset, in: "japanish")
+                            viewModel.deleteVocabulary(id: deleted)
+                        }
+                    }
+                    .onMove { from, to in
+                        UserManager.shared.japanishVocabularyIDs.move(fromOffsets: from, toOffset: to)
+                    }
+                }
+            }
+            
+            // MARK: 프랑스어
+            if !frenchVocabularyIDs.isEmpty {
+                Section("프랑스어") {
+                    ForEach(frenchVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
+                        }, deleteCompletion: {
+                            viewModel.getVocabularyData()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                    }
+                    .onDelete { indexSet in
+                        for offset in indexSet {
+                            let deleted = UserManager.editModeDeleteVocabulary(at: offset, in: "french")
+                            viewModel.deleteVocabulary(id: deleted)
+                        }
+                    }
+                    .onMove { from, to in
+                        UserManager.shared.frenchVocabularyIDs.move(fromOffsets: from, toOffset: to)
+                    }
                 }
             }
         }
         .environment(\.editMode, $editMode)
-        .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
-        
+        /// - environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
+        .animation(.default, value: editMode)
+        .toolbar {
+            /// - 편집 모드
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    if editMode == .inactive {
+                        editMode = .active
+                    } else {
+                        editMode = .inactive
+                    }
+                } label: {
+                    Text(editMode == .inactive ? "편집" : "완료")
+                }
+                .onDisappear {
+                    editMode = .inactive
+                }
+            }
+        }
     }
 
     // MARK: selectedVocabulary가 nil이면서 vocabularyList의 상태에 따라 분기되는 Detail View 및 공통 수정자
@@ -321,15 +343,7 @@ struct DisplaySplitView: View {
             }
         }
     }
-    
-    
-    func getVocaItem(for itemID: UUID) -> Vocabulary {
-        guard let vocaItem = viewModel.vocabularyList.first(where: {$0.id == itemID }) else {
-            return Vocabulary()
-        }
-        
-        return vocaItem
-    }
+
     
 //    // 3개의 단어장 불러오기
 //    func getRecentVocabulary() -> [Vocabulary] {
@@ -346,44 +360,6 @@ struct DisplaySplitView: View {
 //
 //        return result
 //    }
-    
-    func move(from source: IndexSet, to destination: Int, type: String) {
-        switch type {
-        case "KR":
-            viewModel.koreanVoca.move(fromOffsets: source, toOffset: destination)
-        case "EN":
-            viewModel.englishVoca.move(fromOffsets: source, toOffset: destination)
-        case "JA":
-            viewModel.japaneseVoca.move(fromOffsets: source, toOffset: destination)
-        case "FR":
-            viewModel.frenchVoca.move(fromOffsets: source, toOffset: destination)
-//        case "recent":
-//            viewModel.recentVocabularyList.move(fromOffsets: source, toOffset: destination)
-        case "favorite":
-            viewModel.pinnedVocabularyList.move(fromOffsets: source, toOffset: destination)
-        default:
-            break
-        }
-    }
-    
-    func delete(at offsets: IndexSet, type: String) {
-        switch type {
-        case "KR":
-            viewModel.koreanVoca.remove(atOffsets: offsets)
-        case "EN":
-            viewModel.englishVoca.remove(atOffsets: offsets)
-        case "JA":
-            viewModel.japaneseVoca.remove(atOffsets: offsets)
-        case "FR":
-            viewModel.frenchVoca.remove(atOffsets: offsets)
-//        case "recent":
-//            viewModel.recentVocabularyList.remove(atOffsets: offsets)
-        case "favorite":
-            viewModel.pinnedVocabularyList.remove(atOffsets: offsets)
-        default:
-            break
-        }
-    }
 }
 
 struct VocabularyListView_Previews: PreviewProvider {
