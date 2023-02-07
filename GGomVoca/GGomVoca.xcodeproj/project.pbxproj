@@ -60,6 +60,7 @@
 		63EA4AE92987B0B5009392EE /* EditVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */; };
 		C08DB58F2989FCD700403F59 /* MyNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB58E2989FCD700403F59 /* MyNoteView.swift */; };
 		C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */; };
+		C0C17C812990EE1A00F24CF0 /* MyNoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */; };
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
@@ -157,6 +158,7 @@
 		63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVocabularyView.swift; sourceTree = "<group>"; };
 		C08DB58E2989FCD700403F59 /* MyNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteView.swift; sourceTree = "<group>"; };
 		C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
+		C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteDetailView.swift; sourceTree = "<group>"; };
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				C08DB58E2989FCD700403F59 /* MyNoteView.swift */,
+				C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */,
 			);
 			path = MyNoteView;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03F904E829514B9B003262AE /* SearchListCell.swift in Sources */,
+				C0C17C812990EE1A00F24CF0 /* MyNoteDetailView.swift in Sources */,
 				EE57C056295180BE004312CE /* VocabularyListViewModel.swift in Sources */,
 				63EA4AD729875E00009392EE /* JPWordListView.swift in Sources */,
 				63EA4AE229875E0A009392EE /* FRWordsTableView.swift in Sources */,
