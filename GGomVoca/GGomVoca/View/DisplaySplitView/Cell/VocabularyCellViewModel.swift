@@ -62,15 +62,13 @@ class VocabularyCellViewModel{
      즐겨찾기 업데이트
      */
     func updateFavoriteVocabulary(id: UUID) {
-
         let managedContext = viewContext
         let vocabularyFetch = Vocabulary.fetchRequest()
         vocabularyFetch.predicate = NSPredicate(format: "id = %@", id as CVarArg)
-        //vocabularyFetch.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+
         let results = (try? self.viewContext.fetch(vocabularyFetch) as [Vocabulary]) ?? []
         
         do {
-
             let objectUpdate = results[0]
             objectUpdate.setValue(!objectUpdate.isPinned, forKey: "isPinned")
             print(objectUpdate)
