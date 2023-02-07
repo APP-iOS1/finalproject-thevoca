@@ -30,26 +30,143 @@ struct MyNoteView: View {
     var body: some View {
         List {
             ForEach(sectionHeaders, id: \.self) { header in
-                Section(header: HStack {
-                    Text(header)
-                }) {
-                    if header == sectionHeaders[0] {
-                        ForEach(frequentlyIncorrectedWords) { word in
-                            Text(word.word ?? "")
+                switch header {
+                case sectionHeaders[0]:
+                    Section(header: HStack {
+                        Text(header)
+                        
+                        Spacer()
+                        
+                        NavigationLink(destination: MyNoteDetailView(
+                            navigationTitle: header,
+                            words: frequentlyIncorrectedWords)
+                        ) {
+                            
+                            Text("더보기")
+                                .font(.callout)
                         }
-                    } else if header == sectionHeaders[1] {
-                        ForEach(confusedWords) { word in
-                            Text(word.word ?? "")
-                        }
-                    } else {
-                        ForEach(perfectlyMemorizedWords) { word in
-                            Text(word.word ?? "")
+                    }) {
+                        if frequentlyIncorrectedWords.count >= 6 {
+                            ForEach(frequentlyIncorrectedWords[0..<5]) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
+                        } else {
+                            // 단어가 5개 이하일 때는 변환 과정 없이 그대로
+                            ForEach(frequentlyIncorrectedWords) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
                         }
                     }
+                case sectionHeaders[1]:
+                    Section(header: HStack {
+                        Text(header)
+                        
+                        Spacer()
+                        
+                        NavigationLink(destination: MyNoteDetailView(
+                            navigationTitle: header,
+                            words: frequentlyIncorrectedWords)
+                        ) {
+                            Text("더보기")
+                                .font(.callout)
+                        }
+                    }) {
+                        if confusedWords.count >= 6 {
+                            ForEach(confusedWords[0..<5]) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
+                        } else {
+                            // 단어가 5개 이하일 때는 변환 과정 없이 그대로
+                            ForEach(confusedWords) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                case sectionHeaders[2]:
+                    Section(header: HStack {
+                        Text(header)
+                        
+                        Spacer()
+                        
+                        NavigationLink(destination: MyNoteDetailView(
+                            navigationTitle: header,
+                            words: frequentlyIncorrectedWords)
+                        ) {
+                            Text("더보기")
+                                .font(.callout)
+                        }
+                    }) {
+                        if perfectlyMemorizedWords.count >= 6 {
+                            ForEach(perfectlyMemorizedWords[0..<5]) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
+                        } else {
+                            // 단어가 5개 이하일 때는 변환 과정 없이 그대로
+                            ForEach(perfectlyMemorizedWords) { word in
+                                HStack(spacing: 0) {
+                                    Text(word.word ?? "")
+                                    
+                                    Spacer()
+                                    
+                                    ForEach(word.recentTestResults ?? [], id: \.self) { result in
+                                        Image(systemName: result == "O" ? "circle" : "xmark")
+                                            .foregroundColor(result == "O" ? .green : .red)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                default:
+                    EmptyView()
                 }
             }
         }
-        .listStyle(.plain)
+        .listStyle(.insetGrouped)
         
         .navigationTitle("단어장 세부 정보")
         .navigationBarTitleDisplayMode(.inline)
