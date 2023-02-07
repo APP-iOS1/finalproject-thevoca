@@ -30,6 +30,20 @@ final class UserManager {
         }
     }
     
+    // MARK: 단어장 삭제
+    static func deleteVocabulary(id: String) {
+        if let index = shared.pinnedVocabularyIDs.firstIndex(of: id) {
+            shared.pinnedVocabularyIDs.remove(at: index)
+        } else if let index = shared.koreanVocabularyIDs.firstIndex(of: id) {
+            shared.koreanVocabularyIDs.remove(at: index)
+        } else if let index = shared.englishVocabularyIDs.firstIndex(of: id) {
+            shared.englishVocabularyIDs.remove(at: index)
+        } else if let index = shared.japanishVocabularyIDs.firstIndex(of: id) {
+            shared.japanishVocabularyIDs.remove(at: index)
+        } else if let index = shared.frenchVocabularyIDs.firstIndex(of: id) {
+            shared.frenchVocabularyIDs.remove(at: index)
+        }
+    }
     
     var recentVocabulary : [String] {
         get {

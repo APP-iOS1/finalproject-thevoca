@@ -109,8 +109,8 @@ struct VocabularyCell: View {
                 words = words.filter { $0.deletedAt != nil }
                 if words.isEmpty {
                     vm.updateDeletedData(id: vocabulary.id!)
-                    vm.deleteVocaInAppdata(id: vocabulary.id?.uuidString ?? "")
                     deleteCompletion()
+                    UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                 } else if UIDevice.current.model == "iPhone" {
                     deleteActionSheet = true
                 } else {
@@ -169,6 +169,7 @@ struct VocabularyCell: View {
                             .destructive(Text("단어장 삭제")) {
                                 vm.updateDeletedData(id: vocabulary.id!)
                                 deleteCompletion()
+                                UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                             },
                             .cancel(Text("취소"))
                         ])
@@ -180,6 +181,7 @@ struct VocabularyCell: View {
                   primaryButton: .destructive(Text("단어장 삭제")) {
                     vm.updateDeletedData(id: vocabulary.id!)
                     deleteCompletion() //삭제 후 업데이트
+                    UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                     },
                   secondaryButton: .cancel(Text("취소")))
         }
