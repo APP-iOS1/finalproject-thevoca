@@ -10,11 +10,11 @@ import SwiftUI
 final class UserManager {
     static var shared = UserManager()
     
-    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs  : [String] = []
-    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String] = []
-    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String] = []
-    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String] = []
-    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String] = []
+    @UbiquitousStorage(key: "pinnedVocabularyIDs",   defaultValue: []) var pinnedVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "koreanVocabularyIDs",   defaultValue: []) var koreanVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "englishVocabularyIDs",  defaultValue: []) var englishVocabularyIDs : [String]
+    @UbiquitousStorage(key: "japanishVocabularyIDs", defaultValue: []) var japanishVocabularyIDs: [String]
+    @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
     
     // MARK: 단어장 추가
     static func addVocabulary(id: String, nationality: String) {

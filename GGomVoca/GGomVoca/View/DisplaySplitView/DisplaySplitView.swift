@@ -11,12 +11,12 @@ struct DisplaySplitView: View {
     // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
-    // MARK: AppStorage Property
-    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs   = UserManager.shared.pinnedVocabularyIDs
-    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs   = UserManager.shared.koreanVocabularyIDs
-    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs  = UserManager.shared.englishVocabularyIDs
-    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs = UserManager.shared.japanishVocabularyIDs
-    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs   = UserManager.shared.frenchVocabularyIDs
+    // MARK: UbiquitousStorage Property
+    @UbiquitousStorage(key: "pinnedVocabularyIDs",   defaultValue: []) var pinnedVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "koreanVocabularyIDs",   defaultValue: []) var koreanVocabularyIDs  : [String]
+    @UbiquitousStorage(key: "englishVocabularyIDs",  defaultValue: []) var englishVocabularyIDs : [String]
+    @UbiquitousStorage(key: "japanishVocabularyIDs", defaultValue: []) var japanishVocabularyIDs: [String]
+    @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
     
     // MARK: View Properties
     @StateObject var viewModel = DisplaySplitViewModel(vocabularyList: [])

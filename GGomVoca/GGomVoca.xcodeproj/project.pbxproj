@@ -23,6 +23,7 @@
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		6398595A2992429200E51C69 /* UbiquitousStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639859592992429200E51C69 /* UbiquitousStorage.swift */; };
 		639B31EB298059CD00955DE4 /* WordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B31EA298059CD00955DE4 /* WordListViewModel.swift */; };
 		639B31ED29806E1700955DE4 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B31EC29806E1600955DE4 /* AddNewWordView.swift */; };
 		63B095F3297631F100E6BB21 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B095F2297631F100E6BB21 /* View+.swift */; };
@@ -112,6 +113,7 @@
 		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		639859592992429200E51C69 /* UbiquitousStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UbiquitousStorage.swift; sourceTree = "<group>"; };
 		639B31EA298059CD00955DE4 /* WordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModel.swift; sourceTree = "<group>"; };
 		639B31EC29806E1600955DE4 /* AddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
 		63B095F2297631F100E6BB21 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				EE1E49FE2976709A00890CF7 /* UserManager.swift */,
+				639859592992429200E51C69 /* UbiquitousStorage.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
 				EEDCBFE5298B818C00A7B016 /* PracticeVocaListViewModel.swift in Sources */,
+				6398595A2992429200E51C69 /* UbiquitousStorage.swift in Sources */,
 				63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */,
 				EAB4FFA92977C8830070941A /* Modifiers.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,

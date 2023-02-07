@@ -25,7 +25,7 @@ extension Array where Element: Comparable {
     }
 }
 
-// MARK: AppStorage에 Array를 담기 위한 extension
+// MARK: NSUbiquitousKeyValueStore에 Array를 담기 위한 extension
 extension Array: RawRepresentable where Element: Codable {
     public init?(rawValue: String) {
         guard let data = rawValue.data(using: .utf8),
