@@ -85,6 +85,8 @@ struct iPadWordTestView: View {
                                         .frame(width: 200, height: 80)
                                     Divider()
                                     TextField("", text: $answers[index], axis: .vertical)
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
                                         .padding(.vertical)
                                 }
                                 Divider()
