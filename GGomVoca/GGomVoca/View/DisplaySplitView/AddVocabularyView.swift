@@ -73,7 +73,7 @@ struct AddVocabularyView: View {
             addCompletion()
             
             /// - AppStorage에도 저장
-            UserManager.addVocabulary(id: newVocabulary.id?.uuidString ?? "", nationality: nationality)
+            UserManager.addVocabulary(id: newVocabulary.id!.uuidString, nationality: "\(nationality)")
         }
     }
     

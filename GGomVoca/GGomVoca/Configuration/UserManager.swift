@@ -17,16 +17,18 @@ final class UserManager {
     @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String] = []
     
     // MARK: 단어장 추가
-    static func addVocabulary(id: String, nationality: Nationality) {
+    static func addVocabulary(id: String, nationality: String) {
         switch nationality {
-        case .KO:
+        case "KO":
             shared.koreanVocabularyIDs.append(id)
-        case .EN:
+        case "EN":
             shared.englishVocabularyIDs.append(id)
-        case .JA:
+        case "JA":
             shared.japanishVocabularyIDs.append(id)
-        case .FR:
+        case "FR":
             shared.frenchVocabularyIDs.append(id)
+        default:
+            break
         }
     }
     
@@ -42,6 +44,26 @@ final class UserManager {
             shared.japanishVocabularyIDs.remove(at: index)
         } else if let index = shared.frenchVocabularyIDs.firstIndex(of: id) {
             shared.frenchVocabularyIDs.remove(at: index)
+        }
+    }
+    
+    // MARK: 단어장 고정
+    static func pinnedVocabulary(id: String, nationality: String) {
+        if let index = shared.pinnedVocabularyIDs.firstIndex(of: id) {
+            shared.pinnedVocabularyIDs.remove(at: index)
+            addVocabulary(id: id, nationality: nationality)
+        } else {
+            shared.pinnedVocabularyIDs.append(id)
+            
+            if let index = shared.koreanVocabularyIDs.firstIndex(of: id) {
+                shared.koreanVocabularyIDs.remove(at: index)
+            } else if let index = shared.englishVocabularyIDs.firstIndex(of: id) {
+                shared.englishVocabularyIDs.remove(at: index)
+            } else if let index = shared.japanishVocabularyIDs.firstIndex(of: id) {
+                shared.japanishVocabularyIDs.remove(at: index)
+            } else if let index = shared.frenchVocabularyIDs.firstIndex(of: id) {
+                shared.frenchVocabularyIDs.remove(at: index)
+            }
         }
     }
     

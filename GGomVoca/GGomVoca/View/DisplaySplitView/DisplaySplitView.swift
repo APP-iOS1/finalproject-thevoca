@@ -117,7 +117,7 @@ struct DisplaySplitView: View {
     func vocabularyListView() -> some View {
         List(selection: $selectedVocabulary) {
             // MARK: 고정된 단어장
-            if !viewModel.pinnedVocabularyList.isEmpty {
+            if !pinnedVocabularyIDs.isEmpty {
                 Section("고정된 단어장") {
                     ForEach(viewModel.pinnedVocabularyList) { vocabulary in
                         VocabularyCell(
@@ -125,7 +125,6 @@ struct DisplaySplitView: View {
                                 viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
-//                                viewModel.recentVocabularyList = getRecentVocabulary()
                             }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onMove(perform: { source, destination in
@@ -136,8 +135,8 @@ struct DisplaySplitView: View {
                     })
                 }
             }
-            
-//             MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
+
+//            MARK: 최근 본 단어장; 최근 본 단어장이 없는 경우 나타나지 않음
 //            if !viewModel.recentVocabularyList.isEmpty {
 //                Section("최근 본 단어장") {
 //                    ForEach(viewModel.recentVocabularyList) { vocabulary in

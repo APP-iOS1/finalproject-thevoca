@@ -96,6 +96,7 @@ struct VocabularyCell: View {
             Button {
                 vm.updateFavoriteVocabulary(id: vocabulary.id!)
                 pinnedCompletion()
+                UserManager.pinnedVocabulary(id: vocabulary.id!.uuidString, nationality: vocabulary.nationality!)
             } label: {
                 Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
             }
