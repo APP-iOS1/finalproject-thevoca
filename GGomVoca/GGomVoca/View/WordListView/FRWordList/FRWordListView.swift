@@ -211,100 +211,105 @@ struct FRWordListView: View {
                 ToolbarItem {
 
                     Menu {
-
-                        Menu {
-                          Picker(selection: $sort, label: Text("")) {
-                              Text("모두 보기").tag(0)
-                              Text("뜻만 보기").tag(1)
-                              Text("단어만 보기").tag(2)
-                          }
-                        } label: {
-                            Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
-                            Image(systemName: "eye.fill")
-                        }
-
-                        Button {
-                            isTestMode.toggle()
-                        } label: {
-                            HStack {
-                                Text("시험 보기")
-                                Image(systemName: "square.and.pencil")
-                            }
-                        }
-                        .foregroundColor(.orange)
-
-                        Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
-                            isSpeech.toggle()
-                        } label: {
-                            HStack {
-                                Text("전체 발음 듣기")
-                                Image(systemName: "speaker.wave.3")
-                            }
-                        }
-
-                        Menu {
-                            Button("시간순") {
-                              selectedOrder = "시간순"
-                              viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
-                            }
-
-                            Button("사전순") {
-                              selectedOrder = "사전순"
-                              viewModel.words.sort { $0.word! < $1.word! }
+                        Section {
+                            Menu {
+                                Picker(selection: $sort, label: Text("")) {
+                                  Text("모두 보기").tag(0)
+                                  Text("뜻만 보기").tag(1)
+                                  Text("단어만 보기").tag(2)
+                                }
+                            } label: {
+                                Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
+                                Image(systemName: "eye.fill")
                             }
 
                             Button {
-                              viewModel.words.shuffle()
-                              selectedOrder = "랜덤"
+                                isTestMode.toggle()
                             } label: {
-                              Text("랜덤")
+                                HStack {
+                                  Text("시험 보기")
+                                  Image(systemName: "square.and.pencil")
+                                }
                             }
+                            .foregroundColor(.orange)
 
+                            NavigationLink(destination: MyNoteView(words: viewModel.words)) {
+                                HStack {
+                                    Text("시험 결과 보기")
+                                    Image(systemName: "chart.line.uptrend.xyaxis")
+                                }
+                            }
+                            .isDetailLink(true)
 
-                        } label: {
-                            Text("정렬 옵션: \n · \(Text(selectedOrder))")
-                            Image(systemName: "arrow.up.arrow.down")
                         }
 
 
+                        Section {
+                            Menu {
+                                Button("시간순") {
+                                    selectedOrder = "시간순"
+                                    //                              for i in viewModel.words.indices {
+                                    //                                print("createdAt: \(viewModel.words[i].createdAt)")
+                                    //                              }
+                                    viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
+                                }
 
+                                Button("사전순") {
+                                    selectedOrder = "사전순"
+                                    viewModel.words.sort { $0.word! < $1.word! }
+                                }
 
-                        Button {
-                            isSelectionMode.toggle()
-                        } label: {
-                            HStack {
-                                Text("단어장 편집하기")
-                                Image(systemName: "checkmark.circle")
+                                Button {
+                                    viewModel.words.shuffle()
+                                    selectedOrder = "랜덤"
+                                } label: {
+                                    Text("랜덤")
+                                }
+
+                            } label: {
+                                Text("정렬 옵션: \n · \(Text(selectedOrder))")
+                                Image(systemName: "arrow.up.arrow.down")
                             }
-                        }
 
-                        NavigationLink {
-                            ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
-                        } label: {
-                            HStack {
-                                Text("단어 가져오기")
-                                Image(systemName: "square.and.arrow.down")
+                            Button {
+                                isSelectionMode.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어장 편집하기")
+                                    Image(systemName: "checkmark.circle")
+                                }
                             }
-                        }
-                        .isDetailLink(true)
 
-                        Button {
-                            isExport.toggle()
-                        } label: {
-                            HStack {
-                                Text("단어 리스트 내보내기")
-                                Image(systemName: "square.and.arrow.up")
+                            NavigationLink {
+                                ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
+                            } label: {
+                                HStack {
+                                    Text("단어장 가져오기")
+                                    Image(systemName: "square.and.arrow.down")
+                                }
                             }
-                        }
+                            .isDetailLink(true)
 
-                        NavigationLink(destination: MyNoteView(words: viewModel.words)) {
-                            HStack {
-                                Text("시험 결과 보기")
-                                Image(systemName: "chart.line.uptrend.xyaxis")
+                            Button {
+                                isExport.toggle()
+                            } label: {
+                                HStack {
+                                    Text("단어장 내보내기")
+                                    Image(systemName: "square.and.arrow.up")
+                                }
                             }
-                        }
-                        .isDetailLink(true)
+
+                      }
+
+                      Button {
+                          SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                          isSpeech.toggle()
+                      } label: {
+                          HStack {
+                              Text("전체 발음 듣기")
+                              Image(systemName: "speaker.wave.3")
+                          }
+                      }
 
                     } label: {
                         Image(systemName: "line.3.horizontal")
