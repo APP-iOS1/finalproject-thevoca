@@ -20,16 +20,16 @@ struct iPhoneWordTestView: View {
     @StateObject var vm: TestViewModel = TestViewModel()
     
     // MARK: Test Mode에 관한 Properties
-    let testMode: String
+    let testType: String
     let isMemorized: Bool
     
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
     
-    // testMode에 따른 textField placeholder
+    // testType에 따른 textField placeholder
     var textFieldPlaceHolder: String {
-        switch testMode {
+        switch testType {
         case "word":
             return "단어를 입력해주세요"
         case "meaning":
@@ -61,7 +61,7 @@ struct iPhoneWordTestView: View {
             Spacer()
             
             if !vm.testPaper.isEmpty {
-                Text(vm.showQuestion(testMode: testMode))
+                Text(vm.showQuestion(testType: testType))
                     .font(.largeTitle)
                     .frame(width: UIScreen.main.bounds.width * 0.9)
             }
@@ -113,14 +113,14 @@ struct iPhoneWordTestView: View {
                         // 타이머 종료
                         vm.cancelTimer()
                         // 문제지 채점
-                        vm.gradeTestPaper(testMode: testMode)
+                        vm.gradeTestPaper(testType: testType)
                         vm.testResult()
                         isFinished = true
                     } label: {
                         Text("제출")
                     }
                     .navigationDestination(isPresented: $isFinished) {
-                        WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testMode)
+                        WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
                     }
                 }
                 // 마지막 문제가 아닐 때는 PASS 버튼

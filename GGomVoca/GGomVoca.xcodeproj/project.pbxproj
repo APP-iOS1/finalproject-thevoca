@@ -335,8 +335,8 @@
 				EAEF3168298AB721009CE764 /* TestViewModel.swift */,
 				EAEF31642989F84F009CE764 /* TestModeSelectView.swift */,
 				EAEF31622989F488009CE764 /* iPhoneWordTestView.swift */,
-				EAEF3166298A4205009CE764 /* WordTestResult.swift */,
 				635CBD59298A693A0071328E /* iPadWordTestView.swift */,
+				EAEF3166298A4205009CE764 /* WordTestResult.swift */,
 				16E1ECC6298CE54A00BA4C9C /* Result.swift */,
 			);
 			path = View;

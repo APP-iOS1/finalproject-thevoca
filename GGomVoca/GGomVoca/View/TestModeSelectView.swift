@@ -33,7 +33,7 @@ struct TestModeSelectView: View {
                         iPhoneWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
-                            testMode: "word",
+                            testType: "word",
                             isMemorized: true
                         )
                     } else if UIDevice.current.model == "iPad" {
@@ -61,7 +61,7 @@ struct TestModeSelectView: View {
                         iPhoneWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
-                            testMode: "meaning",
+                            testType: "meaning",
                             isMemorized: true
                         )
                     } else if UIDevice.current.model == "iPad" {
@@ -88,7 +88,7 @@ struct TestModeSelectView: View {
                         iPhoneWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
-                            testMode: "word",
+                            testType: "word",
                             isMemorized: false
                         )
                     } else if UIDevice.current.model == "iPad" {
@@ -115,7 +115,7 @@ struct TestModeSelectView: View {
                         iPhoneWordTestView(
                             isTestMode: $isTestMode,
                             vocabularyID: vocabularyID,
-                            testMode: "meaning",
+                            testType: "meaning",
                             isMemorized: false
                         )
                     } else if UIDevice.current.model == "iPad" {

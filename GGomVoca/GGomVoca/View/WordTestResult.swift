@@ -13,7 +13,7 @@ struct WordTestResult: View {
     
     // MARK: Data Properties
     @ObservedObject var vm: TestViewModel
-    let testMode: String
+    let testType: String
     
     // 맞은 개수
     var correctCount: Int {
@@ -83,7 +83,7 @@ struct WordTestResult: View {
             
             List(vm.testPaper) { paper in
                 HStack {
-                    switch testMode {
+                    switch testType {
                     case "word":
                       Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)

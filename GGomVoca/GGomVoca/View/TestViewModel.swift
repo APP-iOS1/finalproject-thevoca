@@ -70,8 +70,8 @@ final class TestViewModel: ObservableObject {
     }
     
     // MARK: - 문제 출제
-    func showQuestion(testMode: String) -> String {
-        switch testMode {
+    func showQuestion(testType: String) -> String {
+        switch testType {
         case "word":
           return testPaper[currentQuestionNum].meaning.joined(separator: ", ")
         case "meaning":
@@ -100,11 +100,11 @@ final class TestViewModel: ObservableObject {
     }
     
     // MARK: - 시험지 채점
-    func gradeTestPaper(testMode: String) {
+    func gradeTestPaper(testType: String) {
 
 
       for idx in testPaper.indices {
-            switch testMode {
+            switch testType {
             case "word":
                 if testPaper[idx].word == testPaper[idx].answer {
                   testPaper[idx].isCorrect = .Right

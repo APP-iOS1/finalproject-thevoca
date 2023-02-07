@@ -151,12 +151,12 @@ struct iPadWordTestView: View {
                         }
                         vm.showNextQuestion()
                     }
-                    vm.gradeTestPaper(testMode: testType)
+                    vm.gradeTestPaper(testType: testType)
                     vm.testResult()
                     isFinished = true
                 }
                 .navigationDestination(isPresented: $isFinished) {
-                    WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testType)
+                    WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
                 }
             }
         }
