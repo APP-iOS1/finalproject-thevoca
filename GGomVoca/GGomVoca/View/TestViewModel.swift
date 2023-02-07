@@ -34,7 +34,8 @@ final class TestViewModel: ObservableObject {
     }
     
     var timer: AnyCancellable?
-    let timeLimit = 15
+    let iPhoneTimeLimit = 15
+    let iPadTimeLimit = 30
     @Published var timeRemaining : Int = 0
     var timeCountUp: Int = 0
     
@@ -171,16 +172,32 @@ final class TestViewModel: ObservableObject {
     }
     
     // MARK: - Timer 관련 메서드
-    func startTimer() {
-        timeRemaining = timeLimit
+    func startiPadTimer() {
+        timeRemaining = iPadTimeLimit * testPaper.count
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
                 self.timeRemaining -= 1
+                self.timeCountUp += 1
                 if self.timeRemaining < 0 {
+                    self.cancelTimer()
+                }
+            }
+    }
+    
+    func startTimer() {
+        timeRemaining = iPhoneTimeLimit
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.timeRemaining -= 1
+                self.timeCountUp += 1
+                if self.timeRemaining < 0 {
+                    // 마지막 문제인 경우
                     if self.currentQuestionNum >= self.wholeQuestionNum - 1 {
                         self.cancelTimer()
                     } else {
+                        // 마지막 문제가 아니면 다음 문제로 넘어감
                         self.saveAnswer(answer: "")
                         self.showNextQuestion()
                         self.restartTimer()
@@ -195,10 +212,9 @@ final class TestViewModel: ObservableObject {
     }
     
     func cancelTimer() {
-        self.timeCountUp += (timeLimit - timeRemaining)
         timer?.cancel()
     }
-    
+
     func convertSecondsToTime(seconds: Int) -> String {
         let minutes = seconds / 60
         let seconds = seconds % 60
