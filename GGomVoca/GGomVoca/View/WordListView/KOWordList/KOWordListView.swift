@@ -163,7 +163,7 @@ struct KOWordListView: View {
             })
             // 새 단어 추가 시트
             .sheet(isPresented: $addNewWord) {
-                KOAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
+                KOAddNewWordView(viewModel: viewModel)
                     .presentationDetents([.height(CGFloat(500))])
             }
             .toolbar {

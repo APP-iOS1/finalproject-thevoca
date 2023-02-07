@@ -161,7 +161,7 @@ struct FRWordListView: View {
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
-            FRAddNewWordView(viewModel: viewModel, addNewWord: $addNewWord)
+            FRAddNewWordView(viewModel: viewModel)
                 .presentationDetents([.height(CGFloat(500))])
         }
         // 단어장 내보내기

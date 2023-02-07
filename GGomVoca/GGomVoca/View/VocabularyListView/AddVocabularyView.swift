@@ -39,9 +39,7 @@ struct AddVocabularyView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("새로운 단어장")
-            .onAppear {
-                focusingVocabularyTitle = true
-            }
+            .onAppear { focusingVocabularyTitle = true }
             .toolbar {
                 /// - 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {
