@@ -29,12 +29,21 @@ struct TestModeSelectView: View {
             
             VStack(spacing: 15) {
                 NavigationLink {
-                    iPhoneWordTestView(
-                        isTestMode: $isTestMode,
-                        vocabularyID: vocabularyID,
-                        testMode: "word",
-                        isMemorized: true
-                    )
+                    if UIDevice.current.model == "iPhone" {
+                        iPhoneWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testMode: "word",
+                            isMemorized: true
+                        )
+                    } else if UIDevice.current.model == "iPad" {
+                        iPadWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testType: "word",
+                            isMemorized: true
+                        )
+                    }
                 } label: {
                     Text("전체 단어 시험")
                         .foregroundColor(.black)
@@ -75,12 +84,21 @@ struct TestModeSelectView: View {
                 }
                 
                 NavigationLink {
-                    iPhoneWordTestView(
-                        isTestMode: $isTestMode,
-                        vocabularyID: vocabularyID,
-                        testMode: "word",
-                        isMemorized: false
-                    )
+                    if UIDevice.current.model == "iPhone" {
+                        iPhoneWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testMode: "word",
+                            isMemorized: false
+                        )
+                    } else if UIDevice.current.model == "iPad" {
+                        iPadWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testType: "word",
+                            isMemorized: false
+                        )
+                    }
                 } label: {
                     Text("못외운 단어 시험")
                         .foregroundColor(.black)
@@ -93,12 +111,21 @@ struct TestModeSelectView: View {
                 }
                 
                 NavigationLink {
-                    iPhoneWordTestView(
-                        isTestMode: $isTestMode,
-                        vocabularyID: vocabularyID,
-                        testMode: "meaning",
-                        isMemorized: false
-                    )
+                    if UIDevice.current.model == "iPhone" {
+                        iPhoneWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testMode: "meaning",
+                            isMemorized: false
+                        )
+                    } else if UIDevice.current.model == "iPad" {
+                        iPadWordTestView(
+                            isTestMode: $isTestMode,
+                            vocabularyID: vocabularyID,
+                            testType: "meaning",
+                            isMemorized: false
+                        )
+                    }
                 } label: {
                     Text("못외운 뜻 시험")
                         .foregroundColor(.black)
