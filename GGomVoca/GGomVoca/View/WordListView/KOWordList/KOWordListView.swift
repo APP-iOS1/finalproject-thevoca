@@ -166,6 +166,15 @@ struct KOWordListView: View {
                 KOAddNewWordView(viewModel: viewModel)
                     .presentationDetents([.height(CGFloat(500))])
             }
+          // 단어장 내보내기
+            .fileExporter(isPresented: $isExport, document: CSVFile(initialText: viewModel.buildDataForCSV() ?? ""), contentType: .commaSeparatedText, defaultFilename: "\(navigationTitle)") { result in
+                switch result {
+                case .success(let url):
+                    print("Saved to \(url)")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             .toolbar {
                 // TODO: 편집모드에 따른 toolbar State 분기
                 if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
@@ -207,9 +216,12 @@ struct KOWordListView: View {
                             Section {
                                 Menu {
                                     Picker(selection: $sort, label: Text("")) {
-                                      Text("모두 보기").tag(0)
-                                      Text("뜻만 보기").tag(1)
-                                      Text("단어만 보기").tag(2)
+                                        Text("모두 보기").tag(0)
+                                        Text("뜻만 보기").tag(1)
+                                        Text("단어만 보기").tag(2)
+                                    }
+                                    .onChange(of: sort) { _ in
+                                        unmaskedWords = []
                                     }
                                 } label: {
                                     Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
