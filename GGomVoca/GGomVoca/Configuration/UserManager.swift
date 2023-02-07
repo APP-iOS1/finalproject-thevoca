@@ -47,6 +47,28 @@ final class UserManager {
         }
     }
     
+    // MARK: EditMode에서 단어장 삭제
+    static func editModeDeleteVocabulary(at offset: IndexSet.Element, in group: String) -> String {
+        var result = ""
+        
+        switch group {
+        case "pinned":
+            result = UserManager.shared.pinnedVocabularyIDs.remove(at: offset)
+        case "korean":
+            result = UserManager.shared.koreanVocabularyIDs.remove(at: offset)
+        case "english":
+            result = UserManager.shared.englishVocabularyIDs.remove(at: offset)
+        case "japanish":
+            result = UserManager.shared.japanishVocabularyIDs.remove(at: offset)
+        case "french":
+            result = UserManager.shared.frenchVocabularyIDs.remove(at: offset)
+        default:
+            break
+        }
+        
+        return result
+    }
+    
     // MARK: 단어장 고정
     static func pinnedVocabulary(id: String, nationality: String) {
         if let index = shared.pinnedVocabularyIDs.firstIndex(of: id) {

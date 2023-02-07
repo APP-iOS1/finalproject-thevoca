@@ -23,6 +23,7 @@ class DisplaySplitViewModel : ObservableObject {
     
     // MARK: Store Property
     var repository : CoredataRepository = CoredataRepository()
+    @Environment(\.managedObjectContext) private var viewContext
     
     // MARK: Published Properties
     @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
@@ -93,6 +94,22 @@ class DisplaySplitViewModel : ObservableObject {
         }
         
         return vocabulary
+    }
+    
+    // MARK: 단어장 삭제 함수
+    func deleteVocabulary(id: String) {
+        let vocabulary = getVocabulary(for: id)
+        vocabulary.deleatedAt = "\(Date.now)"
+        saveContext()
+    }
+
+    func saveContext() {
+        do {
+            print("saveContext")
+            try viewContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
     }
     
     // MARK: 최근 본 단어장을 UserDefault에서 삭제
