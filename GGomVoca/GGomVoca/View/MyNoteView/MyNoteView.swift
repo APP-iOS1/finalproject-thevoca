@@ -173,20 +173,21 @@ struct MyNoteView: View {
     }
 }
 
+//[Bool?]?
 extension Array<Word> {
     /// 단어들 중에서 오답의 빈도 수가 총 시험 횟수와 같은 경우 : 자주 틀린 단어
     func getFrequentlyIncorrectedWords() -> [Word] {
-        return self.filter { $0.recentTestResults?.filter { $0 == false }.count == $0.recentTestResults?.count }
+        return self.filter { $0.recentTestResults?.filter { $0 == "X" }.count == $0.recentTestResults?.count }
     }
     
     /// 단어들 중에서 정답의 빈도 수가 총 시험 횟수의 절반인 경우 : 헷갈리는 단어
     func getConfusedWords() -> [Word] {
-        return self.filter { $0.recentTestResults?.filter { $0 == true }.count == $0.recentTestResults?.count ?? -1 / 2 }
+        return self.filter { $0.recentTestResults?.filter { $0 == "O" }.count == $0.recentTestResults?.count ?? -1 / 2 }
     }
     
     /// 단어들 중에서 정답의 빈도 수가 총 시험 횟수와 같은 경우 : 완벽히 외운 단어
     func getPerfectlyMemorizedWords() -> [Word] {
-        return self.filter { $0.recentTestResults?.filter { $0 == true }.count == $0.recentTestResults?.count }
+        return self.filter { $0.recentTestResults?.filter { $0 == "O" }.count == $0.recentTestResults?.count }
     }
 }
 

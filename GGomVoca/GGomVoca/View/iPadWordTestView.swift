@@ -27,12 +27,19 @@ private var testWords: [TestWord] = [
 ]
 
 struct iPadWordTestView: View {
+    // 시험지 fullscreen 닫기 위한 Property
+    @Binding var isTestMode: Bool
+    
+    // MARK: Data Properties
+    var vocabularyID: Vocabulary.ID
+    @StateObject var vm: TestViewModel = TestViewModel()
+    
     // MARK: SuperView Properties
-    var testType: String = "word"
-    //    var isMemorized: Bool
+    let testType: String
+    let isMemorized: Bool
     
     // MARK: View Properties
-    @State private var answers: [String] = Array(repeating: "", count: testWords.count)
+    @State private var answers: [String] = []
     
     @State private var testTime: Int = 30 * testWords.count
     private var timeRemaining: String {
@@ -62,15 +69,18 @@ struct iPadWordTestView: View {
         self.timer.upstream.connect().cancel()
     }
     
+    // 시험 종료 후 결과지로 이동하기 위한 Property
+    @State var isFinished: Bool = false
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
                     Section {
-                        ForEach(testWords.indices, id: \.self) { index in
+                        ForEach(vm.testPaper.indices, id: \.self) { index in
                             VStack(spacing: 0) {
                                 HStack(alignment: .center) {
-                                    Text(testType == "meaning" ? testWords[index].word : testWords[index].meaning)
+                                    Text(testType == "meaning" ? vm.testPaper[index].word : vm.testPaper[index].meaning.joined(separator: ", "))
                                         .multilineTextAlignment(.center)
                                         .frame(width: 200, height: 80)
                                     Divider()
@@ -112,7 +122,12 @@ struct iPadWordTestView: View {
         .background { Color("offwhite") }
         .navigationTitle("남은 시간 : \(timeRemaining)")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { calcRemain() }
+        .onAppear {
+            vm.getVocabulary(vocabularyID: vocabularyID)
+            vm.createPaper(isMemorized: isMemorized)
+            answers = Array(repeating: "", count: vm.testPaper.count)
+            calcRemain()
+        }
         .onReceive(timer) { _ in
             if testTime > 0 {
                 testTime -= 1
@@ -126,17 +141,30 @@ struct iPadWordTestView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("제출") {
-                    print("제출")
+                    for idx in answers.indices {
+                        if answers[idx].isEmpty {
+                            vm.saveAnswer(answer: "")
+                        } else {
+                            vm.saveAnswer(answer: answers[idx])
+                        }
+                        vm.showNextQuestion()
+                    }
+                    vm.gradeTestPaper(testMode: testType)
+                    vm.testResult()
+                    isFinished = true
+                }
+                .navigationDestination(isPresented: $isFinished) {
+                    WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testType)
                 }
             }
         }
     }
 }
 
-struct iPadWordTestView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            iPadWordTestView()
-        }
-    }
-}
+//struct iPadWordTestView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationStack {
+//            iPadWordTestView()
+//        }
+//    }
+//}

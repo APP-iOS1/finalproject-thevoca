@@ -26,6 +26,7 @@ struct iPhoneWordTestView: View {
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
+    
     // testMode에 따른 textField placeholder
     var textFieldPlaceHolder: String {
         switch testMode {
@@ -67,20 +68,28 @@ struct iPhoneWordTestView: View {
             
             Spacer()
             
+            if timeOver||isExistLastAnswer {
+                Text("\(Image(systemName: "exclamationmark.circle")) 우상단의 제출 버튼을 눌러주세요")
+            }
             TextField("\(textFieldPlaceHolder)", text: $answer)
                 .multilineTextAlignment(.center)
                 .textFieldStyle(.roundedBorder)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
                 .focused($focusedField, equals: .answer)
+                .submitLabel(.done)
                 .onSubmit {
-                    // 마지막 문제일 경우 답변 저장만 함
-                    vm.saveAnswer(answer: answer)
-                    // 마지막 문제가 아닌 경우
-                    if !vm.showSubmitButton() {
-                        vm.showNextQuestion()
-                        answer.removeAll()
-                        vm.restartTimer()
+                    if !answer.isEmpty {
+                        // 마지막 문제일 경우 답변 저장만 함
+                        vm.saveAnswer(answer: answer)
+                        // 마지막 문제가 아닌 경우
+                        if !vm.showSubmitButton() {
+                            vm.showNextQuestion()
+                            answer.removeAll()
+                            vm.restartTimer()
+                            focusedField = .answer
+                        }
+                    } else {
                         focusedField = .answer
                     }
                 }
@@ -105,6 +114,7 @@ struct iPhoneWordTestView: View {
                         vm.cancelTimer()
                         // 문제지 채점
                         vm.gradeTestPaper(testMode: testMode)
+                        vm.testResult()
                         isFinished = true
                     } label: {
                         Text("제출")
