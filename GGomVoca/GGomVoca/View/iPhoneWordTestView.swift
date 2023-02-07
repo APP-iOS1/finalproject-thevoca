@@ -20,16 +20,16 @@ struct iPhoneWordTestView: View {
     @StateObject var vm: TestViewModel = TestViewModel()
     
     // MARK: Test Mode에 관한 Properties
-    let testMode: String
-    let isMemorized: Bool
+    let testType: String
+    let isWholeWord: Bool
     
     // MARK: TextField에 관한 Properties
     @FocusState private var focusedField: Field?
     @State var answer: String = ""
     
-    // testMode에 따른 textField placeholder
+    // testType에 따른 textField placeholder
     var textFieldPlaceHolder: String {
-        switch testMode {
+        switch testType {
         case "word":
             return "단어를 입력해주세요"
         case "meaning":
@@ -49,7 +49,7 @@ struct iPhoneWordTestView: View {
     
     // MARK: Timer에 관한 Property
     var timer: String {
-        vm.timeRemaining == -1 ? "⏰ Time Over" : vm.convertSecondsToTime(seconds: vm.timeRemaining)
+        vm.timeRemaining == -1 ? "⏰ 시험 종료" : vm.convertSecondsToTime(seconds: vm.timeRemaining)
     }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
@@ -61,7 +61,7 @@ struct iPhoneWordTestView: View {
             Spacer()
             
             if !vm.testPaper.isEmpty {
-                Text(vm.showQuestion(testMode: testMode))
+                Text(vm.showQuestion(testType: testType))
                     .font(.largeTitle)
                     .frame(width: UIScreen.main.bounds.width * 0.9)
             }
@@ -83,7 +83,7 @@ struct iPhoneWordTestView: View {
                         // 마지막 문제일 경우 답변 저장만 함
                         vm.saveAnswer(answer: answer)
                         // 마지막 문제가 아닌 경우
-                        if !vm.showSubmitButton() {
+                        if !isExistLastAnswer {
                             vm.showNextQuestion()
                             answer.removeAll()
                             vm.restartTimer()
@@ -97,30 +97,31 @@ struct iPhoneWordTestView: View {
         }
         .onAppear {
             vm.getVocabulary(vocabularyID: vocabularyID)
-            vm.createPaper(isMemorized: isMemorized)
+            vm.createPaper(isWholeWord: isWholeWord)
             vm.startTimer()
             focusedField = .answer
         }
         .navigationTitle("\(timer)")
         .toolbar {
-            // 마지막 문제일 때는 제출 버튼
-            if vm.showSubmitButton() {
+            // 마지막 문제까지 제출하거나 제한 시간이 끝난 경우 제출 버튼 나옴
+            if isExistLastAnswer || vm.timeRemaining == -1 {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        if vm.testPaper.last?.answer == nil && vm.timeRemaining != -1 {
-                            vm.saveAnswer(answer: answer)
+                        // 마지막 submit 안하고 timeover된 경우
+                        if vm.testPaper.last?.answer == nil {
+                            vm.saveAnswer(answer: "")
                         }
                         // 타이머 종료
                         vm.cancelTimer()
                         // 문제지 채점
-                        vm.gradeTestPaper(testMode: testMode)
+                        vm.gradeTestPaper(testType: testType)
                         vm.testResult()
                         isFinished = true
                     } label: {
                         Text("제출")
                     }
                     .navigationDestination(isPresented: $isFinished) {
-                        WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testMode)
+                        WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
                     }
                 }
                 // 마지막 문제가 아닐 때는 PASS 버튼
@@ -130,7 +131,9 @@ struct iPhoneWordTestView: View {
                         vm.saveAnswer(answer: "")
                         vm.showNextQuestion()
                         answer.removeAll()
-                        vm.restartTimer()
+                        if !isExistLastAnswer {
+                            vm.restartTimer()
+                        }
                         focusedField = .answer
                     } label: {
                         Text("pass")

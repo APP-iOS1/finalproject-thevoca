@@ -36,38 +36,15 @@ struct iPadWordTestView: View {
     
     // MARK: SuperView Properties
     let testType: String
-    let isMemorized: Bool
+    let isWholeWord: Bool
     
     // MARK: View Properties
     @State private var answers: [String] = []
     
-    @State private var testTime: Int = 30 * testWords.count
-    private var timeRemaining: String {
-        testTime > 0 ? convertSecondsToTime(timeInSeconds: testTime) : "시험 종료!"
+    var timer: String {
+        vm.timeRemaining == -1 ? "⏰ 시험 종료" : vm.convertSecondsToTime(seconds: vm.timeRemaining)
     }
     
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    // MARK: 타이머 관련 메서드
-    func convertSecondsToTime(timeInSeconds: Int) -> String {
-            let hours = timeInSeconds / 3600
-            let minutes = (timeInSeconds - hours * 3600) / 60
-            let seconds = timeInSeconds % 60
-            return String(format: "%02i:%02i:%02i", hours,minutes,seconds)
-        }
-    
-    func calcRemain() {
-        let calendar = Calendar.current
-        let date = Date()
-        let value = 30 * testWords.count
-        let targetTime : Date = calendar.date(byAdding: .second, value: value, to: date, wrappingComponents: false) ?? Date()
-        let remainSeconds = Int(targetTime.timeIntervalSince(date))
-        self.testTime = remainSeconds
-    }
-    
-    func cancelTimer() {
-        self.timer.upstream.connect().cancel()
-    }
     
     // 시험 종료 후 결과지로 이동하기 위한 Property
     @State var isFinished: Bool = false
@@ -85,6 +62,8 @@ struct iPadWordTestView: View {
                                         .frame(width: 200, height: 80)
                                     Divider()
                                     TextField("", text: $answers[index], axis: .vertical)
+                                        .textInputAutocapitalization(.never)
+                                        .disableAutocorrection(true)
                                         .padding(.vertical)
                                 }
                                 Divider()
@@ -120,23 +99,13 @@ struct iPadWordTestView: View {
             }
         }
         .background { Color("offwhite") }
-        .navigationTitle("남은 시간 : \(timeRemaining)")
+        .navigationTitle("\(timer)")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             vm.getVocabulary(vocabularyID: vocabularyID)
-            vm.createPaper(isMemorized: isMemorized)
+            vm.createPaper(isWholeWord: isWholeWord)
             answers = Array(repeating: "", count: vm.testPaper.count)
-            calcRemain()
-        }
-        .onReceive(timer) { _ in
-            if testTime > 0 {
-                testTime -= 1
-            } else {
-                cancelTimer()
-            }
-        }
-        .onDisappear {
-            cancelTimer()
+            vm.startiPadTimer()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -149,12 +118,15 @@ struct iPadWordTestView: View {
                         }
                         vm.showNextQuestion()
                     }
-                    vm.gradeTestPaper(testMode: testType)
+                    // 타이머 종료
+                    vm.cancelTimer()
+                    // 문제지 채점
+                    vm.gradeTestPaper(testType: testType)
                     vm.testResult()
                     isFinished = true
                 }
                 .navigationDestination(isPresented: $isFinished) {
-                    WordTestResult(isTestMode: $isTestMode, vm: vm, testMode: testType)
+                    WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
                 }
             }
         }
