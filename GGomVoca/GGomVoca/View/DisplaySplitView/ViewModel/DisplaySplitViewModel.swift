@@ -14,11 +14,11 @@ class DisplaySplitViewModel : ObservableObject {
     internal init(repository: CoredataRepository = CoredataRepository(), vocabularyList: [Vocabulary] = [], pinnedVocabularyList: [Vocabulary] = [], koreanVoca: [Vocabulary] = [], englishVoca: [Vocabulary] = [], japaneseVoca: [Vocabulary] = [], frenchVoca: [Vocabulary] = []) {
         self.repository = repository
         self.vocabularyList = vocabularyList
-        self.pinnedVocabularyList = pinnedVocabularyList
-        self.koreanVoca = koreanVoca
-        self.englishVoca = englishVoca
-        self.japaneseVoca = japaneseVoca
-        self.frenchVoca = frenchVoca
+//        self.pinnedVocabularyList = pinnedVocabularyList
+//        self.koreanVoca = koreanVoca
+//        self.englishVoca = englishVoca
+//        self.japaneseVoca = japaneseVoca
+//        self.frenchVoca = frenchVoca
     }
     
     // MARK: Store Property
@@ -26,11 +26,11 @@ class DisplaySplitViewModel : ObservableObject {
     
     // MARK: Published Properties
     @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
-    @Published var pinnedVocabularyList : [Vocabulary] = [] // 즐겨찾기
-    @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
-    @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
-    @Published var japaneseVoca         : [Vocabulary] = [] // 일본어 단어장
-    @Published var frenchVoca           : [Vocabulary] = [] // 프랑스어 단어장
+//    @Published var pinnedVocabularyList : [Vocabulary] = [] // 고정된 단어장
+//    @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
+//    @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
+//    @Published var japaneseVoca         : [Vocabulary] = [] // 일본어 단어장
+//    @Published var frenchVoca           : [Vocabulary] = [] // 프랑스어 단어장
     
     init(vocabularyList: [Vocabulary]) {
         self.vocabularyList = vocabularyList
@@ -39,11 +39,11 @@ class DisplaySplitViewModel : ObservableObject {
     // MARK: Clear Vocabulary Lists
     func clearVoca() {
         vocabularyList = []
-        pinnedVocabularyList = []
-        koreanVoca = []
-        japaneseVoca = []
-        englishVoca = []
-        frenchVoca = []
+//        pinnedVocabularyList = []
+//        koreanVoca = []
+//        japaneseVoca = []
+//        englishVoca = []
+//        frenchVoca = []
     }
 
     // MARK: Get Vocabulary Lists
@@ -55,31 +55,31 @@ class DisplaySplitViewModel : ObservableObject {
             if voca.deleatedAt == nil {
                 vocabularyList.append(voca)
                 
-                if voca.isPinned {
-                    pinnedVocabularyList.append(voca)
-                    continue
-                }
-                
-                /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue
-                if voca.nationality == "KO" {
-                    koreanVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "EN" {
-                    englishVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "JA" {
-                    japaneseVoca.append(voca)
-                    continue
-                }
-                
-                if voca.nationality == "FR" {
-                    frenchVoca.append(voca)
-                    continue
-                }
+//                if voca.isPinned {
+//                    pinnedVocabularyList.append(voca)
+//                    continue
+//                }
+//
+//                /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue
+//                if voca.nationality == "KO" {
+//                    koreanVoca.append(voca)
+//                    continue
+//                }
+//
+//                if voca.nationality == "EN" {
+//                    englishVoca.append(voca)
+//                    continue
+//                }
+//
+//                if voca.nationality == "JA" {
+//                    japaneseVoca.append(voca)
+//                    continue
+//                }
+//
+//                if voca.nationality == "FR" {
+//                    frenchVoca.append(voca)
+//                    continue
+//                }
             }
         }
     }
