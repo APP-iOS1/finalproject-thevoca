@@ -13,15 +13,13 @@ struct GGomVocaApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
             // environment -> view에 접근
             DisplaySplitView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-    /*
-     DI 
-     */
+    
+    // MARK: DI
     init(){
         DependencyManager.shared.register()
     }
