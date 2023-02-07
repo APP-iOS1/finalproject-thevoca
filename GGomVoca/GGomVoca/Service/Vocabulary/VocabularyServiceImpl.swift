@@ -28,7 +28,7 @@ class VocabularyServiceImpl: VocabularyService{
         
         let publisher = cloudDataRepo.syncVocaData() //cloud DB와 coreData DB 동기화
             .flatMap{value in
-                return self.coreDataRepo.fetchVocaData()} //동기화된 CoreData 데이터 불러오기
+                return self.coreDataRepo.fetchVocaListData()} //동기화된 CoreData 데이터 불러오기
            .eraseToAnyPublisher()
            
     
