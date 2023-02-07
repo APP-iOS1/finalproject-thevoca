@@ -21,7 +21,7 @@ extension Word{
               let isMemorized = ckRecord["isMemorized"] as? Bool,
               let meaning = ckRecord["meaning"] as? [String],
               let option = ckRecord["option"] as? String,
-              let recentTestResults = ckRecord["recentTestResults"] as? [Bool],
+              let recentTestResults = ckRecord["recentTestResults"] as? [String],
               let createdAt = ckRecord["createdAt"] as? String,
               let vocabularyIDStr = ckRecord["vocabularyID"] as? String,
               let vocabularyID = UUID(uuidString: vocabularyIDStr),
