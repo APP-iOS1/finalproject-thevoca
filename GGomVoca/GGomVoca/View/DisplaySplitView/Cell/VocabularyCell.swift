@@ -16,7 +16,6 @@ struct VocabularyCell: View {
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
     @Binding var selectedVocabulary: Vocabulary?
-    
     var vocabulary: Vocabulary
     
     // MARK: View Properties

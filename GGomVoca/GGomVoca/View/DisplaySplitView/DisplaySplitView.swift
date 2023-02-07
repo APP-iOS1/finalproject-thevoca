@@ -11,8 +11,15 @@ struct DisplaySplitView: View {
     // MARK: CoreData Property
     @Environment(\.managedObjectContext) private var viewContext
     
+    // MARK: UserDefaults
+    @AppStorage("pinnedVocabularyIDs")   var pinnedVocabularyIDs  : [String]?
+    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String]?
+    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String]?
+    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String]?
+    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String]?
+    
     // MARK: View Properties
-    @StateObject var viewModel = VocabularyListViewModel(vocabularyList: [])
+    @StateObject var viewModel = DisplaySplitViewModel(vocabularyList: [])
     @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
     //NavigationSplitView 선택 단어장 Id
     @State private var selectedVocabulary : Vocabulary?
@@ -78,28 +85,14 @@ struct DisplaySplitView: View {
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
-//                    Image(systemName: "plus.circle")
+                    //                    Image(systemName: "plus.circle")
                     Image(systemName: "folder.badge.plus")
-//                    Image(systemName: "doc.badge.plus")
-//                    HStack(spacing: 3) {
-//                        Image(systemName: "plus.circle")
-//                        Text("단어장 추가")
-//                    }
+                    //                    Image(systemName: "doc.badge.plus")
+                    //                    HStack(spacing: 3) {
+                    //                        Image(systemName: "plus.circle")
+                    //                        Text("단어장 추가")
+                    //                    }
                 }
-            }
-            
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button {
-                    if editMode == .inactive {
-                        editMode = .active
-                    } else {
-                        editMode = .inactive
-                    }
-                } label: {
-                    Text(editMode == .inactive ? "편집" : "완료")
-                }
-                
-                
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
@@ -177,6 +170,19 @@ struct DisplaySplitView: View {
 //                    .foregroundColor(.gray)
 //                }
 //            }
+            
+            if let koreanVocabularyIDs {
+                Section("임시 한국어") {
+                    ForEach(koreanVocabularyIDs, id: \.self) { vocabularyID in
+                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
+                        }, deleteCompletion: {
+                            viewModel.getVocabularyData()
+                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                    }
+                }
+            }
             
             // MARK: 한국어
             if !viewModel.koreanVoca.isEmpty {
@@ -260,7 +266,19 @@ struct DisplaySplitView: View {
         }
         .environment(\.editMode, $editMode)
         .animation(.default, value: editMode) // environment로 editmode를 구현하면 기본으로 제공되는 editbutton과 다르게 애니메이션이 없음. 그래서 직접 구현
-        
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    if editMode == .inactive {
+                        editMode = .active
+                    } else {
+                        editMode = .inactive
+                    }
+                } label: {
+                    Text(editMode == .inactive ? "편집" : "완료")
+                }
+            }
+        }
     }
 
     // MARK: selectedVocabulary가 nil이면서 vocabularyList의 상태에 따라 분기되는 Detail View 및 공통 수정자

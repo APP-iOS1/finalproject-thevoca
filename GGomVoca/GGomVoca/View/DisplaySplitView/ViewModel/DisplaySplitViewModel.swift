@@ -10,13 +10,22 @@ import SwiftUI
 // -> Entity -> Model -> ViewModel(UI 데이터) -> View
 
 //Server -> Repository(reposiroty pattern) -> ViewModel
-class VocabularyListViewModel : ObservableObject {
+class DisplaySplitViewModel : ObservableObject {
+    internal init(repository: CoredataRepository = CoredataRepository(), vocabularyList: [Vocabulary] = [], pinnedVocabularyList: [Vocabulary] = [], koreanVoca: [Vocabulary] = [], englishVoca: [Vocabulary] = [], japaneseVoca: [Vocabulary] = [], frenchVoca: [Vocabulary] = []) {
+        self.repository = repository
+        self.vocabularyList = vocabularyList
+        self.pinnedVocabularyList = pinnedVocabularyList
+        self.koreanVoca = koreanVoca
+        self.englishVoca = englishVoca
+        self.japaneseVoca = japaneseVoca
+        self.frenchVoca = frenchVoca
+    }
+    
     // MARK: Store Property
     var repository : CoredataRepository = CoredataRepository()
     
     // MARK: Published Properties
     @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
-    @Published var recentVocabularyList : [Vocabulary] = [] // 최근 본 단어장
     @Published var pinnedVocabularyList : [Vocabulary] = [] // 즐겨찾기
     @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
     @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
@@ -75,6 +84,17 @@ class VocabularyListViewModel : ObservableObject {
         }
     }
     
+    // MARK: Vocabualry.ID로 해당 단어장을 찾아오는 메서드
+    func getVocabulary(for vocaId: String) -> Vocabulary {
+        var vocabulary = Vocabulary()
+        
+        if let vocaIndex = vocabularyList.firstIndex(where: { $0.id?.uuidString ?? "" == vocaId }) {
+            vocabulary = vocabularyList[vocaIndex]
+        }
+        
+        return vocabulary
+    }
+    
 //    // MARK: 최근 본 단어장을 UserDefault에서 삭제
 //    func deleteRecentVoca(id : String) {
 //        // [voca1, voca2]
@@ -84,7 +104,7 @@ class VocabularyListViewModel : ObservableObject {
 //        }
 //        UserManager.shared.recentVocabulary = before
 //    }
-//
+
 //    // MARK: 최근 본 단어장 관리 메서드
 //    func manageRecentVocabulary(voca: Vocabulary) {
 //        /// - 기존에 최근 본 단어장에 들어있는 단어장을 또 확인 한 경우 배열에서 지우고 배열의 첫번째 요소로 다시 삽입

@@ -12,6 +12,12 @@ struct AddVocabularyView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
+    // MARK: UserDefaults
+    @AppStorage("koreanVocabularyIDs")   var koreanVocabularyIDs  : [String]?
+    @AppStorage("englishVocabularyIDs")  var englishVocabularyIDs : [String]?
+    @AppStorage("japanishVocabularyIDs") var japanishVocabularyIDs: [String]?
+    @AppStorage("frenchVocabularyIDs")   var frenchVocabularyIDs  : [String]?
+    
     // MARK: View Properties
     @State var inputVocabularyName: String = ""
     @State var nationality: Nationality = Nationality.KO
@@ -67,6 +73,36 @@ struct AddVocabularyView: View {
             newVocabulary.words = NSSet(array: [])
             
             saveContext()
+            
+            switch newVocabulary.nationality {
+            case "KO":
+                print("추가 시작")
+                if var koreanVocabularyIDs {
+                    koreanVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
+                } else {
+                    koreanVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
+                }
+            case "EN":
+                if var englishVocabularyIDs {
+                    englishVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
+                } else {
+                    englishVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
+                }
+            case "JA":
+                if var japanishVocabularyIDs {
+                    japanishVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
+                } else {
+                    japanishVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
+                }
+            case "FR":
+                if var frenchVocabularyIDs {
+                    frenchVocabularyIDs.append(newVocabulary.id?.uuidString ?? "")
+                } else {
+                    frenchVocabularyIDs = [newVocabulary.id?.uuidString ?? ""]
+                }
+            default:
+                break
+            }
         }
     }
     
