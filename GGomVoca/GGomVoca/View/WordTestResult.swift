@@ -88,8 +88,15 @@ struct WordTestResult: View {
                       Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
-                        Text(paper.answer ?? "")
-                            .horizontalAlignSetting(.center)
+                        VStack {
+                            Text(paper.answer ?? "")
+                                .strikethrough(paper.isCorrect == .Right ? false : true)
+                            if paper.isCorrect != .Right {
+                                Text(paper.word)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .horizontalAlignSetting(.center)
                         Text(paper.meaning.joined(separator: ", "))
                             .horizontalAlignSetting(.center)
                     case "meaning":
@@ -98,8 +105,15 @@ struct WordTestResult: View {
                             .font(.body)
                         Text(paper.word)
                             .horizontalAlignSetting(.center)
-                        Text(paper.answer ?? "")
-                            .horizontalAlignSetting(.center)
+                        VStack {
+                            Text(paper.answer ?? "")
+                                .strikethrough(paper.isCorrect == .Right ? false : true)
+                            if paper.isCorrect != .Right {
+                                Text(paper.meaning.joined(separator: ", "))
+                                    .foregroundColor(.red)
+                            }
+                        }
+                        .horizontalAlignSetting(.center)
                     default:
                         Text("Empty")
                     }
