@@ -16,9 +16,9 @@ import SwiftUI
 struct AddNewWordView: View {
     // MARK: Super View Properties
     var viewModel : WordListViewModel
-    @Binding var addNewWord: Bool
     
     // MARK: View Properties
+    @Environment(\.dismiss) private var dismiss
     @State private var isContinue: Bool = false
     /// - 입력값 관련
     @State private var inputWord: String = ""
@@ -108,10 +108,11 @@ struct AddNewWordView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("새 단어 추가")
+            .onAppear { wordFocused = true }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("취소", role: .cancel) {
-                        addNewWord = false
+                        dismiss()
                     }
                 }
                 
@@ -119,9 +120,7 @@ struct AddNewWordView: View {
                     Button("추가") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
                         meaning.isEmpty ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
-                        print("meanings : \(meanings)")
-                      print("isWordEmpty : \(isWordEmpty)")
-                      print("isMeaningEmpty : \(isMeaningEmpty)")
+
                         if !isWordEmpty && !isWordEmpty {
                             /// - 단어 추가
                             viewModel.addNewWord(word: word, meaning: meanings, option: option)
@@ -133,10 +132,10 @@ struct AddNewWordView: View {
 
                             /// - isContinue 상태에 따라 sheet를 닫지 않고 유지함
                             if !isContinue {
-                                addNewWord = false
-                                /// - 단어를 입력하는 TextField로 Focus 이동
-                                wordFocused = true
+                                dismiss()
                             }
+                            /// - 단어를 입력하는 TextField로 Focus 이동
+                            wordFocused = true
                         }
                     }
                 }

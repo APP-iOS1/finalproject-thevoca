@@ -16,6 +16,7 @@ struct AddVocabularyView: View {
     let addCompletion: () -> ()
     
     // MARK: View Properties
+    @FocusState private var focusingVocabularyTitle: Bool
     @State var inputVocabularyName: String = ""
     @State var nationality: Nationality = Nationality.KO
     
@@ -29,6 +30,7 @@ struct AddVocabularyView: View {
             Form {
                 Section("단어장 제목") {
                     TextField("단어장의 제목을 입력하세요.", text: $inputVocabularyName)
+                        .focused($focusingVocabularyTitle)
                 }
 
                 Picker(selection: $nationality, label: Text("공부하는 언어")) {
@@ -40,6 +42,7 @@ struct AddVocabularyView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("새로운 단어장")
+            .onAppear { focusingVocabularyTitle = true }
             .toolbar {
                 /// - 취소 버튼
                 ToolbarItem(placement: .navigationBarLeading) {

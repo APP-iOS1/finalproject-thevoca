@@ -16,15 +16,15 @@ import SwiftUI
 struct FRAddNewWordView: View {
     // MARK: Super View Properties
     var viewModel : FRFRWordListViewModel
-    @Binding var addNewWord: Bool
     
     // MARK: View Properties
+    @Environment(\.dismiss) private var dismiss
     @State private var isContinue: Bool = false
     /// - 입력값 관련
     @State private var inputWord: String = ""
     @State private var inputOption: String = ""
     @State private var inputMeaning: String = ""
-  @State private var meanings: [String] = [""]
+    @State private var meanings: [String] = [""]
     
     // 입력값 공백 제거
     private var word: String {
@@ -74,59 +74,58 @@ struct FRAddNewWordView: View {
                 }
                 
                 Section {
-                  ForEach(meanings.indices, id: \.self) { index in
-                    FieldView(value: Binding<String>(get: {
-                      guard index < meanings.count else { return "" }
-                      return meanings[index]
-                    }, set: { newValue in
-                      guard index < meanings.count else { return }
-                      meanings[index] = newValue
-                    })) {
-                      if meanings.count > 1 {
-                        meanings.remove(at: index)
-                      } else {
-                        // MARK: 최소 뜻 개수 1개 보장
-
-                      }
+                    ForEach(meanings.indices, id: \.self) { index in
+                        FieldView(value: Binding<String>(get: {
+                            guard index < meanings.count else { return "" }
+                            return meanings[index]
+                        }, set: { newValue in
+                            guard index < meanings.count else { return }
+                            meanings[index] = newValue
+                        })) {
+                            if meanings.count > 1 {
+                                meanings.remove(at: index)
+                            } else {
+                                // MARK: 최소 뜻 개수 1개 보장
+                                
+                            }
+                        }
                     }
-                  }
-                  Button("뜻 추가하기") {
-                    meanings.append("")
-                  }
+                    Button("뜻 추가하기") {
+                        meanings.append("")
+                    }
                 } header: {
-                  HStack {
-                    Text("뜻")
-                    if isMeaningEmpty {
-                      Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                    HStack {
+                        Text("뜻")
+                        if isMeaningEmpty {
+                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        }
                     }
-                  }
                 }
                 .buttonStyle(.borderless)
-              }
+            }
             .shakeEffect(trigger: isWordEmpty || isMeaningEmpty)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("새 단어 추가")
+            .onAppear { wordFocused = true }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("취소", role: .cancel) {
-                        addNewWord = false
+                        dismiss()
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("추가") {
                         word.isEmpty ? (isWordEmpty = true) : (isWordEmpty = false)
-                      // MARK: 뜻이 입력되지 않은 element check
-                      meanings.contains("") ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
-                      print("meanings : \(meanings)")
-                      print("isWordEmpty : \(isWordEmpty)")
-                      print("isMeaningEmpty : \(isMeaningEmpty)")
+                        
+                        // MARK: 뜻이 입력되지 않은 element check
+                        meanings.contains("") ? (isMeaningEmpty = true) : (isMeaningEmpty = false)
 
-                      // MARK: 뜻 내부 String trim
-                      for i in meanings.indices {
-                        meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
-                      }
-                      if !isWordEmpty && !isMeaningEmpty {
+                        // MARK: 뜻 내부 String trim
+                        for i in meanings.indices {
+                            meanings[i] = meanings[i].trimmingCharacters(in: .whitespaces)
+                        }
+                        if !isWordEmpty && !isMeaningEmpty {
                             /// - 단어 추가
                             viewModel.addNewWord(word: word, meaning: meanings, option: option)
                             
@@ -134,13 +133,13 @@ struct FRAddNewWordView: View {
                             inputWord = ""
                             meanings = [""]
                             inputOption = ""
-
+                            
                             /// - isContinue 상태에 따라 sheet를 닫지 않고 유지함
                             if !isContinue {
-                                addNewWord = false
-                                /// - 단어를 입력하는 TextField로 Focus 이동
-                                wordFocused = true
+                                dismiss()
                             }
+                            /// - 단어를 입력하는 TextField로 Focus 이동
+                            wordFocused = true
                         }
                     }
                 }
