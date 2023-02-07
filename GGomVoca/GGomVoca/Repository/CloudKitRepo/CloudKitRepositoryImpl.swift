@@ -13,16 +13,16 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     //기본 싱글톤 인스턴스를 통해 얻은 private Cloud 데이터베이스 컨테이너
     let database = CKContainer.default().privateCloudDatabase
     //MARK:  VocaList Cloud와 Coredata 동기화
-    func syncVocaData() -> AnyPublisher<[Vocabulary], FirstPartyRepoError> {
+    func syncVocaData() -> AnyPublisher<[Vocabulary], RepositoryError> {
         let predicate =  NSPredicate(value: true)
         //let query = CKQuery(recordType: Vocabulary.recordType, predicate: predicate)
         let query = CKQuery(recordType: "Vocabulary", predicate: predicate)
         var vocaList = [Vocabulary]()
-        return Future<[Vocabulary], FirstPartyRepoError>{[weak self]observer in
+        return Future<[Vocabulary], RepositoryError>{[weak self]observer in
             self?.database.perform(query, inZoneWith: nil) { (records, error) in
                 if let error = error {
                     print("Error fetching vocabulary: \(error.localizedDescription)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                     return
                 }
                 
@@ -64,13 +64,13 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     }
     
     //MARK:  WordList Cloud와 Coredata 동기화
-    func syncVocaData(voca : Vocabulary) -> AnyPublisher<[Word], FirstPartyRepoError> {
+    func syncVocaData(voca : Vocabulary) -> AnyPublisher<[Word], RepositoryError> {
         let query = CKQuery(recordType: "Word", predicate: NSPredicate(format: "recordID == %@", voca.ckRecord.recordID))
-        return Future<[Word], FirstPartyRepoError>{[weak self] observer in
+        return Future<[Word], RepositoryError>{[weak self] observer in
             self?.database.perform(query, inZoneWith: nil) { (records, error) in
                 if let error = error {
                     print("Error retrieving word record: \(error)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                 } else if let records = records, records.count > 0 {
                     let wordRecord = records[0]
                     let name = wordRecord["name"] as? String
@@ -89,13 +89,13 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     
     
     //MARK: Post New Voca CloudKit
-    func postVocaData(vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
+    func postVocaData(vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, RepositoryError> {
         let record = vocabulary.ckRecord
-        return Future<Vocabulary, FirstPartyRepoError>{[weak self]observer in
+        return Future<Vocabulary, RepositoryError>{[weak self]observer in
             self?.database.save(record){(CKRecord, error) in
                 if let error = error{
                     print("ERROR save Vocabulary : \(error.localizedDescription)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                     return
                 }
                 print("ckRecord: \(String(describing: CKRecord))")
@@ -107,17 +107,17 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     }
     
     //MARK: Post New Word CloudKit
-    func postWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
+    func postWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, RepositoryError> {
         let vocaRecord = vocabulary.ckRecord
         let wordRecord = word.ckRecord(vocaOfWord: vocabulary)
         
-        return Future<Vocabulary, FirstPartyRepoError>{[weak self]observer in
+        return Future<Vocabulary, RepositoryError>{[weak self]observer in
             let saveOperation = CKModifyRecordsOperation(recordsToSave: [vocaRecord, wordRecord], recordIDsToDelete: nil)
             //handle the results of the operation. It provides the saved records, deleted records (if any), and any error that might have occurred.
             saveOperation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
                 if let error = error {
                     print("Error saving records: \(error)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                 } else {
                     print("Records saved successfully")
                     // records to the CloudKit
@@ -132,15 +132,15 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     }
     
     //MARK: Update New Word CloudKit
-    func updateVocaData(vocabulary: Vocabulary) -> AnyPublisher<String, FirstPartyRepoError> {
+    func updateVocaData(vocabulary: Vocabulary) -> AnyPublisher<String, RepositoryError> {
         //동일한 레코드 가 데이터베이스에 이미 존재하는 경우 기존 레코드가 새 데이터로 업데이트됩니다.
         //레코드가 없으면 새 레코드가 생성됩니다.
         let record = vocabulary.ckRecord
-        return Future<String, FirstPartyRepoError>{[weak self]observer in
+        return Future<String, RepositoryError>{[weak self]observer in
             self?.database.save(record){(CKRecord, error) in
                 if let error = error{
                     print("ERROR save Vocabulary : \(error.localizedDescription)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                     return
                 }
                 print("ckRecord: \(String(describing: CKRecord))")
@@ -152,17 +152,17 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     
     //코어데이터에 저장 후 실행
     //MARK: Update Word CloudKit
-    func updateWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, FirstPartyRepoError> {
+    func updateWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, RepositoryError> {
         let vocaRecord = vocabulary.ckRecord
         let wordRecord = word.ckRecord(vocaOfWord: vocabulary)
         
-        return Future<Vocabulary, FirstPartyRepoError>{[weak self]observer in
+        return Future<Vocabulary, RepositoryError>{[weak self]observer in
             let saveOperation = CKModifyRecordsOperation(recordsToSave: [vocaRecord, wordRecord], recordIDsToDelete: nil)
             //handle the results of the operation. It provides the saved records, deleted records (if any), and any error that might have occurred.
             saveOperation.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
                 if let error = error {
                     print("Error saving records: \(error)")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                 } else {
                     print("Records saved successfully")
                     // records to the CloudKit
@@ -178,13 +178,13 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     
     
     
-    func deleteVocaData(record: CKRecord) -> AnyPublisher<String, FirstPartyRepoError> {
+    func deleteVocaData(record: CKRecord) -> AnyPublisher<String, RepositoryError> {
       
-        return Future<String, FirstPartyRepoError>{[weak self] observer in
+        return Future<String, RepositoryError>{[weak self] observer in
             self?.database.delete(withRecordID: record.recordID) { (recordID, error) -> Void in
                 guard let _ = error else {
                     print("ERROR delete Vocabulary : \(String(describing: error?.localizedDescription))")
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                   return
                 }
                 
@@ -197,16 +197,16 @@ class CloudKitRepositoryImpl : CloudKitRepository {
     
     //코어데이터 삭제전 먼저 실행 필요
     //MARK: delete Word CloudKit
-    func deleteWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<String, FirstPartyRepoError> {
+    func deleteWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<String, RepositoryError> {
         let vocaRecord = vocabulary.ckRecord
         let wordRecord = word.ckRecord(vocaOfWord: vocabulary)
         
-        return Future<String, FirstPartyRepoError>{[weak self]observer in
+        return Future<String, RepositoryError>{[weak self]observer in
             
             self?.database.delete(withRecordID: wordRecord.recordID){ (recordID, error) in
                 guard let _ = error else {
                      
-                    observer(.failure(FirstPartyRepoError.notFoundDataFromCloudKit))
+                    observer(.failure(RepositoryError.cloudRepositoryError(error: .failPostWordFromCloudKit)))
                       return
                     }
                 observer(.success("Cloud에서 삭제되었습니다."))
