@@ -150,7 +150,7 @@ struct iPadWordTestView: View {
                         vm.showNextQuestion()
                     }
                     vm.gradeTestPaper(testMode: testType)
-                    vm.saveTestResult()
+                    vm.testResult()
                     isFinished = true
                 }
                 .navigationDestination(isPresented: $isFinished) {
