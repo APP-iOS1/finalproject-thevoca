@@ -152,10 +152,12 @@ struct WordTestResult: View {
             .listStyle(.plain)
             .padding(.top, -10)
             
-            Text("\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다.")
-                .foregroundColor(.gray)
-                .frame(width: UIScreen.main.bounds.width * 0.9)
-                .multilineTextAlignment(.center)
+            if checkLabel {
+                Text("\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다.")
+                    .foregroundColor(.gray)
+                    .frame(width: UIScreen.main.bounds.width * 0.9)
+                    .multilineTextAlignment(.center)
+            }
         }
         .onAppear {
             if vm.testPaper.filter({ $0.isToggleMemorize == true }).count > 0 {
