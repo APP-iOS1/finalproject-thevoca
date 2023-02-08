@@ -71,6 +71,7 @@ struct JPWordListView: View {
                 .verticalAlignSetting(.center)
             } else {
                 JPWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                    .padding(.top, 15)
             }
             
             if !multiSelection.isEmpty {
