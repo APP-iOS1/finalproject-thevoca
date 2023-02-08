@@ -37,7 +37,6 @@ struct JPWordListView: View {
     @State var isExport: Bool = false
     
     /// - 단어장 편집모드 관련 State
-    @Environment(\.editMode) var editMode
     @State var isSelectionMode: Bool = false
     @State private var multiSelection: Set<Word> = Set<Word>()
     // 단어 여러 개 삭제 시 확인 메시지
@@ -188,7 +187,6 @@ struct JPWordListView: View {
             } else if isSelectionMode, !isSpeech {  // 편집 모드
                 ToolbarItem {
                     Button("취소", role: .cancel) {
-                        editMode?.wrappedValue = .inactive
                         isSelectionMode.toggle()
                         multiSelection.removeAll()
                         SpeechSynthesizer.shared.stopSpeaking()
@@ -279,7 +277,6 @@ struct JPWordListView: View {
                             }
 
                             Button {
-                                editMode?.wrappedValue = .active
                                 isSelectionMode.toggle()
                             } label: {
                                 HStack {

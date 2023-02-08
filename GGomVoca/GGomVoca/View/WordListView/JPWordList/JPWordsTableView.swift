@@ -85,6 +85,7 @@ struct JPWordsTableView: View {
         } // List
         .listStyle(.plain)
         .padding(.top, -10)
+        .environment(\.editMode, .constant(self.isSelectionMode ? EditMode.active : EditMode.inactive)).animation(Animation.spring(), value: isSelectionMode)
         // MARK: 단어 편집 시트
         .sheet(isPresented: $editWord) {
             JPEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
