@@ -23,10 +23,7 @@ class DependencyManager {
     }
     // View
     func registerViews() {
-        //CrewListView 종속성은 register 사용하여 등록
-        container.register(PracticeVocaListView.self) { resolver in
-            let viewModel = resolver.resolve(PracticeVocaListViewModel.self)
-            return PracticeVocaListView(viewModel: viewModel!) }
+        // 종속성은 register 사용하여 등록
         
         //단어장 리스트 뷰
         container.register(DisplaySplitView.self) { resolver in
@@ -37,10 +34,6 @@ class DependencyManager {
     
     // ViewModel
     func registerViewModels() {
-        container.register(PracticeVocaListViewModel.self) { resolver in
-            let service = resolver.resolve(VocabularyService.self)!
-            return PracticeVocaListViewModel(service: service)
-        }
         
         container.register(DisplaySplitViewModel.self) { resolver in
             let service = resolver.resolve(VocabularyService.self)!
