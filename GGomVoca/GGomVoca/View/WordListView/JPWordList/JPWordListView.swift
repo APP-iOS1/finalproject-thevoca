@@ -71,9 +71,10 @@ struct JPWordListView: View {
                 .verticalAlignSetting(.center)
             } else {
                 JPWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                    .padding(.top, 15)
             }
             
-            if !multiSelection.isEmpty {
+            if !multiSelection.isEmpty && isSelectionMode {
                 VStack(spacing: 0) {
                     Rectangle()
                         .foregroundColor(Color("toolbardivider"))
