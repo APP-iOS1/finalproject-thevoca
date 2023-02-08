@@ -65,6 +65,23 @@ struct JPWordsTableView: View {
             .alignmentGuide(.listRowSeparatorLeading) { d in
                 d[.leading]
             }
+            .background {
+                if !isSelectionMode {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            
+                            /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
+                            if unmaskedWords.contains(word.id) {
+                                if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
+                                    unmaskedWords.remove(at: tmpIndex)
+                                }
+                            } else {
+                                unmaskedWords.append(word.id)
+                            }
+                        }
+                }
+            }
             .swipeActions(allowsFullSwipe: false) {
                 Button(role: .destructive){
                     viewModel.deleteWord(word: word)
