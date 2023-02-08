@@ -13,6 +13,7 @@
 		162EE05129509F4E0065E103 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162EE04F29509F4E0065E103 /* SegmentView.swift */; };
 		165BA9792987861D0067F217 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BA9782987861D0067F217 /* String+.swift */; };
 		165BA97B29879A090067F217 /* EmptyWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BA97A29879A090067F217 /* EmptyWordListView.swift */; };
+		16C665C629936C2700B02C9E /* VLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C665C529936C2700B02C9E /* VLine.swift */; };
 		16E1ECC1298B9A0800BA4C9C /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E1ECC0298B9A0800BA4C9C /* ShakeEffect.swift */; };
 		16E1ECC3298C49E400BA4C9C /* FieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E1ECC2298C49E400BA4C9C /* FieldView.swift */; };
 		16E1ECC5298CDCFC00BA4C9C /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E1ECC4298CDCFC00BA4C9C /* Array+.swift */; };
@@ -104,6 +105,7 @@
 		162EE04F29509F4E0065E103 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		165BA9782987861D0067F217 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		165BA97A29879A090067F217 /* EmptyWordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyWordListView.swift; sourceTree = "<group>"; };
+		16C665C529936C2700B02C9E /* VLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLine.swift; sourceTree = "<group>"; };
 		16E1ECC0298B9A0800BA4C9C /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
 		16E1ECC2298C49E400BA4C9C /* FieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldView.swift; sourceTree = "<group>"; };
 		16E1ECC4298CDCFC00BA4C9C /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				EAB4FFAC2977C8FD0070941A /* CellButtonView.swift */,
 				165BA97A29879A090067F217 /* EmptyWordListView.swift */,
 				16E1ECC2298C49E400BA4C9C /* FieldView.swift */,
+				16C665C529936C2700B02C9E /* VLine.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -693,6 +696,7 @@
 				63EA4ABF29875DE8009392EE /* KOWordListView.swift in Sources */,
 				EAB4FFAD2977C8FD0070941A /* CellButtonView.swift in Sources */,
 				63EA4AD929875E00009392EE /* JPWordsTableView.swift in Sources */,
+				16C665C629936C2700B02C9E /* VLine.swift in Sources */,
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
 				EEE6EABD2992210A00C0F653 /* CoreDataError.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
