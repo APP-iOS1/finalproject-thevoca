@@ -71,21 +71,23 @@ struct JPWordsTableView: View {
                 d[.leading]
             }
             .overlay {
-                Color.clear
-                    .frame(width: UIScreen.main.bounds.width)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if !isSelectionMode && selectedSegment != .normal {
-                            /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
-                            if unmaskedWords.contains(word.id) {
-                                if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
-                                    unmaskedWords.remove(at: tmpIndex)
+                if !isSelectionMode {
+                    Color.clear
+                        .frame(width: UIScreen.main.bounds.width)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if selectedSegment != .normal {
+                                /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
+                                if unmaskedWords.contains(word.id) {
+                                    if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
+                                        unmaskedWords.remove(at: tmpIndex)
+                                    }
+                                } else {
+                                    unmaskedWords.append(word.id)
                                 }
-                            } else {
-                                unmaskedWords.append(word.id)
                             }
                         }
-                    }
+                }
             }
             .swipeActions(allowsFullSwipe: false) {
                 Button(role: .destructive){
