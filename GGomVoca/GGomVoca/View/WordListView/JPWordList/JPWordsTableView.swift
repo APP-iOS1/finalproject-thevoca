@@ -28,6 +28,8 @@ struct JPWordsTableView: View {
             if isSelectionMode {
                 Image(systemName: "circle")
                     .foregroundColor(.clear)
+                    .font(.title2)
+                    .padding(.vertical, -10)
             }
             Text("단어")
                 .headerText()
@@ -36,13 +38,13 @@ struct JPWordsTableView: View {
             Text("뜻")
                 .headerText()
         }
+        .animation(.default, value: isSelectionMode)
         .padding(.horizontal, 20)
         .background {
             Rectangle()
                 .fill(Color("fourseason"))
                 .frame(height: 30)
         }
-        .animation(Animation.spring(), value: isSelectionMode)
         
         // MARK: - Content
         List($viewModel.words, id: \.self, selection: $multiSelection) { $word in
@@ -52,14 +54,17 @@ struct JPWordsTableView: View {
                     .horizontalAlignSetting(.center)
                     .multilineTextAlignment(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    .animation(.none, value: isSelectionMode)
                 // 발음
                 Text(word.option ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    .animation(.none, value: isSelectionMode)
                 // 뜻
                 Text(word.meaning!.joined(separator: ", "))
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    .animation(.none, value: isSelectionMode)
             }
             .frame(minHeight: 40)
             .alignmentGuide(.listRowSeparatorLeading) { d in
@@ -107,7 +112,8 @@ struct JPWordsTableView: View {
         } // List
         .listStyle(.plain)
         .padding(.top, -10)
-        .environment(\.editMode, .constant(self.isSelectionMode ? EditMode.active : EditMode.inactive)).animation(Animation.spring(), value: isSelectionMode)
+        .environment(\.editMode, .constant(self.isSelectionMode ? EditMode.active : EditMode.inactive))
+        .animation(.default, value: isSelectionMode)
         // MARK: 단어 편집 시트
         .sheet(isPresented: $editWord) {
             JPEditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
