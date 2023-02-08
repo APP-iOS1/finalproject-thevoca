@@ -70,12 +70,12 @@ struct JPWordsTableView: View {
             .alignmentGuide(.listRowSeparatorLeading) { d in
                 d[.leading]
             }
-            .background {
-                if !isSelectionMode {
-                    Color.clear
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            
+            .overlay {
+                Color.clear
+                    .frame(width: UIScreen.main.bounds.width)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        if !isSelectionMode && selectedSegment != .normal {
                             /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
                             if unmaskedWords.contains(word.id) {
                                 if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
@@ -85,7 +85,7 @@ struct JPWordsTableView: View {
                                 unmaskedWords.append(word.id)
                             }
                         }
-                }
+                    }
             }
             .swipeActions(allowsFullSwipe: false) {
                 Button(role: .destructive){
