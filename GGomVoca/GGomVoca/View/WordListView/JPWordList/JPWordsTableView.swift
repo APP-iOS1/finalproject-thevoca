@@ -43,19 +43,27 @@ struct JPWordsTableView: View {
         List {
             ForEach($viewModel.words) { $word in
                 HStack {
+                    // 단어
                     Text(word.word ?? "")
                         .horizontalAlignSetting(.center)
                         .multilineTextAlignment(.center)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    // 발음
                     Text(word.option ?? "")
                         .horizontalAlignSetting(.center)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    // 뜻
                     Text(word.meaning!.joined(separator: ", "))
                         .horizontalAlignSetting(.center)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
-                .alignmentGuide(.listRowSeparatorLeading) { d in
-                    d[.leading]
+                .frame(minHeight: 40)
+                .swipeActions(allowsFullSwipe: false) {
+                    Button(role: .destructive){
+                        viewModel.deleteWord(word: word)
+                    }label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
                 }
                 .contextMenu {
                     if selectedSegment == .normal {
