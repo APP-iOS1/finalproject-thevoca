@@ -74,7 +74,7 @@ struct JPWordListView: View {
                     .padding(.top, 15)
             }
             
-            if !multiSelection.isEmpty {
+            if !multiSelection.isEmpty && isSelectionMode {
                 VStack(spacing: 0) {
                     Rectangle()
                         .foregroundColor(Color("toolbardivider"))
