@@ -8,11 +8,10 @@
 import SwiftUI
 //단어장 셀 뷰
 struct VocabularyCell: View {
-    // MARK: SuperView Properties
-    var vm : VocabularyCellViewModel = VocabularyCellViewModel()
+    
     // TODO: 최근 본 단어장 코드 완전히 걷어 낼때 refreshCompletion으로 변경하고 deleteComletion 삭제
     //단어장 고정하기 completion Handler
-    var pinnedCompletion: () -> ()
+    var pinnedCompletion: (UUID) -> ()
     //단어장 삭제 completion Handler
     var deleteCompletion : () -> ()
     @Binding var selectedVocabulary: Vocabulary?
@@ -67,8 +66,8 @@ struct VocabularyCell: View {
         // 단어장 고정하기 스와이프
         .swipeActions(edge: .leading) {
             Button {
-                vm.updateFavoriteVocabulary(id: vocabulary.id!)
-                pinnedCompletion()
+                //vm.updateFavoriteVocabulary(id: vocabulary.id!)
+                pinnedCompletion(vocabulary.id!)
                 UserManager.pinnedVocabulary(id: vocabulary.id!.uuidString, nationality: vocabulary.nationality!)
             } label: {
                 Image(systemName: vocabulary.isPinned ? "pin.slash.fill" : "pin.fill")
@@ -82,7 +81,7 @@ struct VocabularyCell: View {
                 var words = vocabulary.words?.allObjects as? [Word] ?? []
                 words = words.filter { $0.deletedAt != nil }
                 if words.isEmpty {
-                    vm.updateDeletedData(id: vocabulary.id!)
+                   
                     deleteCompletion()
                     UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                 } else if UIDevice.current.model == "iPhone" {
@@ -101,8 +100,8 @@ struct VocabularyCell: View {
         }
         .contextMenu {
             Button {
-                vm.updateFavoriteVocabulary(id: vocabulary.id!)
-                pinnedCompletion()
+               
+                pinnedCompletion(vocabulary.id!)
             } label: {
                 if vocabulary.isPinned {
                     HStack {
@@ -131,7 +130,7 @@ struct VocabularyCell: View {
         }
         // MARK: 단어장 이름 변경 sheet
         .sheet(isPresented: $editVocabularyName) {
-            pinnedCompletion() // vocabularyListView를 re-render하게 함
+            pinnedCompletion(vocabulary.id!) // vocabularyListView를 re-render하게 함
         } content: {
             EditVocabularyView(vocabulary: vocabulary)
         }
@@ -141,7 +140,7 @@ struct VocabularyCell: View {
                         message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
                         buttons: [
                             .destructive(Text("단어장 삭제")) {
-                                vm.updateDeletedData(id: vocabulary.id!)
+                               
                                 deleteCompletion()
                                 UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
                             },
@@ -153,9 +152,9 @@ struct VocabularyCell: View {
             Alert(title: Text("'\(vocabulary.name ?? "")' 단어장을 삭제 하시겠습니까?"),
                   message: Text("단어장에 포함된 모든 단어가 삭제됩니다.\n삭제된 단어장은 최근 삭제된 단어장에서 확인할 수 있습니다."),
                   primaryButton: .destructive(Text("단어장 삭제")) {
-                    vm.updateDeletedData(id: vocabulary.id!)
+//                   
                     deleteCompletion() //삭제 후 업데이트
-                    UserManager.deleteVocabulary(id: vocabulary.id!.uuidString)
+                   
                     },
                   secondaryButton: .cancel(Text("취소")))
         }

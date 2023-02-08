@@ -31,7 +31,7 @@ extension Vocabulary {
             return nil
         }
         print("from result : \(ckRecord) = success")
-        let vocabulary = Vocabulary(context: PracticePersistence.shared.container.viewContext)
+        let vocabulary = Vocabulary(context: PersistenceController.shared.container.viewContext)
         vocabulary.id = id
         vocabulary.isPinned = isPinned
         vocabulary.name = name

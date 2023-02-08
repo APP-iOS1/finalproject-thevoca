@@ -24,5 +24,3 @@ protocol VocabularyService{
     //TODO: Publisher 반환타입 수정
     func deletedVocaData(id: UUID) -> AnyPublisher<String, RepositoryError>
 }
-
-

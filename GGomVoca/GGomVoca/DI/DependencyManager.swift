@@ -23,17 +23,21 @@ class DependencyManager {
     }
     // View
     func registerViews() {
-        //CrewListView 종속성은 register 사용하여 등록
-        container.register(PracticeVocaListView.self) { resolver in
-            let viewModel = resolver.resolve(PracticeVocaListViewModel.self)
-            return PracticeVocaListView(viewModel: viewModel!) }
+        // 종속성은 register 사용하여 등록
+        
+        //단어장 리스트 뷰
+        container.register(DisplaySplitView.self) { resolver in
+            let viewModel = resolver.resolve(DisplaySplitViewModel.self)
+            return DisplaySplitView(viewModel: viewModel!) }
+        
     }
     
     // ViewModel
     func registerViewModels() {
-        container.register(PracticeVocaListViewModel.self) { resolver in
+        
+        container.register(DisplaySplitViewModel.self) { resolver in
             let service = resolver.resolve(VocabularyService.self)!
-            return PracticeVocaListViewModel(service: service)
+            return DisplaySplitViewModel(vocabularyList: [], service: service)
         }
     }
     
@@ -45,10 +49,18 @@ class DependencyManager {
             return VocabularyServiceImpl(coreDataRepo: coreDataRepository,
                                          cloudDataRepo: cloudDataRepository)
         }
+        
+        container.register(WordListService.self) { resolver in
+            let coreDataRepository = resolver.resolve(CoreDataRepository.self)!
+            let cloudDataRepository = resolver.resolve(CloudKitRepository.self)!
+            return WordListServiceImpl(coreDataRepo: coreDataRepository,
+                                         cloudDataRepo: cloudDataRepository)
+        }
+        
     }
     // Model (Repository)
     func registerRepositories() {
-        container.register(CoreDataRepository.self) { _ in CoreDataRepositoryImpl(context: PracticePersistence.shared.container.viewContext) }
+        container.register(CoreDataRepository.self) { _ in CoreDataRepositoryImpl(context: PersistenceController.shared.container.viewContext) }
         container.register(CloudKitRepository.self) { _ in CloudKitRepositoryImpl() }
     }
     
