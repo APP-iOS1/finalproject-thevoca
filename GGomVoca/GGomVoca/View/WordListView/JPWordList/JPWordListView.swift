@@ -10,7 +10,7 @@ import SwiftUI
 struct JPWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var viewModel: JPWordListViewModel = JPWordListViewModel()
+    @StateObject var viewModel: JPWordListViewModel = DependencyManager.shared.resolve(JPWordListViewModel.self)!
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
