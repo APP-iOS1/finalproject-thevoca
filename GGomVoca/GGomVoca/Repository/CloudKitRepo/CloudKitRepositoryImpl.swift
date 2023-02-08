@@ -31,15 +31,17 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     let cloudVocaId = record["id"] as? String
                     let cloudVocaUpdatedAt = record.modificationDate
                     
-                    if let coreDataVocabulary = PracticePersistence.shared.fetchVocabularyFromCoreData(withID: cloudVocaId ?? ""){
+                    if let coreDataVocabulary = PersistenceController.shared.fetchVocabularyFromCoreData(withID: cloudVocaId ?? ""){
                         //MARK: Coredata가 최신인 경우.
-                        if coreDataVocabulary.updatedAt ?? "" > "\(cloudVocaUpdatedAt)"{
+                        if coreDataVocabulary.updatedAt ?? "" > "\(cloudVocaUpdatedAt!)"{
                             vocaList.append(coreDataVocabulary)
-                        }else if coreDataVocabulary.updatedAt ?? "" < "\(cloudVocaUpdatedAt)"{
+                            print("CoreData가 최신 \(coreDataVocabulary)")
+                        }else if coreDataVocabulary.updatedAt ?? "" < "\(cloudVocaUpdatedAt!)"{
                             //MARK: Cloud가 최신인 경우
                             //기존 Voca 제거
-                            PracticePersistence.shared.deleteVocabularyFromCoreData(withID: cloudVocaId ?? "")
-                            PracticePersistence.shared.saveContext()
+                          
+                            PersistenceController.shared.deleteVocabularyFromCoreData(withID: cloudVocaId ?? "")
+                            PersistenceController.shared.saveContext()
                             //Cloud 버전으로 New Vocabulary 생성
                             if let cloudVocabulary = Vocabulary.from(ckRecord: record){
                                 vocaList.append(cloudVocabulary)
@@ -49,13 +51,16 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     }else{
                         //MARK: Coredata는 없고 Cloud만 존재하는 경우
                         //Cloud 버전으로 New Vocabulary 생성
+                        
                         if let cloudVocabulary = Vocabulary.from(ckRecord: record){
+                            print("Cloud만 존재 \(cloudVocabulary)")
+                          
                             vocaList.append(cloudVocabulary)
                         }
                     }
                 }
                 
-                PracticePersistence.shared.saveContext()
+                PersistenceController.shared.saveContext()
                 observer(.success(vocaList))
             }
             
@@ -99,7 +104,7 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     return
                 }
                 print("ckRecord: \(String(describing: CKRecord))")
-                PracticePersistence.shared.saveContext()
+                PersistenceController.shared.saveContext()
                 observer(.success(vocabulary))
             }
         }.eraseToAnyPublisher()
@@ -144,7 +149,7 @@ class CloudKitRepositoryImpl : CloudKitRepository {
                     return
                 }
                 print("ckRecord: \(String(describing: CKRecord))")
-                PracticePersistence.shared.saveContext()
+                PersistenceController.shared.saveContext()
                 observer(.success("Cloud update complete"))
             }
         }.eraseToAnyPublisher()
@@ -195,10 +200,9 @@ class CloudKitRepositoryImpl : CloudKitRepository {
          
     }
     
-    //코어데이터 삭제전 먼저 실행 필요
     //MARK: delete Word CloudKit
     func deleteWordData(word : Word,vocabulary: Vocabulary) -> AnyPublisher<String, RepositoryError> {
-        let vocaRecord = vocabulary.ckRecord
+        _ = vocabulary.ckRecord
         let wordRecord = word.ckRecord(vocaOfWord: vocabulary)
         
         return Future<String, RepositoryError>{[weak self]observer in
