@@ -13,18 +13,18 @@ struct WordSearchingView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     // MARK: View Properties...
-    @State var searchStr : String = ""
+    var keyword : String
     @State var allWords : [SearchingWordModel] = []
     
     var lowerCasedSearchWord: String {
-        searchStr.lowercased()
+        keyword.lowercased()
     }
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack(spacing: 0) {
                 // 검색어가 입력되지 않았을 때 나타낼 Placeholder
-                if searchStr.count == 0 {
+                if keyword.count == 0 {
                     HStack {
                         VStack(alignment: .center) {
                             Image(systemName: "questionmark.circle")
@@ -78,12 +78,12 @@ struct WordSearchingView: View {
                     }
                 }
             }
-            .navigationBarTitle("내단어검색")
+//            .navigationBarTitle("내단어검색")
             .onAppear {
                 let vocabularyList = searchResults() as [Vocabulary]
                 allWords = toSearchwords(vocaList: vocabularyList)
             }
-        }.searchable(text: $searchStr, prompt: "단어를 입력해주세요.")
+//        }
     }
     // MARK: vocabulary를 fetch 받아오는 함수
     func searchResults() -> [Vocabulary] {
@@ -120,10 +120,10 @@ struct WordSearchingView: View {
     }
 }
 
-struct WordSearchingView_Previews: PreviewProvider {
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    static var previews: some View {
-        WordSearchingView()
-    }
-}
+//struct WordSearchingView_Previews: PreviewProvider {
+//    @Environment(\.managedObjectContext) private var viewContext
+//
+//    static var previews: some View {
+//        WordSearchingView(keyword: .contains(""))
+//    }
+//}
