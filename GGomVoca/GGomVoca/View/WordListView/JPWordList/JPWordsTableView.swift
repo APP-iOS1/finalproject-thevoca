@@ -40,8 +40,7 @@ struct JPWordsTableView: View {
         }
         
         // MARK: - Content
-        List {
-            ForEach($viewModel.words) { $word in
+        List($viewModel.words, id: \.self, selection: $multiSelection) { $word in
                 HStack {
                     // 단어
                     Text(word.word ?? "")
@@ -58,6 +57,9 @@ struct JPWordsTableView: View {
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
                 .frame(minHeight: 40)
+                .alignmentGuide(.listRowSeparatorLeading) { d in
+                    d[.leading]
+                }
                 .swipeActions(allowsFullSwipe: false) {
                     Button(role: .destructive){
                         viewModel.deleteWord(word: word)
@@ -80,7 +82,6 @@ struct JPWordsTableView: View {
                         }
                     }
                 }
-            }
         } // List
         .listStyle(.plain)
         .padding(.top, -10)
