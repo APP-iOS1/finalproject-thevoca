@@ -19,18 +19,16 @@ struct KOWordListView: View {
     @State private var emptyMessage: String = ""
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
     @State private var sort: Int = 0
-    private var selectedSegment: ProfileSection {
-        switch sort {
-        case 1:
-            return .wordTest
-        case 2:
-            return .meaningTest
-        default:
-            return .normal
-        }
-    }
+
+
     
-    @State private var selectedOrder: String = "사전순"
+
+
+    // MARK: UIKit Menu
+    @State var isImportVoca: Bool = false
+    @State var isCheckResult: Bool = false
+    @State var selectedSegment: ProfileSection = .normal
+    @State var selectedOrder: String = "사전순"
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -212,114 +210,25 @@ struct KOWordListView: View {
                 
                 // 햄버거 버튼
                 ToolbarItem {
-                    
-                    Menu {
-                        Section {
-                            Menu {
-                                Picker(selection: $sort, label: Text("")) {
-                                    Text("모두 보기").tag(0)
-                                    Text("뜻만 보기").tag(1)
-                                    Text("단어만 보기").tag(2)
-                                }
-                                .onChange(of: sort) { _ in
-                                    unmaskedWords = []
-                                }
-                            } label: {
-                                Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
-                                Image(systemName: "eye.fill")
-                            }
-                            
-                            Button {
-                                isTestMode.toggle()
-                            } label: {
-                                HStack {
-                                    Text("시험 보기")
-                                    Image(systemName: "square.and.pencil")
-                                }
-                            }
-                            .foregroundColor(.orange)
-                            
-                            NavigationLink(destination: MyNoteView(words: viewModel.words)) {
-                                HStack {
-                                    Text("시험 결과 보기")
-                                    Image(systemName: "chart.line.uptrend.xyaxis")
-                                }
-                            }
-                            .isDetailLink(true)
-                            
+                    CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $isSpeech, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
+                        .onChange(of: selectedSegment) { _ in
+                            unmaskedWords = []
                         }
-                        
-                        
-                        Section {
-                            Menu {
-                                Button("시간순") {
-                                    selectedOrder = "시간순"
-                                    //                              for i in viewModel.words.indices {
-                                    //                                print("createdAt: \(viewModel.words[i].createdAt)")
-                                    //                              }
-                                    viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
-                                }
-                                
-                                Button("사전순") {
-                                    selectedOrder = "사전순"
-                                    viewModel.words.sort { $0.word! < $1.word! }
-                                }
-                                
-                                Button {
-                                    viewModel.words.shuffle()
-                                    selectedOrder = "랜덤"
-                                } label: {
-                                    Text("랜덤")
-                                }
-                                
-                            } label: {
-                                Text("정렬 옵션: \n · \(Text(selectedOrder))")
-                                Image(systemName: "arrow.up.arrow.down")
-                            }
-                            
-                            Button {
-                                isSelectionMode.toggle()
-                            } label: {
-                                HStack {
-                                    Text("단어장 편집하기")
-                                    Image(systemName: "checkmark.circle")
-                                }
-                            }
-                            
-                            NavigationLink {
-                                ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
-                            } label: {
-                                HStack {
-                                    Text("단어장 가져오기")
-                                    Image(systemName: "square.and.arrow.down")
-                                }
-                            }
-                            .isDetailLink(true)
-                            
-                            Button {
-                                isExport.toggle()
-                            } label: {
-                                HStack {
-                                    Text("단어장 내보내기")
-                                    Image(systemName: "square.and.arrow.up")
-                                }
-                            }
-                            
-                        }
-                        
-                        Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
-                            isSpeech.toggle()
-                        } label: {
-                            HStack {
-                                Text("전체 발음 듣기")
-                                Image(systemName: "speaker.wave.3")
+                        .onChange(of: selectedOrder) { value in
+                            switch value {
+                            case "랜덤 정렬":
+                            viewModel.words.shuffle()
+                            case "사전순 정렬":
+                            viewModel.words.shuffle()
+                            default:
+                            viewModel.words.shuffle()
                             }
                         }
-                        
-                    } label: {
-                        Image(systemName: "line.3.horizontal")
-                    }
+                        .onChange(of: isSpeech) { value in
+                            if value {
+                              SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                            }
+                        }
                 }
             }
         }
