@@ -23,85 +23,153 @@ struct WordsTableView: View {
     @Binding var multiSelection: Set<Word>
     
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-                Section {
-                    ForEach(viewModel.words) { word in
-                        WordCell(selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords,
-                                 isSelectionMode: $isSelectionMode, multiSelection: $multiSelection,
-                                 nationality: viewModel.nationality, word: word)
-                            .addSwipeButtonActions(leadingButtons: [],
-                                              trailingButton:  [.delete], onClick: { button in
-                                switch button {
-                                case .delete:
-                                    viewModel.deleteWord(word: word)
-                                default:
-                                    print("default")
-                                }
-                            })
-                            .contextMenu {
-                                if selectedSegment == .normal {
-                                    Button {
-                                        editingWord = word
-                                        editWord.toggle()
-                                    } label: {
-                                        Label("수정하기", systemImage: "gearshape.fill")
-                                    }
-                                    
-                                    Button {
-                                        // Voice Over
-                                    } label: {
-                                        Label("발음 듣기", systemImage: "mic.fill")
-                                    }
-                                }
-                            }
-                        
-                        Divider()
+        // MARK: - Header
+        HStack {
+            if isSelectionMode {
+                Image(systemName: "circle")
+                    .foregroundColor(.clear)
+                    .font(.title2)
+                    .padding(.vertical, -10)
+            }
+
+            switch viewModel.nationality {
+            case "KO", "JA":
+                Text("단어")
+                    .headerText()
+                Text("발음")
+                    .headerText()
+                Text("뜻")
+                    .headerText()
+            case "EN", "FR":
+                Text("단어")
+                    .headerText()
+                Text("뜻")
+                    .headerText()
+            default:
+                EmptyView()
+            }
+        }
+        .animation(.default, value: isSelectionMode)
+        .padding(.horizontal, 20)
+        .background {
+            Rectangle()
+                .fill(Color("fourseason"))
+                .frame(height: 30)
+        }
+        
+        // MARK: - Content
+        List($viewModel.words, id: \.self, selection: $multiSelection) { $word in
+            HStack {
+                switch viewModel.nationality {
+                case "KO", "JA":
+                    HStack {
+                        Text(word.word ?? "")
+                            .horizontalAlignSetting(.center)
+                            .multilineTextAlignment(.center)
+                            .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                            .animation(.none, value: isSelectionMode)
+                        VLine()
+                        Text(word.option ?? "")
+                            .horizontalAlignSetting(.center)
+                            .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                            .animation(.none, value: isSelectionMode)
+                        VLine()
+                        Text(word.meaning!.joined(separator: ","))
+                            .horizontalAlignSetting(.center)
+                            .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                            .animation(.none, value: isSelectionMode)
                     }
-                } header: {
-                    VStack(spacing: 0) {
-                        HStack {
-                            if isSelectionMode {
-                                /// - 편집모드에서 header도 체크용 원만큼 오른쪽으로 밀리도록 하기 위해 circle image를 배경색과 같은색으로 띄움
-                                Image(systemName: "circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                                    .foregroundColor(Color("offwhite"))
-                                    .padding(.leading, 20)
-                            }
-                            
-                            switch viewModel.nationality {
-                            case "KO", "JA":
-                                Text("단어")
-                                    .horizontalAlignSetting(.center)
-                                Text("발음")
-                                    .horizontalAlignSetting(.center)
-                                Text("뜻")
-                                    .horizontalAlignSetting(.center)
-                            case "EN", "FR":
-                                Text("단어")
-                                    .horizontalAlignSetting(.center)
-                                Text("뜻")
-                                    .horizontalAlignSetting(.center)
-                            default:
-                                EmptyView()
+                case "FR", "EN":
+                    Text(word.word ?? "")
+                        .horizontalAlignSetting(.center)
+                        .multilineTextAlignment(.center)
+                        .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                        .animation(.none, value: isSelectionMode)
+                    VLine()
+                    HStack(spacing: 0) {
+                        // MARK: 단어의 성별에 따라 표시하는 이미지 변경
+                        switch word.option {
+                        case "f":
+                            Image(systemName: "f.square")
+                                .font(.subheadline)
+                                .opacity(0.5)
+                                .padding(.trailing, 5)
+                        case "m":
+                            Image(systemName: "m.square")
+                                .font(.subheadline)
+                                .opacity(0.5)
+                                .padding(.trailing, 5)
+                        default:
+                            EmptyView()
+                        }
+
+                      Text(word.meaning!.joined(separator: ", "))
+                    }
+                    .horizontalAlignSetting(.center)
+                    .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
+                    .animation(.none, value: isSelectionMode)
+                    
+                default:
+                    Text("default")
+                }
+            }
+            .frame(minHeight: 40)
+            .alignmentGuide(.listRowSeparatorLeading) { d in
+                d[.leading]
+            }
+            .overlay {
+                if !isSelectionMode {
+                    Color.clear
+                        .frame(width: UIScreen.main.bounds.width)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            if selectedSegment != .normal {
+                                /// - 편집모드가 아닐때는 단어를 가렸다가 보였다가 할 수 있도록
+                                if unmaskedWords.contains(word.id) {
+                                    if let tmpIndex = unmaskedWords.firstIndex(of: word.id) {
+                                        unmaskedWords.remove(at: tmpIndex)
+                                    }
+                                } else {
+                                    unmaskedWords.append(word.id)
+                                }
                             }
                         }
-                        .frame(height: 40)
-                        .background { Color("offwhite") }
-                        
-                        Rectangle()
-                            .foregroundColor(Color("toolbardivider"))
-                            .frame(height: 1)
+                }
+            }
+            .swipeActions(allowsFullSwipe: false) {
+                Button(role: .destructive){
+                    viewModel.deleteWord(word: word)
+                }label: {
+                    Label("Delete", systemImage: "trash.fill")
+                }
+            }
+            .contextMenu {
+                if selectedSegment == .normal {
+                    Button {
+                        editingWord = word
+                        editWord.toggle()
+                    } label: {
+                        Label("수정하기", systemImage: "gearshape.fill")
                     }
-                } // Section
-            } // LazyVStack
-            .background { Color("offwhite") }
-        } // ScrollView
+                    Button {
+                        SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ja-JP", .single)
+                    } label: {
+                        Label("발음 듣기", systemImage: "mic.fill")
+                    }
+                }
+            }
+        } // List
+        .listStyle(.plain)
+        .padding(.top, -10)
+        .environment(\.editMode, .constant(self.isSelectionMode ? EditMode.active : EditMode.inactive))
+        .animation(.default, value: isSelectionMode)
         // MARK: 단어 편집 시트
         .sheet(isPresented: $editWord) {
             EditWordView(viewModel: viewModel, editWord: $editWord, editingWord: $editingWord)
                 .presentationDetents([.medium])
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
