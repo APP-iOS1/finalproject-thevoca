@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 import SwiftUI
-
+//삭제 예정 (구 Repository)
 struct CoredataRepository{
     static var shared = CoredataRepository()
     

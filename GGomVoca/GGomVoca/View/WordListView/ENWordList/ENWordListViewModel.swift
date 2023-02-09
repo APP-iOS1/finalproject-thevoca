@@ -9,9 +9,7 @@ import Foundation
 import Combine
 
 class ENENWordListViewModel: ObservableObject {
-    // MARK: CoreData ViewContext
-    var viewContext = PersistenceController.shared.container.viewContext
-    var coreDataRepository = CoredataRepository()
+    
     
     //MARK: Service
     var service : WordListService
@@ -26,16 +24,8 @@ class ENENWordListViewModel: ObservableObject {
   var nationality: String = "EN"
   @Published var words: [Word] = []
   
-  // MARK: saveContext
-  func saveContext() {
-    do {
-      try viewContext.save()
-    } catch {
-      print("Error saving managed object context: \(error)")
-    }
-  }
     // MARK: 일치하는 id의 단어장 불러오기 Updated
-    func fetchVocabulary(vocabularyID: Vocabulary.ID){
+    func getVocabulary(vocabularyID: Vocabulary.ID){
         service.getVocabularyFromId(vocabularyID: vocabularyID)
             .sink(receiveCompletion: {observer in
                 switch observer {
@@ -47,22 +37,17 @@ class ENENWordListViewModel: ObservableObject {
                 }
                 
             }, receiveValue: {[weak self] voca in
-               
+               print(" 불러오기 결과 \(voca)")
+                print(" 불러오기 결과 \(voca.name)")
+                self?.selectedVocabulary = voca
                 let allWords = voca.words?.allObjects as? [Word] ?? []
                 self?.words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
              })
              .store(in: &bag)
     }
     
-    // MARK: 일치하는 id의 단어장 불러오기 Deprecated
-    func getVocabulary(vocabularyID: Vocabulary.ID) {
-        selectedVocabulary = coreDataRepository.getVocabularyFromID(vocabularyID: vocabularyID ?? UUID())
-        let allWords = selectedVocabulary.words?.allObjects as? [Word] ?? []
-        words = allWords.filter { $0.deletedAt == "" || $0.deletedAt == nil }
-    }
-    
     // MARK: 단어 삭제하기 Updated
-    func deleteWord_(word: Word){
+    func deleteWord(word: Word){
         service.deleteWord(word: word)
             .sink(receiveCompletion: {observer in
                 switch observer {
@@ -77,25 +62,16 @@ class ENENWordListViewModel: ObservableObject {
                 
                print(result)
             
-                
-                self.fetchVocabulary(vocabularyID: self.selectedVocabulary.id)
+                self.service.saveContext()
+                self.getVocabulary(vocabularyID: self.selectedVocabulary.id)
              })
              .store(in: &bag)
     }
     
     
-    // MARK: 단어 삭제하기 Deprecated
-    func deleteWord(word: Word) {
-    word.deletedAt = "\(Date())"
     
-    saveContext()
-    
-    if let tempIndex = words.firstIndex(of: word) {
-      words.remove(at: tempIndex)
-    }
-  }
     // MARK: 단어 수정하기 Updated
-    func updateWord_(editWord: Word, word: String, meaning: [String], option: String = "") {
+    func updateWord(editWord: Word, word: String, meaning: [String], option: String = "") {
         service.updateWord(editWord: editWord, word: word, meaning: meaning, option: option)
             .sink(receiveCompletion: {observer in
                 switch observer {
@@ -107,26 +83,15 @@ class ENENWordListViewModel: ObservableObject {
                 }
                 
             }, receiveValue: {[weak self] value in
-                self?.fetchVocabulary(vocabularyID: self?.selectedVocabulary.id)
+                self?.service.saveContext()
+                self?.getVocabulary(vocabularyID: self?.selectedVocabulary.id)
             })
             .store(in: &bag)
     }
-    // MARK: 단어 수정하기 Deprecated
-    func updateWord(editWord: Word, word: String, meaning: [String], option: String = "") {
-        guard let tempIndex = words.firstIndex(of: editWord) else { return }
-        
-        editWord.word = word
-        editWord.meaning = meaning
-        editWord.option = option
-        
-        saveContext()
-        
-        words[tempIndex] = editWord
-    }
-    
+
 
     // MARK: 단어 추가하기 Updated
-    func postNewWord(word: String, meaning: [String], option: String = ""){
+    func addNewWord(word: String, meaning: [String], option: String = ""){
         service.postWordData(word: word, meaning: meaning, option: option, voca: self.selectedVocabulary)
             .sink(receiveCompletion: {observer in
                 switch observer {
@@ -139,23 +104,9 @@ class ENENWordListViewModel: ObservableObject {
                 
             }, receiveValue: {[weak self] word in
                print(word)
+                self?.getVocabulary(vocabularyID: self?.selectedVocabulary.id)
             })
             .store(in: &bag)
-    }
-    
-    // MARK: 단어 추가하기 Deprecated
-    func addNewWord(word: String, meaning: [String], option: String = "") {
-        let newWord = Word(context: viewContext)
-        newWord.vocabularyID = selectedVocabulary.id
-        newWord.vocabulary = selectedVocabulary
-        newWord.id = UUID()
-        newWord.word = word
-        newWord.meaning = meaning
-        newWord.option = option
-        
-        saveContext()
-        
-        words.append(newWord)
     }
     
   // MARK: 단어장의 word 배열이 비어있을 때 나타낼 Empty 메세지의 다국어 처리
