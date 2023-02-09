@@ -31,11 +31,11 @@ struct TabbarView: View {
 //                    Text("마이노트")
 //                }
             
-            WordSearchingView()
-                .tabItem {
-                    Image(systemName: "rectangle.and.text.magnifyingglass")
-                    Text("내단어찾기")
-                }
+//            WordSearchingView(keyword: <#String#>)
+//                .tabItem {
+//                    Image(systemName: "rectangle.and.text.magnifyingglass")
+//                    Text("내단어찾기")
+//                }
             
 //            SettingsView()
 //                .tabItem {

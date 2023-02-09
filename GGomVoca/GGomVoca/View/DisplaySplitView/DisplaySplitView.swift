@@ -21,13 +21,17 @@ struct DisplaySplitView: View {
     // MARK: View Properties
     @StateObject var viewModel : DisplaySplitViewModel
     @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
-    //NavigationSplitView 선택 단어장 Id
+    /// - NavigationSplitView 선택 단어장 Id
     @State private var selectedVocabulary : Vocabulary?
-    //단어장 추가 뷰 show flag
+    /// - 단어장 추가 뷰 show flag
     @State private var isShowingAddVocabulary: Bool = false
-    
-    // 편집 모드 관련
+    /// - EditMode
     @State private var editMode: EditMode = .inactive
+    /// - Searching
+    @State private var inputKeyword: String = ""
+    private var keyword: String {
+        inputKeyword.trimmingCharacters(in: .whitespaces).lowercased()
+    }
     
     var body: some View {
         NavigationSplitView(columnVisibility: $splitViewVisibility) {
@@ -39,23 +43,18 @@ struct DisplaySplitView: View {
                     case "KO":
                         KOWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "EN" :
                         ENWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "JA" :
                         JPWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "FR" :
                         FRWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     default:
                         WordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     }
                 }
             } else {
@@ -63,6 +62,7 @@ struct DisplaySplitView: View {
             }
         }
         .navigationSplitViewStyle(.automatic)
+        .searchable(text: $inputKeyword, placement: .navigationBarDrawer, prompt: "등록한 단어 검색")
         .onAppear {
             //fetch 단어장 data
 //            UserManager.shared.japanishVocabularyIDs.removeAll()
@@ -81,7 +81,11 @@ struct DisplaySplitView: View {
             if viewModel.vocabularyList.isEmpty {
                 emptyVocabularyListView()
             } else {
-                vocabularyListView()
+                if !inputKeyword.isEmpty {
+                    SearchingResultsInMyWordsView(selectedVocabulary: $selectedVocabulary, keyword: keyword)
+                } else {
+                    vocabularyListView()
+                }
             }
         }
         .navigationBarTitle("단어장")
@@ -351,23 +355,6 @@ struct DisplaySplitView: View {
             }
         }
     }
-
-    
-//    // 3개의 단어장 불러오기
-//    func getRecentVocabulary() -> [Vocabulary] {
-//        var result = [Vocabulary]()
-//        print("아직 돌기전", result)
-//        let vocaIds = UserManager.shared.recentVocabulary
-//        print("vocaIds", vocaIds)
-//        for vocaId in vocaIds {
-//            if let id = UUID(uuidString: vocaId) {
-//                print(id)
-//                result.append(getVocaItem(for: id))
-//            }
-//        }
-//
-//        return result
-//    }
 }
 
 struct VocabularyListView_Previews: PreviewProvider {
