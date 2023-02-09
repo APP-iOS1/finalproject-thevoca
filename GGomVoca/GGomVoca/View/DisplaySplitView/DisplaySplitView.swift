@@ -64,13 +64,6 @@ struct DisplaySplitView: View {
         .navigationSplitViewStyle(.automatic)
         .searchable(text: $inputKeyword, placement: .navigationBarDrawer, prompt: "등록한 단어 검색")
         .onAppear {
-            //fetch 단어장 data
-//            UserManager.shared.japanishVocabularyIDs.removeAll()
-//            UserManager.shared.englishVocabularyIDs.removeAll()
-//            UserManager.shared.koreanVocabularyIDs.removeAll()
-//            UserManager.shared.frenchVocabularyIDs.removeAll()
-//            UserManager.shared.pinnedVocabularyIDs.removeAll()
-//
             viewModel.getVocabularyData()
         }
     }
@@ -95,13 +88,13 @@ struct DisplaySplitView: View {
                 Button {
                     isShowingAddVocabulary.toggle()
                 } label: {
-                    //                    Image(systemName: "plus.circle")
+                    //Image(systemName: "plus.circle")
                     Image(systemName: "folder.badge.plus")
-                    //                    Image(systemName: "doc.badge.plus")
-                    //                    HStack(spacing: 3) {
-                    //                        Image(systemName: "plus.circle")
-                    //                        Text("단어장 추가")
-                    //                    }
+                    //Image(systemName: "doc.badge.plus")
+                    //HStack(spacing: 3) {
+                    //Image(systemName: "plus.circle")
+                    //Text("단어장 추가")
+                    //}
                 }
                 .disabled(editMode == .active)
             }
@@ -109,7 +102,6 @@ struct DisplaySplitView: View {
         .sheet(isPresented: $isShowingAddVocabulary) {
             AddVocabularyView(addCompletion:{  name , nationality in
                 viewModel.addVocabulary(name: name, nationality: nationality)})
-           
                 .presentationDetents([.height(CGFloat(270))])
         }
     }
@@ -118,10 +110,11 @@ struct DisplaySplitView: View {
     func emptyVocabularyListView() -> some View {
         VStack(spacing: 10) {
             Text("단어장 없음").font(.title3)
-            Text("하단의 버튼을 눌러 단어장을 생성하세요")
+            Text("하단의 \(Image(systemName: "folder.badge.plus"))을 눌러 단어장을 생성하세요")
         }
         .foregroundColor(.gray)
         .padding()
+        .padding(.bottom, 40)
     }
 
     // MARK: VocabularyList가 비어있지 않을 때 표시되는 sidebar view
@@ -320,7 +313,6 @@ struct DisplaySplitView: View {
                     .fontWeight(.light)
                 Image(systemName: "arrow.right")
                 Image(systemName: "folder.badge.plus")
-//                        Image(systemName: "plus.circle")
                     .font(.largeTitle)
                     .fontWeight(.light)
                 Image(systemName: "arrow.right")
