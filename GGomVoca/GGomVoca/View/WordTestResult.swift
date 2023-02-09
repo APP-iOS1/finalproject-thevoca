@@ -66,12 +66,12 @@ struct WordTestResult: View {
             HStack {
                 Text(Image(systemName: "circle"))
                     .foregroundColor(.clear)
-                Text("단어")
+                Text("문제")
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(.secondary)
                     .horizontalAlignSetting(.center)
-                Text("뜻")
+                Text("답")
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(.secondary)
@@ -96,6 +96,8 @@ struct WordTestResult: View {
                       Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                         .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
                             .font(.body)
+                        Text(paper.meaning.joined(separator: ", "))
+                            .horizontalAlignSetting(.center)
                         VStack {
                             if !paper.answer!.isEmpty {
                                 Text(paper.answer!)
@@ -107,8 +109,6 @@ struct WordTestResult: View {
                             }
                         }
                         .horizontalAlignSetting(.center)
-                        Text(paper.meaning.joined(separator: ", "))
-                            .horizontalAlignSetting(.center)
                         
                         if checkLabel {
                             Image(systemName: "checkmark.circle.fill")
