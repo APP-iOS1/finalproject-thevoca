@@ -28,7 +28,6 @@ struct DisplaySplitView: View {
     /// - EditMode
     @State private var editMode: EditMode = .inactive
     /// - Searching
-    @Environment(\.isSearching) private var isSearching
     @State private var inputKeyword: String = ""
     private var keyword: String {
         inputKeyword.trimmingCharacters(in: .whitespaces).lowercased()
@@ -82,7 +81,7 @@ struct DisplaySplitView: View {
                 emptyVocabularyListView()
             } else {
                 if !inputKeyword.isEmpty {
-                    WordSearchingView(keyword: keyword)
+                    SearchingResultsInMyWordsView(keyword: keyword)
                 } else {
                     vocabularyListView()
                 }
