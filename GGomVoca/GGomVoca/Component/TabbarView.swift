@@ -19,7 +19,7 @@ struct TabbarView: View {
     
     var body: some View {
         TabView {
-            DependencyManager.shared.resolve(DisplaySplitView.self)
+            DisplaySplitView()
                 .tabItem {
                     Image(systemName: "list.star")
                     Text("단어장")
@@ -49,6 +49,6 @@ struct TabbarView: View {
 
 struct TabbarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabbarView()//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        TabbarView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

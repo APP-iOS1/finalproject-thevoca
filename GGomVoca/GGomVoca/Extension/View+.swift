@@ -19,14 +19,6 @@ extension View {
             .frame(maxHeight: .infinity, alignment: alignment)
     }
     
-    func headerText() -> some View {
-        self
-            .font(.subheadline)
-            .bold()
-            .foregroundColor(.secondary)
-            .horizontalAlignSetting(.center)
-    }
-    
     // MARK: Custom Swipe
     func addSwipeButtonActions(leadingButtons: [CellButtons], trailingButton: [CellButtons], onClick: @escaping (CellButtons) -> Void) -> some View {
         self.modifier(SwipeContainerCell(leadingButtons: leadingButtons, trailingButton: trailingButton, onClick: onClick))

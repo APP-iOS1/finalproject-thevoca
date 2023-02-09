@@ -13,7 +13,7 @@ struct AddVocabularyView: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: SuperView properties
-    let addCompletion: (String, String) -> ()
+    let addCompletion: () -> ()
     
     // MARK: View Properties
     @FocusState private var focusingVocabularyTitle: Bool
@@ -51,8 +51,7 @@ struct AddVocabularyView: View {
                 /// - 추가 버튼
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("완료") {
-                        //addVocabulary() // MARK: Deprecated
-                        addCompletion(self.vocabularyName, "\(self.nationality)")
+                        addVocabulary()
                         dismiss()
                     }
                     /// - 단어장 이름이 공백인 경우 버튼 비활성화
@@ -61,7 +60,35 @@ struct AddVocabularyView: View {
             }
         }
     }
-
+    
+    // MARK: 단어장 추가
+    private func addVocabulary() { //name: String, nationality: String
+        withAnimation {
+            let newVocabulary = Vocabulary(context: viewContext)
+            
+            newVocabulary.id = UUID()
+            newVocabulary.name = "\(self.vocabularyName)"
+            newVocabulary.nationality = "\(self.nationality)"
+            newVocabulary.createdAt = "\(Date())"
+            newVocabulary.words = NSSet(array: [])
+            
+            saveContext()
+            addCompletion()
+            
+            /// - AppStorage에도 저장
+            UserManager.addVocabulary(id: newVocabulary.id!.uuidString, nationality: "\(nationality)")
+        }
+    }
+    
+    
+    // MARK: saveContext
+    func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
+        }
+    }
 }
 
 //struct AddVocabularyView_Previews: PreviewProvider {
