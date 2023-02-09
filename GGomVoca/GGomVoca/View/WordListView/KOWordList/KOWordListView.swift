@@ -12,8 +12,6 @@ struct KOWordListView: View {
     var vocabularyID: Vocabulary.ID
 
     @StateObject var viewModel: KOWordListViewModel = DependencyManager.shared.resolve(KOWordListViewModel.self)!
-
-    @StateObject var viewModel: KOWordListViewModel = KOWordListViewModel()
   
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
