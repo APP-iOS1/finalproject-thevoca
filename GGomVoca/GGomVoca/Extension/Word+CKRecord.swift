@@ -25,15 +25,15 @@ extension Word{
               let createdAt = ckRecord["createdAt"] as? String,
               let vocabularyIDStr = ckRecord["vocabularyID"] as? String,
               let vocabularyID = UUID(uuidString: vocabularyIDStr),
-              let word = ckRecord["word"] as? String
-             // let updatedAt = ckRecord["updatedAt"] as? String
+              let word = ckRecord["word"] as? String,
+              let updatedAt = ckRecord["updatedAt"] as? String
                 
         else {
             print("from result : \(ckRecord) = fail")
             return nil
         }
         print("from result : \(ckRecord) = success")
-        let newWord = Word(context: PersistenceController.shared.container.viewContext)
+        let newWord = Word(context: PracticePersistence.shared.container.viewContext)
         newWord.id = id
         newWord.correctCount = Int16(correctCount)
         newWord.incorrectCount = Int16(incorrectCount)
@@ -44,7 +44,6 @@ extension Word{
         newWord.vocabularyID = vocabularyID
         newWord.word = word
         newWord.createdAt = createdAt
-        //newWord.updatedAt = updatedAt
         //word.deleatedAt = deleatedAt
         return newWord
     }

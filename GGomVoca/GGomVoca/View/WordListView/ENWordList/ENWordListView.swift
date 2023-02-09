@@ -7,18 +7,17 @@
 
 import SwiftUI
 import UIKit
+
 struct ENWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-
-    @StateObject var viewModel: ENENWordListViewModel =
-    DependencyManager.shared.resolve(ENENWordListViewModel.self)!
-
+    @StateObject var viewModel: ENENWordListViewModel = ENENWordListViewModel()
 
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
     @State private var navigationTitle: String = ""
     @State private var emptyMessage: String = ""
+
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
     @State private var sort: Int = 0
     private var selectedSegment: ProfileSection {
@@ -31,9 +30,9 @@ struct ENWordListView: View {
             return .normal
         }
     }
-    
+
     @State private var selectedOrder: String = "사전순"
-    
+
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -65,8 +64,9 @@ struct ENWordListView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            
+          VStack(spacing: 0) {
+
+            // SegmentView(selectedSegment: $selectedSegment, unmaskedWords: $unmaskedWords)
             if viewModel.words.isEmpty {
                 VStack(spacing: 10) {
                     EmptyWordListView(lang: viewModel.nationality)
@@ -75,10 +75,9 @@ struct ENWordListView: View {
                 .verticalAlignSetting(.center)
             } else {
                 ENWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
-                    .padding(.top, 15)
             }
             
-            if !multiSelection.isEmpty && isSelectionMode {
+            if !multiSelection.isEmpty {
                 VStack(spacing: 0) {
                     Rectangle()
                         .foregroundColor(Color("toolbardivider"))
@@ -151,7 +150,7 @@ struct ENWordListView: View {
             } label: {
                 Text("Cancel")
             }
-            
+
             Button(role: .destructive) {
                 for word in multiSelection {
                     viewModel.deleteWord(word: word)
@@ -162,7 +161,7 @@ struct ENWordListView: View {
             } label: {
                 Text("OK")
             }
-            
+
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
@@ -196,12 +195,12 @@ struct ENWordListView: View {
                     }
                 }
             } else {
-                //                ToolbarItem {
-                //                    VStack(alignment: .center) {
-                //                        Text("\(viewModel.words.count)")
-                //                            .foregroundColor(.gray)
-                //                    }
-                //                }
+//                ToolbarItem {
+//                    VStack(alignment: .center) {
+//                        Text("\(viewModel.words.count)")
+//                            .foregroundColor(.gray)
+//                    }
+//                }
                 // + 버튼
                 ToolbarItem {
                     Button {
@@ -210,11 +209,11 @@ struct ENWordListView: View {
                         Image(systemName: "plus")
                     }
                 }
-                
-                
+
+
                 // 햄버거 버튼
                 ToolbarItem {
-                    
+                  
                     Menu {
                         Section {
                             Menu {
@@ -230,17 +229,17 @@ struct ENWordListView: View {
                                 Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
                                 Image(systemName: "eye.fill")
                             }
-                            
+
                             Button {
                                 isTestMode.toggle()
                             } label: {
                                 HStack {
-                                    Text("시험 보기")
-                                    Image(systemName: "square.and.pencil")
+                                  Text("시험 보기")
+                                  Image(systemName: "square.and.pencil")
                                 }
                             }
                             .foregroundColor(.orange)
-                            
+
                             NavigationLink(destination: MyNoteView(words: viewModel.words)) {
                                 HStack {
                                     Text("시험 결과 보기")
@@ -248,10 +247,10 @@ struct ENWordListView: View {
                                 }
                             }
                             .isDetailLink(true)
-                            
+
                         }
-                        
-                        
+
+
                         Section {
                             Menu {
                                 Button("시간순") {
@@ -261,24 +260,24 @@ struct ENWordListView: View {
                                     //                              }
                                     viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
                                 }
-                                
+
                                 Button("사전순") {
                                     selectedOrder = "사전순"
                                     viewModel.words.sort { $0.word! < $1.word! }
                                 }
-                                
+
                                 Button {
                                     viewModel.words.shuffle()
                                     selectedOrder = "랜덤"
                                 } label: {
                                     Text("랜덤")
                                 }
-                                
+
                             } label: {
                                 Text("정렬 옵션: \n · \(Text(selectedOrder))")
                                 Image(systemName: "arrow.up.arrow.down")
                             }
-                            
+
                             Button {
                                 isSelectionMode.toggle()
                             } label: {
@@ -287,7 +286,7 @@ struct ENWordListView: View {
                                     Image(systemName: "checkmark.circle")
                                 }
                             }
-                            
+
                             NavigationLink {
                                 ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
                             } label: {
@@ -297,7 +296,7 @@ struct ENWordListView: View {
                                 }
                             }
                             .isDetailLink(true)
-                            
+
                             Button {
                                 isExport.toggle()
                             } label: {
@@ -306,18 +305,18 @@ struct ENWordListView: View {
                                     Image(systemName: "square.and.arrow.up")
                                 }
                             }
-                            
-                        }
                         
-                        Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
-                            isSpeech.toggle()
-                        } label: {
-                            HStack {
-                                Text("전체 발음 듣기")
-                                Image(systemName: "speaker.wave.3")
-                            }
-                        }
+                      }
+
+                      Button {
+                          SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                          isSpeech.toggle()
+                      } label: {
+                          HStack {
+                              Text("전체 발음 듣기")
+                              Image(systemName: "speaker.wave.3")
+                          }
+                      }
                         
                     } label: {
                         Image(systemName: "line.3.horizontal")

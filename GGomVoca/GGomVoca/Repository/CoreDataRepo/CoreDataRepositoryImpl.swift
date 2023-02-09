@@ -65,8 +65,8 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             vocabularyFetch.predicate = NSPredicate(format: "id == %@", vocabularyID as CVarArg)
             
             do {
-                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary])
-                let voca = results.first ?? Vocabulary()
+                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary]) ?? []
+                var voca = results.first ?? Vocabulary()
                 observer(.success(voca))
             }catch{
                 print("\(error)")
@@ -108,7 +108,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             newVocabulary.words = NSSet(array: [])
             newVocabulary.updatedAt = "\(Date())"
             print("newVocabulary \(newVocabulary)")
-//            self?.saveContext()
+            self?.saveContext()
            
             observer(.success(newVocabulary))
         }.eraseToAnyPublisher()

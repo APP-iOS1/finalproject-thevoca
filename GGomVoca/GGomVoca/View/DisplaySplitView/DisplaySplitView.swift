@@ -19,7 +19,7 @@ struct DisplaySplitView: View {
     @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
     
     // MARK: View Properties
-    @StateObject var viewModel : DisplaySplitViewModel
+    @StateObject var viewModel = DisplaySplitViewModel(vocabularyList: [])
     @State private var splitViewVisibility: NavigationSplitViewVisibility = .all
     //NavigationSplitView 선택 단어장 Id
     @State private var selectedVocabulary : Vocabulary?
@@ -65,12 +65,6 @@ struct DisplaySplitView: View {
         .navigationSplitViewStyle(.automatic)
         .onAppear {
             //fetch 단어장 data
-//            UserManager.shared.japanishVocabularyIDs.removeAll()
-//            UserManager.shared.englishVocabularyIDs.removeAll()
-//            UserManager.shared.koreanVocabularyIDs.removeAll()
-//            UserManager.shared.frenchVocabularyIDs.removeAll()
-//            UserManager.shared.pinnedVocabularyIDs.removeAll()
-//
             viewModel.getVocabularyData()
         }
     }
@@ -103,9 +97,7 @@ struct DisplaySplitView: View {
             }
         }
         .sheet(isPresented: $isShowingAddVocabulary) {
-            AddVocabularyView(addCompletion:{  name , nationality in
-                viewModel.addVocabulary(name: name, nationality: nationality)})
-           
+            AddVocabularyView(addCompletion: viewModel.getVocabularyData)
                 .presentationDetents([.height(CGFloat(270))])
         }
     }
@@ -129,8 +121,8 @@ struct DisplaySplitView: View {
                     ForEach(pinnedVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(
-                            pinnedCompletion: { vocaId in
-                                viewModel.updateIsPinnedVocabulary(id: vocaId)
+                            pinnedCompletion: {
+                                viewModel.getVocabularyData()
                             }, deleteCompletion: {
                                 viewModel.getVocabularyData()
                             }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
@@ -184,8 +176,8 @@ struct DisplaySplitView: View {
                 Section("한국어") {
                     ForEach(koreanVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId)
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
@@ -207,8 +199,8 @@ struct DisplaySplitView: View {
                 Section("영어") {
                     ForEach(englishVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: {vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
@@ -230,8 +222,8 @@ struct DisplaySplitView: View {
                 Section("일본어") {
                     ForEach(japanishVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
@@ -253,8 +245,8 @@ struct DisplaySplitView: View {
                 Section("프랑스어") {
                     ForEach(frenchVocabularyIDs, id: \.self) { vocabularyID in
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
+                        VocabularyCell(pinnedCompletion: {
+                            viewModel.getVocabularyData()
                         }, deleteCompletion: {
                             viewModel.getVocabularyData()
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
@@ -372,6 +364,6 @@ struct DisplaySplitView: View {
 
 struct VocabularyListView_Previews: PreviewProvider {
     static var previews: some View {
-        DisplaySplitView(viewModel: DisplaySplitViewModel(vocabularyList: [], service: VocabularyServiceImpl(coreDataRepo: CoreDataRepositoryImpl(context: PersistenceController.shared.container.viewContext), cloudDataRepo: CloudKitRepositoryImpl())))
+        DisplaySplitView()
     }
 }

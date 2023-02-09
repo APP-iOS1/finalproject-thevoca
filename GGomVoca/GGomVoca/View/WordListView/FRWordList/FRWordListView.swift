@@ -10,7 +10,7 @@ import SwiftUI
 struct FRWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var viewModel: FRFRWordListViewModel = DependencyManager.shared.resolve(FRFRWordListViewModel.self)!
+    @StateObject var viewModel: FRFRWordListViewModel = FRFRWordListViewModel()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
@@ -30,7 +30,6 @@ struct FRWordListView: View {
     }
 
     @State private var selectedOrder: String = "사전순"
-    
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -72,10 +71,9 @@ struct FRWordListView: View {
                 .verticalAlignSetting(.center)
             } else {
                 FRWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
-                    .padding(.top, 15)
             }
             
-            if !multiSelection.isEmpty && isSelectionMode {
+            if !multiSelection.isEmpty {
                 VStack(spacing: 0) {
                     Rectangle()
                         .foregroundColor(Color("toolbardivider"))
