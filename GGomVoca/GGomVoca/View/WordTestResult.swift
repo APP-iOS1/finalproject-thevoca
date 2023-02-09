@@ -43,7 +43,13 @@ struct WordTestResult: View {
                 } label: {
                     Text("확인")
                 }
-                
+            }
+            ToolbarItem(placement: .bottomBar) {
+                Text("\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다.")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .frame(width: UIScreen.main.bounds.width * 0.9)
+                    .multilineTextAlignment(.center)
             }
         }
         
@@ -120,7 +126,7 @@ struct ListHeader: View {
         .padding(.horizontal, 20)
         .background {
             Rectangle()
-            .fill(Color("fourseason"))
+            .fill(Color("toolbarbackground"))
             .frame(height: 30)
         }
     }
