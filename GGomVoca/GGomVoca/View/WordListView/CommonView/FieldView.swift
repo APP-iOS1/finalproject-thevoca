@@ -21,6 +21,7 @@ struct FieldView: View {
         onDelete()
       }, label: {
         Image(systemName: "multiply")
+          .foregroundColor(.red)
       })
     }
   }
