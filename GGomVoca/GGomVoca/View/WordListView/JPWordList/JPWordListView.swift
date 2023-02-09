@@ -21,15 +21,16 @@ struct JPWordListView: View {
     private var selectedSegment: ProfileSection {
         switch sort {
         case 1:
-          return .wordTest
+            return .wordTest
         case 2:
-          return .meaningTest
+            return .meaningTest
         default:
-          return .normal
+            return .normal
         }
     }
-
+    
     @State private var selectedOrder: String = "사전순"
+    
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -119,7 +120,6 @@ struct JPWordListView: View {
             viewModel.getVocabulary(vocabularyID: vocabularyID)
             navigationTitle = viewModel.selectedVocabulary.name ?? ""
             emptyMessage = viewModel.getEmptyWord()
-            print(viewModel.words)
         }
         // 시험 모드 시트
         .fullScreenCover(isPresented: $isTestMode, content: {
@@ -148,7 +148,7 @@ struct JPWordListView: View {
             } label: {
                 Text("Cancle")
             }
-
+            
             Button(role: .destructive) {
                 for word in multiSelection {
                     viewModel.deleteWord(word: word)
@@ -159,7 +159,7 @@ struct JPWordListView: View {
             } label: {
                 Text("OK")
             }
-
+            
         })
         // 새 단어 추가 시트
         .sheet(isPresented: $addNewWord) {
@@ -193,12 +193,12 @@ struct JPWordListView: View {
                     }
                 }
             } else {
-//                ToolbarItem {
-//                    VStack(alignment: .center) {
-//                        Text("\(viewModel.words.count)")
-//                            .foregroundColor(.gray)
-//                    }
-//                }
+                //                ToolbarItem {
+                //                    VStack(alignment: .center) {
+                //                        Text("\(viewModel.words.count)")
+                //                            .foregroundColor(.gray)
+                //                    }
+                //                }
                 // + 버튼
                 ToolbarItem {
                     Button {
@@ -207,11 +207,11 @@ struct JPWordListView: View {
                         Image(systemName: "plus")
                     }
                 }
-
-
+                
+                
                 // 햄버거 버튼
                 ToolbarItem {
-
+                    
                     Menu {
                         Section {
                             Menu {
@@ -227,17 +227,17 @@ struct JPWordListView: View {
                                 Text("보기 옵션: \n · \(Text(selectedSegment.rawValue))")
                                 Image(systemName: "eye.fill")
                             }
-
+                            
                             Button {
                                 isTestMode.toggle()
                             } label: {
                                 HStack {
-                                  Text("시험 보기")
-                                  Image(systemName: "square.and.pencil")
+                                    Text("시험 보기")
+                                    Image(systemName: "square.and.pencil")
                                 }
                             }
                             .foregroundColor(.orange)
-
+                            
                             NavigationLink(destination: MyNoteView(words: viewModel.words)) {
                                 HStack {
                                     Text("시험 결과 보기")
@@ -245,10 +245,10 @@ struct JPWordListView: View {
                                 }
                             }
                             .isDetailLink(true)
-
+                            
                         }
-
-
+                        
+                        
                         Section {
                             Menu {
                                 Button("시간순") {
@@ -258,24 +258,24 @@ struct JPWordListView: View {
                                     //                              }
                                     viewModel.words.sort { $0.createdAt ?? "\(Date())" < $1.createdAt ?? "\(Date())" }
                                 }
-
+                                
                                 Button("사전순") {
                                     selectedOrder = "사전순"
                                     viewModel.words.sort { $0.word! < $1.word! }
                                 }
-
+                                
                                 Button {
                                     viewModel.words.shuffle()
                                     selectedOrder = "랜덤"
                                 } label: {
                                     Text("랜덤")
                                 }
-
+                                
                             } label: {
                                 Text("정렬 옵션: \n · \(Text(selectedOrder))")
                                 Image(systemName: "arrow.up.arrow.down")
                             }
-
+                            
                             Button {
                                 isSelectionMode.toggle()
                             } label: {
@@ -284,7 +284,7 @@ struct JPWordListView: View {
                                     Image(systemName: "checkmark.circle")
                                 }
                             }
-
+                            
                             NavigationLink {
                                 ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
                             } label: {
@@ -294,7 +294,7 @@ struct JPWordListView: View {
                                 }
                             }
                             .isDetailLink(true)
-
+                            
                             Button {
                                 isExport.toggle()
                             } label: {
@@ -303,19 +303,19 @@ struct JPWordListView: View {
                                     Image(systemName: "square.and.arrow.up")
                                 }
                             }
-
-                      }
-
-                      Button {
-                          SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
-                          isSpeech.toggle()
-                      } label: {
-                          HStack {
-                              Text("전체 발음 듣기")
-                              Image(systemName: "speaker.wave.3")
-                          }
-                      }
-
+                            
+                        }
+                        
+                        Button {
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                            isSpeech.toggle()
+                        } label: {
+                            HStack {
+                                Text("전체 발음 듣기")
+                                Image(systemName: "speaker.wave.3")
+                            }
+                        }
+                        
                     } label: {
                         Image(systemName: "line.3.horizontal")
                     }
