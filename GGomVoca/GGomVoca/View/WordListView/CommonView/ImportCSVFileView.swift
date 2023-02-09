@@ -118,15 +118,24 @@ struct ImportCSVFileView: View {
     // MARK: file을 가져오는 메서드, 파일 경로와 파일 이름 가져옴
     .fileImporter(isPresented: $openFile, allowedContentTypes: [.commaSeparatedText]) { result in
       do {
-        fileURL = try result.get()
-        fileName = fileURL?.lastPathComponent ?? ""
-
-        if let fileURL {
-          csvData = DataFrame.loadCSV(fileURL: fileURL)
-        }
-
+          fileURL = try result.get()
+          //that's used to request access to a security-scoped resource.
+          if fileURL!.startAccessingSecurityScopedResource() {
+              guard String(data: try Data(contentsOf: fileURL!), encoding: .utf8) != nil else { return }
+              
+              fileName = fileURL?.lastPathComponent ?? ""
+              if let fileURL {
+                  csvData = DataFrame.loadCSV(fileURL: fileURL)
+              }
+              do { fileURL!.stopAccessingSecurityScopedResource() }
+              
+          } else {
+              // Handle denied access
+              print("denied access")
+          }
+          
       } catch {
-        print("error reading docs", error.localizedDescription)
+          print("error reading docs", error.localizedDescription)
       }
     }
   }
