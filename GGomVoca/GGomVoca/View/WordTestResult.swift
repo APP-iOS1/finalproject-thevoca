@@ -161,11 +161,12 @@ struct ListCell: View {
     
     var body: some View {
         HStack {
+            Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
+                .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
+                .font(.body)
+            
             switch testType {
             case "word":
-                Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
-                    .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
-                    .font(.body)
                 Text(paper.meaning.joined(separator: ", "))
                     .horizontalAlignSetting(.center)
                 VStack {
@@ -179,16 +180,7 @@ struct ListCell: View {
                     }
                 }
                 .horizontalAlignSetting(.center)
-                
-                if checkLabel {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(paper.isToggleMemorize ? .green : .clear)
-                        .font(.body)
-                }
             case "meaning":
-                Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
-                    .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
-                    .font(.body)
                 Text(paper.word)
                     .horizontalAlignSetting(.center)
                 VStack {
@@ -202,14 +194,14 @@ struct ListCell: View {
                     }
                 }
                 .horizontalAlignSetting(.center)
-                
-                if checkLabel {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(paper.isToggleMemorize ? .green : .clear)
-                        .font(.body)
-                }
             default:
                 EmptyView()
+            }
+            
+            if checkLabel {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(paper.isToggleMemorize ? .green : .clear)
+                    .font(.body)
             }
         }
     }
