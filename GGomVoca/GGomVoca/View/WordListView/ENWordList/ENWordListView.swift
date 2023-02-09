@@ -10,8 +10,11 @@ import UIKit
 struct ENWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var viewModel: ENENWordListViewModel = ENENWordListViewModel()
-    
+
+    @StateObject var viewModel: ENENWordListViewModel =
+    DependencyManager.shared.resolve(ENENWordListViewModel.self)!
+
+
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
     @State private var navigationTitle: String = ""

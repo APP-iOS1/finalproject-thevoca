@@ -10,7 +10,7 @@ import SwiftUI
 struct FRWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var viewModel: FRFRWordListViewModel = FRFRWordListViewModel()
+    @StateObject var viewModel: FRFRWordListViewModel = DependencyManager.shared.resolve(FRFRWordListViewModel.self)!
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당

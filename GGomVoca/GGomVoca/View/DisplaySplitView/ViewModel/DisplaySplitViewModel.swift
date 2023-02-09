@@ -13,12 +13,10 @@ import Combine
 //Server -> Repository(reposiroty pattern) -> ViewModel
 class DisplaySplitViewModel : ObservableObject {
 
-    
-    // MARK: Store Property
-    //var repository : CoredataRepository = CoredataRepository()
+    // MARK: Service Property
     var service : VocabularyService
-   // @Environment(\.managedObjectContext) private var viewContext
     private var bag : Set<AnyCancellable> = Set<AnyCancellable>()
+    
     // MARK: Published Properties
     @Published var vocabularyList:[Vocabulary] = [] // all vocabularies
 
