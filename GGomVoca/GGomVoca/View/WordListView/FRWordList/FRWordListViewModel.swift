@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import Combine
 class FRFRWordListViewModel: ObservableObject {
     // MARK: CoreData ViewContext
     var viewContext = PersistenceController.shared.container.viewContext
@@ -16,6 +16,14 @@ class FRFRWordListViewModel: ObservableObject {
     var selectedVocabulary: Vocabulary = Vocabulary()
     var nationality: String = "FR"
 
+    //MARK: Service
+    var service : WordListService
+    private var bag : Set<AnyCancellable> = Set<AnyCancellable>()
+    
+    init( service: WordListService) {
+        self.service = service
+    }
+    
     @Published var words: [Word] = []
     
     // MARK: saveContext
