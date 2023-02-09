@@ -53,6 +53,7 @@ struct FRWordsTableView: View {
                     .multilineTextAlignment(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                     .animation(.none, value: isSelectionMode)
+                VLine()
                 // 옵션, 뜻
                 HStack(spacing: 0) {
                     // MARK: 단어의 성별에 따라 표시하는 이미지 변경

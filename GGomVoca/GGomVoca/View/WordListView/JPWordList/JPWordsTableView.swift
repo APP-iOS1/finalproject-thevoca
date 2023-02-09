@@ -55,11 +55,13 @@ struct JPWordsTableView: View {
                     .multilineTextAlignment(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                     .animation(.none, value: isSelectionMode)
+                VLine()
                 // 발음
                 Text(word.option ?? "")
                     .horizontalAlignSetting(.center)
                     .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                     .animation(.none, value: isSelectionMode)
+                VLine()
                 // 뜻
                 Text(word.meaning!.joined(separator: ", "))
                     .horizontalAlignSetting(.center)

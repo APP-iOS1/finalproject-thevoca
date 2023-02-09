@@ -68,10 +68,12 @@ struct WordsTableView: View {
                             .multilineTextAlignment(.center)
                             .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                             .animation(.none, value: isSelectionMode)
+                        VLine()
                         Text(word.option ?? "")
                             .horizontalAlignSetting(.center)
                             .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                             .animation(.none, value: isSelectionMode)
+                        VLine()
                         Text(word.meaning!.joined(separator: ","))
                             .horizontalAlignSetting(.center)
                             .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
@@ -83,7 +85,7 @@ struct WordsTableView: View {
                         .multilineTextAlignment(.center)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                         .animation(.none, value: isSelectionMode)
-                    
+                    VLine()
                     HStack(spacing: 0) {
                         // MARK: 단어의 성별에 따라 표시하는 이미지 변경
                         switch word.option {
