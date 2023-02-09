@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditVocabularyView: View {
     // MARK: Environment Properties
-    var viewContext = PersistenceController.shared.container.viewContext
+    @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
     // MARK: SuperView Properties
