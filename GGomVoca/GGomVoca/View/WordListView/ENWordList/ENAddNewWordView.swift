@@ -81,7 +81,7 @@ struct ENAddNewWordView: View {
                             }
                         }
                     }
-                  Button("\(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
+                  Button("\(Image(systemName: "plus.circle")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
                 } header: {
                     HStack {
                         Text("뜻")
