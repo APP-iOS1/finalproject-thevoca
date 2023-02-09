@@ -24,3 +24,4 @@ extension View {
         self.modifier(SwipeContainerCell(leadingButtons: leadingButtons, trailingButton: trailingButton, onClick: onClick))
     }
 }
+

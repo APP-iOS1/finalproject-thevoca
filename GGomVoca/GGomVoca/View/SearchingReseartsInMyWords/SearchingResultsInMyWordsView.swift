@@ -20,7 +20,7 @@ struct SearchingResultsInMyWordsView: View {
     
     var body: some View {
         List(searchResult, selection: $selectedVocabulary) { word in
-            SearchingResultInMyWordsCell(word: word)
+            SearchingResultInMyWordsCell(word: word, keyword: keyword)
         }
         .listStyle(InsetGroupedListStyle())
         .onChange(of: keyword) { newValue in

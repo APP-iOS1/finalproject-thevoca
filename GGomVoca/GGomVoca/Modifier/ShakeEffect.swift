@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
 
 // MARK: - Shake Effect
 struct ShakeEffect: ViewModifier {
