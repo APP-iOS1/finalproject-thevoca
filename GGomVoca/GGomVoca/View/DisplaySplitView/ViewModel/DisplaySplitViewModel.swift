@@ -7,82 +7,91 @@
 
 import Foundation
 import SwiftUI
+import Combine
 // -> Entity -> Model -> ViewModel(UI 데이터) -> View
 
 //Server -> Repository(reposiroty pattern) -> ViewModel
 class DisplaySplitViewModel : ObservableObject {
-    internal init(repository: CoredataRepository = CoredataRepository(), vocabularyList: [Vocabulary] = [], pinnedVocabularyList: [Vocabulary] = [], koreanVoca: [Vocabulary] = [], englishVoca: [Vocabulary] = [], japaneseVoca: [Vocabulary] = [], frenchVoca: [Vocabulary] = []) {
-        self.repository = repository
-        self.vocabularyList = vocabularyList
-//        self.pinnedVocabularyList = pinnedVocabularyList
-//        self.koreanVoca = koreanVoca
-//        self.englishVoca = englishVoca
-//        self.japaneseVoca = japaneseVoca
-//        self.frenchVoca = frenchVoca
-    }
-    
-    // MARK: Store Property
-    var repository : CoredataRepository = CoredataRepository()
-    @Environment(\.managedObjectContext) private var viewContext
+
+    // MARK: Service Property
+    var service : VocabularyService
+    private var bag : Set<AnyCancellable> = Set<AnyCancellable>()
     
     // MARK: Published Properties
-    @Published var vocabularyList       : [Vocabulary] = [] // all vocabularies
-//    @Published var pinnedVocabularyList : [Vocabulary] = [] // 고정된 단어장
-//    @Published var koreanVoca           : [Vocabulary] = [] // 한국어 단어장
-//    @Published var englishVoca          : [Vocabulary] = [] // 영어 단어장
-//    @Published var japaneseVoca         : [Vocabulary] = [] // 일본어 단어장
-//    @Published var frenchVoca           : [Vocabulary] = [] // 프랑스어 단어장
+    @Published var vocabularyList:[Vocabulary] = [] // all vocabularies
+
     
-    init(vocabularyList: [Vocabulary]) {
+    init(vocabularyList: [Vocabulary], service : VocabularyService) {
         self.vocabularyList = vocabularyList
-    }
-    
-    // MARK: Clear Vocabulary Lists
-    func clearVoca() {
-        vocabularyList = []
-//        pinnedVocabularyList = []
-//        koreanVoca = []
-//        japaneseVoca = []
-//        englishVoca = []
-//        frenchVoca = []
+        self.service = service
     }
 
     // MARK: Get Vocabulary Lists
     func getVocabularyData() {
-        let results = repository.getVocabularyData()
-        clearVoca()
+        service.fetchVocabularyList()
+            .sink(receiveCompletion: { observer in
+                switch observer {
+                case .failure(let error):
+                    print(error)
+                    return
+                case .finished:
+                    return
+                }
+            }, receiveValue: { [weak self] vocaList in
+                let list = vocaList.filter{ $0.deleatedAt == nil}
+                self?.vocabularyList = list
+                print("getVocabularyData \(list)")
+           
+            })
+            .store(in: &bag)
+    }
+    
+    /*
+     Post 단어장 추가
+     */
+    func addVocabulary(name: String, nationality: String) { //name: String, nationality: String
         
-        for voca in results {
-            if voca.deleatedAt == nil {
-                vocabularyList.append(voca)
+        service.postVocaData(vocaName: "\(name)", nationality: "\(nationality)")
+            .sink(receiveCompletion: {value in
                 
-//                if voca.isPinned {
-//                    pinnedVocabularyList.append(voca)
-//                    continue
-//                }
-//
-//                /// MARK: 단어 국가 설정은 이중으로 설정될 수 없기 때문에 continue
-//                if voca.nationality == "KO" {
-//                    koreanVoca.append(voca)
-//                    continue
-//                }
-//
-//                if voca.nationality == "EN" {
-//                    englishVoca.append(voca)
-//                    continue
-//                }
-//
-//                if voca.nationality == "JA" {
-//                    japaneseVoca.append(voca)
-//                    continue
-//                }
-//
-//                if voca.nationality == "FR" {
-//                    frenchVoca.append(voca)
-//                    continue
-//                }
-            }
-        }
+                
+            }, receiveValue: {[weak self] value in
+                
+               
+                print("postVocaData result : \(value)")
+                self?.service.saveContext()
+                
+                self?.getVocabularyData()
+                //context에 저장 -> 전체 단어장 배열 다시 불러오기 -> 다음 유비쿼터스에 추가
+                UserManager.addVocabulary(id: value.id!.uuidString, nationality: "\(value.nationality ?? "")")
+            })
+            .store(in: &bag)
+
+    }
+    
+    
+    /*
+     즐겨찾기 업데이트
+     */
+    func updateIsPinnedVocabulary(id: UUID) {
+        service.updatePinnedVoca(id: id)
+            .sink(receiveCompletion: {observer in
+                switch observer {
+                case .failure(let error):
+                    print(error)
+                    return
+                case .finished:
+                    return
+                }
+                
+            }, receiveValue: { [weak self] result in
+                print(result)
+                self?.service.saveContext()
+                self?.getVocabularyData()
+            
+                
+            }).store(in: &bag)
+
     }
     
     // MARK: Vocabualry.ID로 해당 단어장을 찾아오는 메서드
@@ -96,21 +105,33 @@ class DisplaySplitViewModel : ObservableObject {
         return vocabulary
     }
     
+    
+    
     // MARK: 단어장 삭제 함수
     func deleteVocabulary(id: String) {
-        let vocabulary = getVocabulary(for: id)
-        vocabulary.deleatedAt = "\(Date.now)"
-        saveContext()
+        //UpdatedCode
+        guard let uuid = UUID(uuidString: id) else { return }
+        service.deletedVocaData(id: uuid)
+            .sink(receiveCompletion: { observer in
+                switch observer {
+                case .failure(let error):
+                    print(error)
+                    return
+                case .finished:
+                    return
+                }
+            }, receiveValue: {[weak self] value in
+                print(value)
+                self?.service.saveContext() //저장
+                self?.getVocabularyData() //불러오기
+                //MARK: 유비쿼터스 삭제
+                UserManager.deleteVocabulary(id: id)
+            }).store(in: &bag)
+        
     }
+    
+    
 
-    func saveContext() {
-        do {
-            print("saveContext")
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
     
     // MARK: 최근 본 단어장을 UserDefault에서 삭제
 //    func deleteRecentVoca(id : String) {

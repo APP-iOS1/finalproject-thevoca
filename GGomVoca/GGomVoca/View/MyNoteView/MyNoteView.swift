@@ -208,7 +208,7 @@ extension Array<Word> {
 }
 
 struct MyNoteView_Previews: PreviewProvider {
-    static var viewModel: KOWordListViewModel = KOWordListViewModel()
+    static var viewModel: KOWordListViewModel = KOWordListViewModel(service: WordListServiceImpl(coreDataRepo: CoreDataRepositoryImpl(context: PersistenceController.shared.container.viewContext), cloudDataRepo: CloudKitRepositoryImpl()))
     
     static var previews: some View {
         MyNoteView(words: viewModel.words)
