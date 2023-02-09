@@ -12,16 +12,15 @@ struct SearchingResultsInMyWordsView: View {
     var viewModel = SearchingResultsInMyWordsViewModel()
     
     // MARK: Super View Properties...
-    var keyword : String
+    @Binding var selectedVocabulary: Vocabulary?
+    var keyword: String
     
     // MARK: View Properties
     @State private var searchResult: [Word] = []
     
     var body: some View {
-        List {
-            ForEach(searchResult) { word in
-                SearchingResultInMyWordsCell(word: word)
-            }
+        List(searchResult, selection: $selectedVocabulary) { word in
+            SearchingResultInMyWordsCell(word: word)
         }
         .listStyle(InsetGroupedListStyle())
         .onChange(of: keyword) { newValue in

@@ -43,23 +43,18 @@ struct DisplaySplitView: View {
                     case "KO":
                         KOWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "EN" :
                         ENWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "JA" :
                         JPWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     case "FR" :
                         FRWordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     default:
                         WordListView(vocabularyID: selectedVocabulary.id)
                             .id(selectedVocabulary.id)
-                            .toolbar(.hidden, for: .tabBar)
                     }
                 }
             } else {
@@ -81,7 +76,7 @@ struct DisplaySplitView: View {
                 emptyVocabularyListView()
             } else {
                 if !inputKeyword.isEmpty {
-                    SearchingResultsInMyWordsView(keyword: keyword)
+                    SearchingResultsInMyWordsView(selectedVocabulary: $selectedVocabulary, keyword: keyword)
                 } else {
                     vocabularyListView()
                 }
