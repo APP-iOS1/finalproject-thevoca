@@ -6,11 +6,19 @@
 //
 
 import Foundation
-
+import Combine
 class JPWordListViewModel: ObservableObject {
     // MARK: CoreData ViewContext
     var viewContext = PersistenceController.shared.container.viewContext
     var coreDataRepository = CoredataRepository()
+    
+    //MARK: Service
+    var service : WordListService
+    private var bag : Set<AnyCancellable> = Set<AnyCancellable>()
+    
+    init( service: WordListService) {
+        self.service = service
+    }
     
     // MARK: Vocabulary Properties
     var selectedVocabulary: Vocabulary = Vocabulary()

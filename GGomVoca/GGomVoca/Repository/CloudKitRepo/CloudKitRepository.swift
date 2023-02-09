@@ -14,9 +14,6 @@ import CloudKit
 protocol CloudKitRepository {
     //MARK: CloudKit으로부터 Voca 동기화
     func syncVocaData() -> AnyPublisher<[Vocabulary], RepositoryError>
-    
-    
-    
     //MARK: Post New Voca CloudKit
     func postVocaData(vocabulary: Vocabulary) -> AnyPublisher<Vocabulary, RepositoryError>
     //MARK: Update Voca  CloudKit
@@ -24,3 +21,5 @@ protocol CloudKitRepository {
     //MARK: Delete Voca CloudKit
     func deleteVocaData(record: CKRecord) -> AnyPublisher<String, RepositoryError>
 }
+
+
