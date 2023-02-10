@@ -24,6 +24,7 @@ extension View {
             .font(.subheadline)
             .bold()
             .foregroundColor(.secondary)
+            .frame(height: 30)
             .horizontalAlignSetting(.center)
     }
     
