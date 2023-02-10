@@ -4,7 +4,6 @@
 //
 //  Created by do hee kim on 2023/01/18.
 //
-
 import SwiftUI
 
 struct KOWordListView: View {
