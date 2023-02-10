@@ -74,6 +74,10 @@
 		EAEF31652989F84F009CE764 /* TestModeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF31642989F84F009CE764 /* TestModeSelectView.swift */; };
 		EAEF3167298A4205009CE764 /* WordTestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF3166298A4205009CE764 /* WordTestResult.swift */; };
 		EAEF3169298AB721009CE764 /* TestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEF3168298AB721009CE764 /* TestViewModel.swift */; };
+		EE081AF72995DCCB005A8352 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */; };
+		EE081AFA2995DD4D005A8352 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AF92995DD4D005A8352 /* FirebaseAnalytics */; };
+		EE081AFC2995DD4D005A8352 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFB2995DD4D005A8352 /* FirebaseAnalyticsSwift */; };
+		EE081AFE2995DD4D005A8352 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFD2995DD4D005A8352 /* FirebaseCrashlytics */; };
 		EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E49FE2976709A00890CF7 /* UserManager.swift */; };
 		EE57C04D2951791D004312CE /* DisplaySplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04C2951791D004312CE /* DisplaySplitView.swift */; };
 		EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04E29517950004312CE /* AddVocabularyView.swift */; };
@@ -171,6 +175,7 @@
 		EAEF31642989F84F009CE764 /* TestModeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestModeSelectView.swift; sourceTree = "<group>"; };
 		EAEF3166298A4205009CE764 /* WordTestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTestResult.swift; sourceTree = "<group>"; };
 		EAEF3168298AB721009CE764 /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
+		EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EE1E49FE2976709A00890CF7 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		EE57C04C2951791D004312CE /* DisplaySplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySplitView.swift; sourceTree = "<group>"; };
 		EE57C04E29517950004312CE /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
@@ -201,6 +206,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE081AFC2995DD4D005A8352 /* FirebaseAnalyticsSwift in Frameworks */,
+				EE081AFE2995DD4D005A8352 /* FirebaseCrashlytics in Frameworks */,
+				EE081AFA2995DD4D005A8352 /* FirebaseAnalytics in Frameworks */,
 				EEDCBFDD298B800A00A7B016 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,6 +304,7 @@
 				EAB4FFA72977C7D60070941A /* Modifier */,
 				63B095F1297631DF00E6BB21 /* Extension */,
 				6371E05129530885003A1A08 /* Info.plist */,
+				EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */,
 				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
 				EE57C05B29518833004312CE /* Component */,
 				63DC854B2950321D00461DEB /* View */,
@@ -581,6 +590,9 @@
 			name = GGomVoca;
 			packageProductDependencies = (
 				EEDCBFDC298B800A00A7B016 /* Swinject */,
+				EE081AF92995DD4D005A8352 /* FirebaseAnalytics */,
+				EE081AFB2995DD4D005A8352 /* FirebaseAnalyticsSwift */,
+				EE081AFD2995DD4D005A8352 /* FirebaseCrashlytics */,
 			);
 			productName = GGomVoca;
 			productReference = 63DC85312950312E00461DEB /* GGomVoca.app */;
@@ -612,6 +624,7 @@
 			mainGroup = 63DC85282950312E00461DEB;
 			packageReferences = (
 				EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */,
+				EE081AF82995DD4D005A8352 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 63DC85322950312E00461DEB /* Products */;
 			projectDirPath = "";
@@ -628,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */,
+				EE081AF72995DCCB005A8352 /* GoogleService-Info.plist in Resources */,
 				63DC85422950312F00461DEB /* Preview Assets.xcassets in Resources */,
 				6371E04E29530716003A1A08 /* Assets.xcassets in Resources */,
 			);
@@ -958,6 +972,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EE081AF82995DD4D005A8352 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -969,6 +991,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EE081AF92995DD4D005A8352 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE081AF82995DD4D005A8352 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EE081AFB2995DD4D005A8352 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE081AF82995DD4D005A8352 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		EE081AFD2995DD4D005A8352 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE081AF82995DD4D005A8352 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
 		EEDCBFDC298B800A00A7B016 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EEDCBFDB298B800A00A7B016 /* XCRemoteSwiftPackageReference "Swinject" */;

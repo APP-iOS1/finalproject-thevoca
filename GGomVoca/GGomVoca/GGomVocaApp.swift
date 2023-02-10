@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 @main
 struct GGomVocaApp: App {
     let persistenceController = PersistenceController.shared
