@@ -69,7 +69,7 @@ final class TestViewModel: ObservableObject {
     
     // MARK: - 시험지 생성
     func createPaper(isWholeWord: Bool) {
-        for word in words {
+        for word in words.shuffled() {
             if isWholeWord {
                 // 모든 단어 시험지에 추가
                 testPaper.append(Question(id: word.id!, word: word.word!, meaning: word.meaning!))
