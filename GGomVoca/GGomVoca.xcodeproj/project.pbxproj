@@ -66,6 +66,7 @@
 		C08DB58F2989FCD700403F59 /* MyNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB58E2989FCD700403F59 /* MyNoteView.swift */; };
 		C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */; };
 		C0C17C812990EE1A00F24CF0 /* MyNoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */; };
+		EA1F3A1529960A7100C9D25E /* EmptyTestModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F3A1429960A7100C9D25E /* EmptyTestModeView.swift */; };
 		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
@@ -168,6 +169,7 @@
 		C08DB58E2989FCD700403F59 /* MyNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteView.swift; sourceTree = "<group>"; };
 		C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 		C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteDetailView.swift; sourceTree = "<group>"; };
+		EA1F3A1429960A7100C9D25E /* EmptyTestModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTestModeView.swift; sourceTree = "<group>"; };
 		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				162EE03729507A690065E103 /* WordListView */,
 				63DC853B2950312E00461DEB /* ContentView.swift */,
 				EAEF3168298AB721009CE764 /* TestViewModel.swift */,
+				EA1F3A1429960A7100C9D25E /* EmptyTestModeView.swift */,
 				EAEF31642989F84F009CE764 /* TestModeSelectView.swift */,
 				EAEF31622989F488009CE764 /* iPhoneWordTestView.swift */,
 				635CBD59298A693A0071328E /* iPadWordTestView.swift */,
@@ -703,6 +706,7 @@
 				EAEF31632989F488009CE764 /* iPhoneWordTestView.swift in Sources */,
 				EEE3018C2990B8FD00195720 /* WordListService.swift in Sources */,
 				63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */,
+				EA1F3A1529960A7100C9D25E /* EmptyTestModeView.swift in Sources */,
 				16E1ECC1298B9A0800BA4C9C /* ShakeEffect.swift in Sources */,
 				EAEF3169298AB721009CE764 /* TestViewModel.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
