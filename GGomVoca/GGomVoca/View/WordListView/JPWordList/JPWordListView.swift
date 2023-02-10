@@ -10,6 +10,7 @@ import SwiftUI
 struct JPWordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
+    
     @StateObject var viewModel: JPWordListViewModel = DependencyManager.shared.resolve(JPWordListViewModel.self)!
     
     // MARK: View Properties
@@ -69,45 +70,6 @@ struct JPWordListView: View {
                       .padding(.top, 15)
               }
 
-              if !multiSelection.isEmpty && isSelectionMode {
-                  VStack(spacing: 0) {
-                      Rectangle()
-                          .foregroundColor(Color("toolbardivider"))
-                          .frame(height: 1)
-
-                      HStack {
-                          // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
-//                          Button {
-//
-//                          } label: {
-//                              Image(systemName: "folder")
-//                          }
-//                          .padding()
-//
-//                          Spacer()
-
-                          Button("선택한 단어 듣기") {
-                              SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "ja-JP")
-                          }
-                          .padding()
-
-                          Spacer()
-
-                          // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
-                          Button(role: .destructive) {
-                              if UIDevice.current.model == "iPhone" {
-                                  confirmationDialog.toggle()
-                              } else if UIDevice.current.model == "iPad" {
-                                  removeAlert.toggle()
-                              }
-                          } label: {
-                              Image(systemName: "trash")
-                          }
-                          .padding()
-                      }
-                      .background(Color("toolbarbackground"))
-                  }
-              }
           }
           .navigationDestination(isPresented: $isImportVoca, destination: {
             ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
@@ -197,6 +159,32 @@ struct JPWordListView: View {
                           SpeechSynthesizer.shared.stopSpeaking()
                       }
                   }
+                  
+                  ToolbarItemGroup(placement: .bottomBar) {
+//                        Button {
+//
+//                        } label: {
+//                            Image(systemName: "folder")
+//                        }
+//                      .disabled(multiSelection.isEmpty ? true : false)
+                          
+                      Button("선택한 단어 듣기") {
+                          SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                      }
+                      .disabled(multiSelection.isEmpty ? true : false)
+                      
+                      Button(role: .destructive) {
+                          if UIDevice.current.model == "iPhone" {
+                              confirmationDialog.toggle()
+                          } else if UIDevice.current.model == "iPad" {
+                              removeAlert.toggle()
+                          }
+                      } label: {
+                          Image(systemName: "trash")
+                      }
+                      .disabled(multiSelection.isEmpty ? true : false)
+                  }
+                  
               } else {
                   // MARK: 새 단어 추가 버튼
                   ToolbarItemGroup(placement: .bottomBar) {
