@@ -149,21 +149,26 @@ final class TestViewModel: ObservableObject {
                     word.recentTestResults!.removeFirst()
                 }
             }
+            
             // 시험 본 단어 update
             if let tempWord = testPaper.filter({ $0.word == word.word }).first {
                 if tempWord.isCorrect == .Right {
-                    word.recentTestResults?.append("O")
-                    word.correctCount += 1
-                    // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
-                    if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
-                        word.isMemorized = true
-                        for (idx, paper) in testPaper.enumerated() {
-                            if word.id == paper.id {
-                                testPaper[idx].isToggleMemorize = true
-                                break
+                    // isMemorized를 true로 바꿀지 판별
+                    if !word.isMemorized {
+                        if (word.recentTestResults?.filter({ $0 == "O" }).count)! == 4 {
+                            if word.recentTestResults?[0] != "O" || word.recentTestResults?.count == 4 {
+                                word.isMemorized = true
+                                for (idx, paper) in testPaper.enumerated() {
+                                    if word.id == paper.id {
+                                        testPaper[idx].isToggleMemorize = true
+                                        break
+                                    }
+                                }
                             }
                         }
                     }
+                    word.recentTestResults?.append("O")
+                    word.correctCount += 1
                 } else {
                     word.recentTestResults?.append("X")
                     word.incorrectCount += 1
@@ -172,7 +177,6 @@ final class TestViewModel: ObservableObject {
                 // 시험 안 본 단어 update
                 word.recentTestResults?.append("-")
             }
-            
         }
         saveContext()
     }
