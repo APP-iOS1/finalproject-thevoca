@@ -227,15 +227,14 @@ struct FRWordListView: View {
                         }
                         .onChange(of: isSpeech) { value in
                             if value {
-                              SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                              SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "fr-FR")
                             }
-                        }
-                  }
-              }
-          }
-          .onDisappear {
-              SpeechSynthesizer.shared.stopSpeaking()
-          }
+                      }
+                }
+            }
+        }
+        .onDisappear {
+            SpeechSynthesizer.shared.stopSpeaking()
         }
     }
 }
