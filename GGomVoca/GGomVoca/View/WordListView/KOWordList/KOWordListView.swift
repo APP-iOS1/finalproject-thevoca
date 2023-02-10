@@ -238,6 +238,7 @@ struct KOWordListView: View {
                                 }
                             }
                             .foregroundColor(.orange)
+                            .disabled(viewModel.words.isEmpty ? true : false)
                             
                             NavigationLink(destination: MyNoteView(words: viewModel.words)) {
                                 HStack {
@@ -246,6 +247,7 @@ struct KOWordListView: View {
                                 }
                             }
                             .isDetailLink(true)
+                            .disabled(viewModel.words.isEmpty ? true : false)
                             
                         }
                         
