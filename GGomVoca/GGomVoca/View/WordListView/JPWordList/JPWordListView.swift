@@ -307,7 +307,7 @@ struct JPWordListView: View {
                         }
                         
                         Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
                             isSpeech.toggle()
                         } label: {
                             HStack {

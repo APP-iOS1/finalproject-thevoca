@@ -308,7 +308,7 @@ struct KOWordListView: View {
                         }
                         
                         Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ko-KR")
                             isSpeech.toggle()
                         } label: {
                             HStack {
