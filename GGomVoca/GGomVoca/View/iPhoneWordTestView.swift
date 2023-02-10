@@ -54,6 +54,8 @@ struct iPhoneWordTestView: View {
         
     var body: some View {
         VStack {
+            Text("\(Image(systemName: "clock")) \(timer)")
+                .horizontalAlignSetting(.center)
             
             Spacer()
             
@@ -97,7 +99,7 @@ struct iPhoneWordTestView: View {
             vm.startTimer()
             focusedField = .answer
         }
-        .navigationTitle("\(timer)")
+        .navigationTitle("\(vm.currentQuestionNum + 1) / \(vm.testPaper.count)")
         .navigationDestination(isPresented: $vm.isFinished) {
             WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
         }
