@@ -24,6 +24,7 @@ extension View {
             .font(.subheadline)
             .bold()
             .foregroundColor(.secondary)
+            .frame(height: 30)
             .horizontalAlignSetting(.center)
     }
     
@@ -32,3 +33,4 @@ extension View {
         self.modifier(SwipeContainerCell(leadingButtons: leadingButtons, trailingButton: trailingButton, onClick: onClick))
     }
 }
+

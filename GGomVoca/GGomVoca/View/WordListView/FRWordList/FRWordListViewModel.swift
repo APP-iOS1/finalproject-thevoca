@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 class FRFRWordListViewModel: ObservableObject {
-    
+   
     // MARK: Vocabulary Properties
     var selectedVocabulary: Vocabulary = Vocabulary()
     var nationality: String = "FR"
@@ -107,7 +107,6 @@ class FRFRWordListViewModel: ObservableObject {
             })
             .store(in: &bag)
     }
-    
     
     // MARK: 단어장의 word 배열이 비어있을 때 나타낼 Empty 메세지의 다국어 처리
     // TODO: Vocabulary 구조체 자체의 property로 넣을 수 없을지?

@@ -27,11 +27,16 @@ final class TestViewModel: ObservableObject {
     @Published var words: [Word] = []
     
     @Published var testPaper: [Question] = []
+    var testType: String = ""
     // 현재 풀고 있는 문제 번호
     var currentQuestionNum: Int = 0
     // 전체 문제 수
     var wholeQuestionNum: Int {
         testPaper.count
+    }
+    // 마지막 문제인지 판별
+    var isLastQuestion: Bool {
+        currentQuestionNum + 1 == testPaper.count
     }
     
     // MARK: Timer Properties
@@ -43,6 +48,9 @@ final class TestViewModel: ObservableObject {
     @Published var timeRemaining : Int = 0
     // 걸린 시간 표시하기 위한 property
     var timeCountUp: Int = 0
+    
+    // 시험 종료 후 결과지로 이동하기 위한 Property
+    var isFinished: Bool = false
     
     // MARK: saveContext
     func saveContext() {
@@ -62,7 +70,7 @@ final class TestViewModel: ObservableObject {
     
     // MARK: - 시험지 생성
     func createPaper(isWholeWord: Bool) {
-        for word in words {
+        for word in words.shuffled() {
             if isWholeWord {
                 // 모든 단어 시험지에 추가
                 testPaper.append(Question(id: word.id!, word: word.word!, meaning: word.meaning!))
@@ -111,16 +119,11 @@ final class TestViewModel: ObservableObject {
                   testPaper[idx].isCorrect = .Wrong
                 }
             case "meaning":
-              // MARK: Tmp print
-              print("meaning : \(testPaper[idx].meaning)")
-              print("answer : \(testPaper[idx].answer?.components(separatedBy: ","))")
               // MARK: white space trim
               var trimmedAnswer = testPaper[idx].answer?.components(separatedBy: ",")
               for i in trimmedAnswer!.indices {
                 trimmedAnswer![i] = trimmedAnswer![i].trimmingCharacters(in: .whitespaces)
               }
-              print("trimmedAnswer : \(trimmedAnswer)")
-              print("result : \(testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!))")
               if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Right {
                 testPaper[idx].isCorrect = .Right
                 } else if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Wrong {
@@ -146,38 +149,49 @@ final class TestViewModel: ObservableObject {
                     word.recentTestResults!.removeFirst()
                 }
             }
+            
             // 시험 본 단어 update
             if let tempWord = testPaper.filter({ $0.word == word.word }).first {
-//                print("[test!] \(tempWord)")
                 if tempWord.isCorrect == .Right {
                     word.recentTestResults?.append("O")
                     word.correctCount += 1
-                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
-                    // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
-                    if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
-                        word.isMemorized = true
-                        for (idx, paper) in testPaper.enumerated() {
-                            if word.id == paper.id {
-                                testPaper[idx].isToggleMemorize = true
-                                print("[testPaper] \(testPaper)")
-                                break
+                    
+                    // isMemorized를 true로 바꿀지 판별
+                    if !word.isMemorized {
+                        if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
+                            word.isMemorized = true
+                            for (idx, paper) in testPaper.enumerated() {
+                                if word.id == paper.id {
+                                    testPaper[idx].isToggleMemorize = true
+                                    break
+                                }
                             }
                         }
                     }
                 } else {
                     word.recentTestResults?.append("X")
                     word.incorrectCount += 1
-                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
                 }
             } else {
                 // 시험 안 본 단어 update
-//                print("[isMemorized] \(word)")
                 word.recentTestResults?.append("-")
-                print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
             }
-            
         }
         saveContext()
+    }
+    
+    func nextActions(answer: String) {
+        saveAnswer(answer: answer)
+        if isLastQuestion {
+            cancelTimer()
+            // 문제지 채점
+            gradeTestPaper(testType: testType)
+            testResult()
+            isFinished = true
+        } else {
+            showNextQuestion()
+            restartTimer()
+        }
     }
     
     // MARK: - Timer 관련 메서드
@@ -197,22 +211,14 @@ final class TestViewModel: ObservableObject {
     
     // iPone용 Timer
     func startTimer() {
-        timeRemaining = iPhoneTimeLimit
+        timeRemaining = testType == "word" ? iPhoneTimeLimit : iPhoneTimeLimit + (3 * (testPaper[currentQuestionNum].meaning.count - 1))
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
                 self.timeRemaining -= 1
                 self.timeCountUp += 1
                 if self.timeRemaining < 0 {
-                    // 마지막 문제인 경우
-                    if self.currentQuestionNum >= self.wholeQuestionNum - 1 {
-                        self.cancelTimer()
-                    } else {
-                        // 마지막 문제가 아니면 다음 문제로 넘어감
-                        self.saveAnswer(answer: "")
-                        self.showNextQuestion()
-                        self.restartTimer()
-                    }
+                    self.nextActions(answer: "")
                 }
             }
     }

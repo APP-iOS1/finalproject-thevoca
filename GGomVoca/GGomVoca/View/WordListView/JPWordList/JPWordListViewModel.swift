@@ -8,8 +8,7 @@
 import Foundation
 import Combine
 class JPWordListViewModel: ObservableObject {
-  
-    
+   
     //MARK: Service
     var service : WordListService
     private var bag : Set<AnyCancellable> = Set<AnyCancellable>()
@@ -23,7 +22,6 @@ class JPWordListViewModel: ObservableObject {
     var nationality: String = "JA"
 
     @Published var words: [Word] = []
-    
     // MARK: 일치하는 id의 단어장 불러오기 Updated
     func getVocabulary(vocabularyID: Vocabulary.ID){
         service.getVocabularyFromId(vocabularyID: vocabularyID)
@@ -108,7 +106,6 @@ class JPWordListViewModel: ObservableObject {
             })
             .store(in: &bag)
     }
-    
     
     // MARK: 단어장의 word 배열이 비어있을 때 나타낼 Empty 메세지의 다국어 처리
     // TODO: Vocabulary 구조체 자체의 property로 넣을 수 없을지?

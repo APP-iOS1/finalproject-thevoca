@@ -63,7 +63,6 @@ struct WordListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             if viewModel.words.isEmpty {
                 VStack(spacing: 10) {
                     EmptyWordListView(lang: viewModel.nationality)
@@ -74,45 +73,7 @@ struct WordListView: View {
                 WordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
                     .padding(.top, 15)
             }
-            
-            if !multiSelection.isEmpty && isSelectionMode {
-                VStack(spacing: 0) {
-                    Rectangle()
-                        .foregroundColor(Color("toolbardivider"))
-                        .frame(height: 1)
-                    
-                    HStack {
-                        // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "folder")
-                        }
-                        .padding()
-                        
-                        Spacer()
-                        
-                        Button("선택한 단어 듣기") {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "ja-JP")
-                        }
-                        
-                        Spacer()
-                        
-                        // TODO: 삭제하기 전에 OO개의 단어를 삭제할거냐고 확인하기 confirmationDialog...
-                        Button(role: .destructive) {
-                            if UIDevice.current.model == "iPhone" {
-                                confirmationDialog.toggle()
-                            } else if UIDevice.current.model == "iPad" {
-                                removeAlert.toggle()
-                            }
-                        } label: {
-                            Image(systemName: "trash")
-                        }
-                        .padding()
-                    }
-                    .background(Color("toolbarbackground"))
-                }
-            }
+
         }
         .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
@@ -123,7 +84,11 @@ struct WordListView: View {
         }
         // 시험 모드 시트
         .fullScreenCover(isPresented: $isTestMode, content: {
-            TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+            if viewModel.words.isEmpty {
+                EmptyTestModeView()
+            } else {
+                TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+            }
         })
         // 단어 여러 개 삭제 여부 (iPhone)
         .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
@@ -146,7 +111,7 @@ struct WordListView: View {
             Button(role: .cancel) {
                 removeAlert.toggle()
             } label: {
-                Text("Cancle")
+                Text("Cancel")
             }
             
             Button(role: .destructive) {
@@ -192,22 +157,46 @@ struct WordListView: View {
                         SpeechSynthesizer.shared.stopSpeaking()
                     }
                 }
+                
+                ToolbarItemGroup(placement: .bottomBar) {
+//                        Button {
+//
+//                        } label: {
+//                            Image(systemName: "folder")
+//                        }
+//                    .disabled(multiSelection.isEmpty ? true : false)
+                        
+                    Button("선택한 단어 듣기") {
+                        SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                    }
+                    .disabled(multiSelection.isEmpty ? true : false)
+                    
+                    Button(role: .destructive) {
+                        if UIDevice.current.model == "iPhone" {
+                            confirmationDialog.toggle()
+                        } else if UIDevice.current.model == "iPad" {
+                            removeAlert.toggle()
+                        }
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .disabled(multiSelection.isEmpty ? true : false)
+                }
+                
             } else {
-                //                ToolbarItem {
-                //                    VStack(alignment: .center) {
-                //                        Text("\(viewModel.words.count)")
-                //                            .foregroundColor(.gray)
-                //                    }
-                //                }
-                // + 버튼
-                ToolbarItem {
+                // MARK: 새 단어 추가 버튼
+                ToolbarItemGroup(placement: .bottomBar) {
                     Button {
                         addNewWord.toggle()
                     } label: {
-                        Image(systemName: "plus")
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("새 단어 추가")
+                        }
                     }
+                    
+                    Spacer()
                 }
-                
                 
                 // 햄버거 버튼
                 ToolbarItem {

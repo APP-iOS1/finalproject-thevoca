@@ -69,7 +69,7 @@ class CoreDataRepositoryImpl : CoreDataRepository {
                 let voca = results.first ?? Vocabulary()
                 observer(.success(voca))
             }catch{
-                print("RepositoryError \(error)")
+                print("\(error)")
                 observer(.failure(RepositoryError.coreDataRepositoryError(error: .notFoundDataFromCoreData)))
             }
             
