@@ -78,18 +78,19 @@ struct KOWordListView: View {
 
                       HStack {
                           // TODO: 단어장 이동 버튼; sheet가 올라오고 단어장 목록이 나옴
-                          Button {
-
-                          } label: {
-                              Image(systemName: "folder")
-                          }
-                          .padding()
-
-                          Spacer()
+//                          Button {
+//
+//                          } label: {
+//                              Image(systemName: "folder")
+//                          }
+//                          .padding()
+//
+//                          Spacer()
 
                           Button("선택한 단어 듣기") {
                               SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "kr-KO")
                           }
+                          .padding()
 
                           Spacer()
 
@@ -124,7 +125,11 @@ struct KOWordListView: View {
           }
           // 시험 모드 시트
           .fullScreenCover(isPresented: $isTestMode, content: {
-              TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+              if viewModel.words.isEmpty {
+                  EmptyTestModeView()
+              } else {
+                  TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+              }
           })
           // 단어 여러 개 삭제 여부 (iPhone)
           .confirmationDialog("단어 삭제", isPresented: $confirmationDialog, actions: {
