@@ -24,7 +24,7 @@ protocol TTSProtocol {
     func stopSpeaking()
 }
 
-final class SpeechSynthesizer: TTSProtocol {
+final class SpeechSynthesizer: NSObject, AVSpeechSynthesizerDelegate, TTSProtocol {
     // 싱글톤으로 정의
     static let shared: SpeechSynthesizer = SpeechSynthesizer()
     
@@ -42,14 +42,19 @@ final class SpeechSynthesizer: TTSProtocol {
     // TODO: - 사용자가 설정한 언어에 따라 동적으로 뱌뀌는 코드 추가
     private let meaningUtteranceLanguage = "ko-KR"
     
-    private init() {}
+    private var wordUtterance: AVSpeechUtterance?
+    
+    private override init() {
+        super.init()
+        instance.delegate = self
+    }
     
     /// 단어 하나를 읽어주는 메서드
     func speakWordAndMeaning(_ word: Word, to language: String, _ type: SpeechType) {
-        let wordUtterance = AVSpeechUtterance(string: word.word ?? "") // TTS로 들려줄 단어 설정
-        wordUtterance.voice = AVSpeechSynthesisVoice(language: language) // 언어 설정
-        wordUtterance.postUtteranceDelay = intervalOfWordAndMeaning // 다음 단어와의 시간 간격 설정
-        self.instance.speak(wordUtterance) // TTS 작동
+        wordUtterance = AVSpeechUtterance(string: word.word ?? "") // TTS로 들려줄 단어 설정
+        wordUtterance?.voice = AVSpeechSynthesisVoice(language: language) // 언어 설정
+        wordUtterance?.postUtteranceDelay = intervalOfWordAndMeaning // 다음 단어와의 시간 간격 설정
+        self.instance.speak(wordUtterance ?? AVSpeechUtterance()) // TTS 작동
         
         if type == SpeechType.single { return } // contextMenu로 접근한 경우
         
@@ -73,5 +78,28 @@ final class SpeechSynthesizer: TTSProtocol {
     /// 단어 읽기를 멈추는 메서드 (onDisapper)
     func stopSpeaking() {
         self.instance.stopSpeaking(at: .immediate)
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        print("Speech synthesis started.")
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        wordUtterance = nil
+        print("Speech synthesis finished.")
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+        wordUtterance = nil
+        print("Speech synthesis paused.")
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance) {
+        print("Speech synthesis continued.")
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        wordUtterance = nil
+        print("Speech synthesis cancelled.")
     }
 }
