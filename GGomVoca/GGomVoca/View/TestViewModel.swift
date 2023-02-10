@@ -119,7 +119,6 @@ final class TestViewModel: ObservableObject {
                   testPaper[idx].isCorrect = .Wrong
                 }
             case "meaning":
-              // MARK: Tmp print
               // MARK: white space trim
               var trimmedAnswer = testPaper[idx].answer?.components(separatedBy: ",")
               for i in trimmedAnswer!.indices {
@@ -152,7 +151,6 @@ final class TestViewModel: ObservableObject {
             }
             // 시험 본 단어 update
             if let tempWord = testPaper.filter({ $0.word == word.word }).first {
-//                print("[test!] \(tempWord)")
                 if tempWord.isCorrect == .Right {
                     word.recentTestResults?.append("O")
                     word.correctCount += 1
@@ -172,7 +170,6 @@ final class TestViewModel: ObservableObject {
                 }
             } else {
                 // 시험 안 본 단어 update
-//                print("[isMemorized] \(word)")
                 word.recentTestResults?.append("-")
             }
             
