@@ -34,6 +34,7 @@ final class TestViewModel: ObservableObject {
     var wholeQuestionNum: Int {
         testPaper.count
     }
+    // 마지막 문제인지 판별
     var isLastQuestion: Bool {
         currentQuestionNum + 1 == testPaper.count
     }
@@ -119,15 +120,11 @@ final class TestViewModel: ObservableObject {
                 }
             case "meaning":
               // MARK: Tmp print
-              print("meaning : \(testPaper[idx].meaning)")
-              print("answer : \(testPaper[idx].answer?.components(separatedBy: ","))")
               // MARK: white space trim
               var trimmedAnswer = testPaper[idx].answer?.components(separatedBy: ",")
               for i in trimmedAnswer!.indices {
                 trimmedAnswer![i] = trimmedAnswer![i].trimmingCharacters(in: .whitespaces)
               }
-              print("trimmedAnswer : \(trimmedAnswer)")
-              print("result : \(testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!))")
               if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Right {
                 testPaper[idx].isCorrect = .Right
                 } else if testPaper[idx].meaning.containsSameElements(as: trimmedAnswer!) == .Wrong {
@@ -159,14 +156,12 @@ final class TestViewModel: ObservableObject {
                 if tempWord.isCorrect == .Right {
                     word.recentTestResults?.append("O")
                     word.correctCount += 1
-                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
                     // 최근 시험 결과가 전부 O이면 외운 단어라고 판단
                     if (word.recentTestResults?.filter({ $0 == "O" }).count)! >= 5 {
                         word.isMemorized = true
                         for (idx, paper) in testPaper.enumerated() {
                             if word.id == paper.id {
                                 testPaper[idx].isToggleMemorize = true
-                                print("[testPaper] \(testPaper)")
                                 break
                             }
                         }
@@ -174,13 +169,11 @@ final class TestViewModel: ObservableObject {
                 } else {
                     word.recentTestResults?.append("X")
                     word.incorrectCount += 1
-                    print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
                 }
             } else {
                 // 시험 안 본 단어 update
 //                print("[isMemorized] \(word)")
                 word.recentTestResults?.append("-")
-                print("\(word.word) \(word.meaning) \(word.correctCount) \(word.incorrectCount) \(word.recentTestResults)")
             }
             
         }
@@ -225,7 +218,6 @@ final class TestViewModel: ObservableObject {
                 self.timeRemaining -= 1
                 self.timeCountUp += 1
                 if self.timeRemaining < 0 {
-                    // 마지막 문제인 경우
                     self.nextActions(answer: "")
                 }
             }
