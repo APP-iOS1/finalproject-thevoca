@@ -41,7 +41,7 @@ final class TestViewModel: ObservableObject {
     // MARK: Timer Properties
     var timer: AnyCancellable?
     // 한 문제당 주어지는 시간
-    let iPhoneTimeLimit = 5
+    let iPhoneTimeLimit = 15
     let iPadTimeLimit = 30
     // 남은 시간 표시하기 위한 property
     @Published var timeRemaining : Int = 0
@@ -218,7 +218,7 @@ final class TestViewModel: ObservableObject {
     
     // iPone용 Timer
     func startTimer() {
-        timeRemaining = iPhoneTimeLimit
+        timeRemaining = testType == "word" ? iPhoneTimeLimit : iPhoneTimeLimit + (3 * (testPaper[currentQuestionNum].meaning.count - 1))
         timer = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
