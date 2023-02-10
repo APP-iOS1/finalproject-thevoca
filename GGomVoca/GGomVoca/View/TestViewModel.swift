@@ -27,22 +27,29 @@ final class TestViewModel: ObservableObject {
     @Published var words: [Word] = []
     
     @Published var testPaper: [Question] = []
+    var testType: String = ""
     // 현재 풀고 있는 문제 번호
     var currentQuestionNum: Int = 0
     // 전체 문제 수
     var wholeQuestionNum: Int {
         testPaper.count
     }
+    var isLastQuestion: Bool {
+        currentQuestionNum + 1 == testPaper.count
+    }
     
     // MARK: Timer Properties
     var timer: AnyCancellable?
     // 한 문제당 주어지는 시간
-    let iPhoneTimeLimit = 15
+    let iPhoneTimeLimit = 5
     let iPadTimeLimit = 30
     // 남은 시간 표시하기 위한 property
     @Published var timeRemaining : Int = 0
     // 걸린 시간 표시하기 위한 property
     var timeCountUp: Int = 0
+    
+    // 시험 종료 후 결과지로 이동하기 위한 Property
+    var isFinished: Bool = false
     
     // MARK: saveContext
     func saveContext() {
@@ -180,6 +187,20 @@ final class TestViewModel: ObservableObject {
         saveContext()
     }
     
+    func nextActions(answer: String) {
+        saveAnswer(answer: answer)
+        if isLastQuestion {
+            cancelTimer()
+            // 문제지 채점
+            gradeTestPaper(testType: testType)
+            testResult()
+            isFinished = true
+        } else {
+            showNextQuestion()
+            restartTimer()
+        }
+    }
+    
     // MARK: - Timer 관련 메서드
     // iPad용 Timer
     func startiPadTimer() {
@@ -205,14 +226,7 @@ final class TestViewModel: ObservableObject {
                 self.timeCountUp += 1
                 if self.timeRemaining < 0 {
                     // 마지막 문제인 경우
-                    if self.currentQuestionNum >= self.wholeQuestionNum - 1 {
-                        self.cancelTimer()
-                    } else {
-                        // 마지막 문제가 아니면 다음 문제로 넘어감
-                        self.saveAnswer(answer: "")
-                        self.showNextQuestion()
-                        self.restartTimer()
-                    }
+                    self.nextActions(answer: "")
                 }
             }
     }
