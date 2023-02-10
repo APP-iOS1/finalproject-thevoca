@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>49250687059-p336lv6ngoj6s3lavv3fmtbbluo1le8j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.49250687059-p336lv6ngoj6s3lavv3fmtbbluo1le8j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZqca_FQR0EFS5ML0y-Z2tfxJpJTyDkRQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>49250687059</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>LikeLion.GGomVoca</string>
+	<key>PROJECT_ID</key>
+	<string>ggomvoca</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ggomvoca.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:49250687059:ios:ef6e9bac1c2bb747774ea6</string>
+</dict>
+</plist>
