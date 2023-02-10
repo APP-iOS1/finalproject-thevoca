@@ -193,23 +193,21 @@ struct JPWordListView: View {
                       }
                   }
               } else {
-                  //                ToolbarItem {
-                  //                    VStack(alignment: .center) {
-                  //                        Text("\(viewModel.words.count)")
-                  //                            .foregroundColor(.gray)
-                  //                    }
-                  //                }
-                  // + 버튼
-                  ToolbarItem {
+                  // MARK: 새 단어 추가 버튼
+                  ToolbarItemGroup(placement: .bottomBar) {
                       Button {
                           addNewWord.toggle()
                       } label: {
-                          Image(systemName: "plus")
+                          HStack {
+                              Image(systemName: "plus.circle.fill")
+                              Text("새 단어 추가")
+                          }
                       }
+                      
+                      Spacer()
                   }
 
-
-                // 햄버거 버튼
+                // MARK: 미트볼 버튼
                 ToolbarItem {
                     CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $isSpeech, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
                         .onChange(of: selectedSegment) { _ in

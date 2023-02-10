@@ -63,7 +63,6 @@ struct WordListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            
             if viewModel.words.isEmpty {
                 VStack(spacing: 10) {
                     EmptyWordListView(lang: viewModel.nationality)
@@ -193,21 +192,19 @@ struct WordListView: View {
                     }
                 }
             } else {
-                //                ToolbarItem {
-                //                    VStack(alignment: .center) {
-                //                        Text("\(viewModel.words.count)")
-                //                            .foregroundColor(.gray)
-                //                    }
-                //                }
-                // + 버튼
-                ToolbarItem {
+                // MARK: 새 단어 추가 버튼
+                ToolbarItemGroup(placement: .bottomBar) {
                     Button {
                         addNewWord.toggle()
                     } label: {
-                        Image(systemName: "plus")
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("새 단어 추가")
+                        }
                     }
+                    
+                    Spacer()
                 }
-                
                 
                 // 햄버거 버튼
                 ToolbarItem {
