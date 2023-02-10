@@ -113,7 +113,7 @@ struct FRWordListView: View {
                 Button(role: .cancel) {
                     removeAlert.toggle()
                 } label: {
-                    Text("Cancle")
+                    Text("Cancel")
                 }
                 
                 Button(role: .destructive) {
