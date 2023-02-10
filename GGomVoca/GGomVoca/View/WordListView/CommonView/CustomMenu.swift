@@ -70,48 +70,41 @@ class MenuButton: UIButton {
     func testMenu() -> UIMenu {
 
         let seeAll = UIAction(title: "모두 보기",
-                              image: UIImage(systemName: "eye.fill"),
                               state: currentMode == .normal ? .on : .off) { action in
           self.updateMode(mode: .normal)
         }
         let seeWord = UIAction(title: "단어만 보기",
-                               image: UIImage(systemName: "eye.slash"),
                                state: currentMode == .meaningTest ? .on : .off) { action in
           self.updateMode(mode: .meaningTest)
         }
         let seeMeaning = UIAction(title: "뜻만 보기",
-                                  image: UIImage(systemName: "eye.slash.fill"),
                                   state: currentMode == .wordTest ? .on : .off) { action in
           self.updateMode(mode: .wordTest)
         }
-
-        return UIMenu(title: "보기 모드", subtitle: "\(currentMode.rawValue)", children: [seeAll, seeWord, seeMeaning])
+      return UIMenu(title: "보기 모드", subtitle: "\(currentMode.rawValue)", image: UIImage(systemName: "eye.fill"), children: [seeAll, seeWord, seeMeaning])
     }
 
     func orderMenu() -> UIMenu {
         let orderByRandom = self.orderByRandom()
         let orderByDict = self.orderByDict()
         let orderByDate = self.orderByDate()
-        return UIMenu(title: "정렬", subtitle: "\(orderMode)", children: [orderByRandom, orderByDict, orderByDate])
+      return UIMenu(title: "정렬", subtitle: "\(orderMode)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [orderByRandom, orderByDict, orderByDate])
     }
 
     func orderByRandom() -> UIAction {
-        UIAction(title: "랜덤 정렬",
-                 image: UIImage(systemName: "arrow.up.arrow.down")) { action in
+        UIAction(title: "랜덤 정렬") { action in
           self.updateOrder(order: "랜덤 정렬")
         }
     }
 
     func orderByDict() -> UIAction {
-        UIAction(title: "사전순 정렬",
-                 image: UIImage(systemName: "arrow.up.arrow.down")) { action in
+        UIAction(title: "사전순 정렬") { action in
           self.updateOrder(order: "사전순 정렬")
         }
     }
 
     func orderByDate() -> UIAction {
-        UIAction(title: "시간순 정렬",
-                 image: UIImage(systemName: "arrow.up.arrow.down")) { action in
+        UIAction(title: "시간순 정렬") { action in
           self.updateOrder(order: "시간순 정렬")
         }
     }
@@ -175,11 +168,16 @@ class MenuButton: UIButton {
         // 시험 결과 보기
         let checkResult = self.checkResult()
 
+        let modeTestMenu = UIMenu(title: "", options: .displayInline, children: [testMenu, takeTest, checkResult])
+        let orderVocaMenu = UIMenu(title: "", options: .displayInline, children: [orderMenu, editVoca, importVoca, exportVoca])
+
         setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
-        menu = UIMenu(title: "", children: [testMenu, takeTest, listenAll, orderMenu, editVoca, importVoca, exportVoca, checkResult])
-        //        menu?.preferredElementSize = .medium
+        menu = UIMenu(title: "", children: [modeTestMenu, orderVocaMenu, listenAll])
         showsMenuAsPrimaryAction = true
     }
+
+
+
 
 }
 
