@@ -40,8 +40,6 @@ class DisplaySplitViewModel : ObservableObject {
             }, receiveValue: { [weak self] vocaList in
                 let list = vocaList.filter{ $0.deleatedAt == nil}
                 self?.vocabularyList = list
-                print("getVocabularyData \(list)")
-           
             })
             .store(in: &bag)
     }
@@ -56,8 +54,6 @@ class DisplaySplitViewModel : ObservableObject {
                 
                 
             }, receiveValue: {[weak self] value in
-                
-               
                 print("postVocaData result : \(value)")
                 self?.service.saveContext()
                 
@@ -88,8 +84,6 @@ class DisplaySplitViewModel : ObservableObject {
                 print(result)
                 self?.service.saveContext()
                 self?.getVocabularyData()
-            
-                
             }).store(in: &bag)
 
     }
@@ -124,8 +118,6 @@ class DisplaySplitViewModel : ObservableObject {
                 print(value)
                 self?.service.saveContext() //저장
                 self?.getVocabularyData() //불러오기
-                //MARK: 유비쿼터스 삭제
-                UserManager.deleteVocabulary(id: id)
             }).store(in: &bag)
         
     }

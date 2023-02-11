@@ -34,5 +34,6 @@ struct GGomVocaApp: App {
     // MARK: DI
     init(){
         DependencyManager.shared.register()
+        UserManager.shared.sync() 
     }
 }
