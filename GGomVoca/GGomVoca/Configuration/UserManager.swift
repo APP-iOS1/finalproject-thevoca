@@ -16,6 +16,10 @@ final class UserManager {
     @UbiquitousStorage(key: "japanishVocabularyIDs", defaultValue: []) var japanishVocabularyIDs: [String]
     @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
     
+    func sync() {
+        NSUbiquitousKeyValueStore().synchronize()
+    }
+    
     // MARK: 단어장 추가
     static func addVocabulary(id: String, nationality: String) {
         switch nationality {
@@ -89,14 +93,14 @@ final class UserManager {
         }
     }
     
-    var recentVocabulary : [String] {
-        get {
-            let defaults = UserDefaults.standard
-            return defaults.array(forKey: "RecentVocabulary") as? [String] ?? []
-        }
-        set {
-            let defaults = UserDefaults.standard
-            defaults.set(newValue, forKey: "RecentVocabulary")
-        }
-    }
+//    var recentVocabulary : [String] {
+//        get {
+//            let defaults = UserDefaults.standard
+//            return defaults.array(forKey: "RecentVocabulary") as? [String] ?? []
+//        }
+//        set {
+//            let defaults = UserDefaults.standard
+//            defaults.set(newValue, forKey: "RecentVocabulary")
+//        }
+//    }
 }
