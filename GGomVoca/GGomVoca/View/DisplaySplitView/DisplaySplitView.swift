@@ -128,8 +128,8 @@ struct DisplaySplitView: View {
                         VocabularyCell(
                             pinnedCompletion: { vocaId in
                                 viewModel.updateIsPinnedVocabulary(id: vocaId)
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
+                            }, deleteCompletion: { vocaId in
+                                viewModel.deleteVocabulary(id: vocaId.uuidString)
                             }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onDelete { indexSet in
@@ -183,8 +183,8 @@ struct DisplaySplitView: View {
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: { vocaId in
                             viewModel.updateIsPinnedVocabulary(id: vocaId)
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
+                        }, deleteCompletion: { vocaId in
+                            viewModel.deleteVocabulary(id: vocaId.uuidString)
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onDelete { indexSet in
@@ -206,8 +206,8 @@ struct DisplaySplitView: View {
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: {vocaId in
                             viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
+                        }, deleteCompletion: { vocaId in
+                            viewModel.deleteVocabulary(id: vocaId.uuidString)
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onDelete { indexSet in
@@ -229,8 +229,8 @@ struct DisplaySplitView: View {
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: { vocaId in
                             viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
+                        }, deleteCompletion: { vocaId in
+                            viewModel.deleteVocabulary(id: vocaId.uuidString)
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onDelete { indexSet in
@@ -252,8 +252,8 @@ struct DisplaySplitView: View {
                         let vocabulary = viewModel.getVocabulary(for: vocabularyID)
                         VocabularyCell(pinnedCompletion: { vocaId in
                             viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
+                        }, deleteCompletion: { vocaId in
+                            viewModel.deleteVocabulary(id: vocaId.uuidString)
                         }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
                     }
                     .onDelete { indexSet in
