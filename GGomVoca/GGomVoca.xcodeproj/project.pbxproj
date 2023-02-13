@@ -43,12 +43,10 @@
 		63EA4ABB29875DE8009392EE /* KOAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AB529875DE8009392EE /* KOAddNewWordView.swift */; };
 		63EA4ABC29875DE8009392EE /* KOWordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AB629875DE8009392EE /* KOWordListViewModel.swift */; };
 		63EA4ABD29875DE8009392EE /* KOEditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AB729875DE8009392EE /* KOEditWordView.swift */; };
-		63EA4ABE29875DE8009392EE /* KOWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AB829875DE8009392EE /* KOWordCell.swift */; };
 		63EA4ABF29875DE8009392EE /* KOWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AB929875DE8009392EE /* KOWordListView.swift */; };
 		63EA4AC029875DE8009392EE /* KOWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4ABA29875DE8009392EE /* KOWordsTableView.swift */; };
 		63EA4AC829875DF4009392EE /* ENEditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC229875DF4009392EE /* ENEditWordView.swift */; };
 		63EA4AC929875DF4009392EE /* ENAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC329875DF4009392EE /* ENAddNewWordView.swift */; };
-		63EA4ACA29875DF4009392EE /* ENWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC429875DF4009392EE /* ENWordCell.swift */; };
 		63EA4ACB29875DF4009392EE /* ENWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC529875DF4009392EE /* ENWordListView.swift */; };
 		63EA4ACC29875DF4009392EE /* ENWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC629875DF4009392EE /* ENWordsTableView.swift */; };
 		63EA4ACD29875DF4009392EE /* ENWordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AC729875DF4009392EE /* ENWordListViewModel.swift */; };
@@ -57,11 +55,9 @@
 		63EA4AD729875E00009392EE /* JPWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AD129875E00009392EE /* JPWordListView.swift */; };
 		63EA4AD829875E00009392EE /* JPEditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AD229875E00009392EE /* JPEditWordView.swift */; };
 		63EA4AD929875E00009392EE /* JPWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AD329875E00009392EE /* JPWordsTableView.swift */; };
-		63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AD429875E00009392EE /* JPWordCell.swift */; };
 		63EA4AE229875E0A009392EE /* FRWordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4ADC29875E0A009392EE /* FRWordsTableView.swift */; };
 		63EA4AE329875E0A009392EE /* FREditWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4ADD29875E0A009392EE /* FREditWordView.swift */; };
 		63EA4AE429875E0A009392EE /* FRWordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4ADE29875E0A009392EE /* FRWordListViewModel.swift */; };
-		63EA4AE529875E0A009392EE /* FRWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4ADF29875E0A009392EE /* FRWordCell.swift */; };
 		63EA4AE629875E0A009392EE /* FRAddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */; };
 		63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE129875E0A009392EE /* FRWordListView.swift */; };
 		63EA4AE92987B0B5009392EE /* EditVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */; };
@@ -69,7 +65,6 @@
 		C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */; };
 		C0C17C812990EE1A00F24CF0 /* MyNoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */; };
 		EA1F3A1529960A7100C9D25E /* EmptyTestModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F3A1429960A7100C9D25E /* EmptyTestModeView.swift */; };
-		EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF94297784AC00C49CF3 /* WordCell.swift */; };
 		EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF9729778FE200C49CF3 /* WordListView.swift */; };
 		EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30AF992977908200C49CF3 /* WordsTableView.swift */; };
 		EAB4FFA92977C8830070941A /* SwipeContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4FFA82977C8830070941A /* SwipeContainerCell.swift */; };
@@ -83,6 +78,8 @@
 		EE081AFC2995DD4D005A8352 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFB2995DD4D005A8352 /* FirebaseAnalyticsSwift */; };
 		EE081AFE2995DD4D005A8352 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFD2995DD4D005A8352 /* FirebaseCrashlytics */; };
 		EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E49FE2976709A00890CF7 /* UserManager.swift */; };
+		EE341E5F2999F7EE0015CC45 /* TestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE341E5E2999F7EE0015CC45 /* TestService.swift */; };
+		EE341E612999F8200015CC45 /* TestServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE341E602999F8200015CC45 /* TestServiceImpl.swift */; };
 		EE57C04D2951791D004312CE /* DisplaySplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04C2951791D004312CE /* DisplaySplitView.swift */; };
 		EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04E29517950004312CE /* AddVocabularyView.swift */; };
 		EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C0502951795E004312CE /* VocabularyCell.swift */; };
@@ -148,12 +145,10 @@
 		63EA4AB529875DE8009392EE /* KOAddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOAddNewWordView.swift; sourceTree = "<group>"; };
 		63EA4AB629875DE8009392EE /* KOWordListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOWordListViewModel.swift; sourceTree = "<group>"; };
 		63EA4AB729875DE8009392EE /* KOEditWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOEditWordView.swift; sourceTree = "<group>"; };
-		63EA4AB829875DE8009392EE /* KOWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOWordCell.swift; sourceTree = "<group>"; };
 		63EA4AB929875DE8009392EE /* KOWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOWordListView.swift; sourceTree = "<group>"; };
 		63EA4ABA29875DE8009392EE /* KOWordsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KOWordsTableView.swift; sourceTree = "<group>"; };
 		63EA4AC229875DF4009392EE /* ENEditWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENEditWordView.swift; sourceTree = "<group>"; };
 		63EA4AC329875DF4009392EE /* ENAddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENAddNewWordView.swift; sourceTree = "<group>"; };
-		63EA4AC429875DF4009392EE /* ENWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENWordCell.swift; sourceTree = "<group>"; };
 		63EA4AC529875DF4009392EE /* ENWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENWordListView.swift; sourceTree = "<group>"; };
 		63EA4AC629875DF4009392EE /* ENWordsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENWordsTableView.swift; sourceTree = "<group>"; };
 		63EA4AC729875DF4009392EE /* ENWordListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENWordListViewModel.swift; sourceTree = "<group>"; };
@@ -162,11 +157,9 @@
 		63EA4AD129875E00009392EE /* JPWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JPWordListView.swift; sourceTree = "<group>"; };
 		63EA4AD229875E00009392EE /* JPEditWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JPEditWordView.swift; sourceTree = "<group>"; };
 		63EA4AD329875E00009392EE /* JPWordsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JPWordsTableView.swift; sourceTree = "<group>"; };
-		63EA4AD429875E00009392EE /* JPWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JPWordCell.swift; sourceTree = "<group>"; };
 		63EA4ADC29875E0A009392EE /* FRWordsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordsTableView.swift; sourceTree = "<group>"; };
 		63EA4ADD29875E0A009392EE /* FREditWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FREditWordView.swift; sourceTree = "<group>"; };
 		63EA4ADE29875E0A009392EE /* FRWordListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordListViewModel.swift; sourceTree = "<group>"; };
-		63EA4ADF29875E0A009392EE /* FRWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordCell.swift; sourceTree = "<group>"; };
 		63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRAddNewWordView.swift; sourceTree = "<group>"; };
 		63EA4AE129875E0A009392EE /* FRWordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FRWordListView.swift; sourceTree = "<group>"; };
 		63EA4AE82987B0B5009392EE /* EditVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVocabularyView.swift; sourceTree = "<group>"; };
@@ -174,7 +167,6 @@
 		C08DB5ED298CD27600403F59 /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 		C0C17C802990EE1A00F24CF0 /* MyNoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNoteDetailView.swift; sourceTree = "<group>"; };
 		EA1F3A1429960A7100C9D25E /* EmptyTestModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTestModeView.swift; sourceTree = "<group>"; };
-		EA30AF94297784AC00C49CF3 /* WordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCell.swift; sourceTree = "<group>"; };
 		EA30AF9729778FE200C49CF3 /* WordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListView.swift; sourceTree = "<group>"; };
 		EA30AF992977908200C49CF3 /* WordsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableView.swift; sourceTree = "<group>"; };
 		EAB4FFA82977C8830070941A /* SwipeContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeContainerCell.swift; sourceTree = "<group>"; };
@@ -185,6 +177,8 @@
 		EAEF3168298AB721009CE764 /* WordTestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTestViewModel.swift; sourceTree = "<group>"; };
 		EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EE1E49FE2976709A00890CF7 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		EE341E5E2999F7EE0015CC45 /* TestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestService.swift; sourceTree = "<group>"; };
+		EE341E602999F8200015CC45 /* TestServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestServiceImpl.swift; sourceTree = "<group>"; };
 		EE57C04C2951791D004312CE /* DisplaySplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySplitView.swift; sourceTree = "<group>"; };
 		EE57C04E29517950004312CE /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 		EE57C0502951795E004312CE /* VocabularyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCell.swift; sourceTree = "<group>"; };
@@ -378,9 +372,8 @@
 				63EA4AB629875DE8009392EE /* KOWordListViewModel.swift */,
 				63EA4AB929875DE8009392EE /* KOWordListView.swift */,
 				63EA4ABA29875DE8009392EE /* KOWordsTableView.swift */,
-				63EA4AB829875DE8009392EE /* KOWordCell.swift */,
-				63EA4AB729875DE8009392EE /* KOEditWordView.swift */,
 				63EA4AB529875DE8009392EE /* KOAddNewWordView.swift */,
+				63EA4AB729875DE8009392EE /* KOEditWordView.swift */,
 			);
 			path = KOWordList;
 			sourceTree = "<group>";
@@ -391,7 +384,6 @@
 				63EA4AC729875DF4009392EE /* ENWordListViewModel.swift */,
 				63EA4AC529875DF4009392EE /* ENWordListView.swift */,
 				63EA4AC629875DF4009392EE /* ENWordsTableView.swift */,
-				63EA4AC429875DF4009392EE /* ENWordCell.swift */,
 				63EA4AC329875DF4009392EE /* ENAddNewWordView.swift */,
 				63EA4AC229875DF4009392EE /* ENEditWordView.swift */,
 			);
@@ -404,7 +396,6 @@
 				63EA4AD029875E00009392EE /* JPWordListViewModel.swift */,
 				63EA4AD129875E00009392EE /* JPWordListView.swift */,
 				63EA4AD329875E00009392EE /* JPWordsTableView.swift */,
-				63EA4AD429875E00009392EE /* JPWordCell.swift */,
 				63EA4ACF29875E00009392EE /* JPAddNewWordView.swift */,
 				63EA4AD229875E00009392EE /* JPEditWordView.swift */,
 			);
@@ -417,7 +408,6 @@
 				63EA4ADE29875E0A009392EE /* FRWordListViewModel.swift */,
 				63EA4AE129875E0A009392EE /* FRWordListView.swift */,
 				63EA4ADC29875E0A009392EE /* FRWordsTableView.swift */,
-				63EA4ADF29875E0A009392EE /* FRWordCell.swift */,
 				63EA4AE029875E0A009392EE /* FRAddNewWordView.swift */,
 				63EA4ADD29875E0A009392EE /* FREditWordView.swift */,
 			);
@@ -448,7 +438,6 @@
 				639B31EA298059CD00955DE4 /* WordListViewModel.swift */,
 				EA30AF9729778FE200C49CF3 /* WordListView.swift */,
 				EA30AF992977908200C49CF3 /* WordsTableView.swift */,
-				EA30AF94297784AC00C49CF3 /* WordCell.swift */,
 				639B31EC29806E1600955DE4 /* AddNewWordView.swift */,
 				16F4323F2952A46C000D74B0 /* EditWordView.swift */,
 			);
@@ -471,6 +460,15 @@
 				639859592992429200E51C69 /* UbiquitousStorage.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		EE341E5D2999F7B90015CC45 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				EE341E5E2999F7EE0015CC45 /* TestService.swift */,
+				EE341E602999F8200015CC45 /* TestServiceImpl.swift */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 		EE57C04A29517881004312CE /* DisplaySplitView */ = {
@@ -541,6 +539,7 @@
 		EE759529298A594600AB6E62 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				EE341E5D2999F7B90015CC45 /* Test */,
 				EEE3018A2990B7D000195720 /* WordList */,
 				EE75952E298A5BC300AB6E62 /* Vocabulary */,
 			);
@@ -602,7 +601,6 @@
 				63DC852D2950312E00461DEB /* Sources */,
 				63DC852E2950312E00461DEB /* Frameworks */,
 				63DC852F2950312E00461DEB /* Resources */,
-				EE081AFF2995E06A005A8352 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -670,26 +668,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		EE081AFF2995E06A005A8352 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\n    \"${PODS_ROOT}/FirebaseCrashlytics/run\"\n    \"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		63DC852D2950312E00461DEB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -713,7 +691,6 @@
 				EEC0F81A2994C30C000B359F /* CoredataRepository.swift in Sources */,
 				63EA4ACD29875DF4009392EE /* ENWordListViewModel.swift in Sources */,
 				03F904E529514A6E003262AE /* SearchingResultsInMyWordsView.swift in Sources */,
-				63EA4ACA29875DF4009392EE /* ENWordCell.swift in Sources */,
 				63EA4AD629875E00009392EE /* JPWordListViewModel.swift in Sources */,
 				63DC853C2950312E00461DEB /* ContentView.swift in Sources */,
 				EEE6EABF2992212700C0F653 /* CloudError.swift in Sources */,
@@ -723,11 +700,11 @@
 				EA1F3A1529960A7100C9D25E /* EmptyTestModeView.swift in Sources */,
 				16E1ECC1298B9A0800BA4C9C /* ShakeEffect.swift in Sources */,
 				EAEF3169298AB721009CE764 /* WordTestViewModel.swift in Sources */,
+				EE341E5F2999F7EE0015CC45 /* TestService.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
 				EEE6EABB299220EF00C0F653 /* RepositoryError.swift in Sources */,
 				63EA4AD829875E00009392EE /* JPEditWordView.swift in Sources */,
 				C08DB5EE298CD27600403F59 /* SpeechSynthesizer.swift in Sources */,
-				63EA4ABE29875DE8009392EE /* KOWordCell.swift in Sources */,
 				635CBD5A298A693A0071328E /* iPadWordTestView.swift in Sources */,
 				EE759528298A3C0E00AB6E62 /* CoreDataRepositoryImpl.swift in Sources */,
 				63099091299A0A18001CD534 /* TestScopeSelectViewModel.swift in Sources */,
@@ -736,7 +713,6 @@
 				EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */,
 				EA30AF9829778FE200C49CF3 /* WordListView.swift in Sources */,
 				63EA4ACB29875DF4009392EE /* ENWordListView.swift in Sources */,
-				63EA4AE529875E0A009392EE /* FRWordCell.swift in Sources */,
 				63EA4ABC29875DE8009392EE /* KOWordListViewModel.swift in Sources */,
 				EE75952B298A5B7800AB6E62 /* VocabularyService.swift in Sources */,
 				63EA4ABF29875DE8009392EE /* KOWordListView.swift in Sources */,
@@ -748,13 +724,13 @@
 				EEE6EABD2992210A00C0F653 /* CoreDataError.swift in Sources */,
 				63DC85372950312E00461DEB /* Persistence.swift in Sources */,
 				6398595A2992429200E51C69 /* UbiquitousStorage.swift in Sources */,
-				63EA4ADA29875E00009392EE /* JPWordCell.swift in Sources */,
 				EAB4FFA92977C8830070941A /* SwipeContainerCell.swift in Sources */,
 				63A9E2AC2995E65400F354E8 /* ProfileSection.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,
 				164101612995FA37005C1854 /* EmptyMyNoteView.swift in Sources */,
 				632E89F9299473E300B6C101 /* SearchingResultsInMyWordsViewModel.swift in Sources */,
 				EAEF3167298A4205009CE764 /* WordTestResultView.swift in Sources */,
+				EAEF3167298A4205009CE764 /* WordTestResult.swift in Sources */,
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */,
 				EE57C05429517F81004312CE /* Nationality.swift in Sources */,
@@ -766,7 +742,6 @@
 				EE759522298A3A0E00AB6E62 /* CloudKitRepositoryImpl.swift in Sources */,
 				EEE301922990C08800195720 /* Word+CKRecord.swift in Sources */,
 				63EA4AD529875E00009392EE /* JPAddNewWordView.swift in Sources */,
-				EA30AF95297784AC00C49CF3 /* WordCell.swift in Sources */,
 				16E1ECC3298C49E400BA4C9C /* FieldView.swift in Sources */,
 				63EA4AE329875E0A009392EE /* FREditWordView.swift in Sources */,
 				EE905661298CC4CE00E125C1 /* Vocabulary+CKRecord.swift in Sources */,
@@ -951,12 +926,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Q57K6D2JP2;
+				DEVELOPMENT_TEAM = Q57K6D2JP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GGomVoca/Info.plist;
@@ -979,7 +952,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = GGomVoca_Development_Profile;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
