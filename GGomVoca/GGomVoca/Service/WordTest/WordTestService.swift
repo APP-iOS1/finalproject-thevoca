@@ -1,14 +1,14 @@
 //
-//  TestService.swift
+//  WordTestService.swift
 //  GGomVoca
 //
 //  Created by JeongMin Ko on 2023/02/13.
 //
 
 import Foundation
-
 import Combine
-protocol TestService{
+
+protocol WordTestService{
     
     //MARK: 데이터를 디스크에 저장
     func saveContext()

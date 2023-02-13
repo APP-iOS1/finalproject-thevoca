@@ -89,7 +89,7 @@ struct JPWordListView: View {
               if viewModel.words.isEmpty {
                   EmptyTestModeView()
               } else {
-                  TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+                  TestScopeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
               }
           })
           // 단어 여러 개 삭제 여부 (iPhone)
