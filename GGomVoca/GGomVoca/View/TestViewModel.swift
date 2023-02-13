@@ -209,7 +209,7 @@ final class TestViewModel: ObservableObject {
             }
     }
     
-    // iPone용 Timer
+    // iPhone용 Timer
     func startTimer() {
         timeRemaining = testType == "word" ? iPhoneTimeLimit : iPhoneTimeLimit + (3 * (testPaper[currentQuestionNum].meaning.count - 1))
         timer = Timer.publish(every: 1, on: .main, in: .common)
@@ -233,6 +233,7 @@ final class TestViewModel: ObservableObject {
     }
 
     func convertSecondsToTime(seconds: Int) -> String {
+        let hours = seconds / 60
         let minutes = seconds / 60
         let seconds = seconds % 60
         return String(format: "%02i:%02i", minutes, seconds)
