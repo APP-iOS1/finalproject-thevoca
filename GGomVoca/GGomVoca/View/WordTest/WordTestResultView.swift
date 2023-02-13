@@ -1,5 +1,5 @@
 //
-//  WordTestResult.swift
+//  WordTestResultView.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/02/01.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct WordTestResult: View {
+struct WordTestResultView: View {
     // 시험지 fullscreen 닫기 위한 Property
     @Binding var isTestMode: Bool
     
     // MARK: Data Properties
-    @ObservedObject var vm: TestViewModel
+    @ObservedObject var vm: WordTestViewModel
     let testType: String
     
     // isMemorized 변경되는 단어 체크 표시 유무
@@ -57,7 +57,7 @@ struct WordTestResult: View {
 }
 
 struct ResultSummary: View {
-    @ObservedObject var vm: TestViewModel
+    @ObservedObject var vm: WordTestViewModel
     
     // 맞은 개수
     var correctCount: Int {

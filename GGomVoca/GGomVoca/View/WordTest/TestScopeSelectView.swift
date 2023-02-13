@@ -1,5 +1,5 @@
 //
-//  TestModeSelectView.swift
+//  TestScopeSelectView.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/02/01.

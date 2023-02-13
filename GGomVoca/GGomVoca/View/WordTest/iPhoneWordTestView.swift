@@ -17,7 +17,7 @@ struct iPhoneWordTestView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var vm: TestViewModel = TestViewModel()
+    @StateObject var vm: WordTestViewModel = WordTestViewModel()
     
     // MARK: Test Mode에 관한 Properties
     let testType: String
@@ -101,7 +101,7 @@ struct iPhoneWordTestView: View {
         }
         .navigationTitle("\(vm.currentQuestionNum + 1) / \(vm.testPaper.count)")
         .navigationDestination(isPresented: $vm.isFinished) {
-            WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
+            WordTestResultView(isTestMode: $isTestMode, vm: vm, testType: testType)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

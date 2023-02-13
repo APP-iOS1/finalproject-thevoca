@@ -1,5 +1,5 @@
 //
-//  TestViewModel.swift
+//  WordTestViewModel.swift
 //  GGomVoca
 //
 //  Created by do hee kim on 2023/02/02.
@@ -8,16 +8,7 @@
 import Foundation
 import Combine
 
-struct Question: Identifiable {
-    var id: UUID
-    var word: String
-    var meaning: [String]
-    var answer: String?
-    var isCorrect: Result = .Wrong
-    var isToggleMemorize: Bool = false
-}
-
-final class TestViewModel: ObservableObject {
+final class WordTestViewModel: ObservableObject {
     // MARK: CoreData ViewContext
     var viewContext = PersistenceController.shared.container.viewContext
     var coreDataRepository = CoredataRepository()

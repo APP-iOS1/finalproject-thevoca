@@ -5,17 +5,6 @@
 //  Created by JeongMin Ko on 2022/12/20.
 //
 
-import Foundation
-struct VocabularyModel : Identifiable, Hashable {
-    var id = UUID()
-    var name: String // 단어장 이름
-    var nationality: Nationality // 국가
-    var words: [Word] = [] // 단어 배열
-    var isPinned: Bool = false // 단어장 즐겨찾기
-    var created: Date = Date.now // 생성일시
-    var deleted: Date? // 삭제된 날짜
-}
-
 enum Nationality: String, CaseIterable {
     case KO = "한국어" // 한국어
     case EN = "영어" // 영어

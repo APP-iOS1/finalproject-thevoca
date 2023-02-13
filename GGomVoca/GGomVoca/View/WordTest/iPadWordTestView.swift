@@ -17,7 +17,7 @@ struct iPadWordTestView: View {
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var vm: TestViewModel = TestViewModel()
+    @StateObject var vm: WordTestViewModel = WordTestViewModel()
     
     // MARK: SuperView Properties
     let testType: String
@@ -110,7 +110,7 @@ struct iPadWordTestView: View {
                     isFinished = true
                 }
                 .navigationDestination(isPresented: $isFinished) {
-                    WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
+                    WordTestResultView(isTestMode: $isTestMode, vm: vm, testType: testType)
                 }
             }
         }
