@@ -52,22 +52,18 @@ struct KOWordsTableView: View {
                 HStack {
                     // 단어
                     Text(word.word ?? "")
-                        .horizontalAlignSetting(.center)
-                        .multilineTextAlignment(.center)
+                        .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                        .animation(.none, value: isSelectionMode)
                     VLine()
                     // 발음
                     Text(word.option ?? "")
-                        .horizontalAlignSetting(.center)
+                        .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                        .animation(.none, value: isSelectionMode)
                     VLine()
                     // 뜻
                     Text(word.meaning!.joined(separator: ", "))
-                        .horizontalAlignSetting(.center)
+                        .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                        .animation(.none, value: isSelectionMode)
                 }
                 .frame(minHeight: 40)
                 .alignmentGuide(.listRowSeparatorLeading) { d in
