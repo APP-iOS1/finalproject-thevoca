@@ -24,6 +24,8 @@ struct JPWordListView: View {
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
     @State var selectedOrder: String = "사전순"
+    @State var speakOn: Bool = false
+
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -42,7 +44,7 @@ struct JPWordListView: View {
     @State private var isTestMode: Bool = false
     
     // 전체 발음 듣기 관련 State
-    @State private var isSpeech = false
+    @State var isSpeech: Bool = false
     
     /// 단어 듣기 관련 프로퍼티
     private var selectedWords: [Word] {
@@ -147,6 +149,7 @@ struct JPWordListView: View {
               if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
                   ToolbarItem {
                       Button("취소", role: .cancel) {
+                          speakOn.toggle()
                           isSpeech.toggle()
                           SpeechSynthesizer.shared.stopSpeaking()
                       }
@@ -202,8 +205,9 @@ struct JPWordListView: View {
 
                 // MARK: 미트볼 버튼
                 ToolbarItem {
-                    CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $isSpeech, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
+                    CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
                         .onChange(of: selectedSegment) { _ in
+                            print("selectedSegment Changed")
                             unmaskedWords = []
                         }
                         .onChange(of: selectedOrder) { value in
@@ -216,10 +220,17 @@ struct JPWordListView: View {
                             viewModel.words.shuffle()
                             }
                         }
-                        .onChange(of: isSpeech) { value in
-                            if value {
+                        .onChange(of: speakOn) { _ in
+                            print("speakOn onChanged!")
+                            if speakOn {
+                              print("speakOn : \(speakOn)")
                               SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
+                              isSpeech.toggle()
                             }
+                            print("speakOn : \(speakOn)")
+                        }
+                        .onChange(of: isImportVoca) { _ in
+                          print("??")
                         }
                   }
               }
