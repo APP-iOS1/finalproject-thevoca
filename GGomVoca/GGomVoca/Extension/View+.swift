@@ -28,6 +28,13 @@ extension View {
             .horizontalAlignSetting(.center)
     }
     
+    func listCellText(isSelectionMode: Bool) -> some View {
+        self
+            .horizontalAlignSetting(.center)
+            .multilineTextAlignment(.center)
+            .animation(.none, value: isSelectionMode)
+    }
+    
     // MARK: Custom Swipe
     func addSwipeButtonActions(leadingButtons: [CellButtons], trailingButton: [CellButtons], onClick: @escaping (CellButtons) -> Void) -> some View {
         self.modifier(SwipeContainerCell(leadingButtons: leadingButtons, trailingButton: trailingButton, onClick: onClick))
