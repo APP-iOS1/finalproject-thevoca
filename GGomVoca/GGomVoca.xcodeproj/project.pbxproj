@@ -81,6 +81,8 @@
 		EE081AFC2995DD4D005A8352 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFB2995DD4D005A8352 /* FirebaseAnalyticsSwift */; };
 		EE081AFE2995DD4D005A8352 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = EE081AFD2995DD4D005A8352 /* FirebaseCrashlytics */; };
 		EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1E49FE2976709A00890CF7 /* UserManager.swift */; };
+		EE341E5F2999F7EE0015CC45 /* TestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE341E5E2999F7EE0015CC45 /* TestService.swift */; };
+		EE341E612999F8200015CC45 /* TestServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE341E602999F8200015CC45 /* TestServiceImpl.swift */; };
 		EE57C04D2951791D004312CE /* DisplaySplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04C2951791D004312CE /* DisplaySplitView.swift */; };
 		EE57C04F29517950004312CE /* AddVocabularyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C04E29517950004312CE /* AddVocabularyView.swift */; };
 		EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C0502951795E004312CE /* VocabularyCell.swift */; };
@@ -181,6 +183,8 @@
 		EAEF3168298AB721009CE764 /* TestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewModel.swift; sourceTree = "<group>"; };
 		EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EE1E49FE2976709A00890CF7 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		EE341E5E2999F7EE0015CC45 /* TestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestService.swift; sourceTree = "<group>"; };
+		EE341E602999F8200015CC45 /* TestServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestServiceImpl.swift; sourceTree = "<group>"; };
 		EE57C04C2951791D004312CE /* DisplaySplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySplitView.swift; sourceTree = "<group>"; };
 		EE57C04E29517950004312CE /* AddVocabularyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVocabularyView.swift; sourceTree = "<group>"; };
 		EE57C0502951795E004312CE /* VocabularyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCell.swift; sourceTree = "<group>"; };
@@ -450,6 +454,15 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
+		EE341E5D2999F7B90015CC45 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				EE341E5E2999F7EE0015CC45 /* TestService.swift */,
+				EE341E602999F8200015CC45 /* TestServiceImpl.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 		EE57C04A29517881004312CE /* DisplaySplitView */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +540,7 @@
 		EE759529298A594600AB6E62 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				EE341E5D2999F7B90015CC45 /* Test */,
 				EEE3018A2990B7D000195720 /* WordList */,
 				EE75952E298A5BC300AB6E62 /* Vocabulary */,
 			);
@@ -588,7 +602,6 @@
 				63DC852D2950312E00461DEB /* Sources */,
 				63DC852E2950312E00461DEB /* Frameworks */,
 				63DC852F2950312E00461DEB /* Resources */,
-				EE081AFF2995E06A005A8352 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -656,26 +669,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		EE081AFF2995E06A005A8352 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" != \"Debug\" ]; then\n    \"${PODS_ROOT}/FirebaseCrashlytics/run\"\n    \"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols\" -gsp ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist -p ios ${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		63DC852D2950312E00461DEB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -708,6 +701,7 @@
 				63EA4AE729875E0A009392EE /* FRWordListView.swift in Sources */,
 				EA1F3A1529960A7100C9D25E /* EmptyTestModeView.swift in Sources */,
 				16E1ECC1298B9A0800BA4C9C /* ShakeEffect.swift in Sources */,
+				EE341E5F2999F7EE0015CC45 /* TestService.swift in Sources */,
 				EAEF3169298AB721009CE764 /* TestViewModel.swift in Sources */,
 				EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */,
 				EEE6EABB299220EF00C0F653 /* RepositoryError.swift in Sources */,
@@ -739,6 +733,7 @@
 				164101612995FA37005C1854 /* EmptyMyNoteView.swift in Sources */,
 				632E89F9299473E300B6C101 /* SearchingResultsInMyWordsViewModel.swift in Sources */,
 				EAEF3167298A4205009CE764 /* WordTestResult.swift in Sources */,
+				EE341E612999F8200015CC45 /* TestServiceImpl.swift in Sources */,
 				63B095F72976832C00E6BB21 /* DataFrame+.swift in Sources */,
 				EEDCBFE0298B811A00A7B016 /* DependencyManager.swift in Sources */,
 				EE57C05429517F81004312CE /* VocabularyModel.swift in Sources */,
@@ -892,12 +887,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Q57K6D2JP2;
+				DEVELOPMENT_TEAM = Q57K6D2JP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GGomVoca/Info.plist;
@@ -920,7 +913,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = GGomVoca_Development_Profile;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -938,12 +930,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = GGomVoca/GGomVoca.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GGomVoca/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Q57K6D2JP2;
+				DEVELOPMENT_TEAM = Q57K6D2JP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GGomVoca/Info.plist;
@@ -966,7 +956,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = LikeLion.GGomVoca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = GGomVoca_Development_Profile;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
