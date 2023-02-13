@@ -86,7 +86,7 @@ class DependencyManager {
                                          cloudDataRepo: cloudDataRepository)
         }
         
-        container.register(TestService.self){ resolver in
+        container.register(WordTestService.self){ resolver in
             let coreDataRepository = resolver.resolve(CoreDataRepository.self)!
             let cloudDataRepository = resolver.resolve(CloudKitRepository.self)!
             return TestServiceImpl(coreDataRepo: coreDataRepository,
