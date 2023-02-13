@@ -110,7 +110,7 @@ struct KOWordsTableView: View {
                         Button {
                             SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ko-KR", .single)
                         } label: {
-                            Label("발음 듣기", systemImage: "mic.fill")
+                            Label("단어 듣기", systemImage: "mic.fill")
                         }
                     }
                 }
