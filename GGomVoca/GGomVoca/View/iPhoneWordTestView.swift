@@ -66,6 +66,7 @@ struct iPhoneWordTestView: View {
                 Text(vm.showQuestion(testType: testType))
                     .font(.largeTitle)
                     .frame(width: UIScreen.main.bounds.width * 0.9)
+                    .multilineTextAlignment(.center)
             }
             
             Spacer()
