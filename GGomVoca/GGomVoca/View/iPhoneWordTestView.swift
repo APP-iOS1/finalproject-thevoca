@@ -100,6 +100,7 @@ struct iPhoneWordTestView: View {
             focusedField = .answer
         }
         .navigationTitle("\(vm.currentQuestionNum + 1) / \(vm.testPaper.count)")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $vm.isFinished) {
             WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
         }
