@@ -149,14 +149,38 @@
 /// ContentView
 
 /// EmptyTestModeView
+"시험 볼 단어가 없습니다."
+"\(Image(systemName: "plus.circle.fill")) 새 단어 추가를 눌러 단어를 추가해주세요."
 
 /// TestModeSelectView
+"전체 단어 시험"
+"전체 뜻 시험"
+"못외운 단어 시험"
+"못외운 뜻 시험"
 
 /// iPhoneWordTestView
+"단어를 입력해주세요"
+"뜻을 입력해주세요"
+"⏰ 시험 종료"
+"\(Image(systemName: "exclamationmark.circle")) 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다."
+"pass"
 
 /// iPadWordTestView
+"입력 언어를 해당 하는 언어로 변경하고,"
+"펜슬로 빈 칸에 답을 적어주세요."
+"뜻이 여러 개인 경우 ,(쉼표)로 구분해 주세요."
+"우상단의 제출버튼을 눌러주세요."
+"제출"
 
 /// WordTestResult
+"시험 결과"
+"확인"
+"\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다."
+"걸린 시간"
+"맞은 개수"
+"틀린 개수"
+"문제"
+"답"
 
 /// Result
 
