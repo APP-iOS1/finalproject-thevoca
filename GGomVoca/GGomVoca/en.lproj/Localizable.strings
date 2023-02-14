@@ -93,8 +93,8 @@
 "사전순 정렬" = "by alphabetical";
 "등록순 정렬" = "by date";
 "시험 보기" = "Take a Test";
-"전체 듣기" = "Listen all";
-"단어장 편집" = "Edit voca";
+"전체 단어 듣기" = "Listen all words";
+"단어 선택하기" = "Select word";
 "단어장 가져오기" = "Import voca";
 "단어장 내보내기" = "Export voca";
 "시험 결과 보기" = "Check the results";
