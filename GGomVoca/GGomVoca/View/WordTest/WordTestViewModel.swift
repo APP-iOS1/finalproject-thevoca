@@ -223,12 +223,12 @@ final class WordTestViewModel: ObservableObject {
         timer?.cancel()
     }
     
-    func convertSecondsToTime(timeInSeconds: Int) -> String {
-        let hours = timeInSeconds / 3600
-        let minutes = (timeInSeconds - hours * 3600) / 60
-        let seconds = timeInSeconds % 60
+    func convertSecondsToTime(seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds - hours * 3600) / 60
+        let seconds = seconds % 60
         
-        if timeInSeconds >= 3600 {
+        if seconds >= 3600 {
             return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
         } else {
             return String(format: "%02i:%02i", minutes, seconds)
