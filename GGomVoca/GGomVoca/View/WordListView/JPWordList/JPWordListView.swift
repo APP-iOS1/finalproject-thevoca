@@ -23,7 +23,7 @@ struct JPWordListView: View {
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
-    @State var selectedOrder: String = "사전순"
+    @State var selectedOrder: String = "등록순 정렬"
     @State var speakOn: Bool = false
 
     
@@ -79,7 +79,7 @@ struct JPWordListView: View {
           .navigationDestination(isPresented: $isCheckResult, destination: {
             MyNoteView(words: viewModel.words)
           })
-          .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
+          .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
           .navigationBarTitleDisplayMode(.inline)
           .onAppear {
               viewModel.getVocabulary(vocabularyID: vocabularyID)

@@ -23,7 +23,7 @@ struct FRWordListView: View {
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
-    @State var selectedOrder: String = "사전순"
+    @State var selectedOrder: String = "등록순 정렬"
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -77,7 +77,7 @@ struct FRWordListView: View {
             .navigationDestination(isPresented: $isCheckResult, destination: {
                 MyNoteView(words: viewModel.words)
             })
-            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
+            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.getVocabulary(vocabularyID: vocabularyID)

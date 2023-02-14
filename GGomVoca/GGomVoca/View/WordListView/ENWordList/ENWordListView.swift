@@ -18,12 +18,13 @@ struct ENWordListView: View {
     @State private var navigationTitle: String = ""
     @State private var emptyMessage: String = ""
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
+    @State private var selectedCount: String = ""
     
     // MARK: UIKit Menu
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
-    @State var selectedOrder: String = "사전순"
+    @State var selectedOrder: String = "등록순 정렬"
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -77,7 +78,7 @@ struct ENWordListView: View {
             .navigationDestination(isPresented: $isCheckResult, destination: {
                 MyNoteView(words: viewModel.words)
             })
-            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
+            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.getVocabulary(vocabularyID: vocabularyID)
