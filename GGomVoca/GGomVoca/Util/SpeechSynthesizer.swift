@@ -26,8 +26,6 @@ protocol TTSProtocol {
 
 final class SpeechSynthesizer: NSObject, ObservableObject, TTSProtocol {
     // 싱글톤으로 정의
-    static let shared: SpeechSynthesizer = SpeechSynthesizer()
-    
     private var instance: AVSpeechSynthesizer? = AVSpeechSynthesizer()
     
     // 단어와 의미 사이의 간격 (같은 단어 내에서)
@@ -58,6 +56,7 @@ final class SpeechSynthesizer: NSObject, ObservableObject, TTSProtocol {
     func speakWordAndMeaning(_ word: Word, to language: String, _ type: SpeechType) {
         if instance == nil {
             instance = AVSpeechSynthesizer()
+            instance?.delegate = self
         }
         
         let wordUtterance = AVSpeechUtterance(string: word.word ?? "") // TTS로 들려줄 단어 설정
@@ -80,7 +79,8 @@ final class SpeechSynthesizer: NSObject, ObservableObject, TTSProtocol {
     /// 단어 하나를 읽어주는 메서드를 재사용하는 방식으로 구현
     func speakWordsAndMeanings(_ words: [Word], to language: String) {
         totalWordsCount = calculateWordsAndMeanings(words) // 단어 개수 카운트
-        print(totalWordsCount)
+        spokenWordsCount = 1
+        
         isPlaying = true // 재생 상태로 변경
         
         words.forEach { word in
