@@ -18,6 +18,11 @@ final class UserManager {
     
     func sync() {
         NSUbiquitousKeyValueStore().synchronize()
+        print("고정", pinnedVocabularyIDs)
+        print("한국", koreanVocabularyIDs)
+        print("영어", englishVocabularyIDs)
+        print("일본", japanishVocabularyIDs)
+        print("프랑스", frenchVocabularyIDs)
     }
     
     // MARK: 단어장 추가
@@ -91,6 +96,15 @@ final class UserManager {
                 shared.frenchVocabularyIDs.remove(at: index)
             }
         }
+    }
+    
+    // MARK: 유비쿼터스 초기화
+    static func initializeData() {
+        shared.pinnedVocabularyIDs = []
+        shared.koreanVocabularyIDs = []
+        shared.englishVocabularyIDs = []
+        shared.japanishVocabularyIDs = []
+        shared.frenchVocabularyIDs = []
     }
     
 //    var recentVocabulary : [String] {
