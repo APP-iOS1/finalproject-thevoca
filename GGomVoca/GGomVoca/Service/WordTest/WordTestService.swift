@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol WordTestService{
+protocol WordTestService {
     
     //MARK: 데이터를 디스크에 저장
     func saveContext()

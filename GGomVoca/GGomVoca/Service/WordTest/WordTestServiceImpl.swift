@@ -7,7 +7,8 @@
 
 import Foundation
 import Combine
-class WordTestServiceImpl : TestService{
+
+class WordTestServiceImpl: WordTestService {
     
     //Repository
     var coreDataRepo : CoreDataRepository
