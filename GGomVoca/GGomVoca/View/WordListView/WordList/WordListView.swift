@@ -11,6 +11,7 @@ struct WordListView: View {
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
     @StateObject var viewModel: WordListViewModel = WordListViewModel()
+    @StateObject var speechSynthesizer = SpeechSynthesizer()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
@@ -18,6 +19,8 @@ struct WordListView: View {
     @State private var emptyMessage: String = ""
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
     @State private var sort: Int = 0
+    @State private var speakOn = false
+    
     private var selectedSegment: ProfileSection {
         switch sort {
         case 1:
@@ -70,7 +73,7 @@ struct WordListView: View {
                 .foregroundColor(.gray)
                 .verticalAlignSetting(.center)
             } else {
-                WordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                WordsTableView(viewModel: viewModel, speechSynthesizer: speechSynthesizer, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
                     .padding(.top, 15)
             }
 
@@ -87,7 +90,7 @@ struct WordListView: View {
             if viewModel.words.isEmpty {
                 EmptyTestModeView()
             } else {
-                TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+                TestScopeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
             }
         })
         // 단어 여러 개 삭제 여부 (iPhone)
@@ -142,19 +145,19 @@ struct WordListView: View {
         }
         .toolbar {
             // TODO: 편집모드에 따른 toolbar State 분기
-            if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+            if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                 ToolbarItem {
                     Button("취소", role: .cancel) {
-                        isSpeech.toggle()
-                        SpeechSynthesizer.shared.stopSpeaking()
+                        speakOn.toggle()
+                        speechSynthesizer.stopSpeaking()
                     }
                 }
-            } else if isSelectionMode, !isSpeech {  // 편집 모드
+            } else if isSelectionMode {  // 편집 모드
                 ToolbarItem {
                     Button("취소", role: .cancel) {
                         isSelectionMode.toggle()
                         multiSelection.removeAll()
-                        SpeechSynthesizer.shared.stopSpeaking()
+                        speechSynthesizer.stopSpeaking()
                     }
                 }
                 
@@ -167,7 +170,7 @@ struct WordListView: View {
 //                    .disabled(multiSelection.isEmpty ? true : false)
                         
                     Button("선택한 단어 듣기") {
-                        SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                        speechSynthesizer.speakWordsAndMeanings(selectedWords, to: "en-US")
                     }
                     .disabled(multiSelection.isEmpty ? true : false)
                     
@@ -296,8 +299,7 @@ struct WordListView: View {
                         }
                         
                         Button {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
-                            isSpeech.toggle()
+                            speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "en-US")
                         } label: {
                             HStack {
                                 Text("전체 발음 듣기")

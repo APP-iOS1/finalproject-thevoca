@@ -10,6 +10,8 @@ import SwiftUI
 struct FRWordsTableView: View {
     // MARK: SuperView Properties
     @ObservedObject var viewModel: FRFRWordListViewModel
+    @ObservedObject var speechSynthesizer: SpeechSynthesizer
+    
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -50,10 +52,8 @@ struct FRWordsTableView: View {
                 HStack {
                     // 단어
                     Text(word.word ?? "")
-                        .horizontalAlignSetting(.center)
-                        .multilineTextAlignment(.center)
+                        .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                        .animation(.none, value: isSelectionMode)
                     VLine()
                     // 옵션, 뜻
                     HStack(spacing: 0) {
@@ -75,9 +75,8 @@ struct FRWordsTableView: View {
                         
                         Text(word.meaning!.joined(separator: ", "))
                     }
-                    .horizontalAlignSetting(.center)
+                    .listCellText(isSelectionMode: isSelectionMode)
                     .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id!)) ? 0 : 1)
-                    .animation(.none, value: isSelectionMode)
                 }
                 .frame(minHeight: 40)
                 .alignmentGuide(.listRowSeparatorLeading) { d in
@@ -118,9 +117,9 @@ struct FRWordsTableView: View {
                             Label("수정하기", systemImage: "gearshape.fill")
                         }
                         Button {
-                            SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "fr-FR", .single)
+                            speechSynthesizer.speakWordAndMeaning(word, to: "fr-FR", .single)
                         } label: {
-                            Label("발음 듣기", systemImage: "mic.fill")
+                            Label("단어 듣기", systemImage: "mic.fill")
                         }
                     }
                 }
@@ -134,7 +133,7 @@ struct FRWordsTableView: View {
                     .presentationDetents([.medium])
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

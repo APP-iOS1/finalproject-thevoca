@@ -40,8 +40,9 @@ class DisplaySplitViewModel : ObservableObject {
             }, receiveValue: { [weak self] vocaList in
                 let list = vocaList.filter{ $0.deleatedAt == nil}
                 self?.vocabularyList = list
-                print("getVocabularyData \(list)")
-           
+                if vocaList.isEmpty {
+                    UserManager.initializeData()
+                }
             })
             .store(in: &bag)
     }
@@ -56,8 +57,6 @@ class DisplaySplitViewModel : ObservableObject {
                 
                 
             }, receiveValue: {[weak self] value in
-                
-               
                 print("postVocaData result : \(value)")
                 self?.service.saveContext()
                 
@@ -88,15 +87,13 @@ class DisplaySplitViewModel : ObservableObject {
                 print(result)
                 self?.service.saveContext()
                 self?.getVocabularyData()
-            
-                
             }).store(in: &bag)
 
     }
     
     // MARK: Vocabualry.ID로 해당 단어장을 찾아오는 메서드
-    func getVocabulary(for vocaId: String) -> Vocabulary {
-        var vocabulary = Vocabulary()
+    func getVocabulary(for vocaId: String) -> Vocabulary? {
+        var vocabulary: Vocabulary?
         
         if let vocaIndex = vocabularyList.firstIndex(where: { $0.id?.uuidString ?? "" == vocaId }) {
             vocabulary = vocabularyList[vocaIndex]
@@ -124,8 +121,6 @@ class DisplaySplitViewModel : ObservableObject {
                 print(value)
                 self?.service.saveContext() //저장
                 self?.getVocabularyData() //불러오기
-                //MARK: 유비쿼터스 삭제
-                UserManager.deleteVocabulary(id: id)
             }).store(in: &bag)
         
     }

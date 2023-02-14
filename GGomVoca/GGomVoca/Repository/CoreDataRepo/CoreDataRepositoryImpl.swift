@@ -47,10 +47,6 @@ class CoreDataRepositoryImpl : CoreDataRepository {
             }catch{
                 observer(.failure(RepositoryError.coreDataRepositoryError(error: .notFoundDataFromCoreData)))
             }
-            
-           
-//            print(cloudControlloer.fetchVocabulary(completion: {value in print("ok : \(value)")}))
-            
         }.eraseToAnyPublisher()
         
     }
@@ -179,6 +175,19 @@ class CoreDataRepositoryImpl : CoreDataRepository {
      */
     func deletedVocaData(id: UUID) -> AnyPublisher<String, RepositoryError> {
         return Future<String, RepositoryError>{observer in
+            /// - 단어장 id로 단어장 객체 찾아오기
+            let vocabularyFetch = Vocabulary.fetchRequest()
+            vocabularyFetch.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            
+            do {
+                let results = (try self.context.fetch(vocabularyFetch) as [Vocabulary])
+                let voca = results.first ?? Vocabulary()
+                voca.deleatedAt = "\(Date())"
+            }catch{
+                print("\(error)")
+                observer(.failure(RepositoryError.coreDataRepositoryError(error: .notFoundDataFromCoreData)))
+            }
+            
             observer(.success(""))
             
         }.eraseToAnyPublisher()

@@ -12,12 +12,14 @@ enum Field: Hashable {
 }
 
 struct iPhoneWordTestView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     // 시험지 fullscreen 닫기 위한 Property
     @Binding var isTestMode: Bool
     
     // MARK: Data Properties
     var vocabularyID: Vocabulary.ID
-    @StateObject var vm: TestViewModel = TestViewModel()
+    @StateObject var vm: WordTestViewModel = WordTestViewModel()
     
     // MARK: Test Mode에 관한 Properties
     let testType: String
@@ -56,6 +58,7 @@ struct iPhoneWordTestView: View {
         VStack {
             Text("\(Image(systemName: "clock")) \(timer)")
                 .horizontalAlignSetting(.center)
+                .foregroundColor(vm.timeRemaining < 4 ? .red : colorScheme == .light ? .black : .white)
             
             Spacer()
             
@@ -63,6 +66,7 @@ struct iPhoneWordTestView: View {
                 Text(vm.showQuestion(testType: testType))
                     .font(.largeTitle)
                     .frame(width: UIScreen.main.bounds.width * 0.9)
+                    .multilineTextAlignment(.center)
             }
             
             Spacer()
@@ -100,8 +104,9 @@ struct iPhoneWordTestView: View {
             focusedField = .answer
         }
         .navigationTitle("\(vm.currentQuestionNum + 1) / \(vm.testPaper.count)")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $vm.isFinished) {
-            WordTestResult(isTestMode: $isTestMode, vm: vm, testType: testType)
+            WordTestResultView(isTestMode: $isTestMode, vm: vm, testType: testType)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

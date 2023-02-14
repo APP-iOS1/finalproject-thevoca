@@ -16,6 +16,15 @@ final class UserManager {
     @UbiquitousStorage(key: "japanishVocabularyIDs", defaultValue: []) var japanishVocabularyIDs: [String]
     @UbiquitousStorage(key: "frenchVocabularyIDs",   defaultValue: []) var frenchVocabularyIDs  : [String]
     
+    func sync() {
+        NSUbiquitousKeyValueStore().synchronize()
+        print("고정", pinnedVocabularyIDs)
+        print("한국", koreanVocabularyIDs)
+        print("영어", englishVocabularyIDs)
+        print("일본", japanishVocabularyIDs)
+        print("프랑스", frenchVocabularyIDs)
+    }
+    
     // MARK: 단어장 추가
     static func addVocabulary(id: String, nationality: String) {
         switch nationality {
@@ -89,14 +98,23 @@ final class UserManager {
         }
     }
     
-    var recentVocabulary : [String] {
-        get {
-            let defaults = UserDefaults.standard
-            return defaults.array(forKey: "RecentVocabulary") as? [String] ?? []
-        }
-        set {
-            let defaults = UserDefaults.standard
-            defaults.set(newValue, forKey: "RecentVocabulary")
-        }
+    // MARK: 유비쿼터스 초기화
+    static func initializeData() {
+        shared.pinnedVocabularyIDs = []
+        shared.koreanVocabularyIDs = []
+        shared.englishVocabularyIDs = []
+        shared.japanishVocabularyIDs = []
+        shared.frenchVocabularyIDs = []
     }
+    
+//    var recentVocabulary : [String] {
+//        get {
+//            let defaults = UserDefaults.standard
+//            return defaults.array(forKey: "RecentVocabulary") as? [String] ?? []
+//        }
+//        set {
+//            let defaults = UserDefaults.standard
+//            defaults.set(newValue, forKey: "RecentVocabulary")
+//        }
+//    }
 }

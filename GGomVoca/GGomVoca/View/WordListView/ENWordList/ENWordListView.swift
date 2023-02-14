@@ -12,19 +12,22 @@ struct ENWordListView: View {
     var vocabularyID: Vocabulary.ID
     
     @StateObject var viewModel: ENENWordListViewModel = DependencyManager.shared.resolve(ENENWordListViewModel.self)!
+    @StateObject var speechSynthesizer = SpeechSynthesizer()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
     @State private var navigationTitle: String = ""
     @State private var emptyMessage: String = ""
     @State private var unmaskedWords: [Word.ID] = [] // segment에 따라 Word.ID가 배열에 있으면 보임, 없으면 안보임
-    @State private var selectedCount: String = ""
     
     // MARK: UIKit Menu
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
+
     @State var selectedOrder: String = "등록순 정렬"
+    @State var speakOn: Bool = false
+
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -67,7 +70,7 @@ struct ENWordListView: View {
                     .foregroundColor(.gray)
                     .verticalAlignSetting(.center)
                 } else {
-                    ENWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                    ENWordsTableView(viewModel: viewModel, speechSynthesizer: speechSynthesizer, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
                         .padding(.top, 15)
                 }
                 
@@ -90,7 +93,7 @@ struct ENWordListView: View {
                 if viewModel.words.isEmpty {
                     EmptyTestModeView()
                 } else {
-                    TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+                    TestScopeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
                 }
             })
             // 단어 여러 개 삭제 여부 (iPhone)
@@ -145,19 +148,18 @@ struct ENWordListView: View {
             }
             .toolbar {
                 // TODO: 편집모드에 따른 toolbar State 분기
-                if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+                if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                     ToolbarItem {
                         Button("취소", role: .cancel) {
-                            isSpeech.toggle()
-                            SpeechSynthesizer.shared.stopSpeaking()
+                            speechSynthesizer.stopSpeaking()
                         }
                     }
-                } else if isSelectionMode, !isSpeech {  // 편집 모드
+                } else if isSelectionMode {  // 편집 모드
                     ToolbarItem {
                         Button("취소", role: .cancel) {
                             isSelectionMode.toggle()
                             multiSelection.removeAll()
-                            SpeechSynthesizer.shared.stopSpeaking()
+                            speechSynthesizer.stopSpeaking()
                         }
                     }
                     
@@ -170,7 +172,7 @@ struct ENWordListView: View {
 //                        .disabled(multiSelection.isEmpty ? true : false)
                             
                         Button("선택한 단어 듣기") {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                            speechSynthesizer.speakWordsAndMeanings(selectedWords, to: "en-US")
                         }
                         .disabled(multiSelection.isEmpty ? true : false)
                         
@@ -203,7 +205,7 @@ struct ENWordListView: View {
                     
                     // MARK: 미트볼 버튼
                     ToolbarItem {
-                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $isSpeech, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
+                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
                             .onChange(of: selectedSegment) { _ in
                                 unmaskedWords = []
                             }
@@ -217,9 +219,10 @@ struct ENWordListView: View {
                                     viewModel.words.shuffle()
                                 }
                             }
-                            .onChange(of: isSpeech) { value in
-                                if value {
-                                    SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                            .onChange(of: speakOn) { value in
+                                if speakOn {
+                                    speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "en-US")
+                                    speakOn.toggle() // speakOn를 false로
                                 }
                             }
                         
@@ -227,7 +230,7 @@ struct ENWordListView: View {
                 }
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

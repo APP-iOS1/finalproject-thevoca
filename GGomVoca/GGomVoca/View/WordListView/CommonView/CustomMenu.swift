@@ -117,14 +117,14 @@ class MenuButton: UIButton {
     }
 
     func listenAll() -> UIAction {
-        UIAction(title: "전체 듣기".localized,
+        UIAction(title: "전체 단어 듣기".localized,
                  image: UIImage(systemName: "speaker.wave.3")) { action in
           self.speakOn.toggle()
         }
     }
 
     func editVoca() -> UIAction {
-        UIAction(title: "단어장 편집".localized,
+        UIAction(title: "단어 선택하기".localized,
                  image: UIImage(systemName: "checkmark.circle")) { action in
           self.editOn.toggle()
         }

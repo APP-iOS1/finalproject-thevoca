@@ -10,6 +10,8 @@ import SwiftUI
 struct WordsTableView: View {
     // MARK: SuperView Properties
     @ObservedObject var viewModel: WordListViewModel
+    @ObservedObject var speechSynthesizer: SpeechSynthesizer
+    
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -65,27 +67,21 @@ struct WordsTableView: View {
                     case "KO", "JA":
                         HStack {
                             Text(word.word ?? "")
-                                .horizontalAlignSetting(.center)
-                                .multilineTextAlignment(.center)
+                                .listCellText(isSelectionMode: isSelectionMode)
                                 .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                                .animation(.none, value: isSelectionMode)
                             VLine()
                             Text(word.option ?? "")
-                                .horizontalAlignSetting(.center)
+                                .listCellText(isSelectionMode: isSelectionMode)
                                 .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                                .animation(.none, value: isSelectionMode)
                             VLine()
                             Text(word.meaning!.joined(separator: ","))
-                                .horizontalAlignSetting(.center)
+                                .listCellText(isSelectionMode: isSelectionMode)
                                 .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                                .animation(.none, value: isSelectionMode)
                         }
                     case "FR", "EN":
                         Text(word.word ?? "")
-                            .horizontalAlignSetting(.center)
-                            .multilineTextAlignment(.center)
+                            .listCellText(isSelectionMode: isSelectionMode)
                             .opacity((selectedSegment == .wordTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                            .animation(.none, value: isSelectionMode)
                         VLine()
                         HStack(spacing: 0) {
                             // MARK: 단어의 성별에 따라 표시하는 이미지 변경
@@ -106,9 +102,8 @@ struct WordsTableView: View {
                             
                             Text(word.meaning!.joined(separator: ", "))
                         }
-                        .horizontalAlignSetting(.center)
+                        .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
-                        .animation(.none, value: isSelectionMode)
                         
                     default:
                         Text("default")
@@ -153,9 +148,9 @@ struct WordsTableView: View {
                             Label("수정하기", systemImage: "gearshape.fill")
                         }
                         Button {
-                            SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ja-JP", .single)
+                            speechSynthesizer.speakWordAndMeaning(word, to: "ja-JP", .single)
                         } label: {
-                            Label("발음 듣기", systemImage: "mic.fill")
+                            Label("단어 듣기", systemImage: "mic.fill")
                         }
                     }
                 }
@@ -169,7 +164,7 @@ struct WordsTableView: View {
                     .presentationDetents([.medium])
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

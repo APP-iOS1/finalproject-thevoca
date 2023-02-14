@@ -12,6 +12,7 @@ struct JPWordListView: View {
     var vocabularyID: Vocabulary.ID
     
     @StateObject var viewModel: JPWordListViewModel = DependencyManager.shared.resolve(JPWordListViewModel.self)!
+    @ObservedObject var speechSynthesizer = SpeechSynthesizer()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
@@ -23,6 +24,7 @@ struct JPWordListView: View {
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
+
     @State var selectedOrder: String = "등록순 정렬"
     @State var speakOn: Bool = false
 
@@ -43,9 +45,12 @@ struct JPWordListView: View {
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
+<<<<<<< HEAD
     // 전체 발음 듣기 관련 State
     @State var isSpeech: Bool = false
     
+=======
+>>>>>>> develop
     /// 단어 듣기 관련 프로퍼티
     private var selectedWords: [Word] {
         var array = [Word]()
@@ -68,7 +73,7 @@ struct JPWordListView: View {
                   .foregroundColor(.gray)
                   .verticalAlignSetting(.center)
               } else {
-                  JPWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                  JPWordsTableView(viewModel: viewModel, speechSynthesizer: speechSynthesizer, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
                       .padding(.top, 15)
               }
 
@@ -91,7 +96,7 @@ struct JPWordListView: View {
               if viewModel.words.isEmpty {
                   EmptyTestModeView()
               } else {
-                  TestModeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
+                  TestScopeSelectView(isTestMode: $isTestMode, vocabularyID: vocabularyID)
               }
           })
           // 단어 여러 개 삭제 여부 (iPhone)
@@ -146,20 +151,24 @@ struct JPWordListView: View {
           }
           .toolbar {
               // TODO: 편집모드에 따른 toolbar State 분기
-              if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+              if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                   ToolbarItem {
                       Button("취소", role: .cancel) {
+<<<<<<< HEAD
                           speakOn.toggle()
                           isSpeech.toggle()
                           SpeechSynthesizer.shared.stopSpeaking()
+=======
+                          speechSynthesizer.stopSpeaking()
+>>>>>>> develop
                       }
                   }
-              } else if isSelectionMode, !isSpeech {  // 편집 모드
+              } else if isSelectionMode {  // 편집 모드
                   ToolbarItem {
                       Button("취소", role: .cancel) {
                           isSelectionMode.toggle()
                           multiSelection.removeAll()
-                          SpeechSynthesizer.shared.stopSpeaking()
+                          speechSynthesizer.stopSpeaking()
                       }
                   }
                   
@@ -172,7 +181,7 @@ struct JPWordListView: View {
 //                      .disabled(multiSelection.isEmpty ? true : false)
                           
                       Button("선택한 단어 듣기") {
-                          SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                          speechSynthesizer.speakWordsAndMeanings(selectedWords, to: "ja-JP")
                       }
                       .disabled(multiSelection.isEmpty ? true : false)
                       
@@ -199,7 +208,7 @@ struct JPWordListView: View {
                               Text("새 단어 추가")
                           }
                       }
-                      
+
                       Spacer()
                   }
 
@@ -220,12 +229,19 @@ struct JPWordListView: View {
                             viewModel.words.shuffle()
                             }
                         }
+<<<<<<< HEAD
                         .onChange(of: speakOn) { _ in
                             print("speakOn onChanged!")
                             if speakOn {
                               print("speakOn : \(speakOn)")
                               SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
                               isSpeech.toggle()
+=======
+                        .onChange(of: speakOn) { value in
+                            if speakOn {
+                                speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
+                                speakOn.toggle() // speakOn를 false로
+>>>>>>> develop
                             }
                             print("speakOn : \(speakOn)")
                         }
@@ -236,7 +252,7 @@ struct JPWordListView: View {
               }
           }
           .onDisappear {
-              SpeechSynthesizer.shared.stopSpeaking()
+              speechSynthesizer.stopSpeaking()
           }
         }
     }

@@ -86,6 +86,13 @@ class DependencyManager {
                                          cloudDataRepo: cloudDataRepository)
         }
         
+//        container.register(WordTestService.self){ resolver in
+//            let coreDataRepository = resolver.resolve(CoreDataRepository.self)!
+//            let cloudDataRepository = resolver.resolve(CloudKitRepository.self)!
+//            return WordTestServiceImpl(
+//            
+//        }
+        
     }
     //MARK: Model (Repository)
     func registerRepositories() {

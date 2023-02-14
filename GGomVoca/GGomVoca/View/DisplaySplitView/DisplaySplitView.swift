@@ -66,6 +66,9 @@ struct DisplaySplitView: View {
         .onAppear {
             viewModel.getVocabularyData()
         }
+        .refreshable {
+            viewModel.getVocabularyData()
+        }
     }
     
     // MARK: VocabularyList의 상태에 따라 분기되는 Sidebar View 및 공통 수정자
@@ -108,13 +111,20 @@ struct DisplaySplitView: View {
     
     // MARK: VocabularyList가 비어있을 때 표시되는 sidebar View
     func emptyVocabularyListView() -> some View {
-        VStack(spacing: 10) {
-            Text("단어장 없음").font(.title3)
-            Text("하단의 \(Image(systemName: "folder.badge.plus"))을 눌러 단어장을 생성하세요")
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(alignment: .center, spacing: 10) {
+                    Text("단어장 없음").font(.title3)
+                    Text("하단의 \(Image(systemName: "folder.badge.plus"))을 눌러 단어장을 생성하세요.")
+                    Text("(혹은 아래로 잡아당겨 데이터 동기화)")
+                }
+                .foregroundColor(.gray)
+                .padding()
+                .padding(.bottom, 40)
+                .horizontalAlignSetting(.center)
+                .frame(minHeight: geometry.size.height)
+            }
         }
-        .foregroundColor(.gray)
-        .padding()
-        .padding(.bottom, 40)
     }
 
     // MARK: VocabularyList가 비어있지 않을 때 표시되는 sidebar view
@@ -124,13 +134,14 @@ struct DisplaySplitView: View {
             if !pinnedVocabularyIDs.isEmpty {
                 Section("고정된 단어장") {
                     ForEach(pinnedVocabularyIDs, id: \.self) { vocabularyID in
-                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(
-                            pinnedCompletion: { vocaId in
-                                viewModel.updateIsPinnedVocabulary(id: vocaId)
-                            }, deleteCompletion: {
-                                viewModel.getVocabularyData()
-                            }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        if let vocabulary = viewModel.getVocabulary(for: vocabularyID) {
+                            VocabularyCell(
+                                pinnedCompletion: { vocaId in
+                                    viewModel.updateIsPinnedVocabulary(id: vocaId)
+                                }, deleteCompletion: { vocaId in
+                                    viewModel.deleteVocabulary(id: vocaId.uuidString)
+                                }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        }
                     }
                     .onDelete { indexSet in
                         for offset in indexSet {
@@ -180,12 +191,14 @@ struct DisplaySplitView: View {
             if !koreanVocabularyIDs.isEmpty {
                 Section("한국어") {
                     ForEach(koreanVocabularyIDs, id: \.self) { vocabularyID in
-                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId)
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
-                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        if let vocabulary = viewModel.getVocabulary(for: vocabularyID) {
+                            VocabularyCell(
+                                pinnedCompletion: { vocaId in
+                                    viewModel.updateIsPinnedVocabulary(id: vocaId)
+                                }, deleteCompletion: { vocaId in
+                                    viewModel.deleteVocabulary(id: vocaId.uuidString)
+                                }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        }
                     }
                     .onDelete { indexSet in
                         for offset in indexSet {
@@ -203,12 +216,14 @@ struct DisplaySplitView: View {
             if !englishVocabularyIDs.isEmpty {
                 Section("영어") {
                     ForEach(englishVocabularyIDs, id: \.self) { vocabularyID in
-                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: {vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
-                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        if let vocabulary = viewModel.getVocabulary(for: vocabularyID) {
+                            VocabularyCell(
+                                pinnedCompletion: { vocaId in
+                                    viewModel.updateIsPinnedVocabulary(id: vocaId)
+                                }, deleteCompletion: { vocaId in
+                                    viewModel.deleteVocabulary(id: vocaId.uuidString)
+                                }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        }
                     }
                     .onDelete { indexSet in
                         for offset in indexSet {
@@ -226,12 +241,14 @@ struct DisplaySplitView: View {
             if !japanishVocabularyIDs.isEmpty {
                 Section("일본어") {
                     ForEach(japanishVocabularyIDs, id: \.self) { vocabularyID in
-                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
-                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        if let vocabulary = viewModel.getVocabulary(for: vocabularyID) {
+                            VocabularyCell(
+                                pinnedCompletion: { vocaId in
+                                    viewModel.updateIsPinnedVocabulary(id: vocaId)
+                                }, deleteCompletion: { vocaId in
+                                    viewModel.deleteVocabulary(id: vocaId.uuidString)
+                                }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        }
                     }
                     .onDelete { indexSet in
                         for offset in indexSet {
@@ -249,12 +266,14 @@ struct DisplaySplitView: View {
             if !frenchVocabularyIDs.isEmpty {
                 Section("프랑스어") {
                     ForEach(frenchVocabularyIDs, id: \.self) { vocabularyID in
-                        let vocabulary = viewModel.getVocabulary(for: vocabularyID)
-                        VocabularyCell(pinnedCompletion: { vocaId in
-                            viewModel.updateIsPinnedVocabulary(id: vocaId )
-                        }, deleteCompletion: {
-                            viewModel.getVocabularyData()
-                        }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        if let vocabulary = viewModel.getVocabulary(for: vocabularyID) {
+                            VocabularyCell(
+                                pinnedCompletion: { vocaId in
+                                    viewModel.updateIsPinnedVocabulary(id: vocaId)
+                                }, deleteCompletion: { vocaId in
+                                    viewModel.deleteVocabulary(id: vocaId.uuidString)
+                                }, selectedVocabulary: $selectedVocabulary, vocabulary: vocabulary, editMode: $editMode)
+                        }
                     }
                     .onDelete { indexSet in
                         for offset in indexSet {
