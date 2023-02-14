@@ -45,12 +45,6 @@ struct JPWordListView: View {
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
-<<<<<<< HEAD
-    // 전체 발음 듣기 관련 State
-    @State var isSpeech: Bool = false
-    
-=======
->>>>>>> develop
     /// 단어 듣기 관련 프로퍼티
     private var selectedWords: [Word] {
         var array = [Word]()
@@ -154,13 +148,7 @@ struct JPWordListView: View {
               if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                   ToolbarItem {
                       Button("취소", role: .cancel) {
-<<<<<<< HEAD
-                          speakOn.toggle()
-                          isSpeech.toggle()
-                          SpeechSynthesizer.shared.stopSpeaking()
-=======
                           speechSynthesizer.stopSpeaking()
->>>>>>> develop
                       }
                   }
               } else if isSelectionMode {  // 편집 모드
@@ -229,19 +217,10 @@ struct JPWordListView: View {
                             viewModel.words.shuffle()
                             }
                         }
-<<<<<<< HEAD
-                        .onChange(of: speakOn) { _ in
-                            print("speakOn onChanged!")
-                            if speakOn {
-                              print("speakOn : \(speakOn)")
-                              SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
-                              isSpeech.toggle()
-=======
                         .onChange(of: speakOn) { value in
                             if speakOn {
                                 speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
                                 speakOn.toggle() // speakOn를 false로
->>>>>>> develop
                             }
                             print("speakOn : \(speakOn)")
                         }
