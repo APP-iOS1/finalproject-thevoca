@@ -35,7 +35,7 @@ struct AddVocabularyView: View {
 
                 Picker(selection: $nationality, label: Text("공부하는 언어")) {
                     ForEach(Nationality.allCases, id: \.rawValue) { nationality in
-                        Text(nationality.rawValue)
+                      Text(nationality.rawValue.localized)
                             .tag(nationality)
                     }
                 }
