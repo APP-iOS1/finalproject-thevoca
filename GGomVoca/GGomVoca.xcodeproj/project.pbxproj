@@ -28,6 +28,7 @@
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		638E2228299B5719006FA3E4 /* HeaderText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E2227299B5719006FA3E4 /* HeaderText.swift */; };
 		6398595A2992429200E51C69 /* UbiquitousStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639859592992429200E51C69 /* UbiquitousStorage.swift */; };
 		639B31EB298059CD00955DE4 /* WordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B31EA298059CD00955DE4 /* WordListViewModel.swift */; };
 		639B31ED29806E1700955DE4 /* AddNewWordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B31EC29806E1600955DE4 /* AddNewWordView.swift */; };
@@ -130,6 +131,7 @@
 		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		638E2227299B5719006FA3E4 /* HeaderText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderText.swift; sourceTree = "<group>"; };
 		639859592992429200E51C69 /* UbiquitousStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UbiquitousStorage.swift; sourceTree = "<group>"; };
 		639B31EA298059CD00955DE4 /* WordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModel.swift; sourceTree = "<group>"; };
 		639B31EC29806E1600955DE4 /* AddNewWordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewWordView.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 			isa = PBXGroup;
 			children = (
 				EAB4FFA82977C8830070941A /* SwipeContainerCell.swift */,
+				638E2227299B5719006FA3E4 /* HeaderText.swift */,
 				16E1ECC0298B9A0800BA4C9C /* ShakeEffect.swift */,
 			);
 			path = Modifier;
@@ -727,6 +730,7 @@
 				63A9E2AC2995E65400F354E8 /* ProfileSection.swift in Sources */,
 				EA30AF9A2977908200C49CF3 /* WordsTableView.swift in Sources */,
 				164101612995FA37005C1854 /* EmptyMyNoteView.swift in Sources */,
+				638E2228299B5719006FA3E4 /* HeaderText.swift in Sources */,
 				632E89F9299473E300B6C101 /* SearchingResultsInMyWordsViewModel.swift in Sources */,
 				EAEF3167298A4205009CE764 /* WordTestResultView.swift in Sources */,
 				EAEF3167298A4205009CE764 /* WordTestResultView.swift in Sources */,

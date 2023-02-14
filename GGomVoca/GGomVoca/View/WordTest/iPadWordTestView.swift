@@ -42,14 +42,17 @@ struct iPadWordTestView: View {
                         VStack(spacing: 0) {
                             HStack(alignment: .center) {
                                 Text(testType == "meaning" ? vm.testPaper[index].word : vm.testPaper[index].meaning.joined(separator: ", "))
+                                    .font(.title3)
                                     .multilineTextAlignment(.center)
                                     .frame(width: 200, height: 80)
                                 Divider()
                                 TextField("", text: $answers[index], axis: .vertical)
+                                    .font(.title3)
                                     .textInputAutocapitalization(.never)
                                     .disableAutocorrection(true)
                                     .padding(.vertical)
                             }
+                            
                             Divider()
                         }
                     }

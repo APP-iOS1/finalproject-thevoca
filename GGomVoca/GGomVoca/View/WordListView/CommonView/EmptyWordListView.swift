@@ -41,28 +41,27 @@ struct EmptyWordListView: View {
     
     var body: some View {
         VStack(spacing: 5) {
-            Image(systemName: "tray")
-                .font(.system(size: 70))
-                .fontWeight(.light)
-                .padding(.bottom, 10)
-            Text("\(emptyByLang)")
-                .font(.system(size: 40))
-            Text("텅 빈, 비어있는")
-                .font(.system(size: 40))
+            if UIDevice.current.model == "iPhone" {
+                Image(systemName: "tray")
+                    .font(.system(size: 65))
+                    .fontWeight(.light)
+                    .padding(.bottom, 10)
+                Text("\(emptyByLang)")
+                    .font(.system(size: 35))
+                Text("텅 빈, 비어있는")
+                    .font(.system(size: 35))
+            } else {
+                Image(systemName: "tray")
+                    .font(.system(size: 70))
+                    .fontWeight(.light)
+                    .padding(.bottom, 10)
+                Text("\(emptyByLang)")
+                    .font(.system(size: 40))
+                Text("텅 빈, 비어있는")
+                    .font(.system(size: 40))
+            }
         }
         .foregroundColor(.secondary)
-    }
-}
-
-struct BlankView: View {
-    var text: String = ""
-    var body: some View {
-        Path { path in
-            path.move(to: CGPoint(x: 200, y: 0))
-            path.addLine(to: CGPoint(x: 200, y: 200))
-            
-        }
-        .stroke(.blue, lineWidth: 10)
     }
 }
 
