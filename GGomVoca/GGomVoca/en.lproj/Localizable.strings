@@ -9,47 +9,47 @@
 // MARK: MyNoteView starts
 
 /// MyNoteView
-"자주 틀린 단어"
-"헷갈리는 단어"
-"완벽히 외운 단어"
-"더 보기"
-"시험 결과"
+"자주 틀린 단어" = "Commonly Wrong Word";
+"헷갈리는 단어" = "Confusing Word";
+"완벽히 외운 단어" = "Perfectly Memorized Word";
+"더 보기" = "More Info.";
+"시험 결과" = "Test Results";
 
 /// MyNoteDetailView
 
 /// EmptyMyNoteView
-"시험 결과가 없습니다."
-"시험 보기 를 눌러 단어 시험을 선택하세요."
+"시험 결과가 없습니다." = "There is no Test Results.";
+"시험 보기 를 눌러 단어 시험을 선택하세요." = "Select 'Take a Test' to take a test. lol";
 
 // MARK: MyNoteView ends
 
 // MARK: DisplaySplitView starts
 
 /// DisplaySplitView
-"등록한 단어 검색"
-"단어장"
-"단어장 없음"
-"하단의 \(Image(systemName: "folder.badge.plus"))을 눌러 단어장을 생성하세요"
-"고정된 단어장"
-"한국어"
-"영어"
-"일본어"
-"프랑스어"
-"편집"
-"완료"
-"왼쪽 사이드바에서 단어장을 추가하세요."
-"왼쪽 사이드바에서 단어장을 선택하세요."
-"단어장을 오른쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다."
-"단어장을 왼쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다."
-"단어장을 길게 누르면 단어장의 제목을 변경할 수 있습니다."
+"등록한 단어 검색" = "Search a word";
+"단어장" = "Vocabulary";
+"단어장 없음" = "No Vocabulary";
+"하단의 %@을 눌러 단어장을 생성하세요" = "Click %@ to create a vocabulary";
+"고정된 단어장" = "Pinned Vocabulary";
+"한국어" = "Korean";
+"영어" = "English";
+"일본어" = "Japanese";
+"프랑스어" = "French";
+"편집" = "Edit";
+"완료" = "Done";
+"왼쪽 사이드바에서 단어장을 추가하세요." = "Add a vocabulary on the left";
+"왼쪽 사이드바에서 단어장을 선택하세요." = "Select the vocabulary on the left";
+"단어장을 오른쪽(%@)으로 밀면 상단에 고정됩니다." = "Slide right(%@) to pin the vocabulary";
+"단어장을 왼쪽(%@)으로 밀면 삭제할 수 있습니다." = "Slide left(%@) to delete the vocabulary";
+"단어장을 길게 누르면 단어장의 제목을 변경할 수 있습니다." = "Change the title with the long press";
 
 /// AddVocabularyView
-"단어장 제목"
-"단어장의 제목을 입력하세요."
-"공부하는 언어"
-"새로운 단어장"
-"취소"
-"완료"
+"단어장 제목" = "Vocabulary title";
+"단어장의 제목을 입력하세요." = "Enter title here";
+"공부하는 언어" = "Select the language";
+"새로운 단어장" = "New Vocabulary";
+"취소" = "Cancel";
+"완료" = "Done";
 
 /// EditVocabularyView
 
@@ -70,76 +70,78 @@
 /// CommonView starts
 
 //// ImportCSVFileView
-"파일 내용 확인하기"
-"csv 파일 업로드"
-"가져온 단어 추가하기"
-"단어 가져오기"
+"파일 내용 확인하기" = "check the content";
+"csv 파일 업로드" = "upload CSV file";
+"가져온 단어 추가하기" = "add words";
+"단어 가져오기" = "import words";
 
 //// CellButtonView
 
 //// EmptyWordListView
-"텅 빈, 비어있는"
+"텅 빈, 비어있는" = "empty";
 
 //// FieldView
-"뜻을 입력하세요."
+"뜻을 입력하세요." = "write down the meaning";
 
 //// CustomMenu
-"모두 보기"
-"단어만 보기"
-"뜻만 보기"
-"보기 모드"
-"정렬"
-"랜덤 정렬"
-"사전순 정렬"
-"시간순 정렬"
-"시험 보기"
-"전체 듣기"
-"단어장 가져오기"
-"단어장 내보내기"
-"시험 결과 보기"
+"모두 보기" = "All";
+"단어만 보기" = "Word Only";
+"뜻만 보기" = "Meaning Only";
+"보기 모드" = "View Mode";
+"정렬" = "Sort";
+"랜덤 정렬" = "by random";
+"사전순 정렬" = "by alphabetical";
+"등록순 정렬" = "by date";
+"시험 보기" = "Take a test";
+"전체 듣기" = "Listen all";
+"단어장 편집" = "Edit voca";
+"단어장 가져오기" = "Import voca";
+"단어장 내보내기" = "Export voca";
+"시험 결과 보기" = "Check the results";
 
 /// CommonView ends
 
 /// WordList starts
 
 //// WordListView
-"랜덤 정렬"
-"사전순 정렬"
-"시간순 정렬"
-"선택된 단어 \(multiSelection.count)개"
-"단어 삭제"
-"\(multiSelection.count)개의 단어 삭제"
-"\(multiSelection.count)개의 단어를 삭제하시겠습니까?"
-"취소"
-"선택한 단어 듣기"
-"새 단어 추가"
-"모두 보기"
-"뜻만 보기"
-"단어만 보기"
+//"랜덤 정렬" = "";
+//"사전순 정렬"
+//"시간순 정렬"
+"선택된 단어 %lld개" = "%lld word(s) selected";
+"단어 삭제" = "delete word";
+"%lld 개의 단어 삭제" = "Delete %lld word(s)";
+"%lld 개의 단어를 삭제하시겠습니까?" = "Are you sure to delete %lld word(s)?";
+//"취소"
+"선택한 단어 듣기" = "Listen selected words";
+"새 단어 추가" = "Add a new word";
+//"모두 보기"
+//"뜻만 보기"
+//"단어만 보기"
 
 //// WordsTableView
-"단어"
-"발음"
-"뜻"
-"수정하기"
-"발음 듣기"
+"단어" = "word";
+"발음" = "pronunciation";
+"뜻" = "meaning";
+"수정하기" = "Edit";
+"발음 듣기" = "Listen";
 
 //// WordCell
 
 //// addNewWordView
-"단어를 입력하세요."
-"단어"
-"\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다."
-"발음"
-"발음을 입력하세요."
-"\(Image(systemName: "plus.circle")) \(meanings.count + 1)번째 뜻 추가하기"
-"새 단어 추가"
-"취소"
-"추가"
+"입력창 고정하기" = "Fix this sheet";
+"단어를 입력하세요." = "Enter the word.";
+//"단어"
+"필수 입력 항목입니다." = "this field is mandatory.";
+//"발음"
+"발음을 입력하세요." = "Enter the pronunciation";
+"%lld번째 뜻 추가하기" = "add %lld meaning";
+//"새 단어 추가"
+//"취소"
+"추가" = "Add";
 
 //// EditWordView
-"단어 수정"
-"변경"
+"단어 수정" = "Edit word";
+"변경" = "Edit";
 
 /// WordList ends
 
@@ -149,38 +151,38 @@
 /// ContentView
 
 /// EmptyTestModeView
-"시험 볼 단어가 없습니다."
-"\(Image(systemName: "plus.circle.fill")) 새 단어 추가를 눌러 단어를 추가해주세요."
+"시험 볼 단어가 없습니다." = "There isn't a word to test";
+" 새 단어 추가를 눌러 단어를 추가해주세요." = "Tap 'Add a new word' to add a word.";
 
 /// TestModeSelectView
-"전체 단어 시험"
-"전체 뜻 시험"
-"못외운 단어 시험"
-"못외운 뜻 시험"
+"전체 단어 시험" = "Total Word Test";
+"전체 뜻 시험" = "Total Meaning Test";
+"못외운 단어 시험" = "Commonly Wrong Word Test";
+"못외운 뜻 시험" = "Commonly Wrong Meaning Test";
 
 /// iPhoneWordTestView
-"단어를 입력해주세요"
-"뜻을 입력해주세요"
-"⏰ 시험 종료"
-"\(Image(systemName: "exclamationmark.circle")) 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다."
-"pass"
+"단어를 입력해주세요" = "Enter the word";
+"뜻을 입력해주세요" = "Enter the meaning";
+" 시험 종료" = "Time's up";
+" 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다." = "This is the last one. \n Test will be finished after press the 'Done' button";
+"pass" = "pass";
 
 /// iPadWordTestView
-"입력 언어를 해당 하는 언어로 변경하고,"
-"펜슬로 빈 칸에 답을 적어주세요."
-"뜻이 여러 개인 경우 ,(쉼표)로 구분해 주세요."
-"우상단의 제출버튼을 눌러주세요."
-"제출"
+"입력 언어를 해당 하는 언어로 변경하고," = "Change the language";
+"펜슬로 빈 칸에 답을 적어주세요." = "fill in the blank by pencil.";
+"뜻이 여러 개인 경우 ,(쉼표)로 구분해 주세요." = "if there are multiple meanings, divided by ,(comma).";
+"우상단의 제출버튼을 눌러주세요." = "Please, press the submit button";
+"제출" = "submit";
 
 /// WordTestResult
-"시험 결과"
-"확인"
-"\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다."
-"걸린 시간"
-"맞은 개수"
-"틀린 개수"
-"문제"
-"답"
+"시험 결과" = "Test Results";
+"확인" = "Confirm";
+"%@는 5번 연속 정답 처리된 단어입니다." = "%@ is the word that you corrected 5 times in a row.";
+"걸린 시간" = "elapsed time";
+"맞은 개수" = "correct count";
+"틀린 개수" = "incorrect count";
+"문제" = "question";
+"답" = "answer";
 
 /// Result
 
