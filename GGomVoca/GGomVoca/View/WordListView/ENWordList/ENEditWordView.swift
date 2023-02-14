@@ -71,9 +71,7 @@ struct ENEditWordView: View {
                       }
                     }
                   }
-                  Button("뜻 추가하기") {
-                    meanings.append("")
-                  }
+                    Button("\(Image(systemName: "plus.circle.fill")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
                 } header: {
                   HStack {
                     Text("뜻")
