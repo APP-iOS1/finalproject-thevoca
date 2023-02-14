@@ -20,12 +20,7 @@ extension View {
     }
     
     func headerText() -> some View {
-        self
-            .font(.subheadline)
-            .bold()
-            .foregroundColor(.secondary)
-            .frame(height: 30)
-            .horizontalAlignSetting(.center)
+        modifier(HeaderText())
     }
     
     func listCellText(isSelectionMode: Bool) -> some View {

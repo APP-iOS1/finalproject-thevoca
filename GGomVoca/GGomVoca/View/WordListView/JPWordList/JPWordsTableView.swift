@@ -25,7 +25,7 @@ struct JPWordsTableView: View {
     var body: some View {
         VStack(spacing: 0) {
             // MARK: - Header
-            HStack {
+            HStack(spacing: 25) {
                 if isSelectionMode {
                     Image(systemName: "circle")
                         .foregroundColor(.clear)
