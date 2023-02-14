@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct iPhoneAllWordsDataView: View {
+struct iPhoneWordsDetailDataView: View {
     // MARK: SuperView Property
     var words: [Word]
+    var navigationTitle: String
     
     // MARK: View Properties
     @State private var sorting: SortOrders = .createdAt
@@ -45,7 +46,7 @@ struct iPhoneAllWordsDataView: View {
         List(sortedWord) { word in
             iPhoneDataCell(word: word)
         }
-        .navigationTitle("모든 단어 데이터")
+        .navigationTitle(navigationTitle)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Picker("정렬", selection: $sorting) {
@@ -134,6 +135,6 @@ fileprivate struct iPhoneDataCell: View {
 
 struct iPhoneAllWordsDataView_Previews: PreviewProvider {
     static var previews: some View {
-        iPhoneAllWordsDataView(words: [])
+        iPhoneWordsDetailDataView(words: [], navigationTitle: "")
     }
 }

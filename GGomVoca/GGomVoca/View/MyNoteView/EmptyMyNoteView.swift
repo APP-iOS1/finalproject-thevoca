@@ -13,7 +13,7 @@ struct EmptyMyNoteView: View {
             Text("시험 결과가 없습니다.")
               .font(.system(size: 20))
             Text("")
-            Text("\(Image(systemName: "square.and.pencil") )시험 보기 를 눌러 단어 시험을 선택하세요.")
+            Text("\(Image(systemName: "square.and.pencil") )시험 보기를 눌러 단어 시험을 선택하세요.")
         }
         .foregroundColor(.secondary)
         .horizontalAlignSetting(.center)

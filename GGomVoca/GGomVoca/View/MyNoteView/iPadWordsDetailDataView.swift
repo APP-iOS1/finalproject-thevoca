@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct iPadAllWordsDataView: View {
+struct iPadWordsDetailDataView: View {
     // MARK: SuperView Property
     var words: [Word]
+    var navigationTitle: String
     
     // MARK: View Properties
     @State private var sorting: SortOrders = .createdAt
@@ -52,7 +53,7 @@ struct iPadAllWordsDataView: View {
                 }
                 .listStyle(.plain)
             }
-            .navigationTitle("모든 단어 데이터")
+            .navigationTitle(navigationTitle)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Picker("정렬", selection: $sorting) {
@@ -183,7 +184,7 @@ fileprivate struct iPadDataCell: View {
 struct AllWordsDataView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            iPadAllWordsDataView(words: [])
+            iPadWordsDetailDataView(words: [], navigationTitle: "")
         }
     }
 }
