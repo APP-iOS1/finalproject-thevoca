@@ -19,7 +19,7 @@
 
 /// EmptyMyNoteView
 "시험 결과가 없습니다." = "There is no Test Results.";
-"시험 보기 를 눌러 단어 시험을 선택하세요." = "Select 'Take a Test' to take a test. lol";
+"%@시험 보기 를 눌러 단어 시험을 선택하세요." = "Select '%@Take a Test' to take a test. lol";
 
 // MARK: MyNoteView ends
 
@@ -163,8 +163,8 @@
 /// iPhoneWordTestView
 "단어를 입력해주세요" = "Enter the word";
 "뜻을 입력해주세요" = "Enter the meaning";
-" 시험 종료" = "Time's up";
-" 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다." = "This is the last one. \n Test will be finished after press the 'Done' button";
+"⏰ 시험 종료" = "⏰ Time's up";
+"%@ 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다." = "%@ This is the last one. \n Test will be finished after press the 'Done' button";
 "pass" = "pass";
 
 /// iPadWordTestView
