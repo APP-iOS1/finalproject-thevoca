@@ -40,6 +40,9 @@ class DisplaySplitViewModel : ObservableObject {
             }, receiveValue: { [weak self] vocaList in
                 let list = vocaList.filter{ $0.deleatedAt == nil}
                 self?.vocabularyList = list
+                if vocaList.isEmpty {
+                    UserManager.initializeData()
+                }
             })
             .store(in: &bag)
     }

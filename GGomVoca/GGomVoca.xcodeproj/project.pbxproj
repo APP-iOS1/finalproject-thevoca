@@ -84,7 +84,6 @@
 		EE57C0512951795E004312CE /* VocabularyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C0502951795E004312CE /* VocabularyCell.swift */; };
 		EE57C05429517F81004312CE /* Nationality.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05329517F81004312CE /* Nationality.swift */; };
 		EE57C056295180BE004312CE /* DisplaySplitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C055295180BE004312CE /* DisplaySplitViewModel.swift */; };
-		EE57C05F2951885E004312CE /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57C05E2951885E004312CE /* TabbarView.swift */; };
 		EE759520298A38BC00AB6E62 /* CloudKitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75951F298A38BC00AB6E62 /* CloudKitRepository.swift */; };
 		EE759522298A3A0E00AB6E62 /* CloudKitRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE759521298A3A0E00AB6E62 /* CloudKitRepositoryImpl.swift */; };
 		EE759526298A3C0300AB6E62 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE759525298A3C0300AB6E62 /* CoreDataRepository.swift */; };
@@ -183,7 +182,6 @@
 		EE57C0502951795E004312CE /* VocabularyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyCell.swift; sourceTree = "<group>"; };
 		EE57C05329517F81004312CE /* Nationality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nationality.swift; sourceTree = "<group>"; };
 		EE57C055295180BE004312CE /* DisplaySplitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySplitViewModel.swift; sourceTree = "<group>"; };
-		EE57C05E2951885E004312CE /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		EE75951F298A38BC00AB6E62 /* CloudKitRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitRepository.swift; sourceTree = "<group>"; };
 		EE759521298A3A0E00AB6E62 /* CloudKitRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitRepositoryImpl.swift; sourceTree = "<group>"; };
 		EE759525298A3C0300AB6E62 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 				6371E05129530885003A1A08 /* Info.plist */,
 				EE081AF62995DCCB005A8352 /* GoogleService-Info.plist */,
 				63DC85342950312E00461DEB /* GGomVocaApp.swift */,
-				EE57C05B29518833004312CE /* Component */,
 				63DC854B2950321D00461DEB /* View */,
 				63DC85362950312E00461DEB /* Persistence.swift */,
 				6371E04D29530716003A1A08 /* Assets.xcassets */,
@@ -497,14 +494,6 @@
 				EE57C055295180BE004312CE /* DisplaySplitViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		EE57C05B29518833004312CE /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				EE57C05E2951885E004312CE /* TabbarView.swift */,
-			);
-			path = Component;
 			sourceTree = "<group>";
 		};
 		EE75951E298A38A700AB6E62 /* Repository */ = {
@@ -755,7 +744,6 @@
 				165BA97B29879A090067F217 /* EmptyWordListView.swift in Sources */,
 				63EA4AC829875DF4009392EE /* ENEditWordView.swift in Sources */,
 				1641015D2995705B005C1854 /* CustomMenu.swift in Sources */,
-				EE57C05F2951885E004312CE /* TabbarView.swift in Sources */,
 				16E1ECC5298CDCFC00BA4C9C /* Array+.swift in Sources */,
 				EEE6EAB9299220D600C0F653 /* ErrorProtocol.swift in Sources */,
 				EE759520298A38BC00AB6E62 /* CloudKitRepository.swift in Sources */,
