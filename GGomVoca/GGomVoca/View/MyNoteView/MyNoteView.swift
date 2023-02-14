@@ -32,6 +32,24 @@ struct MyNoteView: View {
             EmptyMyNoteView()
         } else {
             List {
+                NavigationLink {
+                    if UIDevice.current.model == "iPad" {
+                        iPadAllWordsDataView(words: words)
+                    } else {
+                        iPhoneAllWordsDataView(words: words)
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "list.bullet.rectangle.fill")
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundColor(.indigo)
+                            .font(.largeTitle)
+                        Text("모든 단어 데이터 보기")
+                            .eachDeviceFontSize()
+                    }
+                }
+
+                
                 ForEach(sectionHeaders, id: \.self) { header in
                     switch header {
                     case sectionHeaders[0]:
