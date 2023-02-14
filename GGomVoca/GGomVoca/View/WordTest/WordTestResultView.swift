@@ -163,12 +163,13 @@ struct ListCell: View {
         HStack {
             Image(systemName: paper.isCorrect == .Right ? "circle" : paper.isCorrect == .Half ? "triangle" : "xmark")
                 .foregroundColor(paper.isCorrect == .Right ? .green : paper.isCorrect == .Half ? .yellow : .red)
-                .font(.body)
+                .eachDeviceFontSize()
             
             switch testType {
             case "word":
                 Text(paper.meaning.joined(separator: ", "))
                     .horizontalAlignSetting(.center)
+
                 VStack {
                     if !paper.answer!.isEmpty {
                         Text(paper.answer!)
@@ -183,6 +184,7 @@ struct ListCell: View {
             case "meaning":
                 Text(paper.word)
                     .horizontalAlignSetting(.center)
+
                 VStack {
                     if !paper.answer!.isEmpty {
                         Text(paper.answer!)
@@ -201,8 +203,9 @@ struct ListCell: View {
             if checkLabel {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(paper.isToggleMemorize ? .green : .clear)
-                    .font(.body)
+                    .eachDeviceFontSize()
             }
         }
+        .eachDeviceFontSize()
     }
 }

@@ -27,7 +27,7 @@ struct JPWordsTableView: View {
     var body: some View {
         VStack(spacing: 0) {
             // MARK: - Header
-            HStack {
+            HStack(spacing: 25) {
                 if isSelectionMode {
                     Image(systemName: "circle")
                         .foregroundColor(.clear)
@@ -67,6 +67,7 @@ struct JPWordsTableView: View {
                         .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
+                .eachDeviceFontSize()
                 .frame(minHeight: 40)
                 .alignmentGuide(.listRowSeparatorLeading) { d in
                     d[.leading]

@@ -29,7 +29,7 @@ struct UbiquitousStorage<T> {
     }
 }
 
-// MARK: NSUbiquitousKeyValueStore 객체를 생성하지 않고 바로 점메서드로 접근하기 위한 extension
+// MARK: NSUbiquitousKeyValueStore 객체를 생성하지 않고 바로 점표기법으로 접근하기 위한 extension
 /// - 하지만, 우리 앱에서는 이것들을 만질 메서드도 잔뜩 필요하기 때문에 일단 사용하지 않고 UserManager에서 관리하기로 함!
 //extension NSUbiquitousKeyValueStore {
 //    @UbiquitousStorage(key: "pinnedVocabularyIDs",   defaultValue: []) static var pinnedVocabularyIDs  : [String]

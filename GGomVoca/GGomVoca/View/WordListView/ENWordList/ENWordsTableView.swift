@@ -60,6 +60,7 @@ struct ENWordsTableView: View {
                         .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
+                .eachDeviceFontSize()
                 .frame(minHeight: 40)
                 .alignmentGuide(.listRowSeparatorLeading) { d in
                     d[.leading]
