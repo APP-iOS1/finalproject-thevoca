@@ -69,83 +69,83 @@ class MenuButton: UIButton {
 
     func testMenu() -> UIMenu {
 
-        let seeAll = UIAction(title: "모두 보기",
+        let seeAll = UIAction(title: "모두 보기".localized,
                               state: currentMode == .normal ? .on : .off) { action in
           self.updateMode(mode: .normal)
         }
-        let seeWord = UIAction(title: "단어만 보기",
+        let seeWord = UIAction(title: "단어만 보기".localized,
                                state: currentMode == .meaningTest ? .on : .off) { action in
           self.updateMode(mode: .meaningTest)
         }
-        let seeMeaning = UIAction(title: "뜻만 보기",
+        let seeMeaning = UIAction(title: "뜻만 보기".localized,
                                   state: currentMode == .wordTest ? .on : .off) { action in
           self.updateMode(mode: .wordTest)
         }
-      return UIMenu(title: "보기 모드", subtitle: "\(currentMode.rawValue)", image: UIImage(systemName: "eye.fill"), children: [seeAll, seeWord, seeMeaning])
+      return UIMenu(title: "보기 모드".localized, subtitle: "\(currentMode.rawValue.localized)", image: UIImage(systemName: "eye.fill"), children: [seeAll, seeWord, seeMeaning])
     }
 
     func orderMenu() -> UIMenu {
         let orderByRandom = self.orderByRandom()
         let orderByDict = self.orderByDict()
         let orderByDate = self.orderByDate()
-      return UIMenu(title: "정렬", subtitle: "\(orderMode)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [orderByRandom, orderByDict, orderByDate])
+      return UIMenu(title: "정렬".localized, subtitle: "\(orderMode.localized)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [orderByRandom, orderByDict, orderByDate])
     }
 
     func orderByRandom() -> UIAction {
-        UIAction(title: "랜덤 정렬") { action in
+        UIAction(title: "랜덤 정렬".localized) { action in
           self.updateOrder(order: "랜덤 정렬")
         }
     }
 
     func orderByDict() -> UIAction {
-        UIAction(title: "사전순 정렬") { action in
+        UIAction(title: "사전순 정렬".localized) { action in
           self.updateOrder(order: "사전순 정렬")
         }
     }
 
     func orderByDate() -> UIAction {
-        UIAction(title: "시간순 정렬") { action in
-          self.updateOrder(order: "시간순 정렬")
+        UIAction(title: "등록순 정렬".localized) { action in
+          self.updateOrder(order: "등록순 정렬")
         }
     }
 
     func takeTest() -> UIAction {
-        UIAction(title: "시험 보기",
+        UIAction(title: "시험 보기".localized,
                  image: UIImage(systemName: "square.and.pencil")) { action in
           self.testOn.toggle()
         }
     }
 
     func listenAll() -> UIAction {
-        UIAction(title: "전체 단어 듣기",
+        UIAction(title: "전체 단어 듣기".localized,
                  image: UIImage(systemName: "speaker.wave.3")) { action in
           self.speakOn.toggle()
         }
     }
 
     func editVoca() -> UIAction {
-        UIAction(title: "단어 선택하기",
+        UIAction(title: "단어 선택하기".localized,
                  image: UIImage(systemName: "checkmark.circle")) { action in
           self.editOn.toggle()
         }
     }
 
     func importVoca() -> UIAction {
-        UIAction(title: "단어장 가져오기",
+        UIAction(title: "단어장 가져오기".localized,
                  image: UIImage(systemName: "square.and.arrow.down")) { action in
           self.isImportVoca.toggle()
         }
     }
 
     func exportVoca() -> UIAction {
-        UIAction(title: "단어장 내보내기",
+        UIAction(title: "단어장 내보내기".localized,
                  image: UIImage(systemName: "square.and.arrow.up")) { action in
           self.isExportVoca.toggle()
         }
     }
 
     func checkResult() -> UIAction {
-        UIAction(title: "시험 결과 보기",
+        UIAction(title: "시험 결과 보기".localized,
                  image: UIImage(systemName: "chart.line.uptrend.xyaxis")) { action in
           self.isCheckResult.toggle()
         }

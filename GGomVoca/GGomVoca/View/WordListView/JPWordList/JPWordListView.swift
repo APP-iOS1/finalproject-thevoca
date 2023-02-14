@@ -24,8 +24,10 @@ struct JPWordListView: View {
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
-    @State var selectedOrder: String = "사전순"
+
+    @State var selectedOrder: String = "등록순 정렬"
     @State var speakOn: Bool = false
+
     
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
@@ -43,6 +45,12 @@ struct JPWordListView: View {
     /// - 단어 시험모드 관련 State
     @State private var isTestMode: Bool = false
     
+<<<<<<< HEAD
+    // 전체 발음 듣기 관련 State
+    @State var isSpeech: Bool = false
+    
+=======
+>>>>>>> develop
     /// 단어 듣기 관련 프로퍼티
     private var selectedWords: [Word] {
         var array = [Word]()
@@ -76,7 +84,7 @@ struct JPWordListView: View {
           .navigationDestination(isPresented: $isCheckResult, destination: {
             MyNoteView(words: viewModel.words)
           })
-          .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
+          .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
           .navigationBarTitleDisplayMode(.inline)
           .onAppear {
               viewModel.getVocabulary(vocabularyID: vocabularyID)
@@ -146,7 +154,13 @@ struct JPWordListView: View {
               if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                   ToolbarItem {
                       Button("취소", role: .cancel) {
+<<<<<<< HEAD
+                          speakOn.toggle()
+                          isSpeech.toggle()
+                          SpeechSynthesizer.shared.stopSpeaking()
+=======
                           speechSynthesizer.stopSpeaking()
+>>>>>>> develop
                       }
                   }
               } else if isSelectionMode {  // 편집 모드
@@ -202,6 +216,7 @@ struct JPWordListView: View {
                 ToolbarItem {
                     CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
                         .onChange(of: selectedSegment) { _ in
+                            print("selectedSegment Changed")
                             unmaskedWords = []
                         }
                         .onChange(of: selectedOrder) { value in
@@ -214,11 +229,24 @@ struct JPWordListView: View {
                             viewModel.words.shuffle()
                             }
                         }
+<<<<<<< HEAD
+                        .onChange(of: speakOn) { _ in
+                            print("speakOn onChanged!")
+                            if speakOn {
+                              print("speakOn : \(speakOn)")
+                              SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
+                              isSpeech.toggle()
+=======
                         .onChange(of: speakOn) { value in
                             if speakOn {
                                 speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "ja-JP")
                                 speakOn.toggle() // speakOn를 false로
+>>>>>>> develop
                             }
+                            print("speakOn : \(speakOn)")
+                        }
+                        .onChange(of: isImportVoca) { _ in
+                          print("??")
                         }
                   }
               }
