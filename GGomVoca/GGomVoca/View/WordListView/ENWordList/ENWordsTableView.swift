@@ -10,6 +10,8 @@ import SwiftUI
 struct ENWordsTableView: View {
     // MARK: SuperView Properties
     @ObservedObject var viewModel: ENENWordListViewModel
+    @ObservedObject var speechSynthesizer: SpeechSynthesizer
+    
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -100,7 +102,7 @@ struct ENWordsTableView: View {
                             Label("수정하기", systemImage: "gearshape.fill")
                         }
                         Button {
-                            SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "en-US", .single)
+                            speechSynthesizer.speakWordAndMeaning(word, to: "en-US", .single)
                         } label: {
                             Label("단어 듣기", systemImage: "mic.fill")
                         }
@@ -116,7 +118,7 @@ struct ENWordsTableView: View {
                     .presentationDetents([.medium])
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

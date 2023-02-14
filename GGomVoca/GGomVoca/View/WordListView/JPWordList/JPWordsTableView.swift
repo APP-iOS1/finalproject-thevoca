@@ -10,6 +10,8 @@ import SwiftUI
 struct JPWordsTableView: View {
     // MARK: SuperView Properties
     @ObservedObject var viewModel: JPWordListViewModel
+    @ObservedObject var speechSynthesizer: SpeechSynthesizer
+    
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -108,7 +110,7 @@ struct JPWordsTableView: View {
                             Label("수정하기", systemImage: "gearshape.fill")
                         }
                         Button {
-                            SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ja-JP", .single)
+                            speechSynthesizer.speakWordAndMeaning(word, to: "ja-JP", .single)
                         } label: {
                             Label("단어 듣기", systemImage: "mic.fill")
                         }
@@ -124,7 +126,7 @@ struct JPWordsTableView: View {
                     .presentationDetents([.medium])
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }
