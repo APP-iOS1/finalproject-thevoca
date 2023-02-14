@@ -28,6 +28,7 @@
 		6371E0462952058D003A1A08 /* ImportCSVFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6371E0452952058D003A1A08 /* ImportCSVFileView.swift */; };
 		6371E04E29530716003A1A08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04D29530716003A1A08 /* Assets.xcassets */; };
 		6371E05029530737003A1A08 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6371E04F29530737003A1A08 /* Launch Screen.storyboard */; };
+		637A9B07299C12B8007F45F2 /* SortOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637A9B06299C12B8007F45F2 /* SortOrders.swift */; };
 		638E2228299B5719006FA3E4 /* HeaderText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638E2227299B5719006FA3E4 /* HeaderText.swift */; };
 		6398595A2992429200E51C69 /* UbiquitousStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639859592992429200E51C69 /* UbiquitousStorage.swift */; };
 		639B31EB298059CD00955DE4 /* WordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B31EA298059CD00955DE4 /* WordListViewModel.swift */; };
@@ -133,6 +134,7 @@
 		6371E04D29530716003A1A08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6371E04F29530737003A1A08 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		6371E05129530885003A1A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		637A9B06299C12B8007F45F2 /* SortOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrders.swift; sourceTree = "<group>"; };
 		638E2227299B5719006FA3E4 /* HeaderText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderText.swift; sourceTree = "<group>"; };
 		639859592992429200E51C69 /* UbiquitousStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UbiquitousStorage.swift; sourceTree = "<group>"; };
 		639B31EA298059CD00955DE4 /* WordListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordListViewModel.swift; sourceTree = "<group>"; };
@@ -271,6 +273,14 @@
 				EE57C05329517F81004312CE /* Nationality.swift */,
 				16FFDC58297A6D680082007C /* CSVFile.swift */,
 				63A9E2AB2995E65400F354E8 /* ProfileSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		637A9B05299C12A3007F45F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				637A9B06299C12B8007F45F2 /* SortOrders.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -427,6 +437,7 @@
 		C08DB58D2989FC9600403F59 /* MyNoteView */ = {
 			isa = PBXGroup;
 			children = (
+				637A9B05299C12A3007F45F2 /* Model */,
 				C08DB58E2989FCD700403F59 /* MyNoteView.swift */,
 				63D57252299BD06C004F8A31 /* iPadAllWordsDataView.swift */,
 				63D57254299BF38B004F8A31 /* iPhoneAllWordsDataView.swift */,
@@ -727,6 +738,7 @@
 				63EA4ABF29875DE8009392EE /* KOWordListView.swift in Sources */,
 				EAB4FFAD2977C8FD0070941A /* CellButtonView.swift in Sources */,
 				63EA4AD929875E00009392EE /* JPWordsTableView.swift in Sources */,
+				637A9B07299C12B8007F45F2 /* SortOrders.swift in Sources */,
 				63DB052F299A29E7008DBAD6 /* Question.swift in Sources */,
 				16C665C629936C2700B02C9E /* VLine.swift in Sources */,
 				EE1E49FF2976709A00890CF7 /* UserManager.swift in Sources */,
