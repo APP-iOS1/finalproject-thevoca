@@ -7,7 +7,7 @@
 
 import SwiftUI
 import UIKit
-
+// SwiftUI (CustomMenu(@Binding)) -> UIViewRepresentable(@Binding) -> UIKit(@Binding)
 
 struct CustomMenu: UIViewRepresentable {
     @Binding var currentMode: ProfileSection
@@ -19,11 +19,14 @@ struct CustomMenu: UIViewRepresentable {
     @Binding var isExportVoca: Bool
     @Binding var isCheckResult: Bool
 
+    @Binding var isVocaEmpty: Bool
+
     func makeUIView(context: Context) -> MenuButton {
-        return MenuButton(frame: .zero, currentMode: $currentMode, orderMode: $orderMode, speakOn: $speakOn, testOn: $testOn, editOn: $editOn, isImportVoca: $isImportVoca, isExportVoca: $isExportVoca, isCheckResult: $isCheckResult)
+        return MenuButton(frame: .zero, currentMode: $currentMode, orderMode: $orderMode, speakOn: $speakOn, testOn: $testOn, editOn: $editOn, isImportVoca: $isImportVoca, isExportVoca: $isExportVoca, isCheckResult: $isCheckResult, isVocaEmpty: isVocaEmpty)
     }
 
     func updateUIView(_ uiView: MenuButton, context: Context) {
+        uiView.updateVocaEmpty(isVocaEmpty)
     }
 }
 
@@ -37,21 +40,24 @@ class MenuButton: UIButton {
     @Binding var isExportVoca: Bool
     @Binding var isCheckResult: Bool
 
+    var isVocaEmpty: Bool
 
-    init(frame: CGRect, currentMode: Binding<ProfileSection>, orderMode: Binding<String>, speakOn: Binding<Bool>, testOn: Binding<Bool>, editOn: Binding<Bool>, isImportVoca: Binding<Bool>, isExportVoca: Binding<Bool>, isCheckResult: Binding<Bool>) {
-        self._currentMode = currentMode
-        self._orderMode = orderMode
-        self._speakOn = speakOn
-        self._testOn = testOn
-        self._editOn = editOn
-        self._isImportVoca = isImportVoca
-        self._isExportVoca = isExportVoca
-        self._isCheckResult = isCheckResult
-        super.init(frame: frame)
 
-        renderingMenu()
+    init(frame: CGRect, currentMode: Binding<ProfileSection>, orderMode: Binding<String>, speakOn: Binding<Bool>, testOn: Binding<Bool>, editOn: Binding<Bool>, isImportVoca: Binding<Bool>, isExportVoca: Binding<Bool>, isCheckResult: Binding<Bool>, isVocaEmpty: Bool) {
+          self._currentMode = currentMode
+          self._orderMode = orderMode
+          self._speakOn = speakOn
+          self._testOn = testOn
+          self._editOn = editOn
+          self._isImportVoca = isImportVoca
+          self._isExportVoca = isExportVoca
+          self._isCheckResult = isCheckResult
+          self.isVocaEmpty = isVocaEmpty
+          super.init(frame: frame)
 
-    }
+          renderingMenu()
+
+      }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -64,6 +70,15 @@ class MenuButton: UIButton {
 
     func updateOrder(order: String) {
         self.orderMode = order
+        renderingMenu()
+    }
+
+    func updateVocaEmpty(_ current: Bool) {
+        print("SwiftUI isVocaEmpty state: \(current), UIKit isVocaEmpty state: \(isVocaEmpty)")
+        if current != isVocaEmpty {
+          self.isVocaEmpty.toggle()
+        }
+        print("SwiftUI isVocaEmpty state: \(current), UIKit isVocaEmpty state: \(self.isVocaEmpty)")
         renderingMenu()
     }
 
@@ -81,14 +96,25 @@ class MenuButton: UIButton {
                                   state: currentMode == .wordTest ? .on : .off) { action in
           self.updateMode(mode: .wordTest)
         }
-      return UIMenu(title: "보기 모드".localized, subtitle: "\(currentMode.rawValue.localized)", image: UIImage(systemName: "eye.fill"), children: [seeAll, seeWord, seeMeaning])
+
+        // MARK: Conditionally disabled
+        if isVocaEmpty {
+          return UIMenu(title: "보기 모드".localized, subtitle: "\(currentMode.rawValue.localized)", image: UIImage(systemName: "eye.fill"), children: [])
+        }
+
+        return UIMenu(title: "보기 모드".localized, subtitle: "\(currentMode.rawValue.localized)", image: UIImage(systemName: "eye.fill"), children: [seeAll, seeWord, seeMeaning])
     }
 
     func orderMenu() -> UIMenu {
         let orderByRandom = self.orderByRandom()
         let orderByDict = self.orderByDict()
         let orderByDate = self.orderByDate()
-      return UIMenu(title: "정렬".localized, subtitle: "\(orderMode.localized)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [orderByRandom, orderByDict, orderByDate])
+
+        // MARK: Conditionally disabled
+        if isVocaEmpty {
+            return UIMenu(title: "정렬".localized, subtitle: "\(orderMode.localized)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [])
+        }
+        return UIMenu(title: "정렬".localized, subtitle: "\(orderMode.localized)", image: UIImage(systemName: "arrow.up.arrow.down"), children: [orderByRandom, orderByDict, orderByDate])
     }
 
     func orderByRandom() -> UIAction {
@@ -152,6 +178,8 @@ class MenuButton: UIButton {
     }
 
     func renderingMenu() {
+        print("rendering Menu function started -----------------------")
+        print("UIKit isVocaEmpty: \(isVocaEmpty)")
         let testMenu = self.testMenu()
         // 시험 보기
         let takeTest = self.takeTest()
@@ -170,6 +198,15 @@ class MenuButton: UIButton {
 
         let modeTestMenu = UIMenu(title: "", options: .displayInline, children: [testMenu, takeTest, checkResult])
         let orderVocaMenu = UIMenu(title: "", options: .displayInline, children: [orderMenu, editVoca, importVoca, exportVoca])
+
+        // MARK: Conditionally disabled
+        if isVocaEmpty {
+            takeTest.attributes = .disabled
+            listenAll.attributes = .disabled
+            editVoca.attributes = .disabled
+            exportVoca.attributes = .disabled
+            checkResult.attributes = .disabled
+        }
 
         setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
         menu = UIMenu(title: "", children: [modeTestMenu, orderVocaMenu, listenAll])
