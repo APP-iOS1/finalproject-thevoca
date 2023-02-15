@@ -17,7 +17,7 @@ struct EditVocabularyView: View {
     
     // MARK: View Properties
     @State var inputVocabularyName: String = ""
-    @State var nationality: String = ""
+    @State var nationality: Nationality = Nationality.KO
     @State var isShowingMessage: Bool = false
     
     /// - 입력값 양옆 공백 제거
@@ -44,7 +44,19 @@ struct EditVocabularyView: View {
             .navigationBarTitle("단어장 제목 변경")
             .onAppear {
                 inputVocabularyName = vocabulary.name ?? ""
-                nationality = vocabulary.nationality ?? ""
+                switch vocabulary.nationality ?? "" {
+                case "KO":
+                    nationality = .KO
+                case "EN":
+                    nationality = .EN
+                case "JA":
+                    nationality = .JA
+                case "FR":
+                    nationality = .FR
+                default:
+                    break
+                }
+                print(nationality)
             }
             .toolbar {
                 /// - 취소 버튼
