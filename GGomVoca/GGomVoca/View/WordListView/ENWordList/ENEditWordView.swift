@@ -76,7 +76,7 @@ struct ENEditWordView: View {
                   HStack {
                     Text("뜻")
                     if isMeaningEmpty {
-                      Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                        Text("\(Image(systemName: "exclamationmark.circle")) 사용하지 않는 입력 필드는 삭제해주세요.")
 
                     }
                   }
@@ -116,6 +116,7 @@ struct ENEditWordView: View {
                             editWord.toggle()
                         }
                     }
+                    .disabled(word.isEmpty || meanings[0].isEmpty)
                 }
             }
         }
