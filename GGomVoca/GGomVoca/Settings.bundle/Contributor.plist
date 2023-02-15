@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Contributor</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Title</key>
+            <string>
+Contributors.sorted(by: age)
+print(Contributors)
+                
+백수민, 유승태, 고정민, 김도희, 고도현
+                
+            </string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>Title</key>
+            <string>후기</string>
+            <key>Key</key>
+            <string>REVIEW</string>
+            <key>File</key>
+            <string>Review</string>
+        </dict>
+	</array>
+</dict>
+</plist>
