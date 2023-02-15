@@ -28,7 +28,8 @@ struct ENWordListView: View {
     @State var selectedOrder: String = "등록순 정렬"
     @State var speakOn: Bool = false
 
-    
+    @State var isVocaEmpty: Bool = false
+
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -86,6 +87,9 @@ struct ENWordListView: View {
             .onAppear {
                 viewModel.getVocabulary(vocabularyID: vocabularyID)
                 navigationTitle = viewModel.selectedVocabulary.name ?? ""
+                if viewModel.words.isEmpty {
+                    isVocaEmpty = true
+                }
                 emptyMessage = viewModel.getEmptyWord()
             }
             // 시험 모드 시트
@@ -205,7 +209,7 @@ struct ENWordListView: View {
                     
                     // MARK: 미트볼 버튼
                     ToolbarItem {
-                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
+                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult, isVocaEmpty: $isVocaEmpty)
                             .onChange(of: selectedSegment) { _ in
                                 unmaskedWords = []
                             }
@@ -231,6 +235,9 @@ struct ENWordListView: View {
             }
             .onDisappear {
                 speechSynthesizer.stopSpeaking()
+            }
+            .onChange(of: viewModel.words.isEmpty) { value in
+              isVocaEmpty = value
             }
         }
     }
