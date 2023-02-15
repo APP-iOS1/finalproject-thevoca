@@ -10,6 +10,8 @@ import SwiftUI
 struct KOWordsTableView: View {
     // MARK: SuperView Properties
     @ObservedObject var viewModel: KOWordListViewModel
+    @ObservedObject var speechSynthesizer: SpeechSynthesizer
+    
     var selectedSegment: ProfileSection
     @Binding var unmaskedWords: [Word.ID]
     
@@ -65,6 +67,7 @@ struct KOWordsTableView: View {
                         .listCellText(isSelectionMode: isSelectionMode)
                         .opacity((selectedSegment == .meaningTest && !unmaskedWords.contains(word.id)) ? 0 : 1)
                 }
+                .eachDeviceFontSize()
                 .frame(minHeight: 40)
                 .alignmentGuide(.listRowSeparatorLeading) { d in
                     d[.leading]
@@ -104,9 +107,9 @@ struct KOWordsTableView: View {
                             Label("수정하기", systemImage: "gearshape.fill")
                         }
                         Button {
-                            SpeechSynthesizer.shared.speakWordAndMeaning(word, to: "ko-KR", .single)
+                            speechSynthesizer.speakWordAndMeaning(word, to: "ko-KR", .single)
                         } label: {
-                            Label("발음 듣기", systemImage: "mic.fill")
+                            Label("단어 듣기", systemImage: "mic.fill")
                         }
                     }
                 }
@@ -120,7 +123,7 @@ struct KOWordsTableView: View {
                     .presentationDetents([.medium])
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

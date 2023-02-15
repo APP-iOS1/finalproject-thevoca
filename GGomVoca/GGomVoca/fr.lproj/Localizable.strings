@@ -1,0 +1,187 @@
+///* 
+//  Localizable.strings
+//  GGomVoca
+//
+//  Created by tae on 2023/02/11.
+//  
+//*/
+//
+//// MARK: MyNoteView starts
+//
+///// MyNoteView
+//"자주 틀린 단어"
+//"헷갈리는 단어"
+//"완벽히 외운 단어"
+//"더 보기"
+//"시험 결과"
+//
+///// MyNoteDetailView
+//
+///// EmptyMyNoteView
+//"시험 결과가 없습니다."
+//"시험 보기 를 눌러 단어 시험을 선택하세요."
+//
+//// MARK: MyNoteView ends
+//
+//// MARK: DisplaySplitView starts
+//
+///// DisplaySplitView
+//"등록한 단어 검색"
+//"단어장"
+//"단어장 없음"
+//"하단의 \(Image(systemName: "folder.badge.plus"))을 눌러 단어장을 생성하세요"
+//"고정된 단어장"
+//"한국어"
+//"영어"
+//"일본어"
+//"프랑스어"
+//"편집"
+//"완료"
+//"왼쪽 사이드바에서 단어장을 추가하세요."
+//"왼쪽 사이드바에서 단어장을 선택하세요."
+//"단어장을 오른쪽(\(Image(systemName: "arrow.right")))으로 밀면 상단에 고정됩니다."
+//"단어장을 왼쪽(\(Image(systemName: "arrow.left")))으로 밀면 삭제할 수 있습니다."
+//"단어장을 길게 누르면 단어장의 제목을 변경할 수 있습니다."
+//
+///// AddVocabularyView
+//"단어장 제목"
+//"단어장의 제목을 입력하세요."
+//"공부하는 언어"
+//"새로운 단어장"
+//"취소"
+//"완료"
+//
+///// EditVocabularyView
+//
+///// VocabularyCell
+//
+//// MARK: DisplaySplitView ends
+//
+//// MARK: SearchingResultsInMyWordsView starts
+//
+///// SearchingResultsInMyWordsView
+//
+///// SearchingResultsInMyWordsCell
+//
+//// MARK: SearchingResultsInMyWordsView ends
+//
+//// MARK: WordListView starts
+//
+///// CommonView starts
+//
+////// ImportCSVFileView
+//"파일 내용 확인하기"
+//"csv 파일 업로드"
+//"가져온 단어 추가하기"
+//"단어 가져오기"
+//
+////// CellButtonView
+//
+////// EmptyWordListView
+//"텅 빈, 비어있는"
+//
+////// FieldView
+//"뜻을 입력하세요."
+//
+////// CustomMenu
+//"모두 보기"
+//"단어만 보기"
+//"뜻만 보기"
+//"보기 모드"
+//"정렬"
+//"랜덤 정렬"
+//"사전순 정렬"
+//"시간순 정렬"
+//"시험 보기"
+//"전체 듣기"
+//"단어장 가져오기"
+//"단어장 내보내기"
+//"시험 결과 보기"
+//
+///// CommonView ends
+//
+///// WordList starts
+//
+////// WordListView
+//"랜덤 정렬"
+//"사전순 정렬"
+//"시간순 정렬"
+//"선택된 단어 \(multiSelection.count)개"
+//"단어 삭제"
+//"\(multiSelection.count)개의 단어 삭제"
+//"\(multiSelection.count)개의 단어를 삭제하시겠습니까?"
+//"취소"
+//"선택한 단어 듣기"
+//"새 단어 추가"
+//"모두 보기"
+//"뜻만 보기"
+//"단어만 보기"
+//
+////// WordsTableView
+//"단어"
+//"발음"
+//"뜻"
+//"수정하기"
+//"발음 듣기"
+//
+////// WordCell
+//
+////// addNewWordView
+//"단어를 입력하세요."
+//"단어"
+//"\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다."
+//"발음"
+//"발음을 입력하세요."
+//"\(Image(systemName: "plus.circle")) \(meanings.count + 1)번째 뜻 추가하기"
+//"새 단어 추가"
+//"취소"
+//"추가"
+//
+////// EditWordView
+//"단어 수정"
+//"변경"
+//
+///// WordList ends
+//
+//
+//// MARK: Etc
+//
+///// ContentView
+//
+///// EmptyTestModeView
+//"시험 볼 단어가 없습니다."
+//"\(Image(systemName: "plus.circle.fill")) 새 단어 추가를 눌러 단어를 추가해주세요."
+//
+///// TestModeSelectView
+//"전체 단어 시험"
+//"전체 뜻 시험"
+//"못외운 단어 시험"
+//"못외운 뜻 시험"
+//
+///// iPhoneWordTestView
+//"단어를 입력해주세요"
+//"뜻을 입력해주세요"
+//"⏰ 시험 종료"
+//"\(Image(systemName: "exclamationmark.circle")) 마지막 문제입니다.\n완료 버튼을 누르면 시험지가 자동 제출됩니다."
+//"pass"
+//
+///// iPadWordTestView
+//"입력 언어를 해당 하는 언어로 변경하고,"
+//"펜슬로 빈 칸에 답을 적어주세요."
+//"뜻이 여러 개인 경우 ,(쉼표)로 구분해 주세요."
+//"우상단의 제출버튼을 눌러주세요."
+//"제출"
+//
+///// WordTestResult
+//"시험 결과"
+//"확인"
+//"\(Image(systemName: "checkmark.circle.fill"))는 5번 연속 정답 처리된 단어입니다."
+//"걸린 시간"
+//"맞은 개수"
+//"틀린 개수"
+//"문제"
+//"답"
+//
+///// Result
+//
+//

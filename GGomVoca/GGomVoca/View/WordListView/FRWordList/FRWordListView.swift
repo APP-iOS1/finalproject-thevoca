@@ -12,6 +12,7 @@ struct FRWordListView: View {
     var vocabularyID: Vocabulary.ID
     
     @StateObject var viewModel: FRFRWordListViewModel = DependencyManager.shared.resolve(FRFRWordListViewModel.self)!
+    @StateObject var speechSynthesizer = SpeechSynthesizer()
     
     // MARK: View Properties
     /// - onAppear 될 때 viewModel에서 값 할당
@@ -23,8 +24,10 @@ struct FRWordListView: View {
     @State var isImportVoca: Bool = false
     @State var isCheckResult: Bool = false
     @State var selectedSegment: ProfileSection = .normal
-    @State var selectedOrder: String = "사전순"
-    
+
+    @State var selectedOrder: String = "등록순 정렬"
+    @State var speakOn: Bool = false
+
     /// - 단어 추가 버튼 관련 State
     @State var addNewWord: Bool = false
     
@@ -66,7 +69,7 @@ struct FRWordListView: View {
                     .foregroundColor(.gray)
                     .verticalAlignSetting(.center)
                 } else {
-                    FRWordsTableView(viewModel: viewModel, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
+                    FRWordsTableView(viewModel: viewModel, speechSynthesizer: speechSynthesizer, selectedSegment: selectedSegment, unmaskedWords: $unmaskedWords, isSelectionMode: $isSelectionMode, multiSelection: $multiSelection)
                         .padding(.top, 15)
                 }
                 
@@ -77,7 +80,7 @@ struct FRWordListView: View {
             .navigationDestination(isPresented: $isCheckResult, destination: {
                 MyNoteView(words: viewModel.words)
             })
-            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : navigationTitle)
+            .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.getVocabulary(vocabularyID: vocabularyID)
@@ -144,19 +147,18 @@ struct FRWordListView: View {
             }
             .toolbar {
                 // TODO: 편집모드에 따른 toolbar State 분기
-                if !isSelectionMode, isSpeech { // 전체 발음 듣기 모드
+                if !isSelectionMode, speechSynthesizer.isPlaying { // 전체 발음 듣기 모드
                     ToolbarItem {
                         Button("취소", role: .cancel) {
-                            isSpeech.toggle()
-                            SpeechSynthesizer.shared.stopSpeaking()
+                            speechSynthesizer.stopSpeaking()
                         }
                     }
-                } else if isSelectionMode, !isSpeech {  // 편집 모드
+                } else if isSelectionMode {  // 편집 모드
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("취소", role: .cancel) {
                             isSelectionMode.toggle()
                             multiSelection.removeAll()
-                            SpeechSynthesizer.shared.stopSpeaking()
+                            speechSynthesizer.stopSpeaking()
                         }
                     }
                     
@@ -169,7 +171,7 @@ struct FRWordListView: View {
 //                        .disabled(multiSelection.isEmpty ? true : false)
                             
                         Button("선택한 단어 듣기") {
-                            SpeechSynthesizer.shared.speakWordsAndMeanings(selectedWords, to: "en-US")
+                            speechSynthesizer.speakWordsAndMeanings(selectedWords, to: "fr-FR")
                         }
                         .disabled(multiSelection.isEmpty ? true : false)
                         
@@ -202,7 +204,7 @@ struct FRWordListView: View {
                     
                     // MARK: 미트볼 버튼
                     ToolbarItem {
-                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $isSpeech, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
+                        CustomMenu(currentMode: $selectedSegment, orderMode: $selectedOrder, speakOn: $speakOn, testOn: $isTestMode, editOn: $isSelectionMode, isImportVoca: $isImportVoca, isExportVoca: $isExport, isCheckResult: $isCheckResult)
                             .onChange(of: selectedSegment) { _ in
                                 unmaskedWords = []
                             }
@@ -216,16 +218,17 @@ struct FRWordListView: View {
                                     viewModel.words.shuffle()
                                 }
                             }
-                            .onChange(of: isSpeech) { value in
-                                if value {
-                                    SpeechSynthesizer.shared.speakWordsAndMeanings(viewModel.words, to: "fr-FR")
+                            .onChange(of: speakOn) { value in
+                                if speakOn {
+                                    speechSynthesizer.speakWordsAndMeanings(viewModel.words, to: "fr-FR")
+                                    speakOn.toggle() // speakOn를 false로
                                 }
                             }
                     }
                 }
             }
             .onDisappear {
-                SpeechSynthesizer.shared.stopSpeaking()
+                speechSynthesizer.stopSpeaking()
             }
         }
     }

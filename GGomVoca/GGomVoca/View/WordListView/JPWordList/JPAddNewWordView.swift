@@ -81,7 +81,16 @@ struct JPAddNewWordView: View {
                             }
                         }
                     }
-                  Button("\(Image(systemName: "plus.circle.fill")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
+                    // Button("\(Image(systemName: "plus.circle")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
+                    Button {
+                        meanings.append("")
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                            Text("\(meanings.count + 1)번째 뜻 추가하기")
+                        }
+                    }
+
                 } header: {
                     HStack {
                         Text("뜻")

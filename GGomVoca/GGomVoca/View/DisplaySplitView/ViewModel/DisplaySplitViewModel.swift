@@ -40,6 +40,9 @@ class DisplaySplitViewModel : ObservableObject {
             }, receiveValue: { [weak self] vocaList in
                 let list = vocaList.filter{ $0.deleatedAt == nil}
                 self?.vocabularyList = list
+                if vocaList.isEmpty {
+                    UserManager.initializeData()
+                }
             })
             .store(in: &bag)
     }
@@ -89,8 +92,8 @@ class DisplaySplitViewModel : ObservableObject {
     }
     
     // MARK: Vocabualry.ID로 해당 단어장을 찾아오는 메서드
-    func getVocabulary(for vocaId: String) -> Vocabulary {
-        var vocabulary = Vocabulary()
+    func getVocabulary(for vocaId: String) -> Vocabulary? {
+        var vocabulary: Vocabulary?
         
         if let vocaIndex = vocabularyList.firstIndex(where: { $0.id?.uuidString ?? "" == vocaId }) {
             vocabulary = vocabularyList[vocaIndex]
