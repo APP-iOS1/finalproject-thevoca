@@ -82,7 +82,6 @@ class DisplaySplitViewModel : ObservableObject {
                 case .finished:
                     return
                 }
-                
             }, receiveValue: { [weak self] result in
                 print(result)
                 self?.service.saveContext()
