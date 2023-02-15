@@ -92,8 +92,8 @@ struct VocabularyCell: View {
         }
         .contextMenu {
             Button {
-                
                 pinnedCompletion(vocabulary.id!)
+                UserManager.pinnedVocabulary(id: vocabulary.id!.uuidString, nationality: vocabulary.nationality!)
             } label: {
                 if vocabulary.isPinned {
                     HStack {
