@@ -88,24 +88,42 @@ struct AddNewWordView: View {
                     Text("default")
                 }
                 
+                Section(header: Text("발음")) {
+                    TextField("발음을 입력하세요.", text: $inputOption, axis: .vertical)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                }
+                
                 Section {
-                  ForEach($meanings, id: \.self) { $mean in
-                    TextField("뜻을 입력하세요.", text: $mean, axis: .vertical)
-                      .textInputAutocapitalization(.never)
-                      .disableAutocorrection(true)
-                  }
+                    ForEach(meanings.indices, id: \.self) { index in
+                        FieldView(value: Binding<String>(get: {
+                            guard index < meanings.count else { return "" }
+                            return meanings[index]
+                        }, set: { newValue in
+                            guard index < meanings.count else { return }
+                            meanings[index] = newValue
+                        })) {
+                            if meanings.count > 1 {
+                                meanings.remove(at: index)
+                            } else {
+                                // MARK: 최소 뜻 개수 1개 보장
+                                
+                            }
+                        }
+                    }
+                    
+                    Button("\(Image(systemName: "plus.circle.fill")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
                 } header: {
                     HStack {
                         Text("뜻")
-                      Button("+") {
-                        meanings.append("")
-                      }
                         if isMeaningEmpty {
-                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                            Text("\(Image(systemName: "exclamationmark.circle")) 사용하지 않는 입력 필드는 삭제해주세요.")
                         }
                     }
                 }
+                .buttonStyle(.borderless)
             }
+            .shakeEffect(trigger: isWordEmpty || isMeaningEmpty)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("새 단어 추가")
             .onAppear { wordFocused = true }
@@ -138,6 +156,7 @@ struct AddNewWordView: View {
                             wordFocused = true
                         }
                     }
+                    .disabled(word.isEmpty || meanings[0].isEmpty)
                 }
             }
         }

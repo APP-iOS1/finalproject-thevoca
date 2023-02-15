@@ -79,17 +79,33 @@ struct EditWordView: View {
                 }
                 
                 Section {
-                    TextField("뜻을 입력하세요.", text: $inputMeaning, axis: .vertical)
-                        .textInputAutocapitalization(.never)
-                        .disableAutocorrection(true)
+                    ForEach(meanings.indices, id: \.self) { index in
+                        FieldView(value: Binding<String>(get: {
+                            guard index < meanings.count else { return "" }
+                            return meanings[index]
+                        }, set: { newValue in
+                            guard index < meanings.count else { return }
+                            meanings[index] = newValue
+                        })) {
+                            if meanings.count > 1 {
+                                meanings.remove(at: index)
+                            } else {
+                                // MARK: 최소 뜻 개수 1개 보장
+                                
+                            }
+                        }
+                    }
+                    
+                    Button("\(Image(systemName: "plus.circle.fill")) \(meanings.count + 1)번째 뜻 추가하기") { meanings.append("") }
                 } header: {
                     HStack {
                         Text("뜻")
                         if isMeaningEmpty {
-                            Text("\(Image(systemName: "exclamationmark.circle")) 필수 입력 항목입니다.")
+                            Text("\(Image(systemName: "exclamationmark.circle")) 사용하지 않는 입력 필드는 삭제해주세요.")
                         }
                     }
                 }
+                .buttonStyle(.borderless)
             }
             .navigationTitle("단어 수정")
             .navigationBarTitleDisplayMode(.inline)
@@ -115,6 +131,7 @@ struct EditWordView: View {
                             editWord.toggle()
                         }
                     }
+                    .disabled(word.isEmpty || meanings[0].isEmpty)
                 }
             }
         }
