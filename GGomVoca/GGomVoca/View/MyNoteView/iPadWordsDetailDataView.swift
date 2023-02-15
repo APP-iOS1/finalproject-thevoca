@@ -37,7 +37,7 @@ struct iPadWordsDetailDataView: View {
                     return first > second
                 }
             case .isMemorized:
-                return words.sorted {  $0.isMemorized.hashValue < $1.isMemorized.hashValue }
+                return words.sorted {  $0.isMemorized.hashValue > $1.isMemorized.hashValue }
             }
         }
     }

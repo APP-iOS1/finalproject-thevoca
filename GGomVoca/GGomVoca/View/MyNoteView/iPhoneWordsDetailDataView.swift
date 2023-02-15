@@ -16,29 +16,27 @@ struct iPhoneWordsDetailDataView: View {
     @State private var sorting: SortOrders = .createdAt
     
     var sortedWord: [Word] {
-        get {
-            switch sorting {
-            case .createdAt:
-                return words.sorted { $0.createdAt ?? "" < $1.createdAt ?? "" }
-            case .dictionary:
-                return words.sorted { $0.word ?? "" < $1.word ?? "" }
-            case .incorrectRate:
-                return words.sorted {
-                    let first: Double = Double($0.incorrectCount) / Double($0.correctCount + $0.incorrectCount) * 100
-                    let second: Double = Double($1.incorrectCount) / Double($1.correctCount + $1.incorrectCount) * 100
-                    
-                    return first > second
-                }
-            case .correctRate:
-                return words.sorted {
-                    let first: Double = Double($0.correctCount) / Double($0.correctCount + $0.incorrectCount) * 100
-                    let second: Double = Double($1.correctCount) / Double($1.correctCount + $1.incorrectCount) * 100
-                    
-                    return first > second
-                }
-            case .isMemorized:
-                return words.sorted {  $0.isMemorized.hashValue < $1.isMemorized.hashValue }
+        switch sorting {
+        case .createdAt:
+            return words.sorted { $0.createdAt ?? "" < $1.createdAt ?? "" }
+        case .dictionary:
+            return words.sorted { $0.word ?? "" < $1.word ?? "" }
+        case .incorrectRate:
+            return words.sorted {
+                let first: Double = Double($0.incorrectCount) / Double($0.correctCount + $0.incorrectCount) * 100
+                let second: Double = Double($1.incorrectCount) / Double($1.correctCount + $1.incorrectCount) * 100
+                
+                return first > second
             }
+        case .correctRate:
+            return words.sorted {
+                let first: Double = Double($0.correctCount) / Double($0.correctCount + $0.incorrectCount) * 100
+                let second: Double = Double($1.correctCount) / Double($1.correctCount + $1.incorrectCount) * 100
+                
+                return first > second
+            }
+        case .isMemorized:
+            return words.sorted {  $0.isMemorized.hashValue > $1.isMemorized.hashValue }
         }
     }
     

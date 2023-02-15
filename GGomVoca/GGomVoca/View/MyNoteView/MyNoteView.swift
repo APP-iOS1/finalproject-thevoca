@@ -77,7 +77,7 @@ struct MyNoteView: View {
                         .eachDeviceFontSize()
                 }
             }
-            .isDetailLink(true)
+            .disabled(words.isEmpty)
             
             // MARK: 최근 자주 틀린 단어
             Section {
@@ -102,6 +102,7 @@ struct MyNoteView: View {
                         }
                     }
                     .offset(x: 15)
+                    .disabled(frequentlyIncorrectedWords.isEmpty)
                 }
             }
             .headerProminence(.increased)
@@ -129,6 +130,7 @@ struct MyNoteView: View {
                         }
                     }
                     .offset(x: 15)
+                    .disabled(confusedWords.isEmpty)
                 }
             }
             .headerProminence(.increased)
@@ -156,6 +158,7 @@ struct MyNoteView: View {
                         }
                     }
                     .offset(x: 15)
+                    .disabled(highIncorrectRateWords.isEmpty)
                 }
             }
             .headerProminence(.increased)
@@ -183,6 +186,7 @@ struct MyNoteView: View {
                         }
                     }
                     .offset(x: 15)
+                    .disabled(perfectlyMemorizedWords.isEmpty)
                 }
             }
             .headerProminence(.increased)
