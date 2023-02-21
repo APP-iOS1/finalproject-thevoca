@@ -66,3 +66,12 @@ A4용지를 접어가면서 단어나 의미를 가리고 스스로 쪽지시험
 ### 💁‍♂️ 코드 리뷰
 
 - 리뷰어를 지정해서 PR 시에 코드에 대해 분석하고 피드백하는 시간을 가졌어요.
+
+## Open Source License
+Copyright (C)  2023  TheVoca.
+    Permission is granted to copy, distribute and/or modify this document
+    under the terms of the GNU Free Documentation License, Version 1.3
+    or any later version published by the Free Software Foundation;
+    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+    A copy of the license is included in the section entitled "GNU
+    Free Documentation License".
