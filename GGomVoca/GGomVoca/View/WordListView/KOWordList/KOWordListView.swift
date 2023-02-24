@@ -79,6 +79,9 @@ struct KOWordListView: View {
           }
           .navigationDestination(isPresented: $isImportVoca, destination: {
             ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
+                  .onDisappear{
+                      viewModel.getVocabulary(vocabularyID: vocabularyID)
+                  }
           })
           .navigationDestination(isPresented: $isCheckResult, destination: {
             MyNoteView(words: viewModel.words)
@@ -86,6 +89,7 @@ struct KOWordListView: View {
           .navigationTitle(isSelectionMode ? "선택된 단어 \(multiSelection.count)개" : "\(navigationTitle)")
           .navigationBarTitleDisplayMode(.inline)
           .onAppear {
+              print("불렸당")
               viewModel.getVocabulary(vocabularyID: vocabularyID)
               navigationTitle = viewModel.selectedVocabulary.name ?? ""
               if viewModel.words.isEmpty {

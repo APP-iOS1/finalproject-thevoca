@@ -75,6 +75,9 @@ struct JPWordListView: View {
           }
           .navigationDestination(isPresented: $isImportVoca, destination: {
             ImportCSVFileView(vocabulary: viewModel.selectedVocabulary)
+                  .onDisappear{
+                      viewModel.getVocabulary(vocabularyID: vocabularyID)
+                  }
           })
           .navigationDestination(isPresented: $isCheckResult, destination: {
             MyNoteView(words: viewModel.words)
