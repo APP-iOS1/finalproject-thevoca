@@ -99,8 +99,9 @@ struct ImportCSVFileView: View {
                             
                             viewModel.addNewWord(vocabulary: vocabulary, word: word, meaning: meaningArray, option: option)
                             
-                            dismiss()
+                           
                         }
+                        dismiss()
                     }
                 } label: {
                     HStack {
@@ -127,8 +128,9 @@ struct ImportCSVFileView: View {
                     fileName = fileURL?.lastPathComponent ?? ""
                     if let fileURL {
                         csvData = DataFrame.loadCSV(fileURL: fileURL)
+                        fileURL.stopAccessingSecurityScopedResource()
                     }
-                    do { fileURL!.stopAccessingSecurityScopedResource() }
+               
                     
                 } else {
                     // Handle denied access
