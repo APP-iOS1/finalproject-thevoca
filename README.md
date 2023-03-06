@@ -10,11 +10,13 @@ A4용지를 접어가면서 단어나 의미를 가리고 스스로 쪽지시험
 
 꼼꼬미단어장(TheVoca)입니다.
 
+## 앱스토어
+https://apps.apple.com/kr/app/thevoca/id6445853620
 
-# 👨‍👩‍👧‍👦 팀 소개
+# 👨‍👩‍👧‍👦 팀원 소개
 |[수민](https://github.com/steady-on)|[정민](https://github.com/eigen98)|[승태](https://github.com/gxdxt)|[도현](https://github.com/k906506)|[도희](https://github.com/ehvkddl)|
 |:----:|:----:|:----:|:----:|:----:|
-|한줄|한줄|한줄|한줄|한줄|
+|기획&개발|개발|개발|개발|개발|
 |<img src="https://github.com/steady-on.png" width="128">|<img src="https://github.com/eigen98.png" width="128">|<img src="https://github.com/gxdxt.png" width=128>|<img src="https://github.com/k906506.png" width="128">|<img src="https://github.com/ehvkddl.png" width="128">|
 
 # 💻 주요 기능
@@ -39,15 +41,21 @@ A4용지를 접어가면서 단어나 의미를 가리고 스스로 쪽지시험
 - **NSUbiquitousKeyValueStore**를 활용해서 다른 기기에서도 추가한 단어장을 확인할 수 있어요.
 - **NavigationSplitView**로 기기에 따라 다른 접근성을 지원해요.
 
-# **🔨 기술 소개**
+# **🔨 사용한 기술 소개**
 
-## 1️⃣ SwiftUI
+### SwiftUI
 
-## 2️⃣ Combine
+### Combine
 
-## 3️⃣ Swinject
+### CoreData
 
-## 4️⃣ Firebase Analytics
+### NSUbiquitousKeyValueStore
+
+### CloudKit
+
+### Swinject
+
+## Firebase Analytics
 
 # 👂 협업 방식
 
