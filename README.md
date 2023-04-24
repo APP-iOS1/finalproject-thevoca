@@ -14,7 +14,7 @@ A4용지를 접어가면서 단어나 의미를 가리고 스스로 쪽지시험
 https://apps.apple.com/kr/app/thevoca/id6445853620
 
 # 👨‍👩‍👧‍👦 팀원 소개
-|[수민](https://github.com/steady-on)|[정민](https://github.com/eigen98)|[승태](https://github.com/gxdxt)|[도현](https://github.com/k906506)|[도희](https://github.com/ehvkddl)|
+|[SM](https://github.com/steady-on)|[JM](https://github.com/eigen98)|[ST](https://github.com/gxdxt)|[DH](https://github.com/k906506)|[DH](https://github.com/ehvkddl)|
 |:----:|:----:|:----:|:----:|:----:|
 |기획&개발|개발|개발|개발|개발|
 |<img src="https://github.com/steady-on.png" width="128">|<img src="https://github.com/eigen98.png" width="128">|<img src="https://github.com/gxdxt.png" width=128>|<img src="https://github.com/k906506.png" width="128">|<img src="https://github.com/ehvkddl.png" width="128">|
